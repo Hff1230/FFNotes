@@ -41,5 +41,23 @@
   "Emojs/a-file.svg": "FabAFile",
   "Emojs/a-folder.svg": "FabAFile",
   "JoyMeng Note": "FabAFolder",
-  "A Git Commands.md": "FabAFile"
+  "Unity": "FabAFolder",
+  "Unity/Fgui": "FabAFolder",
+  "Games": "FabAFolder",
+  "Games/军团战争.md": {
+    "iconName": "FabAFile",
+    "inheritanceIcon": "FabAFile"
+  },
+  "资料文件夹": "FabAFolder",
+  "资料文件夹/打包相关": "FabAFolder",
+  "资料文件夹/打包相关/2023自动部署神器——Jenkins全网最全攻略.md": "FabAFile",
+  "资料文件夹/AI相关": "FabAFolder",
+  "资料文件夹/Unity相关": "FabAFolder",
+  "资料文件夹/Unity相关/shader从入门到跑路.md": "FabAFile",
+  "资料文件夹/AI相关/Codeium编码AI.md": "FabAFile",
+  "Unity/Fgui/Guide": "FabAFolder",
+  "Unity/Fgui/Guide/GuideView.md": "FabAFile",
+  "DefaultConfig/A Git Commands.md": "FabAFile",
+  "DefaultConfig": "FabAFolder",
+  "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md": "FabAFile"
 }
