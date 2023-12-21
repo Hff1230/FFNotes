@@ -6,10 +6,11 @@
     "emojiStyle": "none",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "SiAFolder",
+      "SiAFile",
       "SiFiles",
       "FabAFile",
-      "FabAFolder",
-      "FabAdversal"
+      "FabAFolder"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [
@@ -57,9 +58,9 @@
   "资料文件夹/Unity相关/shader从入门到跑路.md": "FabAFile",
   "资料文件夹/AI相关/Codeium编码AI.md": "FabAFile",
   "Unity/Fgui/Guide": "FabAFolder",
-  "Unity/Fgui/Guide/GuideView.md": "FabAFile",
   "DefaultConfig/A Git Commands.md": "FabAFile",
   "DefaultConfig": "FabAFolder",
   "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md": "FabAFile",
-  "附件仓库": "SiFiles"
+  "附件仓库": "SiAFolder",
+  "Unity/Fgui/Guide/Guide.md": "FabAFile"
 }
