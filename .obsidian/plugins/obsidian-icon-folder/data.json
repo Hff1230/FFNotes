@@ -6,10 +6,25 @@
     "emojiStyle": "none",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "FabAFile",
+      "FabAFolder",
       "FabAdversal"
     ],
     "recentlyUsedIconsSize": 5,
-    "rules": [],
+    "rules": [
+      {
+        "rule": "File",
+        "icon": "FabAFile",
+        "for": "everything",
+        "order": 0
+      },
+      {
+        "rule": "Folder",
+        "icon": "FabAFolder",
+        "for": "everything",
+        "order": 1
+      }
+    ],
     "extraMargin": {
       "top": 0,
       "right": 4,
@@ -22,5 +37,9 @@
     "iconsBackgroundCheckEnabled": false,
     "iconsInNotesEnabled": true
   },
-  "Git Commands.md": "FabAdversal"
+  "Emojs": "FabAFolder",
+  "Emojs/a-file.svg": "FabAFile",
+  "Emojs/a-folder.svg": "FabAFile",
+  "JoyMeng Note": "FabAFolder",
+  "A Git Commands.md": "FabAFile"
 }

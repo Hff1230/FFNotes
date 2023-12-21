@@ -8,27 +8,18 @@
         "type": "tabs",
         "children": [
           {
-            "id": "719c80612f50139d",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
             "id": "a6d3ffecfbab844f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Git Commands.md",
+                "file": "JoyMeng Note/2023-12-21.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -94,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Git Commands.md",
+                "file": "JoyMeng Note/2023-12-21.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Git Commands.md",
+                "file": "JoyMeng Note/2023-12-21.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Git Commands.md"
+                "file": "JoyMeng Note/2023-12-21.md"
               }
             }
           }
@@ -155,8 +146,16 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a6d3ffecfbab844f",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
-    "Git Commands.md"
+    "A Git Commands.md",
+    "JoyMeng Note/2023-12/day21.md",
+    "JoyMeng Note/2023-12-21.md",
+    "2023-12-21.md",
+    "JoyMeng Note/2023-12",
+    "JoyMeng Note",
+    "Emojs/a-folder.svg",
+    "Emojs/a-file.svg",
+    "Emojs"
   ]
 }
