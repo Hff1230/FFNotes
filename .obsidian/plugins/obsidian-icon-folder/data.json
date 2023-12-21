@@ -6,6 +6,7 @@
     "emojiStyle": "none",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "SiFiles",
       "FabAFile",
       "FabAFolder",
       "FabAdversal"
@@ -59,5 +60,6 @@
   "Unity/Fgui/Guide/GuideView.md": "FabAFile",
   "DefaultConfig/A Git Commands.md": "FabAFile",
   "DefaultConfig": "FabAFolder",
-  "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md": "FabAFile"
+  "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md": "FabAFile",
+  "附件仓库": "SiFiles"
 }

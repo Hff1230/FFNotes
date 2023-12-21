@@ -11,9 +11,11 @@
             "id": "343eb7c0b1f81eb2",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "Emojs/a-folder.svg"
+                "file": "DefaultConfig/A Git Commands.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -83,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Emojs/a-folder.svg",
+                "file": "DefaultConfig/A Git Commands.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -100,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Emojs/a-folder.svg",
+                "file": "DefaultConfig/A Git Commands.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -123,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Emojs/a-folder.svg"
+                "file": "DefaultConfig/A Git Commands.md"
               }
             }
           }
@@ -146,17 +148,18 @@
   },
   "active": "343eb7c0b1f81eb2",
   "lastOpenFiles": [
-    "Emojs/a-file.svg",
-    "Emojs/a-folder.svg",
-    "Games/军团战争.md",
+    "DefaultConfig/NewFile.md",
+    "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
     "DefaultConfig/A Git Commands.md",
+    "资料文件夹/AI相关/Codeium编码AI.md",
+    "附件仓库/Untitled.canvas",
+    "Emojs/a-folder.svg",
+    "Emojs/a-file.svg",
+    "Games/军团战争.md",
     "JoyMeng Note/2023-12-21.md",
     "附件仓库",
-    "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
-    "DefaultConfig/NewFile.md",
     "Unity/Fgui/Guide/GuideView.md",
     "Unity/Fgui/Guide",
-    "资料文件夹/AI相关/Codeium编码AI.md",
     "资料文件夹/Unity相关/shader从入门到跑路.md",
     "资料文件夹/打包相关/2023自动部署神器——Jenkins全网最全攻略.md",
     "资料文件夹/Unity相关",
