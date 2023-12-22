@@ -1,3 +1,5 @@
 {
-  "folder": "JoyMeng Note"
+  "folder": "JoyMeng Note",
+  "format": "日记 YYYY-MM-DD",
+  "template": "DefaultConfig/NewFile"
 }

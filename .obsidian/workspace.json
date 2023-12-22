@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "c4d7c2325a26a04a",
+        "id": "32eaf2b560b65165",
         "type": "tabs",
         "children": [
           {
-            "id": "83f88c12e05f3f65",
+            "id": "13a5852bd213e347",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DefaultConfig/A Git Commands.md",
+                "file": "JoyMeng Note/日记 2023-12-22.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "DefaultConfig/A Git Commands.md",
+                "file": "JoyMeng Note/日记 2023-12-22.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "DefaultConfig/A Git Commands.md",
+                "file": "JoyMeng Note/日记 2023-12-22.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "DefaultConfig/A Git Commands.md"
+                "file": "JoyMeng Note/日记 2023-12-22.md"
               }
             }
           }
@@ -146,13 +146,16 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "83f88c12e05f3f65",
+  "active": "13a5852bd213e347",
   "lastOpenFiles": [
-    "JoyMeng Note/2023-12-22.md",
     "JoyMeng Note/2023-12-21.md",
+    "JoyMeng Note/日记 2023-12-22.md",
+    "JoyMeng Note/日记 232023-12-22.md",
+    "JoyMeng Note/2023-12-22.md",
+    "未命名.canvas",
+    "DefaultConfig/A Git Commands.md",
     "Unity/Fgui/Guide/Guide.md",
     "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
-    "DefaultConfig/A Git Commands.md",
     "资料文件夹/AI相关/Codeium编码AI.md",
     "Emojs/a-folder.svg",
     "Emojs/a-file.svg",
