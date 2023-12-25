@@ -9,3 +9,7 @@
 >git add .
 >git commit -m "daily update"
 >git push
+
+网络异常
+git config --global http.proxy http://127.0.0.1:7890
+git config --global https.proxy http://127.0.0.1:7890
