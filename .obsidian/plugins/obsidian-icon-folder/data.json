@@ -67,5 +67,7 @@
   "Unity/渲染/渲染.md": "IcAFile",
   "DefaultConfig/NewFolder": "IcAFolder",
   "DefaultConfig/NewFile.md": "IcAFile",
-  "资料文件夹/Unity相关/Unity性能优化 C#篇.pdf": "IcAFile"
+  "资料文件夹/Unity相关/Unity性能优化 C#篇.pdf": "IcAFile",
+  "资料文件夹/Unity相关/Unity性能优化 Lua篇.pdf": "IcAFile",
+  "资料文件夹/Unity相关/十大经典排序算法.md": "IcAFile"
 }

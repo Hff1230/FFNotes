@@ -11,9 +11,11 @@
             "id": "13a5852bd213e347",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "资料文件夹/Unity相关/Unity性能优化 C#篇.pdf"
+                "file": "资料文件夹/Unity相关/十大经典排序算法.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -83,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "资料文件夹/Unity相关/Unity性能优化 C#篇.pdf",
+                "file": "资料文件夹/Unity相关/十大经典排序算法.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -100,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "资料文件夹/Unity相关/Unity性能优化 C#篇.pdf",
+                "file": "资料文件夹/Unity相关/十大经典排序算法.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -123,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "资料文件夹/Unity相关/Unity性能优化 C#篇.pdf"
+                "file": "资料文件夹/Unity相关/十大经典排序算法.md"
               }
             }
           }
@@ -146,9 +148,14 @@
   },
   "active": "13a5852bd213e347",
   "lastOpenFiles": [
+    "附件仓库/冒泡动图.jpg",
+    "附件仓库/冒泡动图.jpg.crdownload",
+    "附件仓库/十大排序.jpg",
+    "附件仓库/十大排序.jpg.crdownload",
     "资料文件夹/Unity相关/Unity性能优化 Lua篇.pdf",
-    "Unity/CSharp/优化相关.md",
     "资料文件夹/Unity相关/Unity性能优化 C#篇.pdf",
+    "资料文件夹/Unity相关/十大经典排序算法.md",
+    "Unity/CSharp/优化相关.md",
     "JoyMeng Note/日记 2023-12-25.md",
     "Unity/CSharp",
     "JoyMeng Note/日记 2023-12-22.md",
@@ -173,10 +180,7 @@
     "Unity/Fgui/Guide",
     "资料文件夹/Unity相关",
     "资料文件夹",
-    "资料文件夹/AI相关",
-    "资料文件夹/打包相关",
     "Untitled.md",
-    "Games",
     "JoyMeng Note/2023-12/day21.md",
     "2023-12-21.md"
   ]
