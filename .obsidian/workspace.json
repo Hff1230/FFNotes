@@ -18,8 +18,19 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "bd4d0576ba84e3a0",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.5.3"
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -146,7 +157,7 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "e5f2fd2511419d78",
+  "active": "bd4d0576ba84e3a0",
   "lastOpenFiles": [
     "JoyMeng Note/日记 2023-12-26.md",
     "资料文件夹/Unity相关/Unity性能优化总结.pdf",
