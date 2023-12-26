@@ -13,24 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DefaultConfig/A Git Commands.md",
+                "file": "资料文件夹/Unity相关/未命名.md",
                 "mode": "source",
                 "source": false
               }
             }
-          },
-          {
-            "id": "bd4d0576ba84e3a0",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.5.3"
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -96,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "DefaultConfig/A Git Commands.md",
+                "file": "资料文件夹/Unity相关/未命名.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "DefaultConfig/A Git Commands.md",
+                "file": "资料文件夹/Unity相关/未命名.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "DefaultConfig/A Git Commands.md"
+                "file": "资料文件夹/Unity相关/未命名.md"
               }
             }
           }
@@ -157,8 +146,10 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "bd4d0576ba84e3a0",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
+    "DefaultConfig/A Git Commands.md",
+    "资料文件夹/Unity相关/未命名.md",
     "JoyMeng Note/日记 2023-12-26.md",
     "资料文件夹/Unity相关/Unity性能优化总结.pdf",
     "资料文件夹/Unity相关/Unity编辑器扩展 基于注解手写菜单扩展机制详解.md",
@@ -173,7 +164,6 @@
     "资料文件夹/语言技能/shader从入门到跑路.md",
     "DefaultConfig/NewFile.md",
     "DefaultConfig/MD 语法.md",
-    "DefaultConfig/A Git Commands.md",
     "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
     "资料文件夹/语言技能/Unity性能优化 C#篇.pdf",
     "资料文件夹/语言技能/Unity性能优化 Lua篇.pdf",
