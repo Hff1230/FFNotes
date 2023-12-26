@@ -11,11 +11,9 @@
             "id": "e5f2fd2511419d78",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "资料文件夹/语言技能/聊聊CSharp foreach迭代器跟for循环区别？.md",
-                "mode": "source",
-                "source": false
+                "file": "资料文件夹/Unity相关/Unity性能优化总结.pdf"
               }
             }
           }
@@ -85,7 +83,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "资料文件夹/语言技能/聊聊CSharp foreach迭代器跟for循环区别？.md",
+                "file": "资料文件夹/Unity相关/Unity性能优化总结.pdf",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +100,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "资料文件夹/语言技能/聊聊CSharp foreach迭代器跟for循环区别？.md",
+                "file": "资料文件夹/Unity相关/Unity性能优化总结.pdf",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +123,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "资料文件夹/语言技能/聊聊CSharp foreach迭代器跟for循环区别？.md"
+                "file": "资料文件夹/Unity相关/Unity性能优化总结.pdf"
               }
             }
           }
@@ -146,12 +144,15 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "a15cc7476493b87c",
+  "active": "e5f2fd2511419d78",
   "lastOpenFiles": [
+    "资料文件夹/Unity相关/UI性能优化导图.md",
+    "资料文件夹/Unity相关/Unity性能优化总结.pdf",
+    "附件仓库/Unity性能优化总结.pdf.crdownload",
+    "资料文件夹/算法和数据结构/十大经典排序.md",
+    "资料文件夹/语言技能/聊聊CSharp foreach迭代器跟for循环区别？.md",
     "资料文件夹/算法和数据结构",
     "资料文件夹/语言技能",
-    "资料文件夹/语言技能/十大经典排序.md",
-    "资料文件夹/语言技能/聊聊CSharp foreach迭代器跟for循环区别？.md",
     "资料文件夹/语言技能/C Sharp基础之unsafe code(不安全代码).md",
     "资料文件夹/语言技能/CSharp 入门教程 Func委托.md",
     "资料文件夹/语言技能/shader从入门到跑路.md",
@@ -180,10 +181,7 @@
     "附件仓库/动图库/桶排序.gif.crdownload",
     "附件仓库/动图库/计数排序.webp",
     "附件仓库/动图库/计数排序.webp.crdownload",
-    "附件仓库/动图库/堆排序.mp4",
-    "附件仓库/动图库/堆排序.mp4.crdownload",
     "附件仓库/动图库/快速排序.webp",
-    "附件仓库/动图库/快速排序.webp.crdownload",
     "附件仓库/动图库/归并排序.gif",
     "附件仓库/动图库/希尔排序.webp.jpg",
     "附件仓库/动图库/希尔排序.webp",
@@ -193,7 +191,6 @@
     "JoyMeng Note/日记 2023-12-25.md",
     "Unity/CSharp/优化相关.md",
     "JoyMeng Note/日记 2023-12-22.md",
-    "Games/军团战争.md",
     "未命名.canvas",
     "附件仓库/Untitled.canvas"
   ]

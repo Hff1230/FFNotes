@@ -83,9 +83,10 @@
   "资料文件夹/语言技能": "IcAFolder",
   "资料文件夹/语言技能/Unity性能优化 Lua篇.pdf": "IcAFile",
   "资料文件夹/语言技能/聊聊CSharp foreach迭代器跟for循环区别？.md": "IcAFile",
-  "资料文件夹/语言技能/十大经典排序.md": "IcAFile",
   "资料文件夹/语言技能/C Sharp基础之unsafe code(不安全代码).md": "IcAFile",
   "资料文件夹/语言技能/CSharp 入门教程 Func委托.md": "IcAFile",
   "资料文件夹/语言技能/shader从入门到跑路.md": "IcAFile",
-  "资料文件夹/语言技能/Unity性能优化 C#篇.pdf": "IcAFile"
+  "资料文件夹/语言技能/Unity性能优化 C#篇.pdf": "IcAFile",
+  "资料文件夹/算法和数据结构": "IcAFolder",
+  "资料文件夹/算法和数据结构/十大经典排序.md": "IcAFile"
 }
