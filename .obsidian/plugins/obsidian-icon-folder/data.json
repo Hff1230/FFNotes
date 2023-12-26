@@ -55,7 +55,6 @@
   "资料文件夹/打包相关/2023自动部署神器——Jenkins全网最全攻略.md": "IcAFile",
   "资料文件夹/AI相关": "IcAFolder",
   "资料文件夹/Unity相关": "IcAFolder",
-  "资料文件夹/Unity相关/shader从入门到跑路.md": "IcAFile",
   "资料文件夹/AI相关/Codeium编码AI.md": "FabAFile",
   "Unity/Fgui/Guide": "IcAFolder",
   "DefaultConfig/A Git Commands.md": "IcAFile",
@@ -67,8 +66,6 @@
   "Unity/渲染/渲染.md": "IcAFile",
   "DefaultConfig/NewFolder": "IcAFolder",
   "DefaultConfig/NewFile.md": "IcAFile",
-  "资料文件夹/Unity相关/Unity性能优化 C#篇.pdf": "IcAFile",
-  "资料文件夹/Unity相关/Unity性能优化 Lua篇.pdf": "IcAFile",
   "附件仓库/动图库": "IcAFolder",
   "附件仓库/图片库": "IcAFolder",
   "附件仓库/技术库": "IcAFolder",
@@ -83,6 +80,12 @@
   "附件仓库/技术库/十大经典排序算法/8.计数排序.md": "IcAFile",
   "附件仓库/技术库/十大经典排序算法/9.桶排序.md": "IcAFile",
   "附件仓库/技术库/十大经典排序算法/10.基数排序.md": "IcAFile",
-  "资料文件夹/Unity相关/十大经典排序.md": "IcAFile",
-  "资料文件夹/Unity相关/CSharp 入门教程 Func委托.md": "IcAFile"
+  "资料文件夹/语言技能": "IcAFolder",
+  "资料文件夹/语言技能/Unity性能优化 Lua篇.pdf": "IcAFile",
+  "资料文件夹/语言技能/聊聊CSharp foreach迭代器跟for循环区别？.md": "IcAFile",
+  "资料文件夹/语言技能/十大经典排序.md": "IcAFile",
+  "资料文件夹/语言技能/C Sharp基础之unsafe code(不安全代码).md": "IcAFile",
+  "资料文件夹/语言技能/CSharp 入门教程 Func委托.md": "IcAFile",
+  "资料文件夹/语言技能/shader从入门到跑路.md": "IcAFile",
+  "资料文件夹/语言技能/Unity性能优化 C#篇.pdf": "IcAFile"
 }
