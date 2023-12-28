@@ -11,11 +11,9 @@
             "id": "e5f2fd2511419d78",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "JoyMeng Note/日记 2023-12-28.md",
-                "mode": "source",
-                "source": false
+                "file": "资料文件夹/语言技能/Unity性能优化 Lua篇.pdf"
               }
             }
           }
@@ -85,7 +83,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JoyMeng Note/日记 2023-12-28.md",
+                "file": "资料文件夹/语言技能/Unity性能优化 Lua篇.pdf",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +100,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "JoyMeng Note/日记 2023-12-28.md",
+                "file": "资料文件夹/语言技能/Unity性能优化 Lua篇.pdf",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +123,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JoyMeng Note/日记 2023-12-28.md"
+                "file": "资料文件夹/语言技能/Unity性能优化 Lua篇.pdf"
               }
             }
           }
@@ -148,8 +146,8 @@
   },
   "active": "e5f2fd2511419d78",
   "lastOpenFiles": [
-    "资料文件夹/语言技能/CSharp 入门教程 Func委托.md",
     "JoyMeng Note/日记 2023-12-28.md",
+    "资料文件夹/语言技能/CSharp 入门教程 Func委托.md",
     "资料文件夹/语言技能/C Sharp基础之unsafe code(不安全代码).md",
     "资料文件夹/语言技能/聊聊CSharp foreach迭代器跟for循环区别？.md",
     "JoyMeng Note/日记 2023-12-27.md",
