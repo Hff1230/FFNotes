@@ -95,5 +95,11 @@
   "DefaultConfig/MD 语法.md": "IcAFile",
   "资料文件夹/Unity相关/游戏设计模式：状态模式.md": "IcAFile",
   "资料文件夹/Unity相关/频繁换装导致内存增大解决方案.md": "IcAFile",
-  "资料文件夹/Unity相关/Unity中Animator Override的性能问题.md": "IcAFile"
+  "资料文件夹/Unity相关/Unity中Animator Override的性能问题.md": "IcAFile",
+  "资料文件夹/Shader": "IcAFolder",
+  "资料文件夹/Shader/GPUInstance": "IcAFolder",
+  "资料文件夹/Shader/GPUInstance/FunnyGPUInstance.md": "IcAFile",
+  "资料文件夹/Shader/GPUInstance/FunnyGPUInstanceShader.md": "IcAFile",
+  "资料文件夹/Shader/RenderQueue": "IcAFolder",
+  "资料文件夹/Shader/RenderQueue/ZWrite Off.md": "IcAFile"
 }
