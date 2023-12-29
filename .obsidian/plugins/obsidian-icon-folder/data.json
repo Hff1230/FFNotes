@@ -101,5 +101,7 @@
   "资料文件夹/Shader/GPUInstance/FunnyGPUInstance.md": "IcAFile",
   "资料文件夹/Shader/GPUInstance/FunnyGPUInstanceShader.md": "IcAFile",
   "资料文件夹/Shader/RenderQueue": "IcAFolder",
-  "资料文件夹/Shader/RenderQueue/ZWrite Off.md": "IcAFile"
+  "资料文件夹/Shader/RenderQueue/ZWrite Off.md": "IcAFile",
+  "资料文件夹/编程概念": "IcAFolder",
+  "资料文件夹/编程概念/CSharp结构体与类的区别.md": "IcAFile"
 }

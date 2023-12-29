@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2023-12-29.md",
+                "file": "资料文件夹/编程概念/CSharp结构体与类的区别.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JoyMeng Note/日记 2023-12-29.md",
+                "file": "资料文件夹/编程概念/CSharp结构体与类的区别.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "JoyMeng Note/日记 2023-12-29.md",
+                "file": "资料文件夹/编程概念/CSharp结构体与类的区别.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JoyMeng Note/日记 2023-12-29.md"
+                "file": "资料文件夹/编程概念/CSharp结构体与类的区别.md"
               }
             }
           }
@@ -138,19 +138,21 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:打开快速切换": false,
-      "graph:查看关系图谱": false,
-      "canvas:新建白板": false,
-      "daily-notes:打开/创建今天的日记": false,
-      "templates:插入模板": false,
-      "command-palette:打开命令面板": false
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
     }
   },
   "active": "18ad93d2e1374f14",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2023-12-28.md",
-    "JoyMeng Note/日记 2023-12-29.md",
     "资料文件夹/AI相关/Codeium编码AI.md",
+    "资料文件夹/编程概念/CSharp结构体与类的区别.md",
+    "资料文件夹/编程概念",
+    "JoyMeng Note/日记 2023-12-29.md",
+    "JoyMeng Note/日记 2023-12-28.md",
     "资料文件夹/Shader/RenderQueue/ZWrite Off.md",
     "资料文件夹/Shader/GPUInstance/FunnyGPUInstanceShader.md",
     "资料文件夹/Shader/RenderQueue",
@@ -181,9 +183,7 @@
     "附件仓库/技术库/十大经典排序算法/1.冒泡排序.md",
     "附件仓库/技术库/十大经典排序算法/5.归并排序.md",
     "DefaultConfig/MD 语法.md",
-    "DefaultConfig/A Git Commands.md",
     "资料文件夹/Unity相关/Unity性能优化总结.pdf",
-    "附件仓库/Unity性能优化总结.pdf.crdownload",
     "附件仓库/动图库/基数排序.webp",
     "附件仓库/动图库/桶排序.gif",
     "附件仓库/动图库/计数排序.webp",
