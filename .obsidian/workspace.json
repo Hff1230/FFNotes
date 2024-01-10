@@ -4,16 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "14301d237a0a8bbd",
+        "id": "d4dbc5c85b30fedb",
         "type": "tabs",
         "children": [
           {
-            "id": "b312f687b714f99e",
+            "id": "8eb8f1e499099030",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "附件仓库/杂项仓库/Pasted image 20240110085014.png"
+                "file": "JoyMeng Note/日记 2024-01-10.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -83,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "附件仓库/杂项仓库/Pasted image 20240110085014.png",
+                "file": "JoyMeng Note/日记 2024-01-10.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -100,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "附件仓库/杂项仓库/Pasted image 20240110085014.png",
+                "file": "JoyMeng Note/日记 2024-01-10.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -123,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "附件仓库/杂项仓库/Pasted image 20240110085014.png"
+                "file": "JoyMeng Note/日记 2024-01-10.md"
               }
             }
           }
@@ -144,13 +146,13 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "a15cc7476493b87c",
+  "active": "8eb8f1e499099030",
   "lastOpenFiles": [
-    "附件仓库/unity 四叉树管理场景/新建文本文档.MD",
     "附件仓库/杂项仓库/Pasted image 20240110085014.png",
     "JoyMeng Note/日记 2024-01-10.md",
-    "附件仓库/杂项仓库",
     "资料文件夹/Unity相关/Unity踩坑系列/【Unity 踩坑系列】配置VScode环境Downloading the.NET Runtime Failed to download.NET 7.0.9installation timed out.md",
+    "附件仓库/unity 四叉树管理场景/新建文本文档.MD",
+    "附件仓库/杂项仓库",
     "().md",
     "资料文件夹/Unity相关/Unity踩坑系列",
     "JoyMeng Note/日记 2024-01-09.md",
