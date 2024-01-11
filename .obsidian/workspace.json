@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2024-01-11.md",
+                "file": "DefaultConfig/A Git Commands.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JoyMeng Note/日记 2024-01-11.md",
+                "file": "DefaultConfig/A Git Commands.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "JoyMeng Note/日记 2024-01-11.md",
+                "file": "DefaultConfig/A Git Commands.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JoyMeng Note/日记 2024-01-11.md"
+                "file": "DefaultConfig/A Git Commands.md"
               }
             }
           }
@@ -146,10 +146,13 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "6c7af4b50c53c95d",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
-    "附件仓库/杂项仓库/Pasted image 20240111084141.png",
+    "本地文件",
+    "新建文件夹",
+    "測試01.txt",
     "JoyMeng Note/日记 2024-01-11.md",
+    "附件仓库/杂项仓库/Pasted image 20240111084141.png",
     "JoyMeng Note/日记 2024-01-10.md",
     "附件仓库/杂项仓库/Pasted image 20240110203018.png",
     "附件仓库/杂项仓库/Pasted image 20240110085014.png",
@@ -169,13 +172,11 @@
     "附件仓库/unity 四叉树管理场景/新建文本文档.txt",
     "附件仓库/unity 四叉树管理场景/unity-Multi-tree-manage-scenario-master.zip",
     "附件仓库/unity 四叉树管理场景",
-    "附件仓库/新建文件夹",
     "JoyMeng Note/日记 2024-01-02.md",
     "JoyMeng Note/日记 2023-12-29.md",
     "Games/军团战争.md",
     "资料文件夹/编程概念/CSharp结构体与类的区别.md",
     "资料文件夹/AI相关/Codeium编码AI.md",
-    "资料文件夹/编程概念",
     "JoyMeng Note/日记 2023-12-28.md",
     "资料文件夹/Shader/RenderQueue/ZWrite Off.md",
     "资料文件夹/Shader/GPUInstance/FunnyGPUInstanceShader.md",
