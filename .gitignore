@@ -1,3 +1,7 @@
+#在命令下输入【touch .gitignore】创建文件
 #忽略根目录下bin文件夹中的所有文件，【/bin/*表示】
+#忽略所有.class文件，*.class
+#不要忽略根目录下bin文件夹中.java文件，!/bin/*.java，这样就完成了
+
 /.obsidian/*
 /本地文件/*
