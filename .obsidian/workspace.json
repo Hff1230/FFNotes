@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DefaultConfig/A Git Commands.md",
+                "file": "JoyMeng Note/日记 2024-01-22.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "DefaultConfig/A Git Commands.md",
+                "file": "JoyMeng Note/日记 2024-01-22.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "DefaultConfig/A Git Commands.md",
+                "file": "JoyMeng Note/日记 2024-01-22.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "DefaultConfig/A Git Commands.md"
+                "file": "JoyMeng Note/日记 2024-01-22.md"
               }
             }
           }
@@ -148,6 +148,9 @@
   },
   "active": "6c7af4b50c53c95d",
   "lastOpenFiles": [
+    "JoyMeng Note/日记 2024-01-19.md",
+    "JoyMeng Note/日记 2024-01-22.md",
+    "DefaultConfig/A Git Commands.md",
     "DefaultConfig/MD 语法.md",
     "JoyMeng Note/日记 2024-01-17.md",
     "JoyMeng Note/日记 2024-01-16.md",
@@ -164,7 +167,6 @@
     "附件仓库/杂项仓库/Pasted image 20240112180948.png",
     "附件仓库/杂项仓库/Pasted image 20240112083650.png",
     "JoyMeng Note/日记 2024-01-11.md",
-    "DefaultConfig/A Git Commands.md",
     "新建文本文档.txt",
     "本地文件",
     "新建文件夹",
@@ -192,8 +194,6 @@
     "资料文件夹/AI相关/Codeium编码AI.md",
     "JoyMeng Note/日记 2023-12-28.md",
     "资料文件夹/Shader/RenderQueue/ZWrite Off.md",
-    "资料文件夹/Shader/GPUInstance/FunnyGPUInstanceShader.md",
-    "资料文件夹/Shader/GPUInstance/FunnyGPUInstance.md",
     "未命名.canvas",
     "附件仓库/Untitled.canvas"
   ]
