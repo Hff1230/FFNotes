@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2024-01-23.md",
+                "file": "资料文件夹/算法和数据结构/单例容器/IManager.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JoyMeng Note/日记 2024-01-23.md",
+                "file": "资料文件夹/算法和数据结构/单例容器/IManager.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "JoyMeng Note/日记 2024-01-23.md",
+                "file": "资料文件夹/算法和数据结构/单例容器/IManager.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JoyMeng Note/日记 2024-01-23.md"
+                "file": "资料文件夹/算法和数据结构/单例容器/IManager.md"
               }
             }
           }
@@ -148,8 +148,14 @@
   },
   "active": "6c7af4b50c53c95d",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2024-01-22.md",
+    "资料文件夹/算法和数据结构/单例容器/单例容器类.md",
+    "资料文件夹/算法和数据结构/单例容器/IManager.md",
+    "资料文件夹/算法和数据结构/单例容器/Singleton.md",
+    "资料文件夹/算法和数据结构/十大经典排序.md",
+    "JoyMeng Note/日记 2024-02-07.md",
+    "资料文件夹/算法和数据结构/单例容器",
     "JoyMeng Note/日记 2024-01-23.md",
+    "JoyMeng Note/日记 2024-01-22.md",
     "JoyMeng Note/日记 2024-01-19.md",
     "DefaultConfig/A Git Commands.md",
     "DefaultConfig/MD 语法.md",
@@ -186,14 +192,8 @@
     "JoyMeng Note/日记 2024-01-05.md",
     "JoyMeng Note/日记 2024-01-04.md",
     "资料文件夹/Unity相关/unity-Multi-tree-manage-scenario-master.zip",
-    "附件仓库/unity-Multi-tree-manage-scenario-master.zip.crdownload",
     "JoyMeng Note/日记 2024-01-03.md",
     "JoyMeng Note/日记 2024-01-02.md",
-    "JoyMeng Note/日记 2023-12-29.md",
-    "Games/军团战争.md",
-    "资料文件夹/编程概念/CSharp结构体与类的区别.md",
-    "资料文件夹/AI相关/Codeium编码AI.md",
-    "JoyMeng Note/日记 2023-12-28.md",
     "未命名.canvas",
     "附件仓库/Untitled.canvas"
   ]
