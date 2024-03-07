@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "资料文件夹/算法和数据结构/单例容器/IManager.md",
+                "file": "资料文件夹/算法和数据结构/十大经典排序.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "资料文件夹/算法和数据结构/单例容器/IManager.md",
+                "file": "资料文件夹/算法和数据结构/十大经典排序.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "资料文件夹/算法和数据结构/单例容器/IManager.md",
+                "file": "资料文件夹/算法和数据结构/十大经典排序.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "资料文件夹/算法和数据结构/单例容器/IManager.md"
+                "file": "资料文件夹/算法和数据结构/十大经典排序.md"
               }
             }
           }
@@ -148,8 +148,8 @@
   },
   "active": "6c7af4b50c53c95d",
   "lastOpenFiles": [
-    "资料文件夹/算法和数据结构/单例容器/单例容器类.md",
     "资料文件夹/算法和数据结构/单例容器/IManager.md",
+    "资料文件夹/算法和数据结构/单例容器/单例容器类.md",
     "资料文件夹/算法和数据结构/单例容器/Singleton.md",
     "资料文件夹/算法和数据结构/十大经典排序.md",
     "JoyMeng Note/日记 2024-02-07.md",
