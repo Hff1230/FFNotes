@@ -111,5 +111,11 @@
   "附件仓库/unity 四叉树管理场景": "IcAFolder",
   "资料文件夹/算法和数据结构/单例容器": "IcAFolder",
   "Unity/Fgui/Commpents": "IcAFolder",
-  "Unity/Fgui/Commpents/Glist.md": "IcAFile"
+  "Unity/Fgui/Commpents/Glist.md": "IcAFile",
+  "Unity/Fgui/Commpents/Live2DLoader.md": {
+    "iconName": "IcAFile",
+    "inheritanceIcon": "IcAFile"
+  },
+  "Unity/CSharp": "IcAFolder",
+  "Unity/GameObjectPool": "IcAFolder"
 }

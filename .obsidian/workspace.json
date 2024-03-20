@@ -4,35 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "4d35052591d0b91a",
+        "id": "5a8ec2ef9ca8c033",
         "type": "tabs",
         "children": [
           {
-            "id": "6c7af4b50c53c95d",
+            "id": "0667d06c3bed3eef",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "JoyMeng Note/日记 2024-03-19.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "def00844ffec17c2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Unity/Fgui/Commpents/Glist.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -98,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/Fgui/Commpents/Glist.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/Fgui/Commpents/Glist.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Unity/Fgui/Commpents/Glist.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -159,12 +138,16 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "def00844ffec17c2",
+  "active": "0667d06c3bed3eef",
   "lastOpenFiles": [
+    "Unity/GameObjectPool/CCNodeCache.md",
+    "Unity/GameObjectPool/GameObjectPoolManager.md",
+    "JoyMeng Note/日记 2024-03-19.md",
+    "Unity/GameObjectPool",
+    "Unity/Fgui/Commpents/Live2DLoader.md",
     "Unity/Fgui/Commpents/Glist.md",
     "Unity/Fgui/Commpents",
     "资料文件夹/算法和数据结构/十大经典排序.md",
-    "JoyMeng Note/日记 2024-03-19.md",
     "资料文件夹/算法和数据结构/单例容器/IManager.md",
     "资料文件夹/算法和数据结构/单例容器/单例容器类.md",
     "资料文件夹/算法和数据结构/单例容器/Singleton.md",
@@ -202,11 +185,7 @@
     "附件仓库/unity 四叉树管理场景/新建文本文档.MD",
     "附件仓库/杂项仓库",
     "().md",
-    "资料文件夹/Unity相关/Unity踩坑系列",
     "JoyMeng Note/日记 2024-01-09.md",
-    "JoyMeng Note/日记 2024-01-08.md",
-    "JoyMeng Note/日记 2024-01-05.md",
-    "JoyMeng Note/日记 2024-01-04.md",
     "未命名.canvas",
     "附件仓库/Untitled.canvas"
   ]
