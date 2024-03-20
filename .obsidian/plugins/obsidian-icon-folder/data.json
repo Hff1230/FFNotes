@@ -117,5 +117,6 @@
     "inheritanceIcon": "IcAFile"
   },
   "Unity/CSharp": "IcAFolder",
-  "Unity/GameObjectPool": "IcAFolder"
+  "Unity/GameObjectPool": "IcAFolder",
+  "Unity/红点": "IcAFolder"
 }

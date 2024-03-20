@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "5a8ec2ef9ca8c033",
+        "id": "ece68bfdc1707c0d",
         "type": "tabs",
         "children": [
           {
-            "id": "0667d06c3bed3eef",
+            "id": "7d435e39f9272eaa",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -81,6 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Unity/红点/RedTipNodeConfig.json.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +98,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Unity/红点/RedTipNodeConfig.json.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +120,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Unity/红点/RedTipNodeConfig.json.md"
+              }
             }
           }
         ]
@@ -138,8 +142,14 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "0667d06c3bed3eef",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
+    "Unity/红点/CommonRedTipComponent.md",
+    "Unity/红点/RedTipNodeConfig.json.md",
+    "Unity/红点/RedTipTreeNode.md",
+    "Unity/红点/RedTipController.md",
+    "Unity/未命名.canvas",
+    "Unity/红点",
     "Unity/GameObjectPool/CCNodeCache.md",
     "Unity/GameObjectPool/GameObjectPoolManager.md",
     "JoyMeng Note/日记 2024-03-19.md",
@@ -181,11 +191,6 @@
     "JoyMeng Note/日记 2024-01-10.md",
     "附件仓库/杂项仓库/Pasted image 20240110203018.png",
     "附件仓库/杂项仓库/Pasted image 20240110085014.png",
-    "资料文件夹/Unity相关/Unity踩坑系列/【Unity 踩坑系列】配置VScode环境Downloading the.NET Runtime Failed to download.NET 7.0.9installation timed out.md",
-    "附件仓库/unity 四叉树管理场景/新建文本文档.MD",
-    "附件仓库/杂项仓库",
-    "().md",
-    "JoyMeng Note/日记 2024-01-09.md",
     "未命名.canvas",
     "附件仓库/Untitled.canvas"
   ]
