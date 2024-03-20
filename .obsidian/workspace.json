@@ -13,13 +13,24 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/GameObjectPool/Main.md",
+                "file": "Unity/GameObjectPool/GameObjectPoolManager.md",
                 "mode": "source",
                 "source": false
               }
             }
+          },
+          {
+            "id": "16c6550b4efa112e",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.5.11"
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/GameObjectPool/Main.md",
+                "file": "Unity/GameObjectPool/GameObjectPoolManager.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/GameObjectPool/Main.md",
+                "file": "Unity/GameObjectPool/GameObjectPoolManager.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/GameObjectPool/Main.md"
+                "file": "Unity/GameObjectPool/GameObjectPoolManager.md"
               }
             }
           }
@@ -146,7 +157,7 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "7d435e39f9272eaa",
+  "active": "16c6550b4efa112e",
   "lastOpenFiles": [
     "Unity/GameObjectPool/Main.md",
     "Unity/红点/RedTipNodeConfig.json.md",
