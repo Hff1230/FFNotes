@@ -109,5 +109,7 @@
   "附件仓库/杂项仓库": "IcAFolder",
   "附件仓库/Demo": "IcAFolder",
   "附件仓库/unity 四叉树管理场景": "IcAFolder",
-  "资料文件夹/算法和数据结构/单例容器": "IcAFolder"
+  "资料文件夹/算法和数据结构/单例容器": "IcAFolder",
+  "Unity/Fgui/Commpents": "IcAFolder",
+  "Unity/Fgui/Commpents/Glist.md": "IcAFile"
 }
