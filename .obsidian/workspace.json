@@ -11,8 +11,12 @@
             "id": "7d435e39f9272eaa",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "Unity/GameObjectPool/Main.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/红点/RedTipNodeConfig.json.md",
+                "file": "Unity/GameObjectPool/Main.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -98,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/红点/RedTipNodeConfig.json.md",
+                "file": "Unity/GameObjectPool/Main.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -121,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/红点/RedTipNodeConfig.json.md"
+                "file": "Unity/GameObjectPool/Main.md"
               }
             }
           }
@@ -142,10 +146,11 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "a15cc7476493b87c",
+  "active": "7d435e39f9272eaa",
   "lastOpenFiles": [
-    "Unity/红点/CommonRedTipComponent.md",
+    "Unity/GameObjectPool/Main.md",
     "Unity/红点/RedTipNodeConfig.json.md",
+    "Unity/红点/CommonRedTipComponent.md",
     "Unity/红点/RedTipTreeNode.md",
     "Unity/红点/RedTipController.md",
     "Unity/未命名.canvas",
@@ -188,7 +193,6 @@
     "新建文件夹",
     "測試01.txt",
     "附件仓库/杂项仓库/Pasted image 20240111084141.png",
-    "JoyMeng Note/日记 2024-01-10.md",
     "附件仓库/杂项仓库/Pasted image 20240110203018.png",
     "附件仓库/杂项仓库/Pasted image 20240110085014.png",
     "未命名.canvas",
