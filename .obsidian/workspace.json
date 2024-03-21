@@ -4,33 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "ece68bfdc1707c0d",
+        "id": "f6f05d5f25ac24da",
         "type": "tabs",
         "children": [
           {
-            "id": "7d435e39f9272eaa",
+            "id": "ce59ea315869415c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Unity/GameObjectPool/GameObjectPoolManager.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "16c6550b4efa112e",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.5.11"
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -96,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/GameObjectPool/GameObjectPoolManager.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/GameObjectPool/GameObjectPoolManager.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Unity/GameObjectPool/GameObjectPoolManager.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -157,8 +138,11 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "16c6550b4efa112e",
+  "active": "ce59ea315869415c",
   "lastOpenFiles": [
+    "Unity/GameObjectPool/GameObjectPoolManager.md",
+    "Unity/文件读写/文件读写.md",
+    "Unity/文件读写",
     "Unity/GameObjectPool/Main.md",
     "Unity/红点/RedTipNodeConfig.json.md",
     "Unity/红点/CommonRedTipComponent.md",
@@ -167,7 +151,6 @@
     "Unity/未命名.canvas",
     "Unity/红点",
     "Unity/GameObjectPool/CCNodeCache.md",
-    "Unity/GameObjectPool/GameObjectPoolManager.md",
     "JoyMeng Note/日记 2024-03-19.md",
     "Unity/GameObjectPool",
     "Unity/Fgui/Commpents/Live2DLoader.md",
@@ -198,11 +181,9 @@
     "附件仓库/杂项仓库/Pasted image 20240112181007.png",
     "附件仓库/杂项仓库/Pasted image 20240112180948.png",
     "附件仓库/杂项仓库/Pasted image 20240112083650.png",
-    "JoyMeng Note/日记 2024-01-11.md",
     "新建文本文档.txt",
     "本地文件",
     "新建文件夹",
-    "測試01.txt",
     "附件仓库/杂项仓库/Pasted image 20240111084141.png",
     "附件仓库/杂项仓库/Pasted image 20240110203018.png",
     "附件仓库/杂项仓库/Pasted image 20240110085014.png",

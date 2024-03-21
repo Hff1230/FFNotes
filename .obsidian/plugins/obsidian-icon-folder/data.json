@@ -118,5 +118,6 @@
   },
   "Unity/CSharp": "IcAFolder",
   "Unity/GameObjectPool": "IcAFolder",
-  "Unity/红点": "IcAFolder"
+  "Unity/红点": "IcAFolder",
+  "Unity/文件读写": "IcAFolder"
 }
