@@ -11,8 +11,12 @@
             "id": "ce59ea315869415c",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "Unity/Fgui/Commpents/记事本.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Unity/Fgui/Commpents/记事本.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Unity/Fgui/Commpents/记事本.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Unity/Fgui/Commpents/记事本.md"
+              }
             }
           }
         ]
@@ -138,8 +146,9 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "ce59ea315869415c",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
+    "Unity/Fgui/Commpents/记事本.md",
     "Unity/GameObjectPool/GameObjectPoolManager.md",
     "Unity/文件读写/文件读写.md",
     "Unity/文件读写",
@@ -177,7 +186,6 @@
     "JoyMeng Note/日记 2024-01-13.md",
     "附件仓库/杂项仓库/Pasted image 20240113174506.png",
     "附件仓库/杂项仓库/Pasted image 20240113174422.png",
-    "JoyMeng Note/日记 2024-01-12.md",
     "附件仓库/杂项仓库/Pasted image 20240112181007.png",
     "附件仓库/杂项仓库/Pasted image 20240112180948.png",
     "附件仓库/杂项仓库/Pasted image 20240112083650.png",
