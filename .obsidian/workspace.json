@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/Fgui/Commpents/记事本.md",
+                "file": "Unity/Fgui/Commpents/Live2DLoader创建live2D动画.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/Fgui/Commpents/记事本.md",
+                "file": "Unity/Fgui/Commpents/Live2DLoader创建live2D动画.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/Fgui/Commpents/记事本.md",
+                "file": "Unity/Fgui/Commpents/Live2DLoader创建live2D动画.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/Fgui/Commpents/记事本.md"
+                "file": "Unity/Fgui/Commpents/Live2DLoader创建live2D动画.md"
               }
             }
           }
@@ -149,8 +149,9 @@
   "active": "ce59ea315869415c",
   "lastOpenFiles": [
     "Unity/Fgui/Commpents/Glist.md",
-    "Unity/Fgui/Commpents/Live2DLoader.md",
+    "Unity/Fgui/Commpents/Live2DLoader创建live2D动画.md",
     "Unity/Fgui/Commpents/记事本.md",
+    "Unity/Fgui/Commpents/未命名.md",
     "Unity/GameObjectPool/GameObjectPoolManager.md",
     "Unity/文件读写/文件读写.md",
     "Unity/文件读写",
@@ -183,7 +184,6 @@
     "附件仓库/杂项仓库/Pasted image 20240115175710.png",
     "附件仓库/一键换装.mp4",
     "附件仓库/一键换装.mp4.crdownload",
-    "JoyMeng Note/日记 2024-01-13.md",
     "附件仓库/杂项仓库/Pasted image 20240113174506.png",
     "附件仓库/杂项仓库/Pasted image 20240113174422.png",
     "附件仓库/杂项仓库/Pasted image 20240112181007.png",

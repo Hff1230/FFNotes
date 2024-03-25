@@ -1,3 +1,7 @@
+使用前注册
+UIObjectFactory.SetPackageItemExtension("ui://icon_GiftPack/Live2DCell", typeof(Live2DLoader));
+
+
 ```
 //Fgui自动创建live2D动画
 using FairyGUI;

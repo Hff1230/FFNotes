@@ -112,12 +112,12 @@
   "资料文件夹/算法和数据结构/单例容器": "IcAFolder",
   "Unity/Fgui/Commpents": "IcAFolder",
   "Unity/Fgui/Commpents/Glist.md": "IcAFile",
-  "Unity/Fgui/Commpents/Live2DLoader.md": {
-    "iconName": "IcAFile",
-    "inheritanceIcon": "IcAFile"
-  },
   "Unity/CSharp": "IcAFolder",
   "Unity/GameObjectPool": "IcAFolder",
   "Unity/红点": "IcAFolder",
-  "Unity/文件读写": "IcAFolder"
+  "Unity/文件读写": "IcAFolder",
+  "Unity/Fgui/Commpents/Live2DLoader创建live2D动画.md": {
+    "iconName": "IcAFile",
+    "inheritanceIcon": "IcAFile"
+  }
 }
