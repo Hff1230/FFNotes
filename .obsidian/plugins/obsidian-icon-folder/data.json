@@ -120,5 +120,6 @@
     "iconName": "IcAFile",
     "inheritanceIcon": "IcAFile"
   },
-  "Unity/A开发笔记": "IcAFolder"
+  "Unity/A开发笔记": "IcAFolder",
+  "Unity/A开发笔记/RedAlert": "IcAFolder"
 }
