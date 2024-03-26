@@ -121,5 +121,7 @@
     "inheritanceIcon": "IcAFile"
   },
   "Unity/A开发笔记": "IcAFolder",
-  "Unity/A开发笔记/RedAlert": "IcAFolder"
+  "Unity/A开发笔记/RedAlert": "IcAFolder",
+  "Unity/A开发笔记/张老师文档交接": "IcAFolder",
+  "Unity/A开发笔记/张老师文档交接/进入文件夹查看.md": "IcAFile"
 }
