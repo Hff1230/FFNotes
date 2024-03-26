@@ -11,14 +11,11 @@
             "id": "fe74157a7a98ce9b",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "Unity/A开发笔记/RedAlert/0画布.canvas",
-                "viewState": {
-                  "x": -365.5,
-                  "y": -579,
-                  "zoom": 0
-                }
+                "file": "Unity/A开发笔记/RedAlert/主城.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -88,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/A开发笔记/RedAlert/0画布.canvas",
+                "file": "Unity/A开发笔记/RedAlert/主城.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/A开发笔记/RedAlert/0画布.canvas",
+                "file": "Unity/A开发笔记/RedAlert/主城.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -128,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/A开发笔记/RedAlert/0画布.canvas"
+                "file": "Unity/A开发笔记/RedAlert/主城.md"
               }
             }
           }
@@ -149,9 +146,10 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "fe74157a7a98ce9b",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
     "Unity/A开发笔记/RedAlert/大地图.md",
+    "Unity/A开发笔记/RedAlert/主城.md",
     "Unity/A开发笔记/RedAlert/0画布.canvas",
     "Unity/A开发笔记/RedAlert/日常记录.md",
     "Unity/A开发笔记/RedAlert",
