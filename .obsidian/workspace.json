@@ -18,8 +18,19 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "6498764757150d1a",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.5.12"
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -146,7 +157,7 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "9d89e6b83f6fd0dd",
+  "active": "6498764757150d1a",
   "lastOpenFiles": [
     "Unity/A开发笔记/张老师文档交接/ActivityItemConfig.xlsm",
     "Unity/A开发笔记/张老师文档交接/~$道具统一模块.docx",
