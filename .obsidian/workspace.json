@@ -4,33 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "5ed79012e58712a7",
+        "id": "04c7745d7320db86",
         "type": "tabs",
         "children": [
           {
-            "id": "9d89e6b83f6fd0dd",
+            "id": "78a274c71bdd968f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2024-04-02.md",
+                "file": "JoyMeng Note/日记 2024-04-17.md",
                 "mode": "source",
                 "source": false
               }
             }
-          },
-          {
-            "id": "6498764757150d1a",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.5.12"
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -96,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JoyMeng Note/日记 2024-04-02.md",
+                "file": "JoyMeng Note/日记 2024-04-17.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "JoyMeng Note/日记 2024-04-02.md",
+                "file": "JoyMeng Note/日记 2024-04-17.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JoyMeng Note/日记 2024-04-02.md"
+                "file": "JoyMeng Note/日记 2024-04-17.md"
               }
             }
           }
@@ -157,47 +146,47 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "6498764757150d1a",
+  "active": "78a274c71bdd968f",
   "lastOpenFiles": [
-    "Unity/A开发笔记/张老师文档交接/ActivityItemConfig.xlsm",
-    "Unity/A开发笔记/张老师文档交接/~$道具统一模块.docx",
+    "Unity/A开发笔记/张世睿交接文档/倪隆军查收.md",
+    "JoyMeng Note/日记 2024-04-17.md",
+    "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
+    "Unity/A开发笔记/其他离职人员曾经的交接文档/其他离职人员.md",
+    "JoyMeng Note/日记 2024-04-16.md",
+    "附件仓库/交接文档/胡菲菲查收/~$幕分辨率适配.docx",
+    "附件仓库/交接文档/胡菲菲查收/~$黑底飘字提示.docx",
+    "附件仓库/交接文档/胡菲菲查收/~$其他.docx",
+    "附件仓库/交接文档/胡菲菲查收/~$taConfig2数据来源.docx",
+    "JoyMeng Note/日记 2024-04-15.md",
+    "JoyMeng Note/日记 2024-04-12.md",
+    "JoyMeng Note/日记 2024-04-11.md",
+    "JoyMeng Note/日记 2024-04-10.md",
+    "附件仓库/交接文档/余峤枫交接/~$余峤枫其他.docx",
+    "附件仓库/交接文档/余峤枫交接/~$枫弹出礼包交接.docx",
+    "JoyMeng Note/日记 2024-04-09.md",
+    "JoyMeng Note/日记 2024-04-08.md",
+    "JoyMeng Note/日记 2024-04-07.md",
+    "Unity/Fgui/Commpents/记事本.md",
+    "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md",
+    "附件仓库/交接文档/余峤枫交接/~$枫英雄交接文档.docx",
+    "Unity/A开发笔记/张世睿交接文档/熊福成查收.md",
+    "附件仓库/unity 四叉树管理场景/新建文本文档.MD",
+    "附件仓库/交接文档",
+    "Unity/A开发笔记/其他离职人员曾经的交接文档/~$晏清交接文档.docx",
+    "附件仓库/交接文档/余峤枫交接/余峤枫英雄交接文档.docx",
+    "Unity/A开发笔记/张老师文档交接/进入文件夹查看.md",
+    "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
+    "JoyMeng Note/日记 2024-04-03.md",
     "JoyMeng Note/日记 2024-04-02.md",
     "JoyMeng Note/日记 2024-04-01.md",
-    "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "JoyMeng Note/日记 2024-03-30.md",
-    "Unity/A开发笔记/张老师文档交接/~$邮件模块.docx",
-    "Unity/A开发笔记/张老师文档交接/~$ Microsoft Word 文档.docx",
-    "Unity/A开发笔记/张老师文档交接/~$容器类介绍.docx",
-    "Unity/A开发笔记/张老师文档交接/~$其他.docx",
-    "Unity/A开发笔记/张老师文档交接/~$幕分辨率适配.docx",
-    "Unity/A开发笔记/张老师文档交接/~$开关模块.docx",
-    "Unity/A开发笔记/张老师文档交接/~$模块代码设计.docx",
-    "Unity/A开发笔记/张老师文档交接/~$公告栏.docx",
-    "Unity/A开发笔记/张老师文档交接/~$大地图.docx",
-    "Unity/A开发笔记/张老师文档交接/进入文件夹查看.md",
     "Unity/A开发笔记/RedAlert/大地图.md",
     "Unity/A开发笔记/RedAlert/主城.md",
     "Unity/A开发笔记/RedAlert/0画布.canvas",
     "Unity/A开发笔记/RedAlert/日常记录.md",
     "Unity/Fgui/Commpents/Live2DLoader创建live2D动画.md",
     "Unity/Fgui/Commpents/Glist.md",
-    "Unity/Fgui/Commpents/记事本.md",
-    "Unity/Fgui/Commpents/未命名.md",
-    "Unity/GameObjectPool/GameObjectPoolManager.md",
-    "Unity/文件读写/文件读写.md",
-    "Unity/GameObjectPool/Main.md",
-    "Unity/红点/RedTipNodeConfig.json.md",
-    "Unity/红点/CommonRedTipComponent.md",
-    "Unity/红点/RedTipTreeNode.md",
-    "Unity/红点/RedTipController.md",
     "Unity/未命名.canvas",
-    "Unity/GameObjectPool/CCNodeCache.md",
-    "JoyMeng Note/日记 2024-03-19.md",
-    "资料文件夹/算法和数据结构/十大经典排序.md",
-    "资料文件夹/算法和数据结构/单例容器/IManager.md",
-    "资料文件夹/算法和数据结构/单例容器/单例容器类.md",
-    "资料文件夹/算法和数据结构/单例容器/Singleton.md",
-    "JoyMeng Note/日记 2024-02-07.md",
     "附件仓库/杂项仓库/Pasted image 20240116203943.png",
     "附件仓库/杂项仓库/Pasted image 20240115175710.png",
     "附件仓库/杂项仓库/Pasted image 20240113174506.png",

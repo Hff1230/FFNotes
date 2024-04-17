@@ -122,6 +122,12 @@
   },
   "Unity/A开发笔记": "IcAFolder",
   "Unity/A开发笔记/RedAlert": "IcAFolder",
-  "Unity/A开发笔记/张老师文档交接": "IcAFolder",
-  "Unity/A开发笔记/张老师文档交接/进入文件夹查看.md": "IcAFile"
+  "Unity/A开发笔记/其他离职人员曾经的交接文档": "IcAFolder",
+  "Unity/A开发笔记/其他离职人员曾经的交接文档/其他离职人员.md": "IcAFile",
+  "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md": "IcAFile",
+  "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md": "IcAFile",
+  "Unity/A开发笔记/张世睿交接文档/倪隆军查收.md": "IcAFile",
+  "Unity/A开发笔记/张世睿交接文档/熊福成查收.md": "IcAFile",
+  "Unity/A开发笔记/张世睿交接文档": "IcAFolder",
+  "附件仓库/交接文档": "IcAFolder"
 }

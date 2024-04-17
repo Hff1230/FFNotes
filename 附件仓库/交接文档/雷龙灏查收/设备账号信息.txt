@@ -1,0 +1,23 @@
+SVN服务器：
+	IP地址：10.80.9.41
+	账号：letang
+	密码：zhang@SHI#rui
+
+打包机：
+	开机密码：Wnf^%uCa7hOb
+	TeamCity自动打包：http://10.80.4.125:8111/favorite/projects?mode=builds
+
+亚马逊CDN服务器：
+	IP地址：54.215.92.30
+	端口：22022
+	账户：cok
+	密码：id4Rs8Qjmw
+
+	相对路径：/data/web/cokres/res
+	测试域名：http://cokres.warworldgames.com/res/lastsudan/index.html
+
+	刷新CDN缓存的方法：
+		路径：/data/admin/cok
+		运行：./flushcdn.sh
+	
+	SVN上目前有三个库，帝国（红警2），红警1，COC项目
