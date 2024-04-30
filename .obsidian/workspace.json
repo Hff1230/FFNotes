@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "04c7745d7320db86",
+        "id": "c3e410e5f4beb3d9",
         "type": "tabs",
         "children": [
           {
-            "id": "78a274c71bdd968f",
+            "id": "116fd118b9a809eb",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2024-04-26.md",
+                "file": "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JoyMeng Note/日记 2024-04-26.md",
+                "file": "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "JoyMeng Note/日记 2024-04-26.md",
+                "file": "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JoyMeng Note/日记 2024-04-26.md"
+                "file": "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md"
               }
             }
           }
@@ -146,21 +146,22 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "78a274c71bdd968f",
+  "active": "116fd118b9a809eb",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2024-04-25.md",
     "JoyMeng Note/日记 2024-04-26.md",
+    "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
+    "附件仓库/交接文档/胡菲菲查收/~$其他.docx",
+    "Unity/Fgui/Guide/Guide.md",
+    "JoyMeng Note/日记 2024-04-25.md",
     "JoyMeng Note/日记 2024-04-23.md",
     "JoyMeng Note/日记 2024-04-22.md",
     "JoyMeng Note/日记 2024-04-18.md",
     "JoyMeng Note/日记 2024-04-17.md",
     "Unity/A开发笔记/张世睿交接文档/倪隆军查收.md",
-    "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
     "Unity/A开发笔记/其他离职人员曾经的交接文档/其他离职人员.md",
     "JoyMeng Note/日记 2024-04-16.md",
     "附件仓库/交接文档/胡菲菲查收/~$幕分辨率适配.docx",
     "附件仓库/交接文档/胡菲菲查收/~$黑底飘字提示.docx",
-    "附件仓库/交接文档/胡菲菲查收/~$其他.docx",
     "附件仓库/交接文档/胡菲菲查收/~$taConfig2数据来源.docx",
     "JoyMeng Note/日记 2024-04-15.md",
     "JoyMeng Note/日记 2024-04-12.md",
@@ -183,8 +184,6 @@
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "JoyMeng Note/日记 2024-04-03.md",
     "JoyMeng Note/日记 2024-04-02.md",
-    "JoyMeng Note/日记 2024-04-01.md",
-    "JoyMeng Note/日记 2024-03-30.md",
     "Unity/A开发笔记/RedAlert/0画布.canvas",
     "Unity/未命名.canvas",
     "附件仓库/杂项仓库/Pasted image 20240116203943.png",
