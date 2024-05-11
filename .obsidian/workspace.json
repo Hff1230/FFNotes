@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#雷神",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -65,7 +65,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -146,7 +147,7 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "a2ecfaf25bcfb6c7",
+  "active": "b79ac68b9d40d83e",
   "lastOpenFiles": [
     "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "JoyMeng Note/日记 2024-05-11.md",
