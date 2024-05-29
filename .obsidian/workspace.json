@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/GameEffect.md",
+                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/GameEffect.md",
+                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/GameEffect.md",
+                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/GameEffect.md"
+                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md"
               }
             }
           }
@@ -146,10 +146,11 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "a15cc7476493b87c",
+  "active": "e8b6192f614b6e2d",
   "lastOpenFiles": [
-    "Unity/A开发笔记/张世睿交接文档/熊福成查收.md",
+    "附件仓库/杂项仓库/Pasted image 20240529093030.png",
     "Unity/A开发笔记/张世睿交接文档/GameEffect.md",
+    "Unity/A开发笔记/张世睿交接文档/熊福成查收.md",
     "Unity/A开发笔记/文档.md",
     "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "Unity/A开发笔记/张世睿交接文档/倪隆军查收.md",
@@ -185,7 +186,6 @@
     "JoyMeng Note/日记 2024-04-30.md",
     "JoyMeng Note/日记 2024-04-26.md",
     "Unity/Fgui/Guide/Guide.md",
-    "JoyMeng Note/日记 2024-04-25.md",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/A开发笔记/RedAlert/0画布.canvas",
     "Unity/未命名.canvas",
