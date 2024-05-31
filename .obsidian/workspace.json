@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/CSharp/优化相关.md",
+                "file": "JoyMeng Note/日记 2024-05-31.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/CSharp/优化相关.md",
+                "file": "JoyMeng Note/日记 2024-05-31.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/CSharp/优化相关.md",
+                "file": "JoyMeng Note/日记 2024-05-31.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/CSharp/优化相关.md"
+                "file": "JoyMeng Note/日记 2024-05-31.md"
               }
             }
           }
@@ -146,8 +146,12 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "a15cc7476493b87c",
+  "active": "e8b6192f614b6e2d",
   "lastOpenFiles": [
+    "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
+    "JoyMeng Note/日记 2024-05-31.md",
+    "附件仓库/交接文档/胡菲菲查收/~$taConfig2数据来源.docx",
+    "Unity/CSharp/优化相关.md",
     "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "附件仓库/杂项仓库/Pasted image 20240529093030.png",
     "Unity/A开发笔记/张世睿交接文档/GameEffect.md",
@@ -155,7 +159,6 @@
     "Unity/A开发笔记/文档.md",
     "Unity/A开发笔记/张世睿交接文档/倪隆军查收.md",
     "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md",
-    "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
     "JoyMeng Note/日记 2024-05-27.md",
     "JoyMeng Note/日记 2024-05-24.md",
     "SVN线上分支备份说明文档 1.docx.md",
@@ -171,7 +174,6 @@
     "Unity/A开发笔记/张世睿交接文档/SVN线上分支备份说明文档.docx",
     "JoyMeng Note/日记 2024-05-22.md",
     "Unity/破解/未命名.md",
-    "Unity/破解",
     "JoyMeng Note/日记 2024-05-20.md",
     "JoyMeng Note/日记 2024-05-17.md",
     "附件仓库/杂项仓库/Pasted image 20240517171712.png",
@@ -185,7 +187,6 @@
     "JoyMeng Note/日记 2024-05-06.md",
     "JoyMeng Note/日记 2024-04-30.md",
     "JoyMeng Note/日记 2024-04-26.md",
-    "Unity/Fgui/Guide/Guide.md",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/A开发笔记/RedAlert/0画布.canvas",
     "Unity/未命名.canvas",
