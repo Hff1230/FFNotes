@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#崔健奎",
+                "query": "tag:#胡菲菲",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -65,11 +65,13 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "b38a42c2768a463b",
@@ -148,8 +150,9 @@
   },
   "active": "e8b6192f614b6e2d",
   "lastOpenFiles": [
-    "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
+    "JoyMeng Note/日记 2024-05-24.md",
     "JoyMeng Note/日记 2024-05-31.md",
+    "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
     "附件仓库/交接文档/胡菲菲查收/~$taConfig2数据来源.docx",
     "Unity/CSharp/优化相关.md",
     "Unity/A开发笔记/张世睿交接文档/未命名.md",
@@ -160,7 +163,6 @@
     "Unity/A开发笔记/张世睿交接文档/倪隆军查收.md",
     "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md",
     "JoyMeng Note/日记 2024-05-27.md",
-    "JoyMeng Note/日记 2024-05-24.md",
     "SVN线上分支备份说明文档 1.docx.md",
     "JoyMeng Note/日记 2024-05-23.md",
     "附件仓库/交接文档/胡菲菲查收/~WRL0003.tmp",
