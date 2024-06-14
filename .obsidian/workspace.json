@@ -18,8 +18,19 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "cf355e3fe59c07d5",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.6.3"
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -146,7 +157,7 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "a6b6ad77efe45ba6",
+  "active": "cf355e3fe59c07d5",
   "lastOpenFiles": [
     "Unity/文件读写/文件读写.md",
     "Unity/CSharp/字符匹配.md",
