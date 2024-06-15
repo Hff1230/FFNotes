@@ -13,24 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/CSharp/字符匹配.md",
+                "file": "JoyMeng Note/日记 2024-06-15.md",
                 "mode": "source",
                 "source": false
               }
             }
-          },
-          {
-            "id": "cf355e3fe59c07d5",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.6.3"
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -96,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/CSharp/字符匹配.md",
+                "file": "JoyMeng Note/日记 2024-06-15.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/CSharp/字符匹配.md",
+                "file": "JoyMeng Note/日记 2024-06-15.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/CSharp/字符匹配.md"
+                "file": "JoyMeng Note/日记 2024-06-15.md"
               }
             }
           }
@@ -157,10 +146,14 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "cf355e3fe59c07d5",
+  "active": "a6b6ad77efe45ba6",
   "lastOpenFiles": [
-    "Unity/文件读写/文件读写.md",
+    "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
+    "JoyMeng Note/日记 2024-06-15.md",
+    "附件仓库/交接文档/胡菲菲查收/~$其他.docx",
+    "附件仓库/交接文档/胡菲菲查收/~$开关模块.docx",
     "Unity/CSharp/字符匹配.md",
+    "Unity/文件读写/文件读写.md",
     "Unity/A开发笔记/文档.md",
     "JoyMeng Note/日记 2024-06-11.md",
     "JoyMeng Note/日记 2024-06-07.md",
@@ -174,7 +167,6 @@
     "附件仓库/杂项仓库/Pasted image 20240603150423.png",
     "未命名.canvas",
     "JoyMeng Note/日记 2024-05-31.md",
-    "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
     "附件仓库/交接文档/胡菲菲查收/~$taConfig2数据来源.docx",
     "Unity/CSharp/优化相关.md",
     "附件仓库/杂项仓库/Pasted image 20240529093030.png",
@@ -189,8 +181,6 @@
     "附件仓库/交接文档/胡菲菲查收/~$nguage文件说明.docx",
     "附件仓库/杂项仓库/~$N线上分支备份说明文档.docx",
     "附件仓库/杂项仓库/SVN线上分支备份说明文档.docx",
-    "附件仓库/杂项仓库/SVN线上分支备份说明文档 1.docx",
-    "Unity/A开发笔记/张世睿交接文档/SVN线上分支备份说明文档.docx",
     "Unity/破解/未命名.md",
     "JoyMeng Note/日记 2024-05-17.md",
     "附件仓库/杂项仓库/Pasted image 20240517171712.png",
@@ -199,7 +189,6 @@
     "Unity/A开发笔记/其他离职人员曾经的交接文档/其他离职人员.md",
     "JoyMeng Note/日记 2024-05-15.md",
     "JoyMeng Note/日记 2024-05-11.md",
-    "JoyMeng Note/日记 2024-05-14.md",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/A开发笔记/RedAlert/0画布.canvas",
     "Unity/未命名.canvas",
