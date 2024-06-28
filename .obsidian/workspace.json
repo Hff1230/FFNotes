@@ -13,26 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0198e39b700a9f4e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
                 "file": "JoyMeng Note/日记 2024-06-28.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -159,19 +146,19 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "0198e39b700a9f4e",
+  "active": "0249fd5f8c545fd3",
   "lastOpenFiles": [
+    "Unity/A开发笔记/张世睿交接文档/未命名.md",
+    "JoyMeng Note/日记 2024-06-15.md",
     "JoyMeng Note/日记 2024-06-28.md",
     "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
     "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md",
     "Unity/A开发笔记/张世睿交接文档/GameEffect.md",
-    "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "JoyMeng Note/日记 2024-06-26.md",
     "JoyMeng Note/日记 2024-06-21.md",
     "JoyMeng Note/日记 2024-06-07.md",
     "附件仓库/交接文档/胡菲菲查收/~$模块代码设计.docx",
     "JoyMeng Note/日记 2024-06-17.md",
-    "JoyMeng Note/日记 2024-06-15.md",
     "附件仓库/交接文档/胡菲菲查收/~$其他.docx",
     "附件仓库/交接文档/胡菲菲查收/~$开关模块.docx",
     "Unity/CSharp/字符匹配.md",
