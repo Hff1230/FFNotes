@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "4a85f9b08f9c6a80",
+        "id": "637f293a4a2935a4",
         "type": "tabs",
         "children": [
           {
-            "id": "0249fd5f8c545fd3",
+            "id": "18fce297eef749f4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2024-07-01.md",
+                "file": "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JoyMeng Note/日记 2024-07-01.md",
+                "file": "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "JoyMeng Note/日记 2024-07-01.md",
+                "file": "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JoyMeng Note/日记 2024-07-01.md"
+                "file": "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md"
               }
             }
           }
@@ -146,8 +146,11 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "0249fd5f8c545fd3",
+  "active": "18fce297eef749f4",
   "lastOpenFiles": [
+    "资料文件夹/Shader/Amplify Shader Editor 1.9.5.1.unitypackage",
+    "附件仓库/交接文档/胡菲菲查收/~$模块代码设计.docx",
+    "JoyMeng Note/日记 2024-07-01.md",
     "附件仓库/杂项仓库/Pasted image 20240701144353.png",
     "附件仓库/杂项仓库/Pasted image 20240701144347.png",
     "附件仓库/杂项仓库/Pasted image 20240701144339.png",
@@ -158,9 +161,7 @@
     "附件仓库/杂项仓库/Pasted image 20240701144157.png",
     "附件仓库/杂项仓库/Pasted image 20240701144145.png",
     "附件仓库/杂项仓库/Pasted image 20240701144128.png",
-    "附件仓库/杂项仓库/Pasted image 20240701144118.png",
     "JoyMeng Note/日记 2024-06-28.md",
-    "JoyMeng Note/日记 2024-07-01.md",
     "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "JoyMeng Note/日记 2024-06-15.md",
     "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
@@ -169,7 +170,6 @@
     "JoyMeng Note/日记 2024-06-26.md",
     "JoyMeng Note/日记 2024-06-21.md",
     "JoyMeng Note/日记 2024-06-07.md",
-    "附件仓库/交接文档/胡菲菲查收/~$模块代码设计.docx",
     "JoyMeng Note/日记 2024-06-17.md",
     "附件仓库/交接文档/胡菲菲查收/~$其他.docx",
     "附件仓库/交接文档/胡菲菲查收/~$开关模块.docx",
