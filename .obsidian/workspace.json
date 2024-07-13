@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/A开发笔记/帝国及红警2相关配置说明.md",
+                "file": "Unity/帝国、红警2/内城相关.md",
                 "mode": "source",
                 "source": false
               }
@@ -31,8 +31,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -61,7 +60,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#region",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -78,8 +77,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -99,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/帝国、红警2/dataConfig.md",
+                "file": "Unity/帝国、红警2/内城相关.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/帝国、红警2/dataConfig.md",
+                "file": "Unity/帝国、红警2/内城相关.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +137,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/帝国、红警2/dataConfig.md"
+                "file": "Unity/帝国、红警2/内城相关.md"
               }
             }
           }
@@ -160,11 +158,12 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "dcdb0c3bf27d0891",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
     "Unity/A开发笔记/帝国及红警2相关配置说明.md",
-    "Unity/A开发笔记/黑帮GTA相关说明.md",
+    "Unity/帝国、红警2/内城相关.md",
     "Unity/帝国、红警2/dataConfig.md",
+    "Unity/A开发笔记/黑帮GTA相关说明.md",
     "Unity/帝国、红警2",
     "Unity/A开发笔记/文档.md",
     "Unity/A开发笔记/张世睿交接文档/未命名.md",
@@ -204,7 +203,6 @@
     "Unity/CSharp/字符匹配.md",
     "Unity/文件读写/文件读写.md",
     "JoyMeng Note/日记 2024-06-11.md",
-    "JoyMeng Note/日记 2024-05-24.md",
     "附件仓库/交接文档/胡菲菲查收/~$taConfig2数据来源.docx",
     "附件仓库/交接文档/胡菲菲查收/~WRL0003.tmp",
     "附件仓库/交接文档/胡菲菲查收/~WRD0002.tmp",

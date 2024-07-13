@@ -19,5 +19,3 @@ Global._relic_tile_height:("KING_BLACK", 53)
 
 ```
 `
-
-`
