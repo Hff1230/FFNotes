@@ -134,5 +134,9 @@
   "Unity/A开发笔记/张世睿交接文档/GameEffect.md": {
     "iconName": "IcAFile",
     "inheritanceIcon": "IcAFile"
-  }
+  },
+  "Unity/A开发笔记/黑帮GTA相关说明.md": "IcAFile",
+  "Unity/A开发笔记/帝国及红警2相关配置说明.md": "IcAFile",
+  "Unity/帝国、红警2": "IcAFolder",
+  "Unity/帝国、红警2/dataConfig.md": "IcAFile"
 }

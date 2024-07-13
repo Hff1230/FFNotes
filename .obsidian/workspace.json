@@ -13,13 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2024-07-12.md",
+                "file": "Unity/A开发笔记/帝国及红警2相关配置说明.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "dcdb0c3bf27d0891",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Unity/帝国、红警2/dataConfig.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -48,7 +61,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#region",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -65,7 +78,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -85,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JoyMeng Note/日记 2024-07-12.md",
+                "file": "Unity/帝国、红警2/dataConfig.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "JoyMeng Note/日记 2024-07-12.md",
+                "file": "Unity/帝国、红警2/dataConfig.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JoyMeng Note/日记 2024-07-12.md"
+                "file": "Unity/帝国、红警2/dataConfig.md"
               }
             }
           }
@@ -146,11 +160,18 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "826ec475eacfc8dc",
+  "active": "dcdb0c3bf27d0891",
   "lastOpenFiles": [
+    "Unity/A开发笔记/帝国及红警2相关配置说明.md",
+    "Unity/A开发笔记/黑帮GTA相关说明.md",
+    "Unity/帝国、红警2/dataConfig.md",
+    "Unity/帝国、红警2",
+    "Unity/A开发笔记/文档.md",
+    "Unity/A开发笔记/张世睿交接文档/未命名.md",
+    "未命名.canvas",
+    "JoyMeng Note/日记 2024-07-12.md",
     "JoyMeng Note/日记 2024-07-05.md",
     "JoyMeng Note/日记 2024-07-09.md",
-    "JoyMeng Note/日记 2024-07-12.md",
     "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md",
     "附件仓库/交接文档/雷龙灏查收/~$cheServer.docx",
     "Unity/A开发笔记/张世睿交接文档/倪隆军查收.md",
@@ -158,9 +179,7 @@
     "Unity/A开发笔记/张世睿交接文档/熊福成查收.md",
     "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
     "附件仓库/交接文档/胡菲菲查收/~$其他.docx",
-    "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "Unity/破解/未命名.md",
-    "Unity/A开发笔记/文档.md",
     "JoyMeng Note/日记 2024-06-28.md",
     "JoyMeng Note/日记 2024-07-01.md",
     "JoyMeng Note/日记 2024-07-03.md",
@@ -186,15 +205,10 @@
     "Unity/文件读写/文件读写.md",
     "JoyMeng Note/日记 2024-06-11.md",
     "JoyMeng Note/日记 2024-05-24.md",
-    "JoyMeng Note/日记 2024-05-23.md",
-    "JoyMeng Note/日记 2024-05-22.md",
-    "JoyMeng Note/日记 2024-05-20.md",
-    "未命名.canvas",
     "附件仓库/交接文档/胡菲菲查收/~$taConfig2数据来源.docx",
     "附件仓库/交接文档/胡菲菲查收/~WRL0003.tmp",
     "附件仓库/交接文档/胡菲菲查收/~WRD0002.tmp",
     "附件仓库/交接文档/胡菲菲查收/~WRL0001.tmp",
-    "附件仓库/交接文档/胡菲菲查收/~WRD0000.tmp",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/A开发笔记/RedAlert/0画布.canvas",
     "Unity/未命名.canvas",
