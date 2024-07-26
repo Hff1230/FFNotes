@@ -8,43 +8,18 @@
         "type": "tabs",
         "children": [
           {
-            "id": "826ec475eacfc8dc",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "JoyMeng Note/日记 2024-07-19.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "a8d949edf425948f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "dcdb0c3bf27d0891",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Unity/帝国、红警2/dataConfig.md",
+                "file": "JoyMeng Note/日记 2024-07-26.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -110,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
+                "file": "JoyMeng Note/日记 2024-07-26.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
+                "file": "JoyMeng Note/日记 2024-07-26.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md"
+                "file": "JoyMeng Note/日记 2024-07-26.md"
               }
             }
           }
@@ -173,9 +148,10 @@
   },
   "active": "a8d949edf425948f",
   "lastOpenFiles": [
+    "Unity/A开发笔记/张世睿交接文档/未命名.md",
+    "JoyMeng Note/日记 2024-07-26.md",
     "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md",
     "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
-    "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "Unity/帝国、红警2/dataConfig.md",
     "Unity/帝国、红警2/内城相关.md",
     "Unity/帝国、红警2/聊天相关协议.md",
@@ -214,7 +190,6 @@
     "附件仓库/杂项仓库/Pasted image 20240701144157.png",
     "附件仓库/杂项仓库/Pasted image 20240701144145.png",
     "附件仓库/杂项仓库/Pasted image 20240701144128.png",
-    "JoyMeng Note/日记 2024-06-15.md",
     "附件仓库/交接文档/胡菲菲查收/~$开关模块.docx",
     "附件仓库/交接文档/胡菲菲查收/~$taConfig2数据来源.docx",
     "附件仓库/交接文档/胡菲菲查收/~WRL0003.tmp",
