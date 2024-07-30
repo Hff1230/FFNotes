@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/A开发笔记/PC启动器相关.md",
+                "file": "Unity/A开发笔记/语言代码.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/A开发笔记/PC启动器相关.md",
+                "file": "Unity/A开发笔记/语言代码.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/A开发笔记/PC启动器相关.md",
+                "file": "Unity/A开发笔记/语言代码.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/A开发笔记/PC启动器相关.md"
+                "file": "Unity/A开发笔记/语言代码.md"
               }
             }
           }
@@ -148,8 +148,9 @@
   },
   "active": "a8d949edf425948f",
   "lastOpenFiles": [
-    "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "Unity/A开发笔记/PC启动器相关.md",
+    "Unity/A开发笔记/语言代码.md",
+    "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "Unity/A开发笔记/文档.md",
     "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
     "附件仓库/交接文档/胡菲菲查收/~$其他.docx",
@@ -178,7 +179,6 @@
     "Unity/破解/未命名.md",
     "JoyMeng Note/日记 2024-06-28.md",
     "JoyMeng Note/日记 2024-07-01.md",
-    "JoyMeng Note/日记 2024-07-03.md",
     "资料文件夹/Shader/Amplify Shader Editor 1.9.5.1.unitypackage",
     "附件仓库/交接文档/胡菲菲查收/~$模块代码设计.docx",
     "附件仓库/杂项仓库/Pasted image 20240701144353.png",
