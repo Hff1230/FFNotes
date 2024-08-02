@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
+                "file": "JoyMeng Note/日记 2024-08-02.md",
                 "mode": "source",
                 "source": false
               }
@@ -65,7 +65,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -85,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
+                "file": "JoyMeng Note/日记 2024-08-02.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
+                "file": "JoyMeng Note/日记 2024-08-02.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md"
+                "file": "JoyMeng Note/日记 2024-08-02.md"
               }
             }
           }
@@ -146,8 +147,10 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "a8d949edf425948f",
+  "active": "b79ac68b9d40d83e",
   "lastOpenFiles": [
+    "Unity/A开发笔记/张世睿交接文档/未命名.md",
+    "JoyMeng Note/日记 2024-08-02.md",
     "Unity/A开发笔记/PC启动器相关.md",
     "Unity/A开发笔记/语言代码.md",
     "Unity/A开发笔记/文档.md",
@@ -155,7 +158,6 @@
     "Unity/A开发笔记/帝国及红警2相关配置说明.md",
     "Unity/CSharp/字符匹配.md",
     "Unity/CSharp/优化相关.md",
-    "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
     "附件仓库/交接文档/胡菲菲查收/~$其他.docx",
     "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md",
@@ -178,7 +180,6 @@
     "JoyMeng Note/日记 2024-07-09.md",
     "Unity/A开发笔记/张世睿交接文档/GameEffect.md",
     "Unity/A开发笔记/张世睿交接文档/熊福成查收.md",
-    "Unity/破解/未命名.md",
     "资料文件夹/Shader/Amplify Shader Editor 1.9.5.1.unitypackage",
     "附件仓库/交接文档/胡菲菲查收/~$模块代码设计.docx",
     "附件仓库/杂项仓库/Pasted image 20240701144353.png",
