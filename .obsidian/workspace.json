@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/破解/未命名.md",
+                "file": "Unity/Shader学习/未命名.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/破解/未命名.md",
+                "file": "Unity/Shader学习/未命名.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/破解/未命名.md",
+                "file": "Unity/Shader学习/未命名.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/破解/未命名.md"
+                "file": "Unity/Shader学习/未命名.md"
               }
             }
           }
@@ -146,10 +146,13 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "a15cc7476493b87c",
+  "active": "a8d949edf425948f",
   "lastOpenFiles": [
-    "Unity/A开发笔记/张世睿交接文档/未命名.md",
+    "资料文件夹/语言技能/shader从入门到跑路.md",
+    "Unity/Shader学习/未命名.md",
+    "Unity/Shader学习",
     "Unity/破解/未命名.md",
+    "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "Unity/A开发笔记/帝国及红警2相关配置说明.md",
     "Unity/A开发笔记/黑帮GTA相关说明.md",
     "Unity/A开发笔记/语言代码.md",
@@ -178,8 +181,6 @@
     "JoyMeng Note/日记 2024-07-17.md",
     "Unity/帝国、红警2",
     "未命名.canvas",
-    "JoyMeng Note/日记 2024-07-05.md",
-    "JoyMeng Note/日记 2024-07-09.md",
     "资料文件夹/Shader/Amplify Shader Editor 1.9.5.1.unitypackage",
     "附件仓库/交接文档/胡菲菲查收/~$模块代码设计.docx",
     "附件仓库/杂项仓库/Pasted image 20240701144353.png",
@@ -194,7 +195,6 @@
     "附件仓库/交接文档/胡菲菲查收/~$开关模块.docx",
     "附件仓库/交接文档/胡菲菲查收/~$taConfig2数据来源.docx",
     "附件仓库/交接文档/胡菲菲查收/~WRL0003.tmp",
-    "附件仓库/交接文档/胡菲菲查收/~WRD0002.tmp",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/A开发笔记/RedAlert/0画布.canvas",
     "Unity/未命名.canvas",
