@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
+                "file": "JoyMeng Note/日记 2024-08-23.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
+                "file": "JoyMeng Note/日记 2024-08-23.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
+                "file": "JoyMeng Note/日记 2024-08-23.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md"
+                "file": "JoyMeng Note/日记 2024-08-23.md"
               }
             }
           }
@@ -148,8 +148,10 @@
   },
   "active": "a8d949edf425948f",
   "lastOpenFiles": [
-    "Unity/Shader学习/未命名.md",
     "JoyMeng Note/日记 2024-08-16.md",
+    "JoyMeng Note/日记 2024-08-23.md",
+    "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
+    "Unity/Shader学习/未命名.md",
     "JoyMeng Note/日记 2024-08-09.md",
     "附件仓库/杂项仓库/Pasted image 20240816104245.png",
     "资料文件夹/语言技能/shader从入门到跑路.md",
@@ -162,7 +164,6 @@
     "Unity/A开发笔记/PC启动器相关.md",
     "Unity/CSharp/优化相关.md",
     "Unity/A开发笔记/文档.md",
-    "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
     "附件仓库/交接文档/胡菲菲查收/~$其他.docx",
     "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md",
     "附件仓库/交接文档/雷龙灏查收/~$账号绑定.docx",
@@ -179,7 +180,6 @@
     "Unity/帝国、红警2/聊天相关协议.md",
     "Unity/文件读写/文件读写.md",
     "JoyMeng Note/日记 2024-07-23.md",
-    "JoyMeng Note/日记 2024-07-12.md",
     "Unity/帝国、红警2",
     "未命名.canvas",
     "资料文件夹/Shader/Amplify Shader Editor 1.9.5.1.unitypackage",
