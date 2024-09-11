@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "d0a443ac1f8637f7",
+        "id": "752a31b6b9771ef7",
         "type": "tabs",
         "children": [
           {
-            "id": "9540ab9d40b1a397",
+            "id": "ab65147bba89a02f",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "JoyMeng Note/日记 2024-09-06.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -85,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JoyMeng Note/日记 2024-09-06.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "JoyMeng Note/日记 2024-09-06.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "JoyMeng Note/日记 2024-09-06.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -146,10 +138,10 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "9540ab9d40b1a397",
+  "active": "ab65147bba89a02f",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2024-08-30.md",
     "JoyMeng Note/日记 2024-09-06.md",
+    "JoyMeng Note/日记 2024-08-30.md",
     "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "JoyMeng Note/日记 2024-08-23.md",
     "附件仓库/杂项仓库/Pasted image 20240830161843.png",
