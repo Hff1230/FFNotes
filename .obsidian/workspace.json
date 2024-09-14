@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "752a31b6b9771ef7",
+        "id": "1e48be302b299012",
         "type": "tabs",
         "children": [
           {
-            "id": "ab65147bba89a02f",
+            "id": "f892d7cb5ada3d9b",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#熊福成",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -65,7 +65,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -146,13 +147,13 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "ab65147bba89a02f",
+  "active": "f892d7cb5ada3d9b",
   "lastOpenFiles": [
-    "Unity/A开发笔记/张世睿交接文档/未命名.md",
+    "JoyMeng Note/日记 2024-09-06.md",
     "JoyMeng Note/日记 2024-09-14.md",
+    "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
     "附件仓库/交接文档/胡菲菲查收/~$道具统一模块.docx",
-    "JoyMeng Note/日记 2024-09-06.md",
     "JoyMeng Note/日记 2024-08-30.md",
     "JoyMeng Note/日记 2024-08-23.md",
     "附件仓库/杂项仓库/Pasted image 20240830161843.png",
