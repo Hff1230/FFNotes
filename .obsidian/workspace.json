@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "1e48be302b299012",
+        "id": "08a937ab050ad6df",
         "type": "tabs",
         "children": [
           {
-            "id": "f892d7cb5ada3d9b",
+            "id": "fd12fa0565971652",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2024-09-30.md",
+                "file": "JoyMeng Note/日记 2024-10-12.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JoyMeng Note/日记 2024-09-30.md",
+                "file": "JoyMeng Note/日记 2024-10-12.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "JoyMeng Note/日记 2024-09-30.md",
+                "file": "JoyMeng Note/日记 2024-10-12.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JoyMeng Note/日记 2024-09-30.md"
+                "file": "JoyMeng Note/日记 2024-10-12.md"
               }
             }
           }
@@ -146,10 +146,11 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "f892d7cb5ada3d9b",
+  "active": "fd12fa0565971652",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2024-09-20.md",
+    "JoyMeng Note/日记 2024-10-12.md",
     "JoyMeng Note/日记 2024-09-30.md",
+    "JoyMeng Note/日记 2024-09-20.md",
     "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "JoyMeng Note/日记 2024-09-14.md",
     "JoyMeng Note/日记 2024-09-06.md",
@@ -188,7 +189,6 @@
     "Unity/CSharp/优化相关.md",
     "附件仓库/交接文档/雷龙灏查收/~$账号绑定.docx",
     "JoyMeng Note/日记 2024-08-02.md",
-    "JoyMeng Note/日记 2024-07-26.md",
     "附件仓库/交接文档/雷龙灏查收/~$cheServer.docx",
     "Unity/帝国、红警2",
     "未命名.canvas",
