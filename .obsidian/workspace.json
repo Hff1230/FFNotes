@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
+                "file": "Unity/Shader学习/Unity内置的变换矩阵.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
+                "file": "Unity/Shader学习/Unity内置的变换矩阵.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
+                "file": "Unity/Shader学习/Unity内置的变换矩阵.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md"
+                "file": "Unity/Shader学习/Unity内置的变换矩阵.md"
               }
             }
           }
@@ -148,10 +148,13 @@
   },
   "active": "fd12fa0565971652",
   "lastOpenFiles": [
+    "Unity/Shader学习/Unity内置的摄像机和屏幕参数.md",
+    "Unity/Shader学习/Unity内置的变换矩阵.md",
+    "Unity/Shader学习/未命名.md",
+    "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "JoyMeng Note/日记 2024-10-12.md",
     "JoyMeng Note/日记 2024-09-30.md",
     "JoyMeng Note/日记 2024-09-20.md",
-    "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "JoyMeng Note/日记 2024-09-14.md",
     "JoyMeng Note/日记 2024-09-06.md",
     "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
@@ -178,7 +181,6 @@
     "Unity/A开发笔记/文档.md",
     "Unity/A开发笔记/语言代码.md",
     "JoyMeng Note/日记 2024-08-16.md",
-    "Unity/Shader学习/未命名.md",
     "JoyMeng Note/日记 2024-08-09.md",
     "资料文件夹/语言技能/shader从入门到跑路.md",
     "Unity/Shader学习",
@@ -186,9 +188,7 @@
     "Unity/A开发笔记/帝国及红警2相关配置说明.md",
     "Unity/A开发笔记/黑帮GTA相关说明.md",
     "Unity/A开发笔记/PC启动器相关.md",
-    "Unity/CSharp/优化相关.md",
     "附件仓库/交接文档/雷龙灏查收/~$账号绑定.docx",
-    "JoyMeng Note/日记 2024-08-02.md",
     "附件仓库/交接文档/雷龙灏查收/~$cheServer.docx",
     "Unity/帝国、红警2",
     "未命名.canvas",
