@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/Shader学习/Unity内置的变换矩阵.md",
+                "file": "Unity/Shader学习/Unity提供的内置文件和变量.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Unity/Shader学习/Unity内置的变换矩阵.md",
+                "file": "Unity/Shader学习/Unity提供的内置文件和变量.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Unity/Shader学习/Unity内置的变换矩阵.md",
+                "file": "Unity/Shader学习/Unity提供的内置文件和变量.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Unity/Shader学习/Unity内置的变换矩阵.md"
+                "file": "Unity/Shader学习/Unity提供的内置文件和变量.md"
               }
             }
           }
@@ -148,11 +148,12 @@
   },
   "active": "fd12fa0565971652",
   "lastOpenFiles": [
+    "Unity/Shader学习/未命名.md",
+    "Unity/Shader学习/Unity提供的内置文件和变量.md",
+    "Unity/Shader学习/Unity内置的变换矩阵.md",
     "Unity/Shader学习/Cg中的矢量和矩阵类型.md",
     "附件仓库/杂项仓库/Pasted image 20241017170609.png",
-    "Unity/Shader学习/Unity内置的变换矩阵.md",
     "Unity/Shader学习/Unity内置的摄像机和屏幕参数.md",
-    "Unity/Shader学习/未命名.md",
     "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "JoyMeng Note/日记 2024-10-12.md",
     "JoyMeng Note/日记 2024-09-30.md",
