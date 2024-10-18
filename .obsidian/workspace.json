@@ -16,10 +16,25 @@
                 "file": "Unity/Shader学习/Unity提供的内置文件和变量.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "Unity提供的内置文件和变量"
+            }
+          },
+          {
+            "id": "13af5677de3f2949",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.7.4"
+              },
+              "icon": "lucide-file",
+              "title": "Release Notes 1.7.4"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -39,7 +54,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
             }
           },
           {
@@ -54,7 +71,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
             }
           },
           {
@@ -62,7 +81,9 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
             }
           }
         ]
@@ -93,7 +114,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Unity提供的内置文件和变量 的反向链接列表"
             }
           },
           {
@@ -105,7 +128,9 @@
                 "file": "Unity/Shader学习/Unity提供的内置文件和变量.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Unity提供的内置文件和变量 的出链列表"
             }
           },
           {
@@ -116,7 +141,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
             }
           },
           {
@@ -126,7 +153,9 @@
               "type": "outline",
               "state": {
                 "file": "Unity/Shader学习/Unity提供的内置文件和变量.md"
-              }
+              },
+              "icon": "lucide-list",
+              "title": "Unity提供的内置文件和变量 的大纲"
             }
           }
         ]
@@ -146,14 +175,14 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "fd12fa0565971652",
+  "active": "13af5677de3f2949",
   "lastOpenFiles": [
-    "Unity/Shader学习/未命名.md",
-    "Unity/Shader学习/Unity提供的内置文件和变量.md",
     "Unity/Shader学习/Unity内置的变换矩阵.md",
+    "Unity/Shader学习/Unity内置的摄像机和屏幕参数.md",
+    "Unity/Shader学习/Unity提供的内置文件和变量.md",
+    "Unity/Shader学习/未命名.md",
     "Unity/Shader学习/Cg中的矢量和矩阵类型.md",
     "附件仓库/杂项仓库/Pasted image 20241017170609.png",
-    "Unity/Shader学习/Unity内置的摄像机和屏幕参数.md",
     "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "JoyMeng Note/日记 2024-10-12.md",
     "JoyMeng Note/日记 2024-09-30.md",
