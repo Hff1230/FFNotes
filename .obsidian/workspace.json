@@ -49,8 +49,7 @@
               "title": "日记 2024-11-23"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -191,7 +190,7 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "b565f90721ca9ef4",
+  "active": "b4c89aa37430993c",
   "lastOpenFiles": [
     "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "JoyMeng Note/日记 2024-11-23.md",
