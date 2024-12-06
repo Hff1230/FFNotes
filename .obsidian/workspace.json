@@ -67,7 +67,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#熊福成",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -88,7 +88,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -178,7 +179,7 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "b565f90721ca9ef4",
+  "active": "b79ac68b9d40d83e",
   "lastOpenFiles": [
     "JoyMeng Note/日记 2024-11-29.md",
     "JoyMeng Note/日记 2024-12-06.md",
