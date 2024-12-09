@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
+                "file": "Unity/A开发笔记/语言代码.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "未命名"
+              "title": "语言代码"
             }
           }
         ]
@@ -173,8 +173,9 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "a15cc7476493b87c",
+  "active": "4e6d02612f99bb01",
   "lastOpenFiles": [
+    "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "JoyMeng Note/日记 2024-12-06.md",
     "JoyMeng Note/日记 2024-11-29.md",
     "JoyMeng Note/日记 2024-11-23.md",
@@ -188,7 +189,6 @@
     "附件仓库/杂项仓库/Pasted image 20241127113001.png",
     "Unity/Shader学习/Shader收藏",
     "JoyMeng Note/日记 2024-11-15.md",
-    "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
     "DefaultConfig/NewFile.md",
     "DefaultConfig/MD 语法.md",
