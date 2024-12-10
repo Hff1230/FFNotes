@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DefaultConfig/NewFile.md",
+                "file": "Unity/A开发笔记/张世睿交接文档/未命名.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "NewFile"
+              "title": "未命名"
             }
           }
         ]
@@ -175,6 +175,7 @@
   },
   "active": "4e6d02612f99bb01",
   "lastOpenFiles": [
+    "DefaultConfig/NewFile.md",
     "资料文件夹/builtin_shaders-2022.3.34f1.zip",
     "JoyMeng Note/日记 2024-12-06.md",
     "Unity/A开发笔记/张世睿交接文档/未命名.md",
@@ -199,7 +200,6 @@
     "Unity/Shader学习/未命名.md",
     "Unity/Shader学习/Shader收藏/yingzi_shadow.md",
     "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
-    "DefaultConfig/NewFile.md",
     "DefaultConfig/MD 语法.md",
     "DefaultConfig/A Git Commands.md",
     "JoyMeng Note/日记 2024-11-29.md",
@@ -222,7 +222,6 @@
     "Unity/Shader学习",
     "附件仓库/交接文档/雷龙灏查收/~$账号绑定.docx",
     "附件仓库/交接文档/雷龙灏查收/~$cheServer.docx",
-    "Unity/帝国、红警2",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/未命名.canvas",
     "附件仓库/Untitled.canvas"
