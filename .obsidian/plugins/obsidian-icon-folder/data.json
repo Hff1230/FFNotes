@@ -121,7 +121,6 @@
     "inheritanceIcon": "IcAFile"
   },
   "Unity/A开发笔记": "IcAFolder",
-  "Unity/A开发笔记/RedAlert": "IcAFolder",
   "Unity/A开发笔记/其他离职人员曾经的交接文档": "IcAFolder",
   "Unity/A开发笔记/其他离职人员曾经的交接文档/其他离职人员.md": "IcAFile",
   "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md": "IcAFile",
@@ -146,5 +145,5 @@
   "Unity/Shader学习": "IcAFolder",
   "Unity/Shader学习/Shader收藏": "IcAFolder",
   "Unity/破解": "IcAFolder",
-  "Unity/帝国、红警2/大地图问题.md": "IcAFile"
+  "Unity/帝国、红警2/RedAlert": "IcAFolder"
 }
