@@ -52,7 +52,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#熊福成",
+                "query": "tag:#雷龙灏",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -73,7 +73,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -173,7 +174,7 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "4e6d02612f99bb01",
+  "active": "b79ac68b9d40d83e",
   "lastOpenFiles": [
     "JoyMeng Note/日记 2024-12-06.md",
     "JoyMeng Note/日记 2024-12-13.md",
