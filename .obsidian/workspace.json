@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#张启凡",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +74,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -174,7 +175,7 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "280b77c02c99c41e",
+  "active": "b79ac68b9d40d83e",
   "lastOpenFiles": [
     "JoyMeng Note/日记 2025-01-25.md",
     "JoyMeng Note/日记 2025-02-08.md",
