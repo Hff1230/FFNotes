@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "327cc049d34bcb94",
+        "id": "3d7769dfee81da53",
         "type": "tabs",
         "children": [
           {
-            "id": "280b77c02c99c41e",
+            "id": "17e6dce2258099e6",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "JoyMeng Note/日记 2025-02-08.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "日记 2025-02-08"
+              "title": "新标签页"
             }
           }
         ]
@@ -53,7 +49,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#张启凡",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,8 +70,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -175,10 +170,10 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "b79ac68b9d40d83e",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2025-01-25.md",
     "JoyMeng Note/日记 2025-02-08.md",
+    "JoyMeng Note/日记 2025-01-25.md",
     "Unity/A开发笔记/文档.md",
     "Unity/帝国、红警2/RedAlert/日常记录.md",
     "Games/军团战争.md",
