@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "3d7769dfee81da53",
+        "id": "512ecd8734070f74",
         "type": "tabs",
         "children": [
           {
-            "id": "17e6dce2258099e6",
+            "id": "bfb14acc27178e73",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Obsidian 全套教程 - 最好用的笔记软件"
+              "title": "新标签页"
             }
           }
         ]
@@ -94,17 +90,16 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
-                "showSearch": false,
+                "showSearch": true,
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Obsidian 全套教程 - 最好用的笔记软件 的反向链接列表"
+              "title": "反向链接"
             }
           },
           {
@@ -113,12 +108,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "JoyMeng Note/日记 2024-10-18.md",
+                "file": "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "日记 2024-10-18 的出链列表"
+              "title": "Obsidian 全套教程 - 最好用的笔记软件 的出链列表"
             }
           },
           {
@@ -128,7 +123,9 @@
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-tags",
               "title": "标签"
@@ -176,12 +173,35 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "529f9b6f15ff7a63",
+  "active": "bfb14acc27178e73",
   "lastOpenFiles": [
-    "DefaultConfig/NewFile.md",
-    "DefaultConfig/A Git Commands.md",
-    "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
     "DefaultConfig/MD 语法.md",
+    "DefaultConfig/NewFile.md",
+    "JoyMeng Note/2023-12-21.md",
+    "JoyMeng Note/日记 2025-02-20.md",
+    "DefaultConfig/NewFolder/【报错解决】.html",
+    "DefaultConfig/NewFolder/【报错解决】_files/zhifubao.png",
+    "DefaultConfig/NewFolder/【报错解决】_files/xinxiu@240.png",
+    "DefaultConfig/NewFolder/【报错解决】_files/weixin.png",
+    "DefaultConfig/NewFolder/【报错解决】_files/waf_captcha_embedded_bs.js",
+    "DefaultConfig/NewFolder/【报错解决】_files/vip-limited-close-roup.png",
+    "DefaultConfig/NewFolder/【报错解决】_files/vip-limited-close-newWhite.png",
+    "DefaultConfig/NewFolder/【报错解决】_files/vendor.3e8c9008c3c2612ba373.js",
+    "DefaultConfig/NewFolder/【报错解决】_files/user-tooltip.js",
+    "DefaultConfig/NewFolder/【报错解决】_files/user-tooltip.css",
+    "DefaultConfig/NewFolder/【报错解决】_files/user-ordertip.js",
+    "DefaultConfig/NewFolder/【报错解决】_files/user-ordertip.css",
+    "DefaultConfig/NewFolder/【报错解决】_files/user-ordercart.js",
+    "DefaultConfig/NewFolder/【报错解决】_files/user-medal.js",
+    "DefaultConfig/NewFolder/【报错解决】_files/user-medal.css",
+    "DefaultConfig/NewFolder/【报错解决】_files/unlike.png",
+    "DefaultConfig/NewFolder/【报错解决】_files/unlike-active.png",
+    "DefaultConfig/NewFolder/【报错解决】_files/totop.png",
+    "DefaultConfig/NewFolder/【报错解决】_files/tobarThumbUpactive.png",
+    "DefaultConfig/NewFolder/【报错解决】_files/tobarCollectionActive2.png",
+    "未命名.canvas",
+    "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
+    "DefaultConfig/A Git Commands.md",
     "Unity/A开发笔记/语言代码.md",
     "Unity/A开发笔记/PC启动器相关.md",
     "Unity/A开发笔记/文档.md",
@@ -194,38 +214,15 @@
     "Unity/帝国、红警2/dataConfig.md",
     "Unity/帝国、红警2/小游戏问题.md",
     "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
-    "附件仓库/交接文档/胡菲菲查收/~$taConfig2数据来源.docx",
     "JoyMeng Note/日记 2025-02-14.md",
     "JoyMeng Note/日记 2025-02-08.md",
     "JoyMeng Note/日记 2025-01-25.md",
     "Games/军团战争.md",
-    "附件仓库/杂项仓库/Pasted image 20250125141534.png",
-    "附件仓库/杂项仓库/Pasted image 20250125141409.png",
-    "附件仓库/杂项仓库/Pasted image 20250125141259.png",
-    "附件仓库/杂项仓库/Pasted image 20250125141234.png",
-    "附件仓库/杂项仓库/Pasted image 20250125141140.png",
-    "附件仓库/杂项仓库/Pasted image 20250125141110.png",
-    "附件仓库/杂项仓库/Pasted image 20250125141054.png",
-    "附件仓库/杂项仓库/Pasted image 20250125140926.png",
-    "附件仓库/杂项仓库/Pasted image 20250125140852.png",
-    "附件仓库/杂项仓库/Pasted image 20250125140750.png",
     "JoyMeng Note/日记 2025-01-17.md",
     "JoyMeng Note/日记 2025-01-20.md",
     "JoyMeng Note/日记 2025-01-10.md",
     "JoyMeng Note/日记 2025-01-03.md",
     "JoyMeng Note/日记 2024-12-27.md",
-    "JoyMeng Note/日记 2024-12-31.md",
-    "JoyMeng Note/日记 2024-12-20.md",
-    "附件仓库/交接文档/胡菲菲查收/~$周历界面.docx",
-    "附件仓库/交接文档/胡菲菲查收/~$手势输入插件.docx",
-    "附件仓库/交接文档/雷龙灏查收/~$cheServer.docx",
-    "附件仓库/交接文档/胡菲菲查收/~$GS包.docx",
-    "附件仓库/交接文档/胡菲菲查收/~$用对话框界面.docx",
-    "资料文件夹/builtin_shaders-2022.3.34f1.zip",
-    "未命名.canvas",
-    "附件仓库/杂项仓库/BloodProjector.shader",
-    "Unity/Shader学习/Shader收藏",
-    "附件仓库/交接文档/胡菲菲查收/~$chivedData文件说明.docx",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/未命名.canvas",
     "附件仓库/Untitled.canvas"
