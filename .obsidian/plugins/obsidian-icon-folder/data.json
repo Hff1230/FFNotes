@@ -1,9 +1,9 @@
 {
   "settings": {
-    "migrated": 3,
+    "migrated": 6,
     "iconPacksPath": ".obsidian/icons",
     "fontSize": 16,
-    "emojiStyle": "none",
+    "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
       "IcAFile",
@@ -15,16 +15,37 @@
     "recentlyUsedIconsSize": 5,
     "rules": [
       {
+        "icon": "IcAFile",
+        "rule": "Unity/A开发笔记/张世睿交接文档/GameEffect.md\\/[\\w\\d\\s]+\\.(?:\\w+\\.)*\\w+",
+        "for": "files",
+        "order": 0,
+        "useFilePath": true
+      },
+      {
+        "icon": "IcAFile",
+        "rule": "Unity/Fgui/Commpents/Live2DLoader创建live2D动画.md\\/[\\w\\d\\s]+\\.(?:\\w+\\.)*\\w+",
+        "for": "files",
+        "order": 1,
+        "useFilePath": true
+      },
+      {
+        "icon": "FabAFile",
+        "rule": "Games/军团战争.md\\/[\\w\\d\\s]+\\.(?:\\w+\\.)*\\w+",
+        "for": "files",
+        "order": 2,
+        "useFilePath": true
+      },
+      {
         "rule": "File",
         "icon": "FabAFile",
         "for": "everything",
-        "order": 0
+        "order": 3
       },
       {
         "rule": "Folder",
         "icon": "FabAFolder",
         "for": "everything",
-        "order": 1
+        "order": 4
       }
     ],
     "extraMargin": {
@@ -37,7 +58,15 @@
     "iconInTitleEnabled": false,
     "iconInFrontmatterEnabled": false,
     "iconsBackgroundCheckEnabled": false,
-    "iconsInNotesEnabled": true
+    "iconsInNotesEnabled": true,
+    "iconInTitlePosition": "above",
+    "iconInFrontmatterFieldName": "icon",
+    "iconColorInFrontmatterFieldName": "iconColor",
+    "iconsInLinksEnabled": true,
+    "iconIdentifier": ":",
+    "lucideIconPackType": "native",
+    "debugMode": false,
+    "useInternalPlugins": false
   },
   "Emojs": "IcAFolder",
   "Emojs/a-file.svg": "IcAFile",
@@ -46,10 +75,6 @@
   "Unity": "IcAFolder",
   "Unity/Fgui": "IcAFolder",
   "Games": "IcAFolder",
-  "Games/军团战争.md": {
-    "iconName": "IcAFile",
-    "inheritanceIcon": "FabAFile"
-  },
   "资料文件夹": "IcAFolder",
   "资料文件夹/打包相关": "IcAFolder",
   "资料文件夹/打包相关/2023自动部署神器——Jenkins全网最全攻略.md": "IcAFile",
@@ -116,10 +141,6 @@
   "Unity/GameObjectPool": "IcAFolder",
   "Unity/红点": "IcAFolder",
   "Unity/文件读写": "IcAFolder",
-  "Unity/Fgui/Commpents/Live2DLoader创建live2D动画.md": {
-    "iconName": "IcAFile",
-    "inheritanceIcon": "IcAFile"
-  },
   "Unity/A开发笔记": "IcAFolder",
   "Unity/A开发笔记/其他离职人员曾经的交接文档": "IcAFolder",
   "Unity/A开发笔记/其他离职人员曾经的交接文档/其他离职人员.md": "IcAFile",
@@ -130,10 +151,6 @@
   "Unity/A开发笔记/张世睿交接文档": "IcAFolder",
   "附件仓库/交接文档": "IcAFolder",
   "Unity/A开发笔记/文档.md": "IcAFile",
-  "Unity/A开发笔记/张世睿交接文档/GameEffect.md": {
-    "iconName": "IcAFile",
-    "inheritanceIcon": "IcAFile"
-  },
   "Unity/A开发笔记/黑帮GTA相关说明.md": "IcAFile",
   "Unity/A开发笔记/帝国及红警2相关配置说明.md": "IcAFile",
   "Unity/帝国、红警2": "IcAFolder",
@@ -145,5 +162,8 @@
   "Unity/Shader学习": "IcAFolder",
   "Unity/Shader学习/Shader收藏": "IcAFolder",
   "Unity/破解": "IcAFolder",
-  "Unity/帝国、红警2/RedAlert": "IcAFolder"
+  "Unity/帝国、红警2/RedAlert": "IcAFolder",
+  "Games/军团战争.md": "IcAFile",
+  "Unity/Fgui/Commpents/Live2DLoader创建live2D动画.md": "IcAFile",
+  "Unity/A开发笔记/张世睿交接文档/GameEffect.md": "IcAFile"
 }
