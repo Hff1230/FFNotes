@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "512ecd8734070f74",
+        "id": "5d4bce5291a7db3d",
         "type": "tabs",
         "children": [
           {
-            "id": "bfb14acc27178e73",
+            "id": "ebe05d526738557c",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -90,10 +90,10 @@
             "state": {
               "type": "backlink",
               "state": {
-                "collapseAll": false,
+                "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
-                "showSearch": true,
+                "showSearch": false,
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
@@ -108,12 +108,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Obsidian 全套教程 - 最好用的笔记软件 的出链列表"
+              "title": "出链"
             }
           },
           {
@@ -156,11 +155,13 @@
               "title": "Source Control"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -173,12 +174,13 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "bfb14acc27178e73",
+  "active": "ebe05d526738557c",
   "lastOpenFiles": [
+    "未命名.canvas",
+    "JoyMeng Note/日记 2025-02-20.md",
     "DefaultConfig/MD 语法.md",
     "DefaultConfig/NewFile.md",
     "JoyMeng Note/2023-12-21.md",
-    "JoyMeng Note/日记 2025-02-20.md",
     "DefaultConfig/NewFolder/【报错解决】.html",
     "DefaultConfig/NewFolder/【报错解决】_files/zhifubao.png",
     "DefaultConfig/NewFolder/【报错解决】_files/xinxiu@240.png",
@@ -199,7 +201,6 @@
     "DefaultConfig/NewFolder/【报错解决】_files/totop.png",
     "DefaultConfig/NewFolder/【报错解决】_files/tobarThumbUpactive.png",
     "DefaultConfig/NewFolder/【报错解决】_files/tobarCollectionActive2.png",
-    "未命名.canvas",
     "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
     "DefaultConfig/A Git Commands.md",
     "Unity/A开发笔记/语言代码.md",
@@ -222,7 +223,6 @@
     "JoyMeng Note/日记 2025-01-20.md",
     "JoyMeng Note/日记 2025-01-10.md",
     "JoyMeng Note/日记 2025-01-03.md",
-    "JoyMeng Note/日记 2024-12-27.md",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/未命名.canvas",
     "附件仓库/Untitled.canvas"
