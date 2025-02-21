@@ -11,10 +11,14 @@
             "id": "ebe05d526738557c",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "Obsidian 全套教程 - 最好用的笔记软件"
             }
           }
         ]
@@ -176,6 +180,7 @@
   },
   "active": "ebe05d526738557c",
   "lastOpenFiles": [
+    "附件仓库/杂项仓库/Pasted image 20250221093929.png",
     "未命名.canvas",
     "JoyMeng Note/日记 2025-02-20.md",
     "DefaultConfig/MD 语法.md",
