@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#刘健",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +74,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -180,23 +181,28 @@
   },
   "active": "ebe05d526738557c",
   "lastOpenFiles": [
+    "附件仓库/杂项仓库/Pasted image 20250228175456.png",
+    "附件仓库/杂项仓库/Pasted image 20250228175422.png",
+    "附件仓库/杂项仓库/Pasted image 20250228175351.png",
+    "附件仓库/杂项仓库/Pasted image 20250228175330.png",
+    "附件仓库/杂项仓库/Pasted image 20250228175244.png",
+    "附件仓库/杂项仓库/Pasted image 20250228175201.png",
+    "附件仓库/杂项仓库/Pasted image 20250228175105.png",
+    "附件仓库/杂项仓库/Pasted image 20250228175031.png",
+    "附件仓库/杂项仓库/Pasted image 20250228175017.png",
+    "附件仓库/杂项仓库/Pasted image 20250228174944.png",
+    "附件仓库/杂项仓库/Pasted image 20250228174908.png",
     "JoyMeng Note/日记 2025-02-21.md",
     "JoyMeng Note/日记 2025-02-28.md",
     "JoyMeng Note/日记 2025-02-14.md",
     "JoyMeng Note/日记 2025-02-20.md",
     "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
-    "附件仓库/杂项仓库/Pasted image 20250221093929.png",
     "未命名.canvas",
     "DefaultConfig/MD 语法.md",
     "DefaultConfig/NewFile.md",
     "JoyMeng Note/2023-12-21.md",
     "DefaultConfig/NewFolder/【报错解决】.html",
-    "DefaultConfig/NewFolder/【报错解决】_files/zhifubao.png",
-    "DefaultConfig/NewFolder/【报错解决】_files/xinxiu@240.png",
-    "DefaultConfig/NewFolder/【报错解决】_files/weixin.png",
     "DefaultConfig/NewFolder/【报错解决】_files/waf_captcha_embedded_bs.js",
-    "DefaultConfig/NewFolder/【报错解决】_files/vip-limited-close-roup.png",
-    "DefaultConfig/NewFolder/【报错解决】_files/vip-limited-close-newWhite.png",
     "DefaultConfig/NewFolder/【报错解决】_files/vendor.3e8c9008c3c2612ba373.js",
     "DefaultConfig/NewFolder/【报错解决】_files/user-tooltip.js",
     "DefaultConfig/NewFolder/【报错解决】_files/user-tooltip.css",
@@ -205,10 +211,6 @@
     "DefaultConfig/NewFolder/【报错解决】_files/user-ordercart.js",
     "DefaultConfig/NewFolder/【报错解决】_files/user-medal.js",
     "DefaultConfig/NewFolder/【报错解决】_files/user-medal.css",
-    "DefaultConfig/NewFolder/【报错解决】_files/unlike.png",
-    "DefaultConfig/NewFolder/【报错解决】_files/unlike-active.png",
-    "DefaultConfig/NewFolder/【报错解决】_files/totop.png",
-    "DefaultConfig/NewFolder/【报错解决】_files/tobarThumbUpactive.png",
     "DefaultConfig/A Git Commands.md",
     "Unity/A开发笔记/语言代码.md",
     "Unity/A开发笔记/PC启动器相关.md",
@@ -227,7 +229,6 @@
     "Games/军团战争.md",
     "JoyMeng Note/日记 2025-01-17.md",
     "JoyMeng Note/日记 2025-01-20.md",
-    "JoyMeng Note/日记 2025-01-10.md",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/未命名.canvas",
     "附件仓库/Untitled.canvas"
