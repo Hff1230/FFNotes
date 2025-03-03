@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "5d4bce5291a7db3d",
+        "id": "21d064a723cba8b8",
         "type": "tabs",
         "children": [
           {
-            "id": "ebe05d526738557c",
+            "id": "cd5587cad2cd38c9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2025-02-28.md",
+                "file": "Unity/A开发笔记/文档.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "日记 2025-02-28"
+              "title": "文档"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#刘健",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,8 +74,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -179,8 +178,11 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "ebe05d526738557c",
+  "active": "cd5587cad2cd38c9",
   "lastOpenFiles": [
+    "未命名.canvas",
+    "DefaultConfig/NewFile.md",
+    "JoyMeng Note/日记 2025-02-28.md",
     "附件仓库/杂项仓库/Pasted image 20250228175456.png",
     "附件仓库/杂项仓库/Pasted image 20250228175422.png",
     "附件仓库/杂项仓库/Pasted image 20250228175351.png",
@@ -191,15 +193,11 @@
     "附件仓库/杂项仓库/Pasted image 20250228175031.png",
     "附件仓库/杂项仓库/Pasted image 20250228175017.png",
     "附件仓库/杂项仓库/Pasted image 20250228174944.png",
-    "附件仓库/杂项仓库/Pasted image 20250228174908.png",
     "JoyMeng Note/日记 2025-02-21.md",
-    "JoyMeng Note/日记 2025-02-28.md",
     "JoyMeng Note/日记 2025-02-14.md",
     "JoyMeng Note/日记 2025-02-20.md",
     "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
-    "未命名.canvas",
     "DefaultConfig/MD 语法.md",
-    "DefaultConfig/NewFile.md",
     "JoyMeng Note/2023-12-21.md",
     "DefaultConfig/NewFolder/【报错解决】.html",
     "DefaultConfig/NewFolder/【报错解决】_files/waf_captcha_embedded_bs.js",
