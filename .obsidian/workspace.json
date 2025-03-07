@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#聂成兵",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +74,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -178,7 +179,7 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "33fb8800fc1aca5e",
+  "active": "b79ac68b9d40d83e",
   "lastOpenFiles": [
     "JoyMeng Note/日记 2025-02-28.md",
     "JoyMeng Note/日记 2025-03-07.md",
