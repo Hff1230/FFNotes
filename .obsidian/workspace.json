@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2025-03-07.md",
+                "file": "JoyMeng Note/日记 2025-03-14.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "日记 2025-03-07"
+              "title": "日记 2025-03-14"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#聂成兵",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -179,10 +179,11 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "b79ac68b9d40d83e",
+  "active": "33fb8800fc1aca5e",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2025-02-28.md",
     "JoyMeng Note/日记 2025-03-07.md",
+    "JoyMeng Note/日记 2025-03-14.md",
+    "JoyMeng Note/日记 2025-02-28.md",
     "JoyMeng Note/日记 2025-03-03.md",
     "未命名.canvas",
     "资料文件夹/~$反射的用法.docx",
@@ -228,7 +229,6 @@
     "Unity/帝国、红警2/RedAlert/日常记录.md",
     "Unity/帝国、红警2/聊天相关协议.md",
     "Unity/帝国、红警2/小游戏问题.md",
-    "Unity/A开发笔记/张世睿交接文档/胡菲菲查收.md",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/未命名.canvas",
     "附件仓库/Untitled.canvas"
