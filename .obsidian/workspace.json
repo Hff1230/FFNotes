@@ -11,17 +11,14 @@
             "id": "33fb8800fc1aca5e",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "未命名.canvas",
-                "viewState": {
-                  "x": -55,
-                  "y": 0,
-                  "zoom": 0
-                }
+                "file": "DefaultConfig/MD 语法.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "未命名"
+              "icon": "lucide-file",
+              "title": "MD 语法"
             }
           }
         ]
@@ -183,23 +180,24 @@
   },
   "active": "33fb8800fc1aca5e",
   "lastOpenFiles": [
+    "DefaultConfig/Git链接异常.md",
+    "DefaultConfig/NewFile.md",
+    "DefaultConfig/launch.json",
+    "DefaultConfig/A Git Commands.md",
+    "未命名.canvas",
     "JoyMeng Note/日记 2025-03-28.md",
     "JoyMeng Note/日记 2025-03-21.md",
     "Unity/A开发笔记/文档.md",
     "Games/军团战争.md",
-    "未命名.canvas",
     "JoyMeng Note/日记 2025-03-14.md",
     "JoyMeng Note/日记 2025-03-07.md",
     "JoyMeng Note/日记 2025-02-28.md",
     "JoyMeng Note/日记 2025-03-03.md",
     "资料文件夹/~$反射的用法.docx",
     "附件仓库/杂项仓库/Pasted image 20250303175202.png",
-    "DefaultConfig/Git链接异常.md",
     "附件仓库/杂项仓库/Pasted image 20250303160916.png",
     "附件仓库/杂项仓库/Pasted image 20250303160524.png",
-    "DefaultConfig/A Git Commands.md",
     "DefaultConfig/MD 语法.md",
-    "DefaultConfig/NewFile.md",
     "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
     "附件仓库/杂项仓库/Pasted image 20250303155909.png",
     "附件仓库/杂项仓库/Pasted image 20250303155821.png",
@@ -226,11 +224,9 @@
     "DefaultConfig/NewFolder/【报错解决】_files/user-ordertip.js",
     "DefaultConfig/NewFolder/【报错解决】_files/user-ordertip.css",
     "DefaultConfig/NewFolder/【报错解决】_files/user-ordercart.js",
-    "DefaultConfig/NewFolder/【报错解决】_files/user-medal.js",
     "Unity/A开发笔记/语言代码.md",
     "Unity/帝国、红警2/RedAlert/0画布.canvas",
     "Unity/帝国、红警2/RedAlert/大地图.md",
-    "Unity/帝国、红警2/RedAlert/主城.md",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/未命名.canvas",
     "附件仓库/Untitled.canvas"
