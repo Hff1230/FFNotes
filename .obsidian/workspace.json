@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2025-04-11.md",
+                "file": "DefaultConfig/A Git Commands.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "日记 2025-04-11"
+              "title": "A Git Commands"
             }
           }
         ]
@@ -178,15 +178,15 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "d47c2b3ebee6a9c5",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2025-04-03.md",
-    "JoyMeng Note/日记 2025-04-10.md",
-    "JoyMeng Note/日记 2025-04-11.md",
-    "JoyMeng Note/日记 2025-03-28.md",
+    "DefaultConfig/NewFile.md",
     "DefaultConfig/MD 语法.md",
     "DefaultConfig/Git链接异常.md",
-    "DefaultConfig/NewFile.md",
+    "JoyMeng Note/日记 2025-04-11.md",
+    "JoyMeng Note/日记 2025-04-03.md",
+    "JoyMeng Note/日记 2025-04-10.md",
+    "JoyMeng Note/日记 2025-03-28.md",
     "DefaultConfig/launch.json",
     "DefaultConfig/A Git Commands.md",
     "未命名.canvas",
