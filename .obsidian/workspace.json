@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "23af5829e11a02aa",
+        "id": "4031f6f10903547f",
         "type": "tabs",
         "children": [
           {
-            "id": "d47c2b3ebee6a9c5",
+            "id": "74f0592f8889cfd5",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -74,7 +74,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -178,10 +179,13 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "d47c2b3ebee6a9c5",
+  "active": "74f0592f8889cfd5",
   "lastOpenFiles": [
-    "Unity/A开发笔记/张世睿交接文档/倪隆军查收.md",
+    "JoyMeng Note/日记 2025-01-03.md",
+    "JoyMeng Note/日记 2024-05-24.md",
+    "JoyMeng Note/日记 2024-05-17.md",
     "JoyMeng Note/日记 2025-04-18.md",
+    "Unity/A开发笔记/张世睿交接文档/倪隆军查收.md",
     "Unity/A开发笔记/张世睿交接文档/未命名.md",
     "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
     "DefaultConfig/A Git Commands.md",
@@ -216,9 +220,6 @@
     "附件仓库/杂项仓库/Pasted image 20250228175422.png",
     "附件仓库/杂项仓库/Pasted image 20250228175351.png",
     "附件仓库/杂项仓库/Pasted image 20250228175330.png",
-    "JoyMeng Note/日记 2025-02-21.md",
-    "JoyMeng Note/日记 2025-02-14.md",
-    "JoyMeng Note/日记 2025-02-20.md",
     "DefaultConfig/NewFolder/【报错解决】.html",
     "DefaultConfig/NewFolder/【报错解决】_files/waf_captcha_embedded_bs.js",
     "DefaultConfig/NewFolder/【报错解决】_files/vendor.3e8c9008c3c2612ba373.js",
