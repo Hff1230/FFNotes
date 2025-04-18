@@ -28,11 +28,11 @@ Shader "Unlit/UnlitAlphaTest" {
 
             CGPROGRAM
 
-            #pragma vertex vert
+            pragma vertex vert
 
-            #pragma fragment frag
+            pragma fragment frag
 
-            #include "Lighting.cginc"
+            include "Lighting.cginc"
 
             fixed4 _Color;
 

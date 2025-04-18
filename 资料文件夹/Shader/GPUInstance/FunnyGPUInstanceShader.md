@@ -45,7 +45,7 @@ Shader "Unlit/FunnyGPUInstance"
 
   
 
-            #include "UnityCG.cginc"
+            include "UnityCG.cginc"
 
   
 
