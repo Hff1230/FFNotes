@@ -1,4 +1,4 @@
-linux man手册
+[linux man手册](https://man7.org/linux/man-pages/man5/proc.5.html#NAME)
 
 查看内存
 查看当前进程：
@@ -8,7 +8,7 @@ adb shell ps -ef | grep 包名
 查看内存
 adb shell getprop dalvik.vm.heapsize // heapsize参数表示单个进程可用的最大内存，表示不受控情况下的极限堆
 adb shell getprop dalvik.vm.heapgrowthlimit // 以heapgrowthlimit为准，超过则OOM
-adb shell getprop
+[adb shell getprop](https://gist.github.com/abhisada/25c0bc679c8e90bd8f52310ceb841ae2)
 
 adb shell cat /proc/meminfo
 MemTotal：Total usable RAM (i.e., physical RAM minus a few，reserved bits and the kernel binary code).
@@ -34,7 +34,7 @@ Dalvik Pss内存 = 私有内存Private Dirty + （共享内存Shared Dirty / 共
 TOTAL：上面全部条目的累加值，全局的展示了你的进程占用的内存情况。
 ViewRootImpl：应用进程里的活动窗口视图个数，可以用来监测对话框或者其他窗口的内存泄露。
 AppContexts及Activities：应用进程里Context和Activity的对象个数，可以用来监测Activity的内存泄露。
-官方文档
+[官方文档](https://developer.android.com/studio/command-line/dumpsys#ViewingAllocations)
 
 adb shell run-as 包名 cat /proc/pid/maps
 查看so虚拟内存大小
@@ -52,8 +52,8 @@ PPID 父进程ID
 VSIZE 进程虚拟地址空间大小
 RSS 进程正在使用物理内存大小
 用户态和内核态时间(单位s) u:130, s:12
-ps进程命令
-Linux进程状态解析之R、S、D、T、Z、X
+[ps进程命令](http://gityuan.com/2015/10/11/ps-command/)
+[Linux进程状态解析之R、S、D、T、Z、X](https://blog.csdn.net/nilxin/article/details/7437671)
 
 adb shell top -m 10 -s cpu(-m显示最大数量，-s 按指定行排序)
 PID : 应用程序ID
@@ -68,7 +68,7 @@ Name : 应用程序名称
 
 adb shell top -t -m 10 -s cpu(-t显示线程，-m显示最大数量，-s 按指定行排序)
 
-获取cpu使用率
+[获取cpu使用率](https://juejin.cn/post/7061788020134920206)
 
 其他指令
 adb logcat ‘*:E’
@@ -79,7 +79,7 @@ adb shell monkey -p your.package.name -v 500
 
 输出线程trace，需要root，排查线程问题
 adb shell debuggerd -b [tid]
-Android打印Trace堆栈
+[Android打印Trace堆栈](http://gityuan.com/2017/07/09/android_debug/)
 
 adb shell dumpsys activity top
 adb shell dumpsys activity 包名
