@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2025-05-09.md",
+                "file": "资料文件夹/编程概念/adb指令 查看cpu和内存.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "日记 2025-05-09"
+              "title": "adb指令 查看cpu和内存"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#胡菲菲",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,8 +74,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -179,10 +178,11 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "b79ac68b9d40d83e",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2025-04-30.md",
     "JoyMeng Note/日记 2025-05-09.md",
+    "资料文件夹/编程概念/adb指令 查看cpu和内存.md",
+    "JoyMeng Note/日记 2025-04-30.md",
     "JoyMeng Note/日记 2025-04-25.md",
     "JoyMeng Note/日记 2025-04-18.md",
     "JoyMeng Note/日记 2025-04-11.md",
@@ -208,7 +208,6 @@
     "Games/军团战争.md",
     "JoyMeng Note/日记 2025-03-14.md",
     "JoyMeng Note/日记 2025-03-07.md",
-    "JoyMeng Note/日记 2025-02-28.md",
     "资料文件夹/~$反射的用法.docx",
     "附件仓库/杂项仓库/Pasted image 20250303175202.png",
     "附件仓库/杂项仓库/Pasted image 20250303160916.png",
