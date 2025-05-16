@@ -11,10 +11,14 @@
             "id": "f0f6c2eea64f86fc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "JoyMeng Note/日记 2025-05-16.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "日记 2025-05-16"
             }
           }
         ]
@@ -176,10 +180,12 @@
   },
   "active": "f0f6c2eea64f86fc",
   "lastOpenFiles": [
-    "资料文件夹/编程概念/adb指令 查看cpu和内存.md",
-    "().md",
-    "Android打印Trace堆栈.md",
     "JoyMeng Note/日记 2025-05-09.md",
+    "JoyMeng Note/日记 2025-05-16.md",
+    "未命名.canvas",
+    "().md",
+    "资料文件夹/编程概念/adb指令 查看cpu和内存.md",
+    "Android打印Trace堆栈.md",
     "JoyMeng Note/日记 2025-04-30.md",
     "JoyMeng Note/日记 2025-04-25.md",
     "JoyMeng Note/日记 2025-04-18.md",
@@ -200,10 +206,7 @@
     "JoyMeng Note/日记 2025-04-10.md",
     "JoyMeng Note/日记 2025-03-28.md",
     "DefaultConfig/launch.json",
-    "未命名.canvas",
     "JoyMeng Note/日记 2025-03-21.md",
-    "Unity/A开发笔记/文档.md",
-    "Games/军团战争.md",
     "资料文件夹/~$反射的用法.docx",
     "附件仓库/杂项仓库/Pasted image 20250303175202.png",
     "附件仓库/杂项仓库/Pasted image 20250303160916.png",
