@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2025-06-20.md",
+                "file": "JoyMeng Note/日记 2025-06-27.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "日记 2025-06-20"
+              "title": "日记 2025-06-27"
             }
           }
         ]
@@ -180,8 +180,9 @@
   },
   "active": "f0f6c2eea64f86fc",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2025-06-13.md",
     "JoyMeng Note/日记 2025-06-20.md",
+    "JoyMeng Note/日记 2025-06-27.md",
+    "JoyMeng Note/日记 2025-06-13.md",
     "JoyMeng Note/日记 2025-06-06.md",
     "JoyMeng Note/日记 2025-05-30.md",
     "JoyMeng Note/日记 2025-05-23.md",
@@ -206,7 +207,6 @@
     "DefaultConfig/A Git Commands.md",
     "DefaultConfig/NewFile.md",
     "DefaultConfig/MD 语法.md",
-    "DefaultConfig/Git链接异常.md",
     "DefaultConfig/launch.json",
     "资料文件夹/~$反射的用法.docx",
     "附件仓库/杂项仓库/Pasted image 20250303175202.png",
