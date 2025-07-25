@@ -40,7 +40,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical",
+                "sortOrder": "byModifiedTime",
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#胡菲菲",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +74,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -178,10 +179,11 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "f0f6c2eea64f86fc",
+  "active": "b79ac68b9d40d83e",
   "lastOpenFiles": [
-    "Unity/A开发笔记/未命名.md",
+    "JoyMeng Note/日记 2025-07-18.md",
     "JoyMeng Note/日记 2025-07-25.md",
+    "Unity/A开发笔记/未命名.md",
     "Unity/A开发笔记/黑帮GTA相关说明.md",
     "Unity/A开发笔记/帝国及红警2相关配置说明.md",
     "Unity/文件读写/文件读写.md",
@@ -206,7 +208,6 @@
     "Unity/Shader学习/未命名.md",
     "Unity/CSharp/字符匹配.md",
     "Unity/CSharp/优化相关.md",
-    "JoyMeng Note/日记 2025-07-18.md",
     "JoyMeng Note/日记 2025-07-11.md",
     "JoyMeng Note/日记 2025-07-04.md",
     "JoyMeng Note/日记 2025-06-27.md",
