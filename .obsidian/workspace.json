@@ -11,17 +11,14 @@
             "id": "f0f6c2eea64f86fc",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "未命名.canvas",
-                "viewState": {
-                  "x": -55,
-                  "y": 0,
-                  "zoom": 0
-                }
+                "file": "Unity/帝国、红警2/dataConfig.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "未命名"
+              "icon": "lucide-file",
+              "title": "dataConfig"
             }
           }
         ]
@@ -183,6 +180,15 @@
   },
   "active": "f0f6c2eea64f86fc",
   "lastOpenFiles": [
+    "Unity/帝国、红警2/内城相关.md",
+    "Unity/帝国、红警2/聊天相关协议.md",
+    "Unity/帝国、红警2/小游戏问题.md",
+    "DefaultConfig/A Git Commands.md",
+    "DefaultConfig/MD 语法.md",
+    "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
+    "DefaultConfig/Git链接异常.md",
+    "DefaultConfig/NewFile.md",
+    "未命名.canvas",
     "JoyMeng Note/日记 2025-07-25.md",
     "JoyMeng Note/日记 2025-07-18.md",
     "Unity/A开发笔记/未命名.md",
@@ -194,25 +200,15 @@
     "Unity/帝国、红警2/RedAlert/日常记录.md",
     "Unity/帝国、红警2/RedAlert/大地图.md",
     "Unity/帝国、红警2/RedAlert/0画布.canvas",
-    "Unity/帝国、红警2/内城相关.md",
     "Unity/帝国、红警2/dataConfig.md",
-    "Unity/帝国、红警2/聊天相关协议.md",
-    "Unity/帝国、红警2/小游戏问题.md",
-    "未命名.canvas",
     "Android打印Trace堆栈.md",
     "Emojs/a-folder.svg",
     "Emojs/a-file.svg",
-    "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
-    "DefaultConfig/NewFile.md",
-    "DefaultConfig/MD 语法.md",
-    "DefaultConfig/A Git Commands.md",
-    "DefaultConfig/Git链接异常.md",
     "Unity/Shader学习/未命名.md",
     "Unity/CSharp/字符匹配.md",
     "Unity/CSharp/优化相关.md",
     "JoyMeng Note/日记 2025-07-11.md",
     "JoyMeng Note/日记 2025-07-04.md",
-    "JoyMeng Note/日记 2025-06-27.md",
     "DefaultConfig/launch.json",
     "资料文件夹/~$反射的用法.docx",
     "附件仓库/杂项仓库/Pasted image 20250303175202.png",
