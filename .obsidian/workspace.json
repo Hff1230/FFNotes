@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/帝国、红警2/dataConfig.md",
+                "file": "JoyMeng Note/日记 2025-08-01.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "dataConfig"
+              "title": "日记 2025-08-01"
             }
           }
         ]
@@ -180,6 +180,10 @@
   },
   "active": "f0f6c2eea64f86fc",
   "lastOpenFiles": [
+    "JoyMeng Note/日记 2025-07-25.md",
+    "JoyMeng Note/日记 2025-08-01.md",
+    "Unity/A开发笔记/未命名.md",
+    "Unity/帝国、红警2/dataConfig.md",
     "Unity/帝国、红警2/内城相关.md",
     "Unity/帝国、红警2/聊天相关协议.md",
     "Unity/帝国、红警2/小游戏问题.md",
@@ -189,9 +193,7 @@
     "DefaultConfig/Git链接异常.md",
     "DefaultConfig/NewFile.md",
     "未命名.canvas",
-    "JoyMeng Note/日记 2025-07-25.md",
     "JoyMeng Note/日记 2025-07-18.md",
-    "Unity/A开发笔记/未命名.md",
     "Unity/A开发笔记/黑帮GTA相关说明.md",
     "Unity/A开发笔记/帝国及红警2相关配置说明.md",
     "Unity/文件读写/文件读写.md",
@@ -200,7 +202,6 @@
     "Unity/帝国、红警2/RedAlert/日常记录.md",
     "Unity/帝国、红警2/RedAlert/大地图.md",
     "Unity/帝国、红警2/RedAlert/0画布.canvas",
-    "Unity/帝国、红警2/dataConfig.md",
     "Android打印Trace堆栈.md",
     "Emojs/a-folder.svg",
     "Emojs/a-file.svg",
