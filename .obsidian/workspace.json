@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2025-07-18.md",
+                "file": "Unity/A开发笔记/未命名.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "日记 2025-07-18"
+              "title": "未命名"
             }
           }
         ]
@@ -178,8 +178,9 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "f0f6c2eea64f86fc",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
+    "JoyMeng Note/日记 2025-07-18.md",
     "JoyMeng Note/日记 2025-07-25.md",
     "JoyMeng Note/日记 2025-08-01.md",
     "Unity/A开发笔记/未命名.md",
@@ -193,7 +194,6 @@
     "DefaultConfig/Git链接异常.md",
     "DefaultConfig/NewFile.md",
     "未命名.canvas",
-    "JoyMeng Note/日记 2025-07-18.md",
     "Unity/A开发笔记/黑帮GTA相关说明.md",
     "Unity/A开发笔记/帝国及红警2相关配置说明.md",
     "Unity/文件读写/文件读写.md",
