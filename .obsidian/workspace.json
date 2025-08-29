@@ -20,8 +20,21 @@
               "icon": "lucide-file",
               "title": "日记 2025-08-22"
             }
+          },
+          {
+            "id": "77077941750aa523",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.9.10"
+              },
+              "icon": "lucide-book-up",
+              "title": "版本说明 1.9.10"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -170,6 +183,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:创建新数据库": false,
       "obsidian-git:Open Git source control": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
@@ -179,7 +193,7 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "e36941f68011cf29",
+  "active": "77077941750aa523",
   "lastOpenFiles": [
     "资料文件夹/编程概念/adb指令 查看cpu和内存.md",
     "JoyMeng Note/日记 2025-08-22.md",
