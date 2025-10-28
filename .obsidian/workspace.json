@@ -4,21 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "f072a45dad6ebafa",
+        "id": "0d608e680c073a54",
         "type": "tabs",
         "children": [
           {
-            "id": "912be7fc96efe915",
+            "id": "fe716e91a7cc7213",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "bases",
               "state": {
-                "file": "JoyMeng Note/日记 2025-10-24.md",
-                "mode": "source",
-                "source": false
+                "file": "未命名.base",
+                "viewName": "表格"
               },
-              "icon": "lucide-file",
-              "title": "日记 2025-10-24"
+              "icon": "lucide-table",
+              "title": "未命名"
             }
           }
         ]
@@ -179,8 +178,9 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "912be7fc96efe915",
+  "active": "fe716e91a7cc7213",
   "lastOpenFiles": [
+    "未命名 1.canvas",
     "JoyMeng Note/日记 2025-10-24.md",
     "JoyMeng Note/日记 2025-10-11.md",
     "JoyMeng Note/日记 2025-10-17.md",
@@ -197,7 +197,6 @@
     "未命名.canvas",
     "Android打印Trace堆栈.md",
     "未命名.base",
-    "未命名 1.canvas",
     "JoyMeng Note/日记 2025-08-29.md",
     "JoyMeng Note/日记 2025-08-22.md",
     "资料文件夹/编程概念/adb指令 查看cpu和内存.md",
@@ -210,7 +209,6 @@
     "Unity/帝国、红警2/dataConfig.md",
     "Unity/帝国、红警2/内城相关.md",
     "Unity/帝国、红警2/聊天相关协议.md",
-    "Unity/帝国、红警2/小游戏问题.md",
     "Unity/帝国、红警2/RedAlert/0画布.canvas",
     "Emojs/a-folder.svg",
     "Emojs/a-file.svg",
