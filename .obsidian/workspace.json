@@ -11,12 +11,13 @@
             "id": "fe716e91a7cc7213",
             "type": "leaf",
             "state": {
-              "type": "bases",
+              "type": "markdown",
               "state": {
-                "file": "未命名.base",
-                "viewName": "表格"
+                "file": "Unity/A开发笔记/未命名.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-table",
+              "icon": "lucide-file",
               "title": "未命名"
             }
           }
@@ -180,6 +181,7 @@
   },
   "active": "fe716e91a7cc7213",
   "lastOpenFiles": [
+    "未命名.base",
     "未命名 1.canvas",
     "JoyMeng Note/日记 2025-10-24.md",
     "JoyMeng Note/日记 2025-10-11.md",
@@ -196,7 +198,6 @@
     "DefaultConfig/Git链接异常.md",
     "未命名.canvas",
     "Android打印Trace堆栈.md",
-    "未命名.base",
     "JoyMeng Note/日记 2025-08-29.md",
     "JoyMeng Note/日记 2025-08-22.md",
     "资料文件夹/编程概念/adb指令 查看cpu和内存.md",
