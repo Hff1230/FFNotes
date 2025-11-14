@@ -20,8 +20,21 @@
               "icon": "lucide-file",
               "title": "using"
             }
+          },
+          {
+            "id": "4c1ad1647cb9539a",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.10.3"
+              },
+              "icon": "lucide-book-up",
+              "title": "版本说明 1.10.3"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -179,7 +192,7 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "fe716e91a7cc7213",
+  "active": "4c1ad1647cb9539a",
   "lastOpenFiles": [
     "JoyMeng Note/日记 2025-11-07.md",
     "Unity/CSharp/using.md",
