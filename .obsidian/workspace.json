@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "15e63cdd16bcb239",
+        "id": "93bedb4725aab707",
         "type": "tabs",
         "children": [
           {
-            "id": "049202bd48812267",
+            "id": "1edfe5c1a32817e7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2025-11-14.md",
+                "file": "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "日记 2025-11-14"
+              "title": "雷龙灏查收"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "热更",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +74,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -179,10 +180,19 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "049202bd48812267",
+  "active": "1edfe5c1a32817e7",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2025-11-07.md",
+    "附件仓库/交接文档/雷龙灏查收/~$代码热更新.docx",
+    "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md",
+    "JoyMeng Note/日记 2024-05-17.md",
+    "Unity/GameObjectPool/Main.md",
+    "Unity/GameObjectPool/CCNodeCache.md",
+    "Unity/GameObjectPool/GameObjectPoolManager.md",
+    "未命名.base",
+    "未命名 1.canvas",
+    "未命名.canvas",
     "JoyMeng Note/日记 2025-11-14.md",
+    "JoyMeng Note/日记 2025-11-07.md",
     "Unity/CSharp/using.md",
     "JoyMeng Note/日记 2025-10-31.md",
     "Unity/A开发笔记/未命名 1.md",
@@ -193,8 +203,6 @@
     "Unity/A开发笔记/未命名.md",
     "Unity/A开发笔记/红警2中东官包三方支付.md",
     "JoyMeng Note/日记 2025-10-24.md",
-    "未命名.base",
-    "未命名 1.canvas",
     "JoyMeng Note/日记 2025-10-11.md",
     "JoyMeng Note/日记 2025-10-17.md",
     "JoyMeng Note/日记 2025-09-30.md",
@@ -203,13 +211,6 @@
     "JoyMeng Note/日记 2025-09-12.md",
     "JoyMeng Note/日记 2025-09-05.md",
     "JoyMeng Note/日记 2025-09-10.md",
-    "DefaultConfig/Git链接异常.md",
-    "未命名.canvas",
-    "Android打印Trace堆栈.md",
-    "JoyMeng Note/日记 2025-08-29.md",
-    "JoyMeng Note/日记 2025-08-22.md",
-    "资料文件夹/编程概念/adb指令 查看cpu和内存.md",
-    "JoyMeng Note/日记 2025-08-15.md",
     "附件仓库/杂项仓库/Pasted image 20250814092251.png",
     "Unity/帝国、红警2/RedAlert/0画布.canvas",
     "Emojs/a-folder.svg",
