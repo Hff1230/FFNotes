@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md",
+                "file": "JoyMeng Note/日记 2025-11-21.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "雷龙灏查收"
+              "title": "日记 2025-11-21"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "热更",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,8 +74,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -182,8 +181,10 @@
   },
   "active": "1edfe5c1a32817e7",
   "lastOpenFiles": [
-    "附件仓库/交接文档/雷龙灏查收/~$代码热更新.docx",
+    "JoyMeng Note/日记 2025-11-14.md",
+    "JoyMeng Note/日记 2025-11-21.md",
     "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md",
+    "附件仓库/交接文档/雷龙灏查收/~$代码热更新.docx",
     "JoyMeng Note/日记 2024-05-17.md",
     "Unity/GameObjectPool/Main.md",
     "Unity/GameObjectPool/CCNodeCache.md",
@@ -191,7 +192,6 @@
     "未命名.base",
     "未命名 1.canvas",
     "未命名.canvas",
-    "JoyMeng Note/日记 2025-11-14.md",
     "JoyMeng Note/日记 2025-11-07.md",
     "Unity/CSharp/using.md",
     "JoyMeng Note/日记 2025-10-31.md",
@@ -230,7 +230,6 @@
     "DefaultConfig/NewFolder/【报错解决】_files/user-tooltip.js",
     "DefaultConfig/NewFolder/【报错解决】_files/user-tooltip.css",
     "DefaultConfig/NewFolder/【报错解决】_files/user-ordertip.js",
-    "DefaultConfig/NewFolder/【报错解决】_files/user-ordertip.css",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/未命名.canvas",
     "附件仓库/Untitled.canvas"
