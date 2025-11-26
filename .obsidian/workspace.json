@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "93bedb4725aab707",
+        "id": "946cfd6aebcfad90",
         "type": "tabs",
         "children": [
           {
-            "id": "1edfe5c1a32817e7",
+            "id": "db78f69986de3784",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "JoyMeng Note/日记 2025-11-21.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "日记 2025-11-21"
+              "title": "新标签页"
             }
           }
         ]
@@ -179,10 +175,10 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "1edfe5c1a32817e7",
+  "active": "db78f69986de3784",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2025-11-14.md",
     "JoyMeng Note/日记 2025-11-21.md",
+    "JoyMeng Note/日记 2025-11-14.md",
     "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md",
     "附件仓库/交接文档/雷龙灏查收/~$代码热更新.docx",
     "JoyMeng Note/日记 2024-05-17.md",
