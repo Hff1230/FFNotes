@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#胡菲菲",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +74,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -179,7 +180,7 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "db78f69986de3784",
+  "active": "b79ac68b9d40d83e",
   "lastOpenFiles": [
     "JoyMeng Note/日记 2025-11-21.md",
     "JoyMeng Note/日记 2025-11-28.md",
