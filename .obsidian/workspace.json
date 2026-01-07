@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "a647553c2686ef7e",
+        "id": "10186ba68ef44410",
         "type": "tabs",
         "children": [
           {
-            "id": "4bc4b70117b0a9f0",
+            "id": "3ecb4e8fde507aea",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JoyMeng Note/日记 2026-01-04.md",
+                "file": "Unity/A开发笔记/未命名.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "日记 2026-01-04"
+              "title": "未命名"
             }
           }
         ]
@@ -74,8 +74,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
@@ -180,23 +179,24 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "4bc4b70117b0a9f0",
+  "active": "3ecb4e8fde507aea",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2025-12-31.md",
+    "Unity/A开发笔记/未命名 1.md",
+    "Unity/帝国、红警2/dataConfig.md",
+    "Unity/帝国、红警2/内城相关.md",
+    "Unity/帝国、红警2/小游戏问题.md",
+    "未命名 1.canvas",
+    "未命名.canvas",
     "JoyMeng Note/日记 2026-01-04.md",
+    "JoyMeng Note/日记 2025-12-31.md",
     "JoyMeng Note/日记 2025-12-26.md",
     "JoyMeng Note/日记 2025-12-19.md",
     "Unity/A开发笔记/未命名.md",
-    "Unity/A开发笔记/未命名 1.md",
     "Unity/A开发笔记/文档.md",
     "Unity/A开发笔记/语言代码.md",
-    "Unity/帝国、红警2/dataConfig.md",
     "Unity/帝国、红警2/聊天相关协议.md",
-    "Unity/帝国、红警2/小游戏问题.md",
-    "未命名.canvas",
     "JoyMeng Note/日记 2025-12-12.md",
     "资料文件夹/~$反射的用法.docx",
-    "未命名 1.canvas",
     "未命名 2.base",
     "未命名 1.base",
     "Android打印Trace堆栈.md",
@@ -204,7 +204,6 @@
     "JoyMeng Note/日记 2025-12-05.md",
     "JoyMeng Note/日记 2025-11-28.md",
     "JoyMeng Note/日记 2025-11-21.md",
-    "Unity/帝国、红警2/内城相关.md",
     "Unity/A开发笔记/帝国及红警2相关配置说明.md",
     "Unity/A开发笔记/红警2中东官包三方支付.md",
     "DefaultConfig/A Git Commands.md",
@@ -213,7 +212,6 @@
     "DefaultConfig/Git链接异常.md",
     "DefaultConfig/NewFile.md",
     "JoyMeng Note/日记 2025-11-14.md",
-    "Unity/A开发笔记/张世睿交接文档/雷龙灏查收.md",
     "附件仓库/交接文档/雷龙灏查收/~$代码热更新.docx",
     "附件仓库/杂项仓库/Pasted image 20250814092251.png",
     "Unity/帝国、红警2/RedAlert/0画布.canvas",
