@@ -11,17 +11,14 @@
             "id": "794319f22c0428d9",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "未命名.canvas",
-                "viewState": {
-                  "x": -55,
-                  "y": 0,
-                  "zoom": 0
-                }
+                "file": "JoyMeng Note/日记 2026-01-09.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "未命名"
+              "icon": "lucide-file",
+              "title": "日记 2026-01-09"
             }
           }
         ]
@@ -183,6 +180,14 @@
   },
   "active": "794319f22c0428d9",
   "lastOpenFiles": [
+    "JoyMeng Note/日记 2025-12-31.md",
+    "JoyMeng Note/日记 2026-01-04.md",
+    "JoyMeng Note/日记 2026-01-09.md",
+    "DefaultConfig/NewFile.md",
+    "DefaultConfig/Git链接异常.md",
+    "DefaultConfig/A Git Commands.md",
+    "DefaultConfig/MD 语法.md",
+    "未命名.canvas",
     "未命名.base",
     "未命名 2.canvas",
     "未命名 1.canvas",
@@ -192,9 +197,6 @@
     "Unity/帝国、红警2/dataConfig.md",
     "Unity/帝国、红警2/内城相关.md",
     "Unity/帝国、红警2/小游戏问题.md",
-    "未命名.canvas",
-    "JoyMeng Note/日记 2026-01-04.md",
-    "JoyMeng Note/日记 2025-12-31.md",
     "JoyMeng Note/日记 2025-12-26.md",
     "JoyMeng Note/日记 2025-12-19.md",
     "Unity/A开发笔记/文档.md",
@@ -210,11 +212,7 @@
     "JoyMeng Note/日记 2025-11-21.md",
     "Unity/A开发笔记/帝国及红警2相关配置说明.md",
     "Unity/A开发笔记/红警2中东官包三方支付.md",
-    "DefaultConfig/A Git Commands.md",
-    "DefaultConfig/MD 语法.md",
     "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
-    "DefaultConfig/Git链接异常.md",
-    "DefaultConfig/NewFile.md",
     "JoyMeng Note/日记 2025-11-14.md",
     "附件仓库/交接文档/雷龙灏查收/~$代码热更新.docx",
     "附件仓库/杂项仓库/Pasted image 20250814092251.png",
