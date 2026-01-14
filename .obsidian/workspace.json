@@ -11,14 +11,13 @@
             "id": "794319f22c0428d9",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "bases",
               "state": {
-                "file": "JoyMeng Note/日记 2026-01-09.md",
-                "mode": "source",
-                "source": false
+                "file": "未命名.base",
+                "viewName": "表格"
               },
-              "icon": "lucide-file",
-              "title": "日记 2026-01-09"
+              "icon": "lucide-table",
+              "title": "未命名"
             }
           }
         ]
@@ -53,7 +52,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#熊福成",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,8 +73,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -179,17 +177,21 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "794319f22c0428d9",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
+    "AI库/tmpclaude-4a8d-cwd",
+    "AI库/小游戏",
+    "AI库",
+    "JoyMeng Note/日记 2026-01-14.md",
+    "未命名.base",
+    "JoyMeng Note/日记 2026-01-09.md",
     "JoyMeng Note/日记 2025-12-31.md",
     "JoyMeng Note/日记 2026-01-04.md",
-    "JoyMeng Note/日记 2026-01-09.md",
     "DefaultConfig/NewFile.md",
     "DefaultConfig/Git链接异常.md",
     "DefaultConfig/A Git Commands.md",
     "DefaultConfig/MD 语法.md",
     "未命名.canvas",
-    "未命名.base",
     "未命名 2.canvas",
     "未命名 1.canvas",
     "未命名 3.canvas",
@@ -213,8 +215,6 @@
     "JoyMeng Note/日记 2025-11-21.md",
     "Unity/A开发笔记/帝国及红警2相关配置说明.md",
     "Unity/A开发笔记/红警2中东官包三方支付.md",
-    "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
-    "JoyMeng Note/日记 2025-11-14.md",
     "附件仓库/交接文档/雷龙灏查收/~$代码热更新.docx",
     "附件仓库/杂项仓库/Pasted image 20250814092251.png",
     "Unity/帝国、红警2/RedAlert/0画布.canvas",
@@ -230,8 +230,6 @@
     "附件仓库/杂项仓库/Pasted image 20250228175456.png",
     "DefaultConfig/NewFolder/【报错解决】.html",
     "DefaultConfig/NewFolder/【报错解决】_files/waf_captcha_embedded_bs.js",
-    "DefaultConfig/NewFolder/【报错解决】_files/vendor.3e8c9008c3c2612ba373.js",
-    "DefaultConfig/NewFolder/【报错解决】_files/user-tooltip.js",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/未命名.canvas",
     "附件仓库/Untitled.canvas"
