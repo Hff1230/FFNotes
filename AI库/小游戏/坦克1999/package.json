@@ -1,0 +1,25 @@
+{
+  "name": "tank-battle-1999",
+  "version": "1.0.0",
+  "description": "坦克大战1999 - 局域网多人对战版",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "tank",
+    "battle",
+    "game",
+    "websocket",
+    "multiplayer"
+  ],
+  "author": "AI Assistant",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^8.16.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}

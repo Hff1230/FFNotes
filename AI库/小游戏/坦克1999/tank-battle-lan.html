@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>坦克大战1999 - 局域网版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #gameContainer {
+            position: relative;
+            background: #0f0f1e;
+            border: 4px solid #00ff00;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.3), inset 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        #gameCanvas {
+            display: block;
+            background: #000;
+            border-radius: 5px;
+        }
+
+        /* 登录界面 */
+        #loginScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 15, 30, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            border-radius: 10px;
+        }
+
+        #loginScreen h1 {
+            font-size: 36px;
+            color: #00ff00;
+            text-shadow: 0 0 20px #00ff00;
+            margin-bottom: 30px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+            to { text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00; }
+        }
+
+        .input-group {
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .input-group label {
+            display: block;
+            color: #00ff00;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 250px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(180deg, #2a2a2a, #1a1a1a);
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 12px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: linear-gradient(180deg, #00ff00, #00aa00);
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* 等待房间 */
+        #waitingRoom {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 15, 30, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 150;
+            border-radius: 10px;
+        }
+
+        #waitingRoom h2 {
+            color: #00ff00;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .room-info {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #00ff00;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .room-info p {
+            color: #00ff00;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .room-info .room-id {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .player-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+            min-width: 300px;
+        }
+
+        .player-item {
+            background: rgba(0, 255, 0, 0.1);
+            padding: 12px 20px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #00ff00;
+        }
+
+        .player-item .player-name {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .player-item .player-status {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .player-item.ready .player-status {
+            color: #00ff00;
+        }
+
+        /* HUD */
+        #hud {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 15px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+            border-bottom: 2px solid #00ff00;
+            z-index: 100;
+        }
+
+        .hud-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .hud-item {
+            text-align: center;
+        }
+
+        .hud-label {
+            font-size: 11px;
+            color: #00ff00;
+            opacity: 0.7;
+            text-transform: uppercase;
+        }
+
+        .hud-value {
+            font-size: 18px;
+            color: #00ff00;
+            font-weight: bold;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        /* 聊天框 */
+        #chatBox {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            width: 300px;
+            height: 150px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            display: none;
+            flex-direction: column;
+            z-index: 50;
+        }
+
+        #chatMessages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            font-size: 12px;
+        }
+
+        .chat-message {
+            margin: 5px 0;
+            padding: 5px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        .chat-message .sender {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .chat-message .text {
+            color: #fff;
+        }
+
+        #chatInput {
+            display: flex;
+            border-top: 1px solid #00ff00;
+        }
+
+        #chatInput input {
+            flex: 1;
+            padding: 8px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 12px;
+        }
+
+        #chatInput input:focus {
+            outline: none;
+        }
+
+        #chatInput button {
+            padding: 8px 15px;
+            background: transparent;
+            border: none;
+            color: #00ff00;
+            cursor: pointer;
+        }
+
+        /* 游戏结束 */
+        #gameOver {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 180;
+            border-radius: 10px;
+        }
+
+        #gameOver h2 {
+            color: #00ff00;
+            font-size: 48px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px #00ff00;
+        }
+
+        .score-board {
+            background: rgba(0, 255, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #00ff00;
+            margin-bottom: 30px;
+        }
+
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            margin: 5px 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+        }
+
+        .score-item .name {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .score-item .score {
+            color: #fff;
+        }
+
+        /* 提示信息 */
+        #notification {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 255, 0, 0.9);
+            color: #000;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: none;
+            z-index: 200;
+        }
+
+        /* 连接状态 */
+        #connectionStatus {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 100;
+        }
+
+        #connectionStatus.connected {
+            background: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
+            border: 1px solid #00ff00;
+        }
+
+        #connectionStatus.disconnected {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff0000;
+            border: 1px solid #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="520" height="520"></canvas>
+
+        <!-- 连接状态 -->
+        <div id="connectionStatus" class="disconnected">未连接</div>
+
+        <!-- 登录界面 -->
+        <div id="loginScreen">
+            <h1>🎮 坦克大战1999 🎮</h1>
+            <div style="color: #00ff00; margin-bottom: 20px; font-size: 14px;">局域网多人对战版</div>
+
+            <div class="input-group">
+                <label>服务器地址</label>
+                <input type="text" id="serverAddress" value="localhost:8080" placeholder="例如: 192.168.1.100:8080">
+            </div>
+
+            <div class="input-group">
+                <label>玩家昵称</label>
+                <input type="text" id="playerName" placeholder="输入你的昵称" maxlength="10">
+            </div>
+
+            <div class="btn-group">
+                <button class="btn" onclick="createRoom()">创建房间</button>
+                <button class="btn" onclick="showJoinRoom()">加入房间</button>
+            </div>
+
+            <div class="input-group" id="joinRoomInput" style="display: none; margin-top: 15px;">
+                <label>房间号</label>
+                <input type="text" id="roomIdInput" placeholder="输入房间号" maxlength="6">
+                <button class="btn" onclick="joinRoom()" style="margin-top: 10px; width: 250px;">加入</button>
+            </div>
+        </div>
+
+        <!-- 等待房间 -->
+        <div id="waitingRoom">
+            <h2>⏳ 等待玩家</h2>
+            <div class="room-info">
+                <p>房间号</p>
+                <p class="room-id" id="displayRoomId">------</p>
+            </div>
+            <div class="player-list" id="playerList">
+                <!-- 动态生成 -->
+            </div>
+            <p style="color: #00ff00; margin: 20px 0; font-size: 14px;">至少需要2名玩家才能开始游戏</p>
+            <button class="btn" id="readyBtn" onclick="toggleReady()">准备</button>
+        </div>
+
+        <!-- HUD -->
+        <div id="hud">
+            <div class="hud-group">
+                <div class="hud-item">
+                    <div class="hud-label">分数</div>
+                    <div class="hud-value" id="score">0</div>
+                </div>
+                <div class="hud-item">
+                    <div class="hud-label">生命</div>
+                    <div class="hud-value" id="lives">3</div>
+                </div>
+            </div>
+            <div class="hud-group">
+                <div class="hud-item">
+                    <div class="hud-label">敌人</div>
+                    <div class="hud-value" id="enemies">20</div>
+                </div>
+                <div class="hud-item">
+                    <div class="hud-label">关卡</div>
+                    <div class="hud-value" id="level">1</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 聊天框 -->
+        <div id="chatBox">
+            <div id="chatMessages"></div>
+            <div id="chatInput">
+                <input type="text" id="messageInput" placeholder="按Enter发送消息..." maxlength="50">
+                <button onclick="sendMessage()">发送</button>
+            </div>
+        </div>
+
+        <!-- 游戏结束 -->
+        <div id="gameOver">
+            <h2 id="gameOverTitle">游戏结束</h2>
+            <div class="score-board" id="scoreBoard">
+                <!-- 动态生成 -->
+            </div>
+            <button class="btn" onclick="location.reload()">返回主菜单</button>
+        </div>
+
+        <!-- 提示 -->
+        <div id="notification"></div>
+    </div>
+
+    <script>
+    // ==================== 游戏常量 ====================
+    const TILE_SIZE = 40;
+    const MAP_SIZE = 13;
+    const CANVAS_SIZE = 520;
+
+    const TILE = {
+        EMPTY: 0,
+        BRICK: 1,
+        STEEL: 2,
+        GRASS: 3,
+        WATER: 4,
+        BASE: 5
+    };
+
+    // ==================== 游戏状态 ====================
+    let ws = null;
+    let playerId = null;
+    let roomId = null;
+    let playerName = '';
+    let isReady = false;
+    let gameState = null;
+    let myTank = null;
+
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // 输入状态
+    const keys = {};
+    let lastMoveTime = 0;
+    let isShooting = false;
+
+    // ==================== WebSocket连接 ====================
+    function connect(serverAddress) {
+        return new Promise((resolve, reject) => {
+            ws = new WebSocket(`ws://${serverAddress}`);
+
+            ws.onopen = () => {
+                updateConnectionStatus(true);
+                showNotification('已连接到服务器');
+                resolve();
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                handleMessage(data);
+            };
+
+            ws.onclose = () => {
+                updateConnectionStatus(false);
+                showNotification('与服务器断开连接');
+            };
+
+            ws.onerror = (error) => {
+                console.error('WebSocket错误:', error);
+                updateConnectionStatus(false);
+                reject(error);
+            };
+        });
+    }
+
+    function updateConnectionStatus(connected) {
+        const status = document.getElementById('connectionStatus');
+        if (connected) {
+            status.textContent = '已连接';
+            status.className = 'connected';
+        } else {
+            status.textContent = '未连接';
+            status.className = 'disconnected';
+        }
+    }
+
+    // ==================== 消息处理 ====================
+    function handleMessage(data) {
+        switch(data.type) {
+            case 'roomCreated':
+                handleRoomCreated(data);
+                break;
+
+            case 'roomJoined':
+                handleRoomJoined(data);
+                break;
+
+            case 'playerJoined':
+                handlePlayerJoined(data);
+                break;
+
+            case 'playerReady':
+                handlePlayerReady(data);
+                break;
+
+            case 'playerLeft':
+                handlePlayerLeft(data);
+                break;
+
+            case 'gameStart':
+                handleGameStart(data);
+                break;
+
+            case 'gameState':
+                handleGameState(data);
+                break;
+
+            case 'gameOver':
+                handleGameOver(data);
+                break;
+
+            case 'chat':
+                handleChat(data);
+                break;
+
+            case 'error':
+                showNotification(data.message);
+                break;
+        }
+    }
+
+    function handleRoomCreated(data) {
+        playerId = data.playerId;
+        roomId = data.roomId;
+        showWaitingRoom(data.players);
+    }
+
+    function handleRoomJoined(data) {
+        playerId = data.playerId;
+        roomId = data.roomId;
+        showWaitingRoom(data.players);
+    }
+
+    function handlePlayerJoined(data) {
+        showNotification(`${data.player.name} 加入了游戏`);
+        if (gameState) return;
+        send({ type: 'getPlayers' });
+    }
+
+    function handlePlayerReady(data) {
+        updatePlayerList();
+    }
+
+    function handlePlayerLeft(data) {
+        showNotification('有玩家离开了游戏');
+        if (gameState) return;
+        send({ type: 'getPlayers' });
+    }
+
+    function handleGameStart(data) {
+        gameState = data.gameState;
+        document.getElementById('waitingRoom').style.display = 'none';
+        document.getElementById('hud').style.display = 'flex';
+        document.getElementById('chatBox').style.display = 'flex';
+
+        // 设置键盘监听
+        setupKeyboard();
+
+        // 开始渲染
+        requestAnimationFrame(gameLoop);
+    }
+
+    function handleGameState(data) {
+        gameState = data.gameState;
+        updateHUD();
+
+        // 找到自己的坦克
+        if (gameState && gameState.tanks) {
+            myTank = gameState.tanks.find(t => t.owner === playerId);
+        }
+    }
+
+    function handleGameOver(data) {
+        document.getElementById('gameOver').style.display = 'flex';
+        document.getElementById('gameOverTitle').textContent = data.won ? '🎉 胜利! 🎉' : '💀 失败 💀';
+
+        const scoreBoard = document.getElementById('scoreBoard');
+        scoreBoard.innerHTML = data.scores.map(s => `
+            <div class="score-item">
+                <span class="name">${s.name}</span>
+                <span class="score">${s.score} 分</span>
+            </div>
+        `).join('');
+    }
+
+    function handleChat(data) {
+        const messages = document.getElementById('chatMessages');
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'chat-message';
+        msgDiv.innerHTML = `<span class="sender">${data.playerName}:</span> <span class="text">${data.message}</span>`;
+        messages.appendChild(msgDiv);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    // ==================== 房间管理 ====================
+    async function createRoom() {
+        playerName = document.getElementById('playerName').value.trim();
+        const serverAddress = document.getElementById('serverAddress').value.trim();
+
+        if (!playerName) {
+            showNotification('请输入玩家昵称');
+            return;
+        }
+
+        try {
+            await connect(serverAddress);
+            send({
+                type: 'createRoom',
+                playerName: playerName
+            });
+        } catch (e) {
+            showNotification('连接服务器失败');
+        }
+    }
+
+    async function joinRoom() {
+        playerName = document.getElementById('playerName').value.trim();
+        const serverAddress = document.getElementById('serverAddress').value.trim();
+        const roomIdInput = document.getElementById('roomIdInput').value.trim().toUpperCase();
+
+        if (!playerName) {
+            showNotification('请输入玩家昵称');
+            return;
+        }
+
+        if (!roomIdInput) {
+            showNotification('请输入房间号');
+            return;
+        }
+
+        try {
+            await connect(serverAddress);
+            send({
+                type: 'joinRoom',
+                roomId: roomIdInput,
+                playerName: playerName
+            });
+        } catch (e) {
+            showNotification('连接服务器失败');
+        }
+    }
+
+    function showJoinRoom() {
+        const input = document.getElementById('joinRoomInput');
+        input.style.display = input.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function showWaitingRoom(players) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('waitingRoom').style.display = 'flex';
+        document.getElementById('displayRoomId').textContent = roomId;
+        updatePlayerList(players);
+    }
+
+    function updatePlayerList(players) {
+        const list = document.getElementById('playerList');
+        list.innerHTML = players.map(p => `
+            <div class="player-item ${p.ready ? 'ready' : ''}">
+                <span class="player-name">${p.name}</span>
+                <span class="player-status">${p.ready ? '✓ 已准备' : '等待中'}</span>
+            </div>
+        `).join('');
+    }
+
+    function toggleReady() {
+        isReady = !isReady;
+        const btn = document.getElementById('readyBtn');
+        btn.textContent = isReady ? '取消准备' : '准备';
+        btn.style.background = isReady ? 'linear-gradient(180deg, #00ff00, #00aa00)' : '';
+        btn.style.color = isReady ? '#000' : '';
+
+        send({
+            type: 'startGame',
+            playerId: playerId,
+            ready: isReady
+        });
+    }
+
+    // ==================== 游戏控制 ====================
+    function setupKeyboard() {
+        document.addEventListener('keydown', (e) => {
+            keys[e.code] = true;
+
+            // 聊天输入时不移动
+            if (document.activeElement.id === 'messageInput') return;
+
+            if (e.code === 'Space') {
+                e.preventDefault();
+                isShooting = true;
+            }
+
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            keys[e.code] = false;
+
+            if (e.code === 'Space') {
+                isShooting = false;
+            }
+        });
+
+        // 聊天回车发送
+        document.getElementById('messageInput').addEventListener('keydown', (e) => {
+            if (e.code === 'Enter') {
+                sendMessage();
+            }
+        });
+    }
+
+    function sendInput() {
+        if (!gameState || !myTank || !myTank.active) return;
+
+        const now = Date.now();
+        if (now - lastMoveTime < 50) return; // 限制发送频率
+        lastMoveTime = now;
+
+        let direction = myTank.direction;
+
+        if (keys['KeyW'] || keys['ArrowUp']) {
+            direction = 0;
+        } else if (keys['KeyS'] || keys['ArrowDown']) {
+            direction = 2;
+        } else if (keys['KeyA'] || keys['ArrowLeft']) {
+            direction = 3;
+        } else if (keys['KeyD'] || keys['ArrowRight']) {
+            direction = 1;
+        }
+
+        send({
+            type: 'playerMove',
+            playerId: playerId,
+            direction: direction,
+            shooting: isShooting
+        });
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('messageInput');
+        const message = input.value.trim();
+
+        if (!message) return;
+
+        send({
+            type: 'chat',
+            playerId: playerId,
+            message: message
+        });
+
+        input.value = '';
+    }
+
+    // ==================== 渲染 ====================
+    function gameLoop() {
+        if (!gameState) return;
+
+        sendInput();
+        render();
+
+        requestAnimationFrame(gameLoop);
+    }
+
+    function render() {
+        // 清空画布
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+
+        if (!gameState.map) return;
+
+        // 绘制地图
+        drawMap();
+
+        // 绘制敌人
+        if (gameState.enemies) {
+            gameState.enemies.forEach(enemy => {
+                if (enemy.active) {
+                    drawTank(enemy.x, enemy.y, enemy.direction, getEnemyColor(enemy.type), false);
+                }
+            });
+        }
+
+        // 绘制玩家坦克
+        if (gameState.tanks) {
+            gameState.tanks.forEach(tank => {
+                if (tank.active) {
+                    const color = tank.owner === playerId ? '#ffd700' : '#ff8c00';
+                    drawTank(tank.x, tank.y, tank.direction, color, tank.shield);
+                }
+            });
+        }
+
+        // 绘制子弹
+        if (gameState.bullets) {
+            gameState.bullets.forEach(bullet => {
+                if (bullet.active) {
+                    ctx.fillStyle = bullet.owner === 'enemy' ? '#fff' : '#ff0';
+                    ctx.fillRect(bullet.x - 3, bullet.y - 3, 6, 6);
+                }
+            });
+        }
+    }
+
+    function drawMap() {
+        for (let y = 0; y < MAP_SIZE; y++) {
+            for (let x = 0; x < MAP_SIZE; x++) {
+                const tile = gameState.map[y][x];
+                const px = x * TILE_SIZE;
+                const py = y * TILE_SIZE;
+
+                switch(tile) {
+                    case TILE.BRICK:
+                        ctx.fillStyle = '#8B4513';
+                        ctx.fillRect(px, py, TILE_SIZE, TILE_SIZE);
+                        ctx.strokeStyle = '#654321';
+                        ctx.lineWidth = 1;
+                        for (let i = 0; i < 2; i++) {
+                            for (let j = 0; j < 2; j++) {
+                                ctx.strokeRect(px + i * TILE_SIZE/2, py + j * TILE_SIZE/2, TILE_SIZE/2, TILE_SIZE/2);
+                            }
+                        }
+                        break;
+
+                    case TILE.STEEL:
+                        ctx.fillStyle = '#C0C0C0';
+                        ctx.fillRect(px, py, TILE_SIZE, TILE_SIZE);
+                        ctx.fillStyle = '#808080';
+                        ctx.fillRect(px + 5, py + 5, TILE_SIZE - 10, TILE_SIZE - 10);
+                        break;
+
+                    case TILE.WATER:
+                        ctx.fillStyle = '#1E90FF';
+                        ctx.fillRect(px, py, TILE_SIZE, TILE_SIZE);
+                        break;
+
+                    case TILE.GRASS:
+                        ctx.fillStyle = '#228B22';
+                        ctx.fillRect(px, py, TILE_SIZE, TILE_SIZE);
+                        break;
+
+                    case TILE.BASE:
+                        ctx.fillStyle = '#FFD700';
+                        ctx.beginPath();
+                        ctx.moveTo(px + TILE_SIZE/2, py + 5);
+                        ctx.lineTo(px + TILE_SIZE - 5, py + TILE_SIZE - 5);
+                        ctx.lineTo(px + 5, py + TILE_SIZE - 5);
+                        ctx.closePath();
+                        ctx.fill();
+                        break;
+                }
+            }
+        }
+    }
+
+    function drawTank(x, y, direction, color, hasShield) {
+        ctx.save();
+        ctx.translate(x, y);
+
+        const angles = [0, Math.PI/2, Math.PI, -Math.PI/2];
+        ctx.rotate(angles[direction]);
+
+        // 护盾
+        if (hasShield) {
+            ctx.strokeStyle = `rgba(0, 255, 255, ${Math.sin(Date.now() / 100) * 0.3 + 0.7})`;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(0, 0, 23, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+
+        // 坦克身体
+        ctx.fillStyle = color;
+        ctx.fillRect(-18, -18, 36, 36);
+
+        // 履带
+        ctx.fillStyle = '#333';
+        ctx.fillRect(-21, -18, 6, 36);
+        ctx.fillRect(15, -18, 6, 36);
+
+        // 炮塔
+        ctx.fillStyle = shadeColor(color, -20);
+        ctx.fillRect(-8, -8, 16, 16);
+
+        // 炮管
+        ctx.fillStyle = '#666';
+        ctx.fillRect(-3, -23, 6, 18);
+
+        ctx.restore();
+    }
+
+    function getEnemyColor(type) {
+        switch(type) {
+            case 2: return '#ffff00';
+            case 3: return '#ff4444';
+            case 4: return '#00ffff';
+            default: return '#ffffff';
+        }
+    }
+
+    function shadeColor(color, percent) {
+        const num = parseInt(color.replace('#', ''), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = (num >> 16) + amt;
+        const G = (num >> 8 & 0x00FF) + amt;
+        const B = (num & 0x0000FF) + amt;
+        return '#' + (0x1000000 +
+            (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+            (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+            (B < 255 ? B < 1 ? 0 : B : 255)
+        ).toString(16).slice(1);
+    }
+
+    function updateHUD() {
+        if (!gameState) return;
+
+        document.getElementById('score').textContent = myTank && gameState.tanks ?
+            gameState.tanks.find(t => t.owner === playerId)?.score || 0 : 0;
+        document.getElementById('lives').textContent = myTank ? (myTank.active ? '●' : '○') : '○';
+        document.getElementById('enemies').textContent = gameState.enemiesRemaining || 0;
+        document.getElementById('level').textContent = gameState.level || 1;
+    }
+
+    // ==================== 工具函数 ====================
+    function send(data) {
+        if (ws && ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify(data));
+        }
+    }
+
+    function showNotification(message) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    }
+    </script>
+</body>
+</html>
