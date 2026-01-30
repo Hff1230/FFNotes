@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "b6133d2d7439d5b1",
+        "id": "f7ebce4a36ec0b40",
         "type": "tabs",
         "children": [
           {
-            "id": "794319f22c0428d9",
+            "id": "26fc60b3da16b602",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "JoyMeng Note/日记 2026-01-30.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "日记 2026-01-30"
+              "title": "新标签页"
             }
           }
         ]
@@ -178,10 +174,14 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "794319f22c0428d9",
+  "active": "26fc60b3da16b602",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2026-01-23.md",
+    "未命名 4.canvas",
+    "未命名 3.canvas",
+    "未命名 2.canvas",
+    "未命名 1.canvas",
     "JoyMeng Note/日记 2026-01-30.md",
+    "JoyMeng Note/日记 2026-01-23.md",
     "AI库/tmpclaude-a46a-cwd",
     "AI库/小游戏/开心农场.html",
     "AI库/小游戏/开心农场策划案.md",
@@ -202,9 +202,6 @@
     "DefaultConfig/A Git Commands.md",
     "DefaultConfig/MD 语法.md",
     "未命名.canvas",
-    "未命名 2.canvas",
-    "未命名 1.canvas",
-    "未命名 3.canvas",
     "Unity/A开发笔记/未命名.md",
     "Unity/A开发笔记/未命名 1.md",
     "Unity/帝国、红警2/dataConfig.md",
@@ -219,7 +216,6 @@
     "资料文件夹/~$反射的用法.docx",
     "Android打印Trace堆栈.md",
     "JoyMeng Note/日记 2025-12-05.md",
-    "JoyMeng Note/日记 2025-11-28.md",
     "附件仓库/杂项仓库/Pasted image 20250814092251.png",
     "Unity/帝国、红警2/RedAlert/0画布.canvas",
     "Emojs/a-folder.svg",
