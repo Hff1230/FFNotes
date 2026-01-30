@@ -154,9 +154,19 @@
               "icon": "git-pull-request",
               "title": "Source Control"
             }
+          },
+          {
+            "id": "c1b75725ceeb7d18",
+            "type": "leaf",
+            "state": {
+              "type": "claudian-view",
+              "state": {},
+              "icon": "bot",
+              "title": "Claudian"
+            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
@@ -171,10 +181,11 @@
       "canvas:新建白板": false,
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
-      "command-palette:打开命令面板": false
+      "command-palette:打开命令面板": false,
+      "claudian:Open Claudian": false
     }
   },
-  "active": "26fc60b3da16b602",
+  "active": "c1b75725ceeb7d18",
   "lastOpenFiles": [
     "未命名 4.canvas",
     "未命名 3.canvas",
