@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "0b4e78f584a908bb",
+        "id": "98e6a6241e79eeb0",
         "type": "tabs",
         "children": [
           {
-            "id": "4de241c58179d93a",
+            "id": "af073c51dba669cf",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -170,7 +170,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
@@ -189,13 +189,13 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "4de241c58179d93a",
+  "active": "af073c51dba669cf",
   "lastOpenFiles": [
+    "AI库/小游戏/坦克1999/坦克大战1999策划案.md",
     "JoyMeng Note/日记 2026-01-30.md",
     "DefaultConfig/A Git Commands.md",
     "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
     "DefaultConfig/MD 语法.md",
-    "AI库/小游戏/坦克1999/坦克大战1999策划案.md",
     "AI库/小游戏/坦克1999/局域网版使用说明.md",
     "未命名 5.canvas",
     "未命名 4.canvas",
