@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>立体图形展开 - 多种展开方案</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .controls {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .control-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        select, button {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        select {
+            background: white;
+            border: 2px solid #667eea;
+            color: #333;
+            min-width: 200px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+            min-width: 120px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .slider-container label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 8px;
+            border-radius: 4px;
+            background: #ddd;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+        }
+
+        .main-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .panel h2 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .scene-3d {
+            height: 450px;
+            perspective: 1200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .scene-2d {
+            height: 450px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* 3D Cube Container */
+        .cube-assembly {
+            width: 180px;
+            height: 180px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.3s;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border: 2px solid rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            backface-visibility: visible;
+            transform-origin: center;
+            box-shadow: inset 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        /* 面的颜色 */
+        .face-front { background: rgba(255, 107, 107, 0.95); }
+        .face-back { background: rgba(78, 205, 196, 0.95); }
+        .face-right { background: rgba(255, 230, 109, 0.95); }
+        .face-left { background: rgba(26, 83, 92, 0.95); }
+        .face-top { background: rgba(255, 159, 67, 0.95); }
+        .face-bottom { background: rgba(84, 160, 255, 0.95); }
+
+        /* 2D 展开图 */
+        .unfolded-grid {
+            position: relative;
+        }
+
+        .unfolded-face {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            border: 2px solid rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.6s ease;
+            box-shadow: inset 0 0 15px rgba(255,255,255,0.3);
+        }
+
+        .unfolded-face.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* 不同展开方案的布局 */
+        /* 方案1: 十字形 - 141排列 */
+        .layout-cross .uf-top { top: 0; left: 90px; }
+        .layout-cross .uf-bottom { top: 180px; left: 90px; }
+        .layout-cross .uf-front { top: 90px; left: 90px; }
+        .layout-cross .uf-back { top: 90px; left: 180px; }
+        .layout-cross .uf-left { top: 90px; left: 0; }
+        .layout-cross .uf-right { top: 90px; left: 270px; }
+
+        /* 方案2: 一字形 - 连续6个 */
+        .layout-line .uf-front { top: 90px; left: 0; }
+        .layout-line .uf-top { top: 90px; left: 90px; }
+        .layout-line .uf-back { top: 90px; left: 180px; }
+        .layout-line .uf-bottom { top: 90px; left: 270px; }
+        .layout-line .uf-left { top: 90px; left: 360px; }
+        .layout-line .uf-right { top: 90px; left: 450px; }
+
+        /* 方案3: L形 */
+        .layout-l .uf-front { top: 0; left: 0; }
+        .layout-l .uf-top { top: 0; left: 90px; }
+        .layout-l .uf-back { top: 0; left: 180px; }
+        .layout-l .uf-right { top: 90px; left: 0; }
+        .layout-l .uf-bottom { top: 90px; left: 90px; }
+        .layout-l .uf-left { top: 180px; left: 0; }
+
+        /* 方案4: Z形 */
+        .layout-z .uf-front { top: 0; left: 0; }
+        .layout-z .uf-top { top: 0; left: 90px; }
+        .layout-z .uf-left { top: 90px; left: 90px; }
+        .layout-z .uf-bottom { top: 180px; left: 90px; }
+        .layout-z .uf-back { top: 180px; left: 0; }
+        .layout-z .uf-right { top: 0; left: 180px; }
+
+        /* 方案5: T形 */
+        .layout-t .uf-top { top: 0; left: 90px; }
+        .layout-t .uf-left { top: 90px; left: 0; }
+        .layout-t .uf-front { top: 90px; left: 90px; }
+        .layout-t .uf-right { top: 90px; left: 180px; }
+        .layout-t .uf-bottom { top: 90px; left: 270px; }
+        .layout-t .uf-back { top: 180px; left: 90px; }
+
+        /* 方案缩略图 */
+        .pattern-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .pattern-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+
+        .pattern-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .pattern-card.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        }
+
+        .pattern-preview {
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .pattern-name {
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .pattern-desc {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .info-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .info-panel h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .info-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .info-item {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .info-item label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .info-item .value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .cut-line-info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .cut-line-info h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .cut-line-info p {
+            color: #856404;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1200px) {
+            .main-display {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎲 立体图形展开 - 多种方案展示</h1>
+            <p class="subtitle">沿不同边剪开，得到不同的展开图 | 正方体有11种不同的展开方式</p>
+        </header>
+
+        <div class="controls">
+            <div class="control-row">
+                <select id="shapeSelect">
+                    <option value="cube">正方体</option>
+                    <option value="cuboid">长方体</option>
+                </select>
+                <button id="autoPlayBtn">▶ 自动展开</button>
+                <button id="pauseBtn" disabled>⏸ 暂停</button>
+                <button id="resetBtn">⟲ 重置</button>
+            </div>
+            <div class="control-row">
+                <div class="slider-container">
+                    <label>展开进度:</label>
+                    <input type="range" id="progressSlider" min="0" max="100" value="0">
+                    <span id="progressValue">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-display">
+            <div class="panel">
+                <h2>🎲 3D 立体视图</h2>
+                <div class="scene-3d" id="scene3d">
+                    <div class="cube-assembly" id="cube3d">
+                        <div class="cube-face face-front" data-face="front">前</div>
+                        <div class="cube-face face-back" data-face="back">后</div>
+                        <div class="cube-face face-right" data-face="right">右</div>
+                        <div class="cube-face face-left" data-face="left">左</div>
+                        <div class="cube-face face-top" data-face="top">上</div>
+                        <div class="cube-face face-bottom" data-face="bottom">下</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>📄 平面展开图</h2>
+                <div class="scene-2d" id="scene2d">
+                    <div class="unfolded-grid layout-cross" id="unfoldedGrid">
+                        <div class="unfolded-face face-top uf-top">上</div>
+                        <div class="unfolded-face face-bottom uf-bottom">下</div>
+                        <div class="unfolded-face face-front uf-front">前</div>
+                        <div class="unfolded-face face-back uf-back">后</div>
+                        <div class="unfolded-face face-left uf-left">左</div>
+                        <div class="unfolded-face face-right uf-right">右</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>🎨 选择展开方案（沿不同边剪开）</h2>
+            <div class="pattern-selector" id="patternSelector">
+                <!-- 动态生成 -->
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <h3 id="patternTitle">📐 十字形展开（141排列）</h3>
+            <div class="info-content">
+                <div class="info-item">
+                    <label>展开方案</label>
+                    <div class="value" id="patternName">十字形</div>
+                </div>
+                <div class="info-item">
+                    <label>排列方式</label>
+                    <div class="value" id="patternLayout">1-4-1</div>
+                </div>
+                <div class="info-item">
+                    <label>剪开路径</label>
+                    <div class="value" id="cutPath">7条棱</div>
+                </div>
+                <div class="info-item">
+                    <label>保留连接</label>
+                    <div class="value" id="keepEdges">5条棱</div>
+                </div>
+            </div>
+            <div class="cut-line-info">
+                <h4>✂️ 剪开说明</h4>
+                <p id="cutDescription">
+                    保持前面不动，剪开前面与上面、下面、左面、右面的连接，然后沿周围棱剪开，
+                    将后面展开到右侧。这是最常见的展开方式，呈十字形。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 展开方案定义
+        const unfoldPatterns = {
+            cube: [
+                {
+                    id: 'cross',
+                    name: '十字形',
+                    layout: '1-4-1',
+                    desc: '最经典的展开方式，中间4个面，上下各1个面',
+                    cutDesc: '保持前面不动，剪开前与上、下的连接，以及周围的棱，将后面展开到最右侧。这是最对称的展开方式。',
+                    // 3D展开时的旋转轴和角度
+                    rotations: {
+                        front: { axis: 'none', angle: 0 },
+                        back: { axis: 'left', angle: 180 },  // 绕左边旋转到右侧
+                        right: { axis: 'left', angle: 90 },   // 绕左边旋转展开
+                        left: { axis: 'right', angle: -90 },  // 绕右边旋转展开
+                        top: { axis: 'bottom', angle: 90 },   // 绕底边向上旋转
+                        bottom: { axis: 'top', angle: -90 }   // 绕顶边向下旋转
+                    },
+                    layoutClass: 'layout-cross'
+                },
+                {
+                    id: 'line',
+                    name: '一字形',
+                    layout: '6',
+                    desc: '6个面连成一条直线',
+                    cutDesc: '从前面开始，依次向右展开，所有面在一条直线上。需要剪开5条棱，保留一条连接所有面。',
+                    rotations: {
+                        front: { axis: 'none', angle: 0 },
+                        top: { axis: 'left', angle: 90 },
+                        back: { axis: 'left', angle: 90 },
+                        bottom: { axis: 'left', angle: 90 },
+                        left: { axis: 'left', angle: 90 },
+                        right: { axis: 'right', angle: -90 }
+                    },
+                    layoutClass: 'layout-line'
+                },
+                {
+                    id: 'l-shape',
+                    name: 'L形',
+                    layout: '3-2-1',
+                    desc: '呈L形排列，3-2-1结构',
+                    cutDesc: '前面、上面、后面横向排列，右面、下面在前面下方，左面在最下面。形成L形结构。',
+                    rotations: {
+                        front: { axis: 'none', angle: 0 },
+                        top: { axis: 'bottom', angle: 90 },
+                        back: { axis: 'bottom', angle: 180 },
+                        right: { axis: 'left', angle: -90 },
+                        bottom: { axis: 'top', angle: -90 },
+                        left: { axis: 'top', angle: -180 }
+                    },
+                    layoutClass: 'layout-l'
+                },
+                {
+                    id: 'z-shape',
+                    name: 'Z形',
+                    layout: '2-2-2',
+                    desc: '呈Z形排列，2-2-2结构',
+                    cutDesc: '前面和上面在上方，左面和下面在中间，后面和右面在下方。形成锯齿状Z形。',
+                    rotations: {
+                        front: { axis: 'none', angle: 0 },
+                        top: { axis: 'bottom', angle: 90 },
+                        left: { axis: 'top', angle: 90 },
+                        bottom: { axis: 'top', angle: 180 },
+                        back: { axis: 'top', angle: 270 },
+                        right: { axis: 'bottom', angle: -90 }
+                    },
+                    layoutClass: 'layout-z'
+                },
+                {
+                    id: 't-shape',
+                    name: 'T形',
+                    layout: '1-4-1变体',
+                    desc: '呈T形排列',
+                    cutDesc: '上面在顶部，左、前、右、下面横向排列，后面在底部。形成倒T形结构。',
+                    rotations: {
+                        front: { axis: 'none', angle: 0 },
+                        top: { axis: 'bottom', angle: 90 },
+                        left: { axis: 'right', angle: -90 },
+                        right: { axis: 'left', angle: 90 },
+                        bottom: { axis: 'left', angle: 180 },
+                        back: { axis: 'bottom', angle: -180 }
+                    },
+                    layoutClass: 'layout-t'
+                }
+            ]
+        };
+
+        // 状态变量
+        let currentShape = 'cube';
+        let currentPattern = unfoldPatterns.cube[0];
+        let isPlaying = false;
+        let progress = 0;
+        let rotationAngleX = -20;
+        let rotationAngleY = -30;
+
+        // DOM元素
+        const shapeSelect = document.getElementById('shapeSelect');
+        const autoPlayBtn = document.getElementById('autoPlayBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const progressSlider = document.getElementById('progressSlider');
+        const progressValue = document.getElementById('progressValue');
+        const cube3d = document.getElementById('cube3d');
+        const scene3d = document.getElementById('scene3d');
+        const unfoldedGrid = document.getElementById('unfoldedGrid');
+        const unfoldedFaces = document.querySelectorAll('.unfolded-face');
+        const patternSelector = document.getElementById('patternSelector');
+        const patternTitle = document.getElementById('patternTitle');
+        const patternName = document.getElementById('patternName');
+        const patternLayout = document.getElementById('patternLayout');
+        const cutPath = document.getElementById('cutPath');
+        const keepEdges = document.getElementById('keepEdges');
+        const cutDescription = document.getElementById('cutDescription');
+
+        // 初始化
+        function init() {
+            renderPatternSelector();
+            setupEventListeners();
+            updatePatternInfo(currentPattern);
+            animate();
+        }
+
+        // 渲染方案选择器
+        function renderPatternSelector() {
+            const patterns = unfoldPatterns[currentShape];
+            patternSelector.innerHTML = patterns.map(pattern => `
+                <div class="pattern-card ${pattern.id === currentPattern.id ? 'active' : ''}"
+                     data-pattern-id="${pattern.id}">
+                    <div class="pattern-preview">
+                        <svg width="120" height="60" viewBox="0 0 120 60">
+                            ${getPatternSVG(pattern.id)}
+                        </svg>
+                    </div>
+                    <div class="pattern-name">${pattern.name}</div>
+                    <div class="pattern-desc">${pattern.layout} | ${pattern.desc}</div>
+                </div>
+            `).join('');
+
+            // 添加点击事件
+            document.querySelectorAll('.pattern-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const patternId = card.dataset.patternId;
+                    currentPattern = patterns.find(p => p.id === patternId);
+                    reset();
+                    updatePatternInfo(currentPattern);
+                    renderPatternSelector();
+                });
+            });
+        }
+
+        // 获取方案预览SVG
+        function getPatternSVG(patternId) {
+            const svgs = {
+                'cross': `
+                    <rect x="35" y="5" width="20" height="20" fill="#ff9f43" stroke="#333" stroke-width="1"/>
+                    <rect x="5" y="25" width="20" height="20" fill="#1a535c" stroke="#333" stroke-width="1"/>
+                    <rect x="35" y="25" width="20" height="20" fill="#ff6b6b" stroke="#333" stroke-width="1"/>
+                    <rect x="65" y="25" width="20" height="20" fill="#4ecdc4" stroke="#333" stroke-width="1"/>
+                    <rect x="95" y="25" width="20" height="20" fill="#ffe66d" stroke="#333" stroke-width="1"/>
+                    <rect x="35" y="45" width="20" height="20" fill="#54a0ff" stroke="#333" stroke-width="1"/>
+                `,
+                'line': `
+                    <rect x="5" y="20" width="18" height="18" fill="#ff6b6b" stroke="#333" stroke-width="1"/>
+                    <rect x="25" y="20" width="18" height="18" fill="#ff9f43" stroke="#333" stroke-width="1"/>
+                    <rect x="45" y="20" width="18" height="18" fill="#4ecdc4" stroke="#333" stroke-width="1"/>
+                    <rect x="65" y="20" width="18" height="18" fill="#54a0ff" stroke="#333" stroke-width="1"/>
+                    <rect x="85" y="20" width="18" height="18" fill="#1a535c" stroke="#333" stroke-width="1"/>
+                    <rect x="105" y="20" width="18" height="18" fill="#ffe66d" stroke="#333" stroke-width="1"/>
+                `,
+                'l-shape': `
+                    <rect x="5" y="5" width="18" height="18" fill="#ff6b6b" stroke="#333" stroke-width="1"/>
+                    <rect x="25" y="5" width="18" height="18" fill="#ff9f43" stroke="#333" stroke-width="1"/>
+                    <rect x="45" y="5" width="18" height="18" fill="#4ecdc4" stroke="#333" stroke-width="1"/>
+                    <rect x="5" y="25" width="18" height="18" fill="#ffe66d" stroke="#333" stroke-width="1"/>
+                    <rect x="25" y="25" width="18" height="18" fill="#54a0ff" stroke="#333" stroke-width="1"/>
+                    <rect x="5" y="45" width="18" height="18" fill="#1a535c" stroke="#333" stroke-width="1"/>
+                `,
+                'z-shape': `
+                    <rect x="5" y="5" width="18" height="18" fill="#ff6b6b" stroke="#333" stroke-width="1"/>
+                    <rect x="25" y="5" width="18" height="18" fill="#ff9f43" stroke="#333" stroke-width="1"/>
+                    <rect x="25" y="25" width="18" height="18" fill="#1a535c" stroke="#333" stroke-width="1"/>
+                    <rect x="25" y="45" width="18" height="18" fill="#54a0ff" stroke="#333" stroke-width="1"/>
+                    <rect x="5" y="45" width="18" height="18" fill="#4ecdc4" stroke="#333" stroke-width="1"/>
+                    <rect x="45" y="5" width="18" height="18" fill="#ffe66d" stroke="#333" stroke-width="1"/>
+                `,
+                't-shape': `
+                    <rect x="25" y="5" width="18" height="18" fill="#ff9f43" stroke="#333" stroke-width="1"/>
+                    <rect x="5" y="25" width="18" height="18" fill="#1a535c" stroke="#333" stroke-width="1"/>
+                    <rect x="25" y="25" width="18" height="18" fill="#ff6b6b" stroke="#333" stroke-width="1"/>
+                    <rect x="45" y="25" width="18" height="18" fill="#ffe66d" stroke="#333" stroke-width="1"/>
+                    <rect x="65" y="25" width="18" height="18" fill="#54a0ff" stroke="#333" stroke-width="1"/>
+                    <rect x="25" y="45" width="18" height="18" fill="#4ecdc4" stroke="#333" stroke-width="1"/>
+                `
+            };
+            return svgs[patternId] || svgs['cross'];
+        }
+
+        // 更新方案信息
+        function updatePatternInfo(pattern) {
+            patternTitle.textContent = `📐 ${pattern.name}展开（${pattern.layout}排列）`;
+            patternName.textContent = pattern.name;
+            patternLayout.textContent = pattern.layout;
+            cutDescription.textContent = pattern.cutDesc;
+
+            // 更新展开图布局
+            unfoldedGrid.className = `unfolded-grid ${pattern.layoutClass}`;
+        }
+
+        // 设置事件监听
+        function setupEventListeners() {
+            autoPlayBtn.addEventListener('click', startAnimation);
+            pauseBtn.addEventListener('click', pauseAnimation);
+            resetBtn.addEventListener('click', reset);
+
+            progressSlider.addEventListener('input', (e) => {
+                progress = parseInt(e.target.value);
+                updateProgress();
+            });
+
+            // 鼠标拖拽旋转
+            let isDragging = false;
+            let previousX, previousY;
+
+            scene3d.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousX = e.clientX;
+                previousY = e.clientY;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+
+                const deltaX = e.clientX - previousX;
+                const deltaY = e.clientY - previousY;
+
+                rotationAngleY += deltaX * 0.5;
+                rotationAngleX -= deltaY * 0.5;
+
+                previousX = e.clientX;
+                previousY = e.clientY;
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+        }
+
+        // 动画循环
+        function animate() {
+            cube3d.style.transform = `rotateX(${rotationAngleX}deg) rotateY(${rotationAngleY}deg)`;
+
+            if (isPlaying && progress < 100) {
+                progress += 0.5;
+                progressSlider.value = progress;
+                updateProgress();
+
+                if (progress >= 100) {
+                    pauseAnimation();
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        // 更新展开进度
+        function updateProgress() {
+            progressValue.textContent = `${Math.round(progress)}%`;
+
+            const unfoldFactor = progress / 100;
+
+            // 更新3D面的展开
+            const rotations = currentPattern.rotations;
+            const faces = cube3d.querySelectorAll('.cube-face');
+
+            faces.forEach(face => {
+                const faceName = face.dataset.face;
+                const rotation = rotations[faceName];
+                const baseTransform = getBaseTransform(faceName);
+
+                if (rotation.axis === 'none') {
+                    face.style.transform = baseTransform;
+                } else {
+                    const currentAngle = rotation.angle * unfoldFactor;
+                    face.style.transform = `${baseTransform} rotate${getRotationAxis(rotation.axis)}(${currentAngle}deg)`;
+                }
+            });
+
+            // 更新2D展开图显示
+            unfoldedFaces.forEach((face, index) => {
+                const showThreshold = 10 + (index * 15);
+                if (progress >= showThreshold) {
+                    face.classList.add('show');
+                } else {
+                    face.classList.remove('show');
+                }
+            });
+        }
+
+        // 获取面的基础变换
+        function getBaseTransform(faceName) {
+            const transforms = {
+                front: 'translateZ(90px)',
+                back: 'rotateY(180deg) translateZ(90px)',
+                right: 'rotateY(90deg) translateZ(90px)',
+                left: 'rotateY(-90deg) translateZ(90px)',
+                top: 'rotateX(90deg) translateZ(90px)',
+                bottom: 'rotateX(-90deg) translateZ(90px)'
+            };
+            return transforms[faceName];
+        }
+
+        // 获取旋转轴
+        function getRotationAxis(axis) {
+            const axisMap = {
+                'left': 'Y',
+                'right': 'Y',
+                'top': 'X',
+                'bottom': 'X'
+            };
+            return axisMap[axis] || 'Y';
+        }
+
+        // 动画控制
+        function startAnimation() {
+            if (progress >= 100) {
+                progress = 0;
+            }
+            isPlaying = true;
+            autoPlayBtn.disabled = true;
+            pauseBtn.disabled = false;
+        }
+
+        function pauseAnimation() {
+            isPlaying = false;
+            autoPlayBtn.disabled = false;
+            pauseBtn.disabled = true;
+        }
+
+        function reset() {
+            pauseAnimation();
+            progress = 0;
+            progressSlider.value = 0;
+            updateProgress();
+
+            // 重置所有面的变换
+            const faces = cube3d.querySelectorAll('.cube-face');
+            faces.forEach(face => {
+                const faceName = face.dataset.face;
+                face.style.transform = getBaseTransform(faceName);
+            });
+        }
+
+        // 启动
+        init();
+    </script>
+</body>
+</html>

@@ -3,9 +3,10 @@
   "title": "Create 3D model H5 display solution with unfold...",
   "titleGenerationStatus": "success",
   "createdAt": 1770104347457,
-  "updatedAt": 1770104433491,
-  "lastResponseAt": 1770104433491,
-  "sessionId": null,
+  "updatedAt": 1770105726663,
+  "lastResponseAt": 1770105685857,
+  "sessionId": "17f39276-343a-406c-a184-3783cbdef738",
+  "sdkSessionId": "17f39276-343a-406c-a184-3783cbdef738",
   "usage": {
     "model": "opus",
     "inputTokens": 0,

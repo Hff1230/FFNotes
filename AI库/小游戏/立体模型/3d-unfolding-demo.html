@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三维立体物体展开演示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .controls {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .control-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .control-row:last-child {
+            margin-bottom: 0;
+        }
+
+        select, button {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        select {
+            background: white;
+            border: 2px solid #667eea;
+            color: #333;
+            min-width: 180px;
+        }
+
+        select:hover, select:focus {
+            border-color: #764ba2;
+            outline: none;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+            min-width: 100px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .slider-container label {
+            font-weight: bold;
+            color: #333;
+            white-space: nowrap;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 8px;
+            border-radius: 4px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .display-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .panel h2 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .scene-3d, .scene-2d {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        /* CSS 3D Cube Styles */
+        .cube-container {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 2px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            transition: all 0.8s ease;
+            backface-visibility: visible;
+        }
+
+        .cube-face.front {
+            background: rgba(255, 107, 107, 0.8);
+            transform: translateZ(100px);
+        }
+
+        .cube-face.back {
+            background: rgba(78, 205, 196, 0.8);
+            transform: rotateY(180deg) translateZ(100px);
+        }
+
+        .cube-face.right {
+            background: rgba(255, 230, 109, 0.8);
+            transform: rotateY(90deg) translateZ(100px);
+        }
+
+        .cube-face.left {
+            background: rgba(26, 83, 92, 0.8);
+            transform: rotateY(-90deg) translateZ(100px);
+        }
+
+        .cube-face.top {
+            background: rgba(255, 159, 67, 0.8);
+            transform: rotateX(90deg) translateZ(100px);
+        }
+
+        .cube-face.bottom {
+            background: rgba(84, 160, 255, 0.8);
+            transform: rotateX(-90deg) translateZ(100px);
+        }
+
+        /* Unfolding animation classes */
+        .unfolding .cube-face.front {
+            transform: translateZ(100px) rotateY(0deg);
+        }
+
+        .unfolding .cube-face.back {
+            transform: rotateY(180deg) translateZ(100px) rotateY(90deg);
+        }
+
+        .unfolding .cube-face.right {
+            transform: rotateY(90deg) translateZ(100px) rotateY(90deg);
+        }
+
+        .unfolding .cube-face.left {
+            transform: rotateY(-90deg) translateZ(100px) rotateY(-90deg);
+        }
+
+        .unfolding .cube-face.top {
+            transform: rotateX(90deg) translateZ(100px) rotateX(90deg);
+        }
+
+        .unfolding .cube-face.bottom {
+            transform: rotateX(-90deg) translateZ(100px) rotateX(-90deg);
+        }
+
+        /* 2D Unfolded View */
+        .unfolded-2d {
+            display: grid;
+            grid-template-areas:
+                ".    top   .     .    ."
+                "left front right back bottom";
+            grid-template-columns: 200px 200px 200px 200px 200px;
+            grid-template-rows: 200px 200px;
+            gap: 0;
+        }
+
+        .unfolded-face {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.5s ease;
+        }
+
+        .unfolded-face.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .unfolded-face.top { background: rgba(255, 159, 67, 0.8); grid-area: top; }
+        .unfolded-face.bottom { background: rgba(84, 160, 255, 0.8); grid-area: bottom; }
+        .unfolded-face.front { background: rgba(255, 107, 107, 0.8); grid-area: front; }
+        .unfolded-face.back { background: rgba(78, 205, 196, 0.8); grid-area: back; }
+        .unfolded-face.left { background: rgba(26, 83, 92, 0.8); grid-area: left; }
+        .unfolded-face.right { background: rgba(255, 230, 109, 0.8); grid-area: right; }
+
+        .info-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .info-panel h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .info-panel p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .info-panel ul {
+            margin-left: 20px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 1024px) {
+            .display-area {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .control-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .slider-container {
+                min-width: auto;
+            }
+
+            .unfolded-2d {
+                grid-template-columns: 100px 100px 100px 100px 100px;
+                grid-template-rows: 100px 100px;
+            }
+
+            .unfolded-face, .cube-face {
+                font-size: 16px;
+            }
+
+            .cube-container {
+                width: 100px;
+                height: 100px;
+            }
+
+            .cube-face {
+                width: 100px;
+                height: 100px;
+            }
+
+            .cube-face.front { transform: translateZ(50px); }
+            .cube-face.back { transform: rotateY(180deg) translateZ(50px); }
+            .cube-face.right { transform: rotateY(90deg) translateZ(50px); }
+            .cube-face.left { transform: rotateY(-90deg) translateZ(50px); }
+            .cube-face.top { transform: rotateX(90deg) translateZ(50px); }
+            .cube-face.bottom { transform: rotateX(-90deg) translateZ(50px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎲 三维立体物体展开演示</h1>
+            <p class="subtitle">交互式学习立体图形与平面展开图的关系</p>
+        </header>
+
+        <div class="controls">
+            <div class="control-row">
+                <select id="shapeSelect">
+                    <option value="cube">正方体</option>
+                    <option value="cuboid">长方体</option>
+                    <option value="triangular-prism">三棱柱</option>
+                    <option value="cylinder">圆柱体</option>
+                    <option value="cone">圆锥体</option>
+                </select>
+                <button id="autoPlayBtn">▶ 自动播放</button>
+                <button id="pauseBtn" disabled>⏸ 暂停</button>
+                <button id="resetBtn">⟲ 重置</button>
+            </div>
+            <div class="control-row">
+                <div class="slider-container">
+                    <label>展开进度:</label>
+                    <input type="range" id="progressSlider" min="0" max="100" value="0">
+                    <span id="progressValue">0%</span>
+                </div>
+            </div>
+            <div class="control-row">
+                <div class="slider-container">
+                    <label>旋转速度:</label>
+                    <input type="range" id="rotationSlider" min="0" max="100" value="30">
+                </div>
+            </div>
+        </div>
+
+        <div class="display-area">
+            <div class="panel">
+                <h2>3D 立体视图</h2>
+                <div class="scene-3d" id="scene3d">
+                    <div class="cube-container" id="cube3d">
+                        <div class="cube-face front">前</div>
+                        <div class="cube-face back">后</div>
+                        <div class="cube-face right">右</div>
+                        <div class="cube-face left">左</div>
+                        <div class="cube-face top">上</div>
+                        <div class="cube-face bottom">下</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>平面展开图</h2>
+                <div class="scene-2d" id="scene2d">
+                    <div class="unfolded-2d">
+                        <div class="unfolded-face top">上</div>
+                        <div class="unfolded-face left">左</div>
+                        <div class="unfolded-face front">前</div>
+                        <div class="unfolded-face right">右</div>
+                        <div class="unfolded-face back">后</div>
+                        <div class="unfolded-face bottom">下</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <h3 id="shapeTitle">正方体展开说明</h3>
+            <p id="shapeDescription">
+                正方体有6个面，每个面都是正方形，面积相等。展开后呈十字形，由6个正方形组成。
+            </p>
+            <ul id="shapeFeatures">
+                <li>面数：6个</li>
+                <li>棱数：12条</li>
+                <li>顶点数：8个</li>
+                <li>每个面：正方形</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let currentShape = 'cube';
+        let isPlaying = false;
+        let animationId = null;
+        let progress = 0;
+        let rotationAngleX = -20;
+        let rotationAngleY = -30;
+        let rotationSpeed = 0.3;
+        let lastTimestamp = 0;
+
+        // DOM elements
+        const shapeSelect = document.getElementById('shapeSelect');
+        const autoPlayBtn = document.getElementById('autoPlayBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const progressSlider = document.getElementById('progressSlider');
+        const progressValue = document.getElementById('progressValue');
+        const rotationSlider = document.getElementById('rotationSlider');
+        const cube3d = document.getElementById('cube3d');
+        const scene3d = document.getElementById('scene3d');
+        const unfoldedFaces = document.querySelectorAll('.unfolded-face');
+        const shapeTitle = document.getElementById('shapeTitle');
+        const shapeDescription = document.getElementById('shapeDescription');
+        const shapeFeatures = document.getElementById('shapeFeatures');
+
+        // Shape data
+        const shapeData = {
+            cube: {
+                title: '正方体展开说明',
+                description: '正方体有6个面，每个面都是正方形，面积相等。展开后呈十字形，由6个正方形组成。',
+                features: ['面数：6个', '棱数：12条', '顶点数：8个', '每个面：正方形']
+            },
+            cuboid: {
+                title: '长方体展开说明',
+                description: '长方体有6个面，相对的面相等。展开后可以有不同的形式，取决于从哪条棱展开。',
+                features: ['面数：6个', '棱数：12条', '顶点数：8个', '面：长方形']
+            },
+            'triangular-prism': {
+                title: '三棱柱展开说明',
+                description: '三棱柱有5个面：2个三角形底面和3个长方形侧面。展开后为2个三角形和3个长方形的组合。',
+                features: ['面数：5个', '棱数：9条', '顶点数：6个', '底面：三角形', '侧面：长方形']
+            },
+            cylinder: {
+                title: '圆柱体展开说明',
+                description: '圆柱体有2个圆形底面和1个曲面侧面。侧面展开后是一个长方形，长等于底面周长，宽等于圆柱高。',
+                features: ['面数：3个', '底面：2个圆形', '侧面：1个曲面', '侧面展开：长方形']
+            },
+            cone: {
+                title: '圆锥体展开说明',
+                description: '圆锥体有1个圆形底面和1个曲面侧面。侧面展开后是一个扇形，半径等于圆锥的母线长。',
+                features: ['面数：2个', '底面：圆形', '侧面：曲面', '侧面展开：扇形']
+            }
+        };
+
+        // Initialize
+        function init() {
+            setupEventListeners();
+            animate();
+        }
+
+        // Event listeners
+        function setupEventListeners() {
+            shapeSelect.addEventListener('change', (e) => {
+                currentShape = e.target.value;
+                updateShapeInfo();
+                reset();
+            });
+
+            autoPlayBtn.addEventListener('click', startAnimation);
+            pauseBtn.addEventListener('click', pauseAnimation);
+            resetBtn.addEventListener('click', reset);
+
+            progressSlider.addEventListener('input', (e) => {
+                progress = parseInt(e.target.value);
+                updateProgress();
+            });
+
+            rotationSlider.addEventListener('input', (e) => {
+                rotationSpeed = e.target.value / 100;
+            });
+
+            // Mouse drag for rotation
+            let isDragging = false;
+            let previousX, previousY;
+
+            scene3d.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousX = e.clientX;
+                previousY = e.clientY;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+
+                const deltaX = e.clientX - previousX;
+                const deltaY = e.clientY - previousY;
+
+                rotationAngleY += deltaX * 0.5;
+                rotationAngleX -= deltaY * 0.5;
+
+                previousX = e.clientX;
+                previousY = e.clientY;
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+        }
+
+        // Animation loop
+        function animate(timestamp = 0) {
+            const deltaTime = timestamp - lastTimestamp;
+            lastTimestamp = timestamp;
+
+            // Auto rotation
+            if (!isDraggingState()) {
+                rotationAngleY += rotationSpeed;
+            }
+
+            // Apply rotation
+            cube3d.style.transform = `rotateX(${rotationAngleX}deg) rotateY(${rotationAngleY}deg)`;
+
+            // Auto unfold animation
+            if (isPlaying && progress < 100) {
+                progress += 0.5;
+                progressSlider.value = progress;
+                updateProgress();
+
+                if (progress >= 100) {
+                    pauseAnimation();
+                }
+            }
+
+            animationId = requestAnimationFrame(animate);
+        }
+
+        function isDraggingState() {
+            // This would be tracked with actual drag state
+            return false;
+        }
+
+        // Animation controls
+        function startAnimation() {
+            if (progress >= 100) {
+                progress = 0;
+            }
+            isPlaying = true;
+            autoPlayBtn.disabled = true;
+            pauseBtn.disabled = false;
+        }
+
+        function pauseAnimation() {
+            isPlaying = false;
+            autoPlayBtn.disabled = false;
+            pauseBtn.disabled = true;
+        }
+
+        function reset() {
+            pauseAnimation();
+            progress = 0;
+            progressSlider.value = 0;
+            updateProgress();
+            rotationAngleX = -20;
+            rotationAngleY = -30;
+        }
+
+        // Update progress
+        function updateProgress() {
+            progressValue.textContent = `${Math.round(progress)}%`;
+
+            // Update 3D unfolding
+            const unfoldFactor = progress / 100;
+            cube3d.classList.toggle('unfolding', progress > 0);
+
+            // Update face transformations based on progress
+            const faces = cube3d.querySelectorAll('.cube-face');
+            const baseTransforms = {
+                front: 'translateZ(100px)',
+                back: 'rotateY(180deg) translateZ(100px)',
+                right: 'rotateY(90deg) translateZ(100px)',
+                left: 'rotateY(-90deg) translateZ(100px)',
+                top: 'rotateX(90deg) translateZ(100px)',
+                bottom: 'rotateX(-90deg) translateZ(100px)'
+            };
+
+            faces.forEach((face, index) => {
+                const faceName = face.classList[1]; // front, back, etc.
+                const extraAngle = unfoldFactor * 90;
+
+                if (faceName === 'back') {
+                    face.style.transform = `rotateY(180deg) translateZ(100px) rotateY(${extraAngle}deg)`;
+                } else if (faceName === 'right') {
+                    face.style.transform = `rotateY(90deg) translateZ(100px) rotateY(${extraAngle}deg)`;
+                } else if (faceName === 'left') {
+                    face.style.transform = `rotateY(-90deg) translateZ(100px) rotateY(${-extraAngle}deg)`;
+                } else if (faceName === 'top') {
+                    face.style.transform = `rotateX(90deg) translateZ(100px) rotateX(${extraAngle}deg)`;
+                } else if (faceName === 'bottom') {
+                    face.style.transform = `rotateX(-90deg) translateZ(100px) rotateX(${-extraAngle}deg)`;
+                }
+            });
+
+            // Update 2D view
+            unfoldedFaces.forEach((face, index) => {
+                const showThreshold = (index + 1) * (100 / unfoldedFaces.length);
+                if (progress >= showThreshold - 20) {
+                    face.classList.add('show');
+                } else {
+                    face.classList.remove('show');
+                }
+            });
+        }
+
+        // Update shape information
+        function updateShapeInfo() {
+            const data = shapeData[currentShape];
+            shapeTitle.textContent = data.title;
+            shapeDescription.textContent = data.description;
+            shapeFeatures.innerHTML = data.features.map(f => `<li>${f}</li>`).join('');
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>

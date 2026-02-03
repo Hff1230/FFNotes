@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三维立体物体展开演示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .controls {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .control-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .control-row:last-child {
+            margin-bottom: 0;
+        }
+
+        select, button {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        select {
+            background: white;
+            border: 2px solid #667eea;
+            color: #333;
+            min-width: 180px;
+        }
+
+        select:hover {
+            border-color: #764ba2;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+            min-width: 100px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .slider-container label {
+            font-weight: bold;
+            color: #333;
+            white-space: nowrap;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 8px;
+            border-radius: 4px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+        }
+
+        .display-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .panel h2 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .scene-3d {
+            height: 400px;
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .scene-2d {
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 3D Cube Styles */
+        .cube-container {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.3s;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 3px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            transition: all 1s ease;
+            backface-visibility: visible;
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        .cube-face.front {
+            background: rgba(255, 107, 107, 0.9);
+            transform: translateZ(100px);
+        }
+
+        .cube-face.back {
+            background: rgba(78, 205, 196, 0.9);
+            transform: rotateY(180deg) translateZ(100px);
+        }
+
+        .cube-face.right {
+            background: rgba(255, 230, 109, 0.9);
+            transform: rotateY(90deg) translateZ(100px);
+        }
+
+        .cube-face.left {
+            background: rgba(26, 83, 92, 0.9);
+            transform: rotateY(-90deg) translateZ(100px);
+        }
+
+        .cube-face.top {
+            background: rgba(255, 159, 67, 0.9);
+            transform: rotateX(90deg) translateZ(100px);
+        }
+
+        .cube-face.bottom {
+            background: rgba(84, 160, 255, 0.9);
+            transform: rotateX(-90deg) translateZ(100px);
+        }
+
+        /* 2D Unfolded View */
+        .unfolded-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .unfolded-face {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 3px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.5s ease;
+        }
+
+        .unfolded-face.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* 正方体展开位置 */
+        .unfolded-face.top-face {
+            background: rgba(255, 159, 67, 0.9);
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .unfolded-face.bottom-face {
+            background: rgba(84, 160, 255, 0.9);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .unfolded-face.front-face {
+            background: rgba(255, 107, 107, 0.9);
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .unfolded-face.back-face {
+            background: rgba(78, 205, 196, 0.9);
+            top: 100px;
+            right: 0;
+        }
+
+        .unfolded-face.left-face {
+            background: rgba(26, 83, 92, 0.9);
+            top: 100px;
+            left: 0;
+        }
+
+        .unfolded-face.right-face {
+            background: rgba(255, 230, 109, 0.9);
+            top: 100px;
+            right: 100px;
+        }
+
+        /* Progress Steps */
+        .steps-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .steps-title {
+            font-size: 1.3em;
+            color: #667eea;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .step.active {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-left: 4px solid #667eea;
+        }
+
+        .step-number {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .step-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Info Panel */
+        .info-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .info-panel h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .info-panel p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .info-card .label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .info-card .value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        @media (max-width: 1024px) {
+            .display-area {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .control-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .slider-container {
+                min-width: auto;
+            }
+
+            .unfolded-face {
+                width: 60px;
+                height: 60px;
+                font-size: 14px;
+            }
+
+            .cube-container {
+                width: 120px;
+                height: 120px;
+            }
+
+            .cube-face {
+                width: 120px;
+                height: 120px;
+                font-size: 20px;
+            }
+
+            .cube-face.front { transform: translateZ(60px); }
+            .cube-face.back { transform: rotateY(180deg) translateZ(60px); }
+            .cube-face.right { transform: rotateY(90deg) translateZ(60px); }
+            .cube-face.left { transform: rotateY(-90deg) translateZ(60px); }
+            .cube-face.top { transform: rotateX(90deg) translateZ(60px); }
+            .cube-face.bottom { transform: rotateX(-90deg) translateZ(60px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎲 三维立体物体展开演示</h1>
+            <p class="subtitle">探索立体图形与平面展开图之间的奥秘</p>
+        </header>
+
+        <div class="controls">
+            <div class="control-row">
+                <select id="shapeSelect">
+                    <option value="cube">正方体</option>
+                    <option value="cuboid">长方体</option>
+                    <option value="triangular-prism">三棱柱</option>
+                    <option value="cylinder">圆柱体</option>
+                    <option value="cone">圆锥体</option>
+                </select>
+                <button id="autoPlayBtn">▶ 自动展开</button>
+                <button id="pauseBtn" disabled>⏸ 暂停</button>
+                <button id="resetBtn">⟲ 重置</button>
+                <button id="stepByStepBtn">📖 分步演示</button>
+            </div>
+            <div class="control-row">
+                <div class="slider-container">
+                    <label>展开进度:</label>
+                    <input type="range" id="progressSlider" min="0" max="100" value="0">
+                    <span id="progressValue">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="steps-container">
+            <div class="steps-title">📋 展开步骤说明</div>
+            <div class="step active" id="step1">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>立体状态（0%）</h4>
+                    <p>物体保持完整的立体形态，所有面都通过棱连接在一起。可以360度旋转观察立体结构。</p>
+                </div>
+            </div>
+            <div class="step" id="step2">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>开始展开（1-30%）</h4>
+                    <p>从选定的一条棱开始，相邻的面开始缓慢分离，像打开盒子盖一样逐渐展开。</p>
+                </div>
+            </div>
+            <div class="step" id="step3">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>继续展开（31-70%）</h4>
+                    <p>更多的面被展开，立体结构逐渐扁平化。可以看到每个面之间的连接关系。</p>
+                </div>
+            </div>
+            <div class="step" id="step4">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>完全展开（71-100%）</h4>
+                    <p>所有面都在同一平面上，形成完整的平面展开图。可以清楚看到所有面的排列方式。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="display-area">
+            <div class="panel">
+                <h2>🎲 3D 立体视图</h2>
+                <div class="scene-3d" id="scene3d">
+                    <div class="cube-container" id="cube3d">
+                        <div class="cube-face front">前</div>
+                        <div class="cube-face back">后</div>
+                        <div class="cube-face right">右</div>
+                        <div class="cube-face left">左</div>
+                        <div class="cube-face top">上</div>
+                        <div class="cube-face bottom">下</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>📄 平面展开图</h2>
+                <div class="scene-2d" id="scene2d">
+                    <div class="unfolded-container">
+                        <div class="unfolded-face top-face">上</div>
+                        <div class="unfolded-face left-face">左</div>
+                        <div class="unfolded-face front-face">前</div>
+                        <div class="unfolded-face right-face">右</div>
+                        <div class="unfolded-face back-face">后</div>
+                        <div class="unfolded-face bottom-face">下</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <h3 id="shapeTitle">📐 正方体</h3>
+            <p id="shapeDescription">
+                正方体是最简单的正多面体，有6个面、12条棱、8个顶点。每个面都是全等的正方形。
+                从任意一条棱剪开都可以展开成平面图，最常见的是"十字形"展开图。
+            </p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="label">面数</div>
+                    <div class="value" id="faceCount">6个</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">棱数</div>
+                    <div class="value" id="edgeCount">12条</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">顶点数</div>
+                    <div class="value" id="vertexCount">8个</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">每个面形状</div>
+                    <div class="value" id="faceShape">正方形</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">表面积公式</div>
+                    <div class="value" id="surfaceArea">6a²</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">体积公式</div>
+                    <div class="value" id="volume">a³</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 状态管理
+        let currentShape = 'cube';
+        let isPlaying = false;
+        let isStepByStep = false;
+        let animationId = null;
+        let progress = 0;
+        let rotationAngleX = -20;
+        let rotationAngleY = -30;
+        let currentStep = 1;
+
+        // DOM元素
+        const shapeSelect = document.getElementById('shapeSelect');
+        const autoPlayBtn = document.getElementById('autoPlayBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const stepByStepBtn = document.getElementById('stepByStepBtn');
+        const progressSlider = document.getElementById('progressSlider');
+        const progressValue = document.getElementById('progressValue');
+        const cube3d = document.getElementById('cube3d');
+        const scene3d = document.getElementById('scene3d');
+        const unfoldedFaces = document.querySelectorAll('.unfolded-face');
+        const shapeTitle = document.getElementById('shapeTitle');
+        const shapeDescription = document.getElementById('shapeDescription');
+        const faceCount = document.getElementById('faceCount');
+        const edgeCount = document.getElementById('edgeCount');
+        const vertexCount = document.getElementById('vertexCount');
+        const faceShape = document.getElementById('faceShape');
+        const surfaceArea = document.getElementById('surfaceArea');
+        const volume = document.getElementById('volume');
+
+        // 图形数据
+        const shapeData = {
+            cube: {
+                title: '📐 正方体',
+                description: '正方体是最简单的正多面体，有6个面、12条棱、8个顶点。每个面都是全等的正方形。从任意一条棱剪开都可以展开成平面图，最常见的是"十字形"展开图。',
+                faceCount: '6个',
+                edgeCount: '12条',
+                vertexCount: '8个',
+                faceShape: '正方形',
+                surfaceArea: '6a²',
+                volume: 'a³'
+            },
+            cuboid: {
+                title: '📦 长方体',
+                description: '长方体有6个面，12条棱，8个顶点。相对的面完全相同。根据剪开的棱不同，可以得到11种不同的展开图。',
+                faceCount: '6个',
+                edgeCount: '12条',
+                vertexCount: '8个',
+                faceShape: '长方形',
+                surfaceArea: '2(ab+bc+ac)',
+                volume: 'abc'
+            },
+            'triangular-prism': {
+                title: '🔺 三棱柱',
+                description: '三棱柱有5个面：2个三角形底面和3个长方形侧面。共有9条棱、6个顶点。展开后是三角形和长方形的组合。',
+                faceCount: '5个',
+                edgeCount: '9条',
+                vertexCount: '6个',
+                faceShape: '三角形+长方形',
+                surfaceArea: '2S底+周长×高',
+                volume: 'S底×高'
+            },
+            cylinder: {
+                title: '🥫 圆柱体',
+                description: '圆柱体有3个面：2个圆形底面和1个曲面侧面。侧面沿高剪开后展开成一个大长方形，长等于底面周长，宽等于圆柱的高。',
+                faceCount: '3个',
+                edgeCount: '2条',
+                vertexCount: '0个',
+                faceShape: '圆形+长方形',
+                surfaceArea: '2πr²+2πrh',
+                volume: 'πr²h'
+            },
+            cone: {
+                title: '🍦 圆锥体',
+                description: '圆锥体有2个面：1个圆形底面和1个曲面侧面。侧面沿母线剪开后展开成一个扇形，扇形的半径等于圆锥的母线长。',
+                faceCount: '2个',
+                edgeCount: '1条',
+                vertexCount: '1个',
+                faceShape: '圆形+扇形',
+                surfaceArea: 'πr²+πrl',
+                volume: '(1/3)πr²h'
+            }
+        };
+
+        // 初始化
+        function init() {
+            setupEventListeners();
+            animate();
+        }
+
+        // 事件监听
+        function setupEventListeners() {
+            shapeSelect.addEventListener('change', (e) => {
+                currentShape = e.target.value;
+                updateShapeInfo();
+                reset();
+            });
+
+            autoPlayBtn.addEventListener('click', startAnimation);
+            pauseBtn.addEventListener('click', pauseAnimation);
+            resetBtn.addEventListener('click', reset);
+            stepByStepBtn.addEventListener('click', startStepByStep);
+
+            progressSlider.addEventListener('input', (e) => {
+                progress = parseInt(e.target.value);
+                updateProgress();
+            });
+
+            // 鼠标拖拽旋转
+            let isDragging = false;
+            let previousX, previousY;
+
+            scene3d.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousX = e.clientX;
+                previousY = e.clientY;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+
+                const deltaX = e.clientX - previousX;
+                const deltaY = e.clientY - previousY;
+
+                rotationAngleY += deltaX * 0.5;
+                rotationAngleX -= deltaY * 0.5;
+
+                previousX = e.clientX;
+                previousY = e.clientY;
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            // 触摸支持
+            scene3d.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                previousX = e.touches[0].clientX;
+                previousY = e.touches[0].clientY;
+            });
+
+            scene3d.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+
+                const deltaX = e.touches[0].clientX - previousX;
+                const deltaY = e.touches[0].clientY - previousY;
+
+                rotationAngleY += deltaX * 0.5;
+                rotationAngleX -= deltaY * 0.5;
+
+                previousX = e.touches[0].clientX;
+                previousY = e.touches[0].clientY;
+            });
+
+            scene3d.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+        }
+
+        // 动画循环
+        function animate() {
+            // 应用旋转
+            cube3d.style.transform = `rotateX(${rotationAngleX}deg) rotateY(${rotationAngleY}deg)`;
+
+            // 自动展开动画
+            if (isPlaying && progress < 100) {
+                progress += 0.5;
+                progressSlider.value = progress;
+                updateProgress();
+
+                if (progress >= 100) {
+                    pauseAnimation();
+                }
+            }
+
+            animationId = requestAnimationFrame(animate);
+        }
+
+        // 更新展开进度
+        function updateProgress() {
+            progressValue.textContent = `${Math.round(progress)}%`;
+
+            // 更新步骤高亮
+            updateSteps();
+
+            // 更新3D展开效果
+            const unfoldFactor = progress / 100;
+
+            const faces = cube3d.querySelectorAll('.cube-face');
+            faces.forEach((face) => {
+                const faceClass = face.classList[1];
+                let baseTransform = '';
+                let unfoldAngle = 0;
+
+                switch(faceClass) {
+                    case 'front':
+                        baseTransform = 'translateZ(100px)';
+                        break;
+                    case 'back':
+                        baseTransform = 'rotateY(180deg) translateZ(100px)';
+                        unfoldAngle = 90 * unfoldFactor;
+                        break;
+                    case 'right':
+                        baseTransform = 'rotateY(90deg) translateZ(100px)';
+                        unfoldAngle = 90 * unfoldFactor;
+                        break;
+                    case 'left':
+                        baseTransform = 'rotateY(-90deg) translateZ(100px)';
+                        unfoldAngle = -90 * unfoldFactor;
+                        break;
+                    case 'top':
+                        baseTransform = 'rotateX(90deg) translateZ(100px)';
+                        unfoldAngle = 90 * unfoldFactor;
+                        break;
+                    case 'bottom':
+                        baseTransform = 'rotateX(-90deg) translateZ(100px)';
+                        unfoldAngle = -90 * unfoldFactor;
+                        break;
+                }
+
+                if (faceClass !== 'front') {
+                    face.style.transform = `${baseTransform} rotate${faceClass === 'top' || faceClass === 'bottom' ? 'X' : 'Y'}(${unfoldAngle}deg)`;
+                }
+            });
+
+            // 更新2D视图
+            unfoldedFaces.forEach((face, index) => {
+                const showProgress = (index + 1) * 16;
+                if (progress >= showProgress) {
+                    face.classList.add('show');
+                    face.style.transform = face.classList.contains('top-face') ||
+                                          face.classList.contains('bottom-face') ||
+                                          face.classList.contains('front-face')
+                        ? 'translateX(-50%) scale(1)'
+                        : 'scale(1)';
+                } else {
+                    face.classList.remove('show');
+                }
+            });
+        }
+
+        // 更新步骤高亮
+        function updateSteps() {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach(step => step.classList.remove('active'));
+
+            if (progress === 0) {
+                document.getElementById('step1').classList.add('active');
+            } else if (progress <= 30) {
+                document.getElementById('step2').classList.add('active');
+            } else if (progress <= 70) {
+                document.getElementById('step3').classList.add('active');
+            } else {
+                document.getElementById('step4').classList.add('active');
+            }
+        }
+
+        // 动画控制
+        function startAnimation() {
+            if (progress >= 100) {
+                progress = 0;
+            }
+            isPlaying = true;
+            isStepByStep = false;
+            autoPlayBtn.disabled = true;
+            pauseBtn.disabled = false;
+            stepByStepBtn.disabled = false;
+        }
+
+        function pauseAnimation() {
+            isPlaying = false;
+            autoPlayBtn.disabled = false;
+            pauseBtn.disabled = true;
+        }
+
+        function reset() {
+            pauseAnimation();
+            progress = 0;
+            progressSlider.value = 0;
+            updateProgress();
+            rotationAngleX = -20;
+            rotationAngleY = -30;
+            updateSteps();
+        }
+
+        function startStepByStep() {
+            pauseAnimation();
+            isStepByStep = true;
+
+            if (progress >= 100) {
+                progress = 0;
+            }
+
+            const nextStep = Math.floor(progress / 25) + 1;
+            const targetProgress = nextStep * 25;
+
+            const animateToStep = () => {
+                if (progress < targetProgress) {
+                    progress += 1;
+                    progressSlider.value = progress;
+                    updateProgress();
+                    requestAnimationFrame(animateToStep);
+                }
+            };
+
+            animateToStep();
+        }
+
+        // 更新图形信息
+        function updateShapeInfo() {
+            const data = shapeData[currentShape];
+            shapeTitle.textContent = data.title;
+            shapeDescription.textContent = data.description;
+            faceCount.textContent = data.faceCount;
+            edgeCount.textContent = data.edgeCount;
+            vertexCount.textContent = data.vertexCount;
+            faceShape.textContent = data.faceShape;
+            surfaceArea.textContent = data.surfaceArea;
+            volume.textContent = data.volume;
+        }
+
+        // 启动
+        init();
+    </script>
+</body>
+</html>
