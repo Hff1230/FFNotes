@@ -1479,7 +1479,7 @@
         }
 
         tryDropPowerup(x, y) {
-            if (Math.random() > 0.15) return;
+            if (Math.random() > 0.20) return; // 掉落率从15%提升到20%
 
             const types = [
                 POWERUP.STAR,
@@ -1487,7 +1487,8 @@
                 POWERUP.CLOCK,
                 POWERUP.SHOVEL,
                 POWERUP.SHIELD,
-                POWERUP.TANK
+                POWERUP.TANK,
+                POWERUP.MEDKIT // 新增医疗包
             ];
 
             const type = types[Math.floor(Math.random() * types.length)];

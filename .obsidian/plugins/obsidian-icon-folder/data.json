@@ -171,5 +171,6 @@
   "资料文件夹/编程概念/adb指令 查看cpu和内存.md": "IcAFile",
   "AI库": "IcAFolder",
   "AI库/小游戏": "IcAFolder",
-  "AI库/小游戏/坦克1999": "IcAFolder"
+  "AI库/小游戏/坦克1999": "IcAFolder",
+  "AI库/小游戏/立体模型": "IcAFolder"
 }
