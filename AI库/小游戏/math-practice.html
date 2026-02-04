@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小学数学口算快速出题器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #10b981;
+            --primary-dark: #059669;
+            --secondary-color: #8b5cf6;
+            --accent-color: #f59e0b;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
+            --info-color: #3b82f6;
+            --bg-color: #f0fdf4;
+            --card-bg: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        select, input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7c3aed;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-info {
+            background: var(--info-color);
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .question-box {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .question-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .answer-input {
+            font-size: 2rem;
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .result-summary {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-direction: column;
+        }
+
+        .score-value {
+            font-size: 3.5rem;
+            font-weight: bold;
+        }
+
+        .score-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .result-item {
+            background: var(--bg-color);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .result-item-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .result-item-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .wrong-answers {
+            background: #fef2f2;
+            border-left: 4px solid var(--danger-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .wrong-answers h3 {
+            color: var(--danger-color);
+            margin-bottom: 15px;
+        }
+
+        .wrong-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wrong-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .wrong-answer-info {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .wrong-answer-info span {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .print-area {
+            display: none;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            .print-area, .print-area * {
+                visibility: visible;
+            }
+
+            .print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                display: block;
+                background: white;
+                padding: 20px;
+            }
+
+            .print-header {
+                text-align: center;
+                margin-bottom: 20px;
+                page-break-after: avoid;
+            }
+
+            .print-info {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #000;
+            }
+
+            .print-question {
+                display: inline-block;
+                width: 30%;
+                margin: 10px 0;
+                font-size: 1.1rem;
+            }
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .toast.success {
+            background: var(--success-color);
+        }
+
+        .toast.error {
+            background: var(--danger-color);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .history-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            background: var(--bg-color);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .history-item:hover {
+            box-shadow: var(--shadow);
+            transform: translateX(5px);
+        }
+
+        .history-date {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .history-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+        }
+
+        .history-stats span {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.6rem;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .question-text {
+                font-size: 2rem;
+            }
+
+            .answer-input {
+                font-size: 1.5rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .result-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧮 小学数学口算快速出题器</h1>
+            <p>让数学练习更简单、更有趣！</p>
+        </header>
+
+        <!-- 主界面 -->
+        <div id="homeSection" class="section active">
+            <div class="card">
+                <h2 style="margin-bottom: 20px;">🎯 开始练习</h2>
+
+                <div class="form-group">
+                    <label>📚 选择年级</label>
+                    <select id="gradeSelect">
+                        <option value="1">一年级 (6-7岁) - 20以内加减法</option>
+                        <option value="2">二年级 (7-8岁) - 100以内加减法、乘法口诀</option>
+                        <option value="3" selected>三年级 (8-9岁) - 1000以内加减乘除</option>
+                        <option value="4">四年级 (9-10岁) - 大数运算、小数加减</option>
+                        <option value="5">五年级 (10-11岁) - 小数乘除、分数加减</option>
+                        <option value="6">六年级 (11-12岁) - 分数乘除、百分数</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>✏️ 运算类型</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="add" checked> 加法
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="subtract" checked> 减法
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="multiply"> 乘法
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="divide"> 除法
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="mixed"> 混合运算
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>📊 难度级别</label>
+                    <select id="difficultySelect">
+                        <option value="easy">简单 - 基础运算</option>
+                        <option value="medium" selected>中等 - 需要进退位</option>
+                        <option value="hard">困难 - 复杂运算</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>📝 题目数量</label>
+                    <select id="questionCount">
+                        <option value="10">10题（快速练习）</option>
+                        <option value="20" selected>20题（标准练习）</option>
+                        <option value="50">50题（强化训练）</option>
+                        <option value="100">100题（综合测试）</option>
+                    </select>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="startPractice()">🎮 开始练习</button>
+                    <button class="btn btn-info" onclick="startTimedTest()">⏱️ 计时测试</button>
+                    <button class="btn btn-secondary" onclick="generatePrint()">🖨️ 生成试卷</button>
+                    <button class="btn btn-primary" onclick="showHistory()">📖 查看记录</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 style="margin-bottom: 20px;">📈 学习统计</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="todayCount">0</div>
+                        <div class="stat-label">今日练习（次）</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="avgAccuracy">0%</div>
+                        <div class="stat-label">平均正确率</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalQuestions">0</div>
+                        <div class="stat-label">累计做题（题）</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="bestStreak">0</div>
+                        <div class="stat-label">最佳连续答对</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 答题界面 -->
+        <div id="practiceSection" class="section">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <span style="font-size: 1.2rem; font-weight: 600;">第 <span id="currentQ">1</span>/<span id="totalQ">20</span> 题</span>
+                    </div>
+                    <div class="timer" id="timer">00:00</div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-text" id="questionText">23 + 15 = ?</div>
+                    <input type="number" class="answer-input" id="answerInput" placeholder="输入答案" onkeypress="handleKeyPress(event)">
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="submitAnswer()">✅ 提交答案</button>
+                    <button class="btn btn-secondary" onclick="skipQuestion()">⏭️ 跳过</button>
+                    <button class="btn btn-info" onclick="readQuestion()">🔊 读题</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成绩界面 -->
+        <div id="resultSection" class="section">
+            <div class="card">
+                <div class="result-summary">
+                    <div class="score-circle">
+                        <div class="score-value" id="finalScore">90</div>
+                        <div class="score-label">分</div>
+                    </div>
+
+                    <h2 id="resultTitle" style="margin-bottom: 20px;">🎉 太棒了！</h2>
+
+                    <div class="result-stats">
+                        <div class="result-item">
+                            <div class="result-item-label">题目数量</div>
+                            <div class="result-item-value" id="resultTotal">20</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-item-label">正确题数</div>
+                            <div class="result-item-value" style="color: var(--success-color);" id="resultCorrect">18</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-item-label">错误题数</div>
+                            <div class="result-item-value" style="color: var(--danger-color);" id="resultWrong">2</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-item-label">用时</div>
+                            <div class="result-item-value" id="resultTime">03:45</div>
+                        </div>
+                    </div>
+
+                    <div id="wrongAnswersSection" class="wrong-answers" style="display: none;">
+                        <h3>❌ 错题回顾</h3>
+                        <div id="wrongAnswersList"></div>
+                    </div>
+
+                    <div class="btn-group" style="margin-top: 30px;">
+                        <button class="btn btn-primary" onclick="restart()">🔄 再练一次</button>
+                        <button class="btn btn-secondary" onclick="practiceWrong()">📕 重练错题</button>
+                        <button class="btn btn-info" onclick="goHome()">🏠 返回主页</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 历史记录界面 -->
+        <div id="historySection" class="section">
+            <div class="card">
+                <h2 style="margin-bottom: 20px;">📖 练习记录</h2>
+                <div class="history-list" id="historyList">
+                    <p style="text-align: center; color: var(--text-secondary); padding: 40px;">暂无练习记录</p>
+                </div>
+                <div class="btn-group" style="margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="goHome()">🏠 返回主页</button>
+                    <button class="btn btn-danger" onclick="clearHistory()">🗑️ 清空记录</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 打印区域 -->
+        <div class="print-area" id="printArea">
+            <div class="print-header">
+                <h1>小学数学口算练习题</h1>
+            </div>
+            <div class="print-info">
+                <div>姓名：__________</div>
+                <div>日期：__________</div>
+                <div>用时：__________</div>
+                <div>得分：__________</div>
+            </div>
+            <div id="printQuestions"></div>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let correctCount = 0;
+        let wrongAnswers = [];
+        let startTime = null;
+        let timerInterval = null;
+        let settings = {};
+        let streak = 0;
+
+        // 初始化
+        window.onload = function() {
+            loadStats();
+            loadHistory();
+        };
+
+        // 工具函数
+        function random(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // 出题算法
+        function generateAddition(grade, difficulty) {
+            let min, max;
+
+            switch(grade) {
+                case 1: min = 1; max = 10; break;
+                case 2: min = 1; max = 50; break;
+                case 3: min = 1; max = 100; break;
+                case 4: min = 1; max = 500; break;
+                case 5: min = 1; max = 1000; break;
+                case 6: min = 1; max = 5000; break;
+                default: min = 1; max = 100;
+            }
+
+            let a = random(min, max);
+            let b = random(min, max);
+
+            if (difficulty === 'easy') {
+                // 简单：不进位
+                a = random(1, Math.min(9, max));
+                b = random(1, Math.min(9, max));
+            } else if (difficulty === 'hard') {
+                // 困难：大数运算
+                a = random(min, max);
+                b = random(min, max);
+            }
+
+            return {
+                question: `${a} + ${b}`,
+                answer: a + b
+            };
+        }
+
+        function generateSubtraction(grade, difficulty) {
+            let min, max;
+
+            switch(grade) {
+                case 1: min = 1; max = 10; break;
+                case 2: min = 1; max = 50; break;
+                case 3: min = 1; max = 100; break;
+                case 4: min = 1; max = 500; break;
+                case 5: min = 1; max = 1000; break;
+                case 6: min = 1; max = 5000; break;
+                default: min = 1; max = 100;
+            }
+
+            let answer = random(min, max);
+            let b = random(min, answer);
+            let a = answer + b;
+
+            if (difficulty === 'easy') {
+                // 简单：不退位
+                answer = random(1, Math.min(9, max));
+                b = random(1, answer);
+                a = answer + b;
+            }
+
+            return {
+                question: `${a} - ${b}`,
+                answer: answer
+            };
+        }
+
+        function generateMultiplication(grade, difficulty) {
+            if (grade === 2) {
+                // 乘法口诀
+                const a = random(1, 9);
+                const b = random(1, 9);
+                return { question: `${a} × ${b}`, answer: a * b };
+            } else if (grade === 3) {
+                // 两位数乘一位数
+                const a = random(10, 99);
+                const b = random(2, 9);
+                return { question: `${a} × ${b}`, answer: a * b };
+            } else if (grade >= 4) {
+                // 两位数乘两位数
+                const a = random(10, 99);
+                const b = random(10, difficulty === 'easy' ? 20 : 99);
+                return { question: `${a} × ${b}`, answer: a * b };
+            }
+            return { question: '2 × 3', answer: 6 };
+        }
+
+        function generateDivision(grade, difficulty) {
+            let b, answer;
+
+            if (grade === 3) {
+                b = random(2, 9);
+                answer = random(1, 12);
+            } else if (grade >= 4) {
+                b = random(2, difficulty === 'easy' ? 9 : 20);
+                answer = random(1, 50);
+            } else {
+                return { question: '6 ÷ 2', answer: 3 };
+            }
+
+            const a = b * answer;
+            return { question: `${a} ÷ ${b}`, answer: answer };
+        }
+
+        function generateMixed(grade, difficulty) {
+            // 简单的两步运算
+            const types = ['add_multiply', 'subtract_divide'];
+            const type = types[random(0, types.length - 1)];
+
+            if (type === 'add_multiply') {
+                const b = random(2, 9);
+                const c = random(2, 9);
+                const bc = b * c;
+                const a = random(1, 50);
+                return { question: `${a} + ${b} × ${c}`, answer: a + bc };
+            } else {
+                const b = random(2, 9);
+                const answer = random(1, 12);
+                const a = b * answer;
+                const c = random(1, 50);
+                return { question: `${a} ÷ ${b} + ${c}`, answer: answer + c };
+            }
+        }
+
+        function generateQuestions() {
+            const count = parseInt(document.getElementById('questionCount').value);
+            const grade = parseInt(document.getElementById('gradeSelect').value);
+            const difficulty = document.getElementById('difficultySelect').value;
+
+            const operationCheckboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked');
+            const operations = Array.from(operationCheckboxes).map(cb => cb.value);
+
+            if (operations.length === 0) {
+                showToast('请至少选择一种运算类型', 'error');
+                return false;
+            }
+
+            questions = [];
+
+            for (let i = 0; i < count; i++) {
+                const op = operations[random(0, operations.length - 1)];
+                let q;
+
+                switch(op) {
+                    case 'add':
+                        q = generateAddition(grade, difficulty);
+                        break;
+                    case 'subtract':
+                        q = generateSubtraction(grade, difficulty);
+                        break;
+                    case 'multiply':
+                        q = generateMultiplication(grade, difficulty);
+                        break;
+                    case 'divide':
+                        q = generateDivision(grade, difficulty);
+                        break;
+                    case 'mixed':
+                        q = generateMixed(grade, difficulty);
+                        break;
+                    default:
+                        q = generateAddition(grade, difficulty);
+                }
+
+                questions.push(q);
+            }
+
+            settings = { grade, difficulty, count };
+            return true;
+        }
+
+        // 开始练习
+        function startPractice() {
+            if (!generateQuestions()) return;
+
+            currentQuestionIndex = 0;
+            correctCount = 0;
+            wrongAnswers = [];
+            streak = 0;
+
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+
+            showQuestion();
+            showSection('practiceSection');
+
+            document.getElementById('answerInput').focus();
+        }
+
+        // 计时测试
+        function startTimedTest() {
+            if (!generateQuestions()) return;
+
+            currentQuestionIndex = 0;
+            correctCount = 0;
+            wrongAnswers = [];
+            streak = 0;
+
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+
+            showQuestion();
+            showSection('practiceSection');
+
+            document.getElementById('answerInput').focus();
+        }
+
+        // 显示题目
+        function showQuestion() {
+            const q = questions[currentQuestionIndex];
+            document.getElementById('questionText').textContent = q.question + ' = ?';
+            document.getElementById('currentQ').textContent = currentQuestionIndex + 1;
+            document.getElementById('totalQ').textContent = questions.length;
+
+            const progress = ((currentQuestionIndex) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            document.getElementById('answerInput').value = '';
+            document.getElementById('answerInput').focus();
+        }
+
+        // 更新计时器
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('timer').textContent = formatTime(elapsed);
+        }
+
+        // 提交答案
+        function submitAnswer() {
+            const userAnswer = parseInt(document.getElementById('answerInput').value);
+
+            if (isNaN(userAnswer)) {
+                showToast('请输入答案', 'error');
+                return;
+            }
+
+            const q = questions[currentQuestionIndex];
+            const isCorrect = userAnswer === q.answer;
+
+            if (isCorrect) {
+                correctCount++;
+                streak++;
+                showToast('✅ 正确！', 'success');
+            } else {
+                wrongAnswers.push({
+                    question: q.question,
+                    correctAnswer: q.answer,
+                    userAnswer: userAnswer
+                });
+                streak = 0;
+                showToast('❌ 错误！', 'error');
+            }
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex >= questions.length) {
+                showResult();
+            } else {
+                showQuestion();
+            }
+        }
+
+        // 跳过题目
+        function skipQuestion() {
+            const q = questions[currentQuestionIndex];
+            wrongAnswers.push({
+                question: q.question,
+                correctAnswer: q.answer,
+                userAnswer: '跳过'
+            });
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex >= questions.length) {
+                showResult();
+            } else {
+                showQuestion();
+            }
+        }
+
+        // 显示结果
+        function showResult() {
+            clearInterval(timerInterval);
+
+            const totalTime = Math.floor((Date.now() - startTime) / 1000);
+            const accuracy = Math.round((correctCount / questions.length) * 100);
+
+            document.getElementById('finalScore').textContent = accuracy;
+            document.getElementById('resultTotal').textContent = questions.length;
+            document.getElementById('resultCorrect').textContent = correctCount;
+            document.getElementById('resultWrong').textContent = questions.length - correctCount;
+            document.getElementById('resultTime').textContent = formatTime(totalTime);
+
+            // 评价
+            let title = '';
+            if (accuracy >= 95) title = '🏆 太棒了！';
+            else if (accuracy >= 85) title = '🎉 很优秀！';
+            else if (accuracy >= 70) title = '👍 继续加油！';
+            else if (accuracy >= 60) title = '💪 需要努力！';
+            else title = '📚 多多练习！';
+
+            document.getElementById('resultTitle').textContent = title;
+
+            // 显示错题
+            if (wrongAnswers.length > 0) {
+                document.getElementById('wrongAnswersSection').style.display = 'block';
+                document.getElementById('wrongAnswersList').innerHTML = wrongAnswers.map(w => `
+                    <div class="wrong-item">
+                        <div class="wrong-question">${w.question} = ?</div>
+                        <div class="wrong-answer-info">
+                            正确答案：<span style="color: var(--success-color); font-weight: 600;">${w.correctAnswer}</span>
+                            你的答案：<span style="color: var(--danger-color);">${w.userAnswer}</span>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('wrongAnswersSection').style.display = 'none';
+            }
+
+            // 保存记录
+            saveHistory(accuracy, totalTime);
+
+            showSection('resultSection');
+        }
+
+        // 重新练习
+        function restart() {
+            startPractice();
+        }
+
+        // 重练错题
+        function practiceWrong() {
+            if (wrongAnswers.length === 0) {
+                showToast('没有错题需要重练', 'error');
+                return;
+            }
+
+            questions = wrongAnswers.map(w => ({
+                question: w.question,
+                answer: w.correctAnswer
+            }));
+
+            currentQuestionIndex = 0;
+            correctCount = 0;
+            wrongAnswers = [];
+            streak = 0;
+
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+
+            showQuestion();
+            showSection('practiceSection');
+        }
+
+        // 返回主页
+        function goHome() {
+            clearInterval(timerInterval);
+            loadStats();
+            showSection('homeSection');
+        }
+
+        // 生成打印试卷
+        function generatePrint() {
+            if (!generateQuestions()) return;
+
+            const printQuestions = document.getElementById('printQuestions');
+            printQuestions.innerHTML = questions.map((q, i) => `
+                <div class="print-question">${i + 1}. ${q.question} = ______</div>
+            `).join('');
+
+            window.print();
+        }
+
+        // 保存历史记录
+        function saveHistory(accuracy, time) {
+            const history = JSON.parse(localStorage.getItem('mathPracticeHistory') || '[]');
+
+            history.unshift({
+                date: new Date().toLocaleString('zh-CN'),
+                grade: settings.grade,
+                difficulty: settings.difficulty,
+                count: settings.count,
+                correct: correctCount,
+                total: questions.length,
+                accuracy: accuracy,
+                time: time
+            });
+
+            // 只保留最近50条记录
+            if (history.length > 50) history.pop();
+
+            localStorage.setItem('mathPracticeHistory', JSON.stringify(history));
+            loadStats();
+        }
+
+        // 加载历史记录
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('mathPracticeHistory') || '[]');
+            const historyList = document.getElementById('historyList');
+
+            if (history.length === 0) {
+                historyList.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">暂无练习记录</p>';
+                return;
+            }
+
+            historyList.innerHTML = history.map((h, i) => `
+                <div class="history-item">
+                    <div class="history-date">${h.date}</div>
+                    <div class="history-stats">
+                        <span>正确率：${h.accuracy}%</span>
+                        <span>题目：${h.correct}/${h.total}</span>
+                        <span>用时：${formatTime(h.time)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 显示历史记录
+        function showHistory() {
+            loadHistory();
+            showSection('historySection');
+        }
+
+        // 清空历史记录
+        function clearHistory() {
+            if (confirm('确定要清空所有练习记录吗？')) {
+                localStorage.removeItem('mathPracticeHistory');
+                loadHistory();
+                loadStats();
+                showToast('记录已清空');
+            }
+        }
+
+        // 加载统计数据
+        function loadStats() {
+            const history = JSON.parse(localStorage.getItem('mathPracticeHistory') || '[]');
+
+            // 今日练习次数
+            const today = new Date().toDateString();
+            const todayCount = history.filter(h => new Date(h.date).toDateString() === today).length;
+            document.getElementById('todayCount').textContent = todayCount;
+
+            // 平均正确率
+            if (history.length > 0) {
+                const avgAcc = Math.round(history.reduce((sum, h) => sum + h.accuracy, 0) / history.length);
+                document.getElementById('avgAccuracy').textContent = avgAcc + '%';
+            }
+
+            // 累计做题
+            const totalQuestions = history.reduce((sum, h) => sum + h.total, 0);
+            document.getElementById('totalQuestions').textContent = totalQuestions;
+
+            // 最佳连续答对
+            const bestStreak = parseInt(localStorage.getItem('mathPracticeBestStreak') || '0');
+            document.getElementById('bestStreak').textContent = bestStreak;
+        }
+
+        // 读题
+        function readQuestion() {
+            const q = questions[currentQuestionIndex];
+            const text = q.question.replace('×', '乘以').replace('÷', '除以').replace('+', '加').replace('-', '减');
+
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text + '等于几');
+                utterance.lang = 'zh-CN';
+                utterance.rate = 0.8;
+                speechSynthesis.speak(utterance);
+            } else {
+                showToast('您的浏览器不支持语音功能', 'error');
+            }
+        }
+
+        // 键盘事件
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                submitAnswer();
+            }
+        }
+
+        // 更新最佳连续答对
+        function updateBestStreak() {
+            const current = parseInt(localStorage.getItem('mathPracticeBestStreak') || '0');
+            if (streak > current) {
+                localStorage.setItem('mathPracticeBestStreak', streak.toString());
+            }
+        }
+    </script>
+</body>
+</html>
