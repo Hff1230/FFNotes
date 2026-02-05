@@ -504,7 +504,6 @@
                 margin: 6px 0.5%;
                 vertical-align: top;
                 font-family: 'Courier New', monospace;
-                text-align: right;
                 font-size: 0.85rem;
                 line-height: 1.3;
                 background: white;
@@ -513,6 +512,16 @@
                 border-radius: 3px;
                 page-break-inside: avoid;
                 box-sizing: border-box;
+            }
+
+            .print-vertical-numbers {
+                text-align: right;
+                margin: 5px 0;
+            }
+
+            .print-vertical-line {
+                border-top: 1px solid #000;
+                margin: 2px 0;
             }
 
             .print-vertical-horizontal {
@@ -1651,9 +1660,11 @@
                         html += `
                             <div class="print-vertical">
                                 <div class="print-vertical-horizontal"><span style="color: #999;">${String(i + 1).padStart(2, '0')}.</span>&nbsp;${q.display}&nbsp;=&nbsp;____</div>
-                                <div style="margin-top: 5px;">${'&nbsp;'.repeat(maxLength - num1Str.length)}${num1Str}</div>
-                                <div>${q.operator}&nbsp;${'&nbsp;'.repeat(maxLength - num2Str.length)}${num2Str}</div>
-                                <div style="border-top: 2px solid #000; margin: 2px 0;"></div>
+                                <div class="print-vertical-numbers">
+                                    <div>${'&nbsp;'.repeat(maxLength - num1Str.length)}${num1Str}</div>
+                                    <div>${q.operator}&nbsp;${'&nbsp;'.repeat(maxLength - num2Str.length)}${num2Str}</div>
+                                </div>
+                                <div class="print-vertical-line"></div>
                                 <div style="min-height: 14px;"></div>
                             </div>
                         `;
