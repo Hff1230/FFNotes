@@ -432,7 +432,7 @@
                 width: 100%;
                 display: block;
                 background: white;
-                padding: 8mm;
+                padding: 6mm;
                 box-sizing: border-box;
                 height: auto;
                 overflow: visible;
@@ -440,12 +440,19 @@
 
             .print-header {
                 text-align: center;
-                margin-bottom: 12px;
+                margin-bottom: 8px;
                 page-break-after: avoid;
             }
 
+            .print-header h1 {
+                font-size: 1.3rem;
+                font-weight: bold;
+                margin: 0;
+                padding: 0;
+            }
+
             .print-section {
-                margin-bottom: 12px;
+                margin-bottom: 8px;
                 page-break-inside: avoid;
             }
 
@@ -473,18 +480,18 @@
             }
 
             .print-section-title {
-                font-size: 1.1rem;
+                font-size: 1rem;
                 font-weight: bold;
-                margin-bottom: 10px;
-                padding-bottom: 8px;
+                margin-bottom: 8px;
+                padding-bottom: 6px;
                 border-bottom: 2px solid #000;
             }
 
             .print-oral {
                 display: inline-block;
                 width: 24%;
-                margin: 5px 0.5%;
-                font-size: 0.95rem;
+                margin: 4px 0.5%;
+                font-size: 0.9rem;
                 vertical-align: top;
                 font-family: 'Courier New', monospace;
                 white-space: nowrap;
@@ -501,33 +508,43 @@
             .print-vertical {
                 display: inline-block;
                 width: 24%;
-                margin: 6px 0.5%;
+                margin: 4px 0.5%;
                 vertical-align: top;
                 font-family: 'Courier New', monospace;
-                font-size: 0.85rem;
-                line-height: 1.3;
+                font-size: 0.8rem;
+                line-height: 1.2;
                 background: white;
-                padding: 5px;
+                padding: 4px;
                 border: 1px solid #ddd;
                 border-radius: 3px;
                 page-break-inside: avoid;
                 box-sizing: border-box;
             }
 
-            .print-vertical-numbers {
+            .print-vertical-calculation {
                 text-align: right;
-                margin: 5px 0;
+                margin: 3px 0;
+            }
+
+            .print-vertical-numbers {
+                display: inline-block;
+                text-align: right;
             }
 
             .print-vertical-line {
-                border-top: 1px solid #000;
-                margin: 2px 0;
+                border-top: 0.5px solid #000;
+                margin: 2px 0 3px 0;
+            }
+
+            .print-vertical-answer {
+                min-height: 22px;
+                margin-top: 2px;
             }
 
             .print-vertical-horizontal {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
                 color: #333;
-                margin-bottom: 4px;
+                margin-bottom: 3px;
                 font-weight: 600;
                 text-align: left;
                 white-space: nowrap;
@@ -541,10 +558,10 @@
             .print-info {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 15px;
-                padding-bottom: 8px;
+                margin-bottom: 10px;
+                padding-bottom: 6px;
                 border-bottom: 2px solid #000;
-                font-size: 0.95rem;
+                font-size: 0.9rem;
             }
         }
 
@@ -740,8 +757,8 @@
                             <select id="oralCount">
                                 <option value="5">5题</option>
                                 <option value="10" selected>10题</option>
+                                <option value="15">15题</option>
                                 <option value="20">20题</option>
-                                <option value="30">30题</option>
                             </select>
                         </div>
                         <div style="flex: 1;">
@@ -939,15 +956,6 @@
 
         <!-- 打印区域 -->
         <div class="print-area" id="printArea">
-            <div class="print-header">
-                <h1>小学数学练习题</h1>
-            </div>
-            <div class="print-info">
-                <div>姓名：__________</div>
-                <div>日期：__________</div>
-                <div>用时：__________</div>
-                <div>得分：__________</div>
-            </div>
             <div id="printContent"></div>
         </div>
     </div>
@@ -1616,17 +1624,16 @@
                 const oralCount = settings.oralCount || 0;
                 const verticalCount = settings.verticalCount || 0;
 
-                // 如果不是第一份，添加分页符
-                if (copyIndex > 0) {
-                    html += '<div style="page-break-after: always;"></div>';
-                }
-
-                // 添加试卷标题和编号
-                if (copies > 1) {
-                    html += '<div class="print-header">';
-                    html += `<h1>小学数学练习题 - 第${copyIndex + 1}份</h1>`;
-                    html += '</div>';
-                }
+                // 每份试卷都添加抬头
+                html += '<div class="print-header">';
+                html += '<h1>小学数学练习题</h1>';
+                html += '</div>';
+                html += '<div class="print-info">';
+                html += '<div>姓名：__________</div>';
+                html += '<div>日期：__________</div>';
+                html += '<div>用时：__________</div>';
+                html += '<div>得分：__________</div>';
+                html += '</div>';
 
                 // 打印口算题（第一部分）
                 if (oralCount > 0) {
@@ -1648,7 +1655,7 @@
                 // 打印竖式题（第二部分）- 包含横式和竖式
                 if (verticalCount > 0) {
                     html += '<div class="print-section">';
-                    html += '<div class="print-section-title">第二部分：竖式题（用竖式计算，每题4分，共' + (verticalCount * 4) + '分）</div>';
+                    html += '<div class="print-section-title">第二部分：竖式题（用竖式计算，每题2分，共' + (verticalCount * 2) + '分）</div>';
                     html += '<div style="display: flex; flex-wrap: wrap;">';
 
                     for (let i = 0; i < verticalCount; i++) {
@@ -1660,17 +1667,24 @@
                         html += `
                             <div class="print-vertical">
                                 <div class="print-vertical-horizontal"><span style="color: #999;">${String(i + 1).padStart(2, '0')}.</span>&nbsp;${q.display}&nbsp;=&nbsp;____</div>
-                                <div class="print-vertical-numbers">
-                                    <div>${'&nbsp;'.repeat(maxLength - num1Str.length)}${num1Str}</div>
-                                    <div>${q.operator}&nbsp;${'&nbsp;'.repeat(maxLength - num2Str.length)}${num2Str}</div>
+                                <div class="print-vertical-calculation">
+                                    <div class="print-vertical-numbers">
+                                        <div>${'&nbsp;'.repeat(maxLength - num1Str.length)}${num1Str}</div>
+                                        <div>${q.operator}&nbsp;${'&nbsp;'.repeat(maxLength - num2Str.length)}${num2Str}</div>
+                                    </div>
+                                    <div class="print-vertical-line"></div>
+                                    <div class="print-vertical-answer"></div>
                                 </div>
-                                <div class="print-vertical-line"></div>
-                                <div style="min-height: 14px;"></div>
                             </div>
                         `;
                     }
 
                     html += '</div></div>';
+                }
+
+                // 在每份试卷之后添加分页符（除了最后一份）
+                if (copyIndex < copies - 1) {
+                    html += '<div style="page-break-after: always;"></div>';
                 }
             }
 

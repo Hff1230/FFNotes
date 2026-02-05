@@ -11,10 +11,14 @@
             "id": "7fffa29e9d92e63f",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "AI库/小游戏/小学数学口算快速出题器方案.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "小学数学口算快速出题器方案"
             }
           }
         ]
@@ -187,13 +191,15 @@
   },
   "active": "7fffa29e9d92e63f",
   "lastOpenFiles": [
+    "AI库/小游戏/立体模型/立体模型H5展示方案.md",
+    "AI库/小游戏/立体模型/三维立体物体展开展示方案.md",
+    "AI库/小游戏/math-practice.html.tmp.19884.1770253114363",
     "AI库/小游戏/math-practice.html",
     "AI库/小游戏/小学数学口算快速出题器方案.md",
     "未命名.canvas",
     "AI库/图片处理/cdr-viewer.html",
     "AI库/图片处理/CDR文件H5查看器方案.md",
     "Unity/A开发笔记/未命名 1.md",
-    "AI库/小游戏/立体模型/三维立体物体展开展示方案.md",
     "未命名.base",
     "未命名 4.canvas",
     "Unity/A开发笔记/未命名.md",
@@ -208,12 +214,9 @@
     "AI库/小游戏/立体模型/立体展开-多方案.html",
     "AI库/小游戏/立体模型/立体展开演示.html",
     "AI库/图片处理",
-    "AI库/小游戏/立体模型/立体模型H5展示方案.md",
     "AI库/小游戏/立体模型/3d-unfolding-threejs.html",
     "AI库/小游戏/立体模型/README.md",
-    "AI库/小游戏/立体模型/3d-unfolding-demo.html",
     "AI库/小游戏/坦克1999/坦克大战1999策划案.md",
-    "立体模型文件夹",
     "AI库/小游戏/坦克1999/局域网版使用说明.md",
     "JoyMeng Note/日记 2026-01-30.md",
     "DefaultConfig/A Git Commands.md",
