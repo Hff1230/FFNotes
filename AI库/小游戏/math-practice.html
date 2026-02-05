@@ -731,7 +731,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>📝 题型选择（可多选）</label>
+                    <label>📝 题型选择（至少选一种）</label>
                     <div class="checkbox-group">
                         <label class="checkbox-item">
                             <input type="checkbox" id="oralCheck" checked> 口算题（横式计算）
@@ -740,7 +740,7 @@
                             <input type="checkbox" id="verticalCheck" checked> 竖式题（笔算计算）
                         </label>
                     </div>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">💡 提示：可选择其中一种或两种都选，题目将按顺序出现</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">💡 提示：可单选或双选，题目将按顺序出现</p>
                 </div>
 
                 <div class="form-group">
@@ -1211,8 +1211,15 @@
             const oralChecked = document.getElementById('oralCheck').checked;
             const verticalChecked = document.getElementById('verticalCheck').checked;
 
+            // 验证至少选择一种题型
             if (!oralChecked && !verticalChecked) {
-                showToast('请至少选择一种题型', 'error');
+                showToast('⚠️ 请至少选择一种题型（口算题或竖式题）', 'error');
+                return false;
+            }
+
+            // 验证运算类型
+            if (operations.length === 0) {
+                showToast('⚠️ 请至少选择一种运算类型（加减乘除）', 'error');
                 return false;
             }
 
