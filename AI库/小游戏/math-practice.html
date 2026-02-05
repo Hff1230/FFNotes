@@ -918,21 +918,24 @@
                             <div style="flex: 1;">
                                 <label style="font-size: 0.95rem; color: var(--primary-color); font-weight: 600;">📝 口算题</label>
                                 <select id="oralCount">
-                                    <option value="10">10题</option>
+                                    <option value="12">12题</option>
+                                    <option value="16">16题</option>
                                     <option value="20" selected>20题</option>
-                                    <option value="30">30题</option>
+                                    <option value="24">24题</option>
+                                    <option value="28">28题</option>
+                                    <option value="32">32题</option>
+                                    <option value="36">36题</option>
                                     <option value="40">40题</option>
-                                    <option value="50">50题</option>
                                 </select>
                             </div>
                             <div style="flex: 1;">
                                 <label style="font-size: 0.95rem; color: var(--secondary-color); font-weight: 600;">✏️ 竖式题</label>
                                 <select id="verticalCount">
-                                    <option value="10">10题</option>
-                                    <option value="20" selected>20题</option>
-                                    <option value="30">30题</option>
-                                    <option value="40">40题</option>
-                                    <option value="50">50题</option>
+                                    <option value="8">8题</option>
+                                    <option value="12">12题</option>
+                                    <option value="16" selected>16题</option>
+                                    <option value="20">20题</option>
+                                    <option value="24">24题</option>
                                 </select>
                             </div>
                         </div>
@@ -940,15 +943,17 @@
                             <div style="flex: 1;">
                                 <label style="font-size: 0.95rem; color: #8b5cf6; font-weight: 600;">📖 应用题</label>
                                 <select id="wordProblemCount">
-                                    <option value="5" selected>5题</option>
+                                    <option value="2">2题</option>
+                                    <option value="4">4题</option>
+                                    <option value="6">6题</option>
+                                    <option value="8" selected>8题</option>
                                     <option value="10">10题</option>
-                                    <option value="15">15题</option>
-                                    <option value="20">20题</option>
+                                    <option value="12">12题</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary);">📌 题目将按顺序出现：口算题 → 竖式题 → 应用题</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">📌 题目将按顺序出现：口算题 → 竖式题 → 应用题 | 数量为4的倍数，便于排版</p>
                 </div>
 
                 <div class="btn-group">
@@ -1024,12 +1029,12 @@
 
                 <!-- 应用题显示 -->
                 <div id="wordProblemArea" class="word-problem-question" style="display: none;">
-                    <div class="word-problem-content" id="wordProblemText" style="font-size: 1.1rem; line-height: 1.8; color: var(--text-primary); margin-bottom: 20px; white-space: pre-wrap;">
+                    <div class="word-problem-content" id="wordProblemText" style="font-size: 1.1rem; line-height: 1.5; color: var(--text-primary); margin-bottom: 15px; white-space: pre-wrap;">
                         题目内容将在这里显示
                     </div>
-                    <div style="max-width: 300px; margin: 0 auto;">
-                        <label style="font-size: 0.95rem; color: var(--text-secondary); display: block; margin-bottom: 8px;">请输入答案：</label>
-                        <input type="number" class="answer-input" id="wordProblemAnswerInput" placeholder="输入答案" onkeypress="handleKeyPress(event)" style="width: 100%; max-width: 300px;">
+                    <div style="max-width: 400px; margin: 0 auto; padding: 15px; border: 2px dashed #ddd; border-radius: 10px; background: #fafafa; min-height: 100px;">
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); text-align: center; margin-bottom: 10px;">📝 解答区域</p>
+                        <input type="number" class="answer-input" id="wordProblemAnswerInput" placeholder="最终答案" onkeypress="handleKeyPress(event)" style="width: 100%; max-width: 200px; margin: 0 auto; display: block;">
                     </div>
                 </div>
 
@@ -1451,7 +1456,7 @@
             const difficulty = document.getElementById('difficultySelect').value;
 
             const operationCheckboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked');
-            const operations = Array.from(operationCheckboxes).map(cb => cb.value);
+            const operations = Array.from(operationCheckboxes).map(cb => cb.value).filter(op => ['add', 'subtract', 'multiply', 'divide'].includes(op));
 
             if (operations.length === 0) {
                 showToast('请至少选择一种运算类型', 'error');
@@ -1930,6 +1935,7 @@
                     // 重新生成题目
                     const oralChecked = originalSettings.oralChecked;
                     const verticalChecked = originalSettings.verticalChecked;
+                    const wordProblemChecked = originalSettings.wordProblemChecked;
                     const grade = originalSettings.grade;
                     const difficulty = originalSettings.difficulty;
 
@@ -1965,7 +1971,10 @@
                     // 使用相同题目，不需要重新生成
                 } else {
                     // 第一份，需要先生成题目
-                    if (!generateQuestions()) return;
+                    if (!generateQuestions()) {
+                        showToast('⚠️ 生成试卷失败，请检查设置', 'error');
+                        return;
+                    }
                 }
 
                 const oralCount = settings.oralCount || 0;
@@ -2045,16 +2054,15 @@
                     const totalSelected = (oralCount > 0 ? 1 : 0) + (verticalCount > 0 ? 1 : 0);
                     const wordTitle = totalSelected > 0 ? '第三部分：应用题' : '应用题';
                     html += '<div class="print-section-title">' + wordTitle + '（每题5分，共' + (wordProblemCount * 5) + '分）</div>';
-                    html += '<div style="display: flex; flex-direction: column; gap: 15px;">';
+                    html += '<div style="display: flex; flex-direction: column; gap: 12px;">';
 
                     for (let i = 0; i < wordProblemCount; i++) {
                         const q = questions[oralCount + verticalCount + i];
                         html += `
-                            <div style="padding: 10px; background: #f9f9f9; border-left: 3px solid #8b5cf6; page-break-inside: avoid;">
-                                <div style="font-size: 0.9rem; line-height: 1.8; margin-bottom: 8px;">${i + 1}. ${q.question}</div>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <span style="font-size: 0.85rem; color: var(--text-secondary);">答案：</span>
-                                    <span style="border-bottom: 1px solid #000; padding: 0 20px; min-width: 80px; display: inline-block;"></span>
+                            <div style="padding: 8px; background: #f9f9f9; border-left: 3px solid #8b5cf6; page-break-inside: avoid;">
+                                <div style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 8px;">${i + 1}. ${q.question}</div>
+                                <div style="border: 1px dashed #ccc; padding: 8px; min-height: 60px; background: white;">
+                                    <div style="font-size: 0.7rem; color: #999; margin-bottom: 3px;">📝 解答区域</div>
                                 </div>
                             </div>
                         `;
@@ -2063,7 +2071,7 @@
                     html += '</div></div>';
                 }
 
-                // 添加草稿区域
+                // 添加草稿区域（智能判断是否会跨页）
                 const totalQuestions = oralCount + verticalCount + wordProblemCount;
 
                 // 智能判断是否需要草稿区
@@ -2071,20 +2079,31 @@
                 const hasWordProblem = wordProblemCount > 0;
                 const needsDraft = hasVertical || hasWordProblem || totalQuestions <= 25;
 
-                if (needsDraft && totalQuestions <= 50) {
-                    // 根据题目数量和类型决定草稿行数
-                    let draftLinesPerCol = 4;
+                // 估算页面占用高度（单位：mm）
+                // A4页面可用高度约 270mm（减去页边距）
+                const pageHeight = 270;
+                const headerHeight = 30; // 试卷头部
+                const oralHeight = oralCount * 10; // 每道口算题约10mm
+                const verticalHeight = verticalCount * 30; // 每道竖式题约30mm
+                const wordProblemHeight = wordProblemCount * 40; // 每道应用题约40mm（缩小后）
 
-                    if (hasVertical && hasWordProblem) {
-                        draftLinesPerCol = 3; // 有竖式题和应用题，草稿区可以小一些
-                    } else if (hasWordProblem) {
-                        draftLinesPerCol = 5; // 只有应用题，需要多一些草稿空间
-                    } else if (totalQuestions <= 15) {
-                        draftLinesPerCol = 6; // 题目少，多给些草稿空间
-                    } else {
-                        draftLinesPerCol = 4;
-                    }
+                // 草稿区高度估算
+                let draftLinesPerCol = 4;
+                if (hasVertical && hasWordProblem) {
+                    draftLinesPerCol = 3;
+                } else if (hasWordProblem) {
+                    draftLinesPerCol = 5;
+                } else if (totalQuestions <= 15) {
+                    draftLinesPerCol = 6;
+                }
+                const draftHeight = 20 + draftLinesPerCol * 2 * 8; // 标题20mm + 每行8mm
 
+                // 计算总高度
+                const currentHeight = headerHeight + oralHeight + verticalHeight + wordProblemHeight;
+                const totalHeight = currentHeight + draftHeight;
+
+                // 只有在不跨页的情况下才添加草稿区
+                if (needsDraft && totalQuestions <= 50 && totalHeight <= pageHeight) {
                     html += '<div class="print-draft-area">';
                     html += '<div class="print-draft-title">📝 草稿区（列竖式计算）</div>';
                     html += '<div class="print-draft-lines">';

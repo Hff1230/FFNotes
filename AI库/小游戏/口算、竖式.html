@@ -854,25 +854,28 @@
                         <div style="flex: 1;">
                             <label style="font-size: 0.95rem; color: var(--primary-color); font-weight: 600;">📝 第一部分：口算题</label>
                             <select id="oralCount">
-                                <option value="10">10题</option>
+                                <option value="12">12题</option>
+                                <option value="16">16题</option>
                                 <option value="20" selected>20题</option>
-                                <option value="30">30题</option>
+                                <option value="24">24题</option>
+                                <option value="28">28题</option>
+                                <option value="32">32题</option>
+                                <option value="36">36题</option>
                                 <option value="40">40题</option>
-                                <option value="50">50题</option>
                             </select>
                         </div>
                         <div style="flex: 1;">
                             <label style="font-size: 0.95rem; color: var(--secondary-color); font-weight: 600;">✏️ 第二部分：竖式题</label>
                             <select id="verticalCount">
-                                <option value="10">10题</option>
-                                <option value="20" selected>20题</option>
-                                <option value="30">30题</option>
-                                <option value="40">40题</option>
-                                <option value="50">50题</option>
+                                <option value="8">8题</option>
+                                <option value="12">12题</option>
+                                <option value="16" selected>16题</option>
+                                <option value="20">20题</option>
+                                <option value="24">24题</option>
                             </select>
                         </div>
                     </div>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary);">📌 题目将按顺序出现：先完成所有口算题，再进行竖式题</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">📌 题目将按顺序出现：先完成所有口算题，再进行竖式题 | 数量为4的倍数，便于排版</p>
                 </div>
 
                 <div class="btn-group">
@@ -1281,7 +1284,7 @@
             const difficulty = document.getElementById('difficultySelect').value;
 
             const operationCheckboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked');
-            const operations = Array.from(operationCheckboxes).map(cb => cb.value);
+            const operations = Array.from(operationCheckboxes).map(cb => cb.value).filter(op => ['add', 'subtract', 'multiply', 'divide'].includes(op));
 
             if (operations.length === 0) {
                 showToast('请至少选择一种运算类型', 'error');
@@ -1726,7 +1729,10 @@
                     // 使用相同题目，不需要重新生成
                 } else {
                     // 第一份，需要先生成题目
-                    if (!generateQuestions()) return;
+                    if (!generateQuestions()) {
+                        showToast('⚠️ 生成试卷失败，请检查设置', 'error');
+                        return;
+                    }
                 }
 
                 const oralCount = settings.oralCount || 0;
