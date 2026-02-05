@@ -411,10 +411,15 @@
             }
 
             html, body {
-                height: 100%;
+                height: auto;
                 margin: 0;
                 padding: 0;
                 overflow: visible;
+            }
+
+            @page {
+                orphans: 0;
+                widows: 0;
             }
 
             body * {
@@ -436,6 +441,14 @@
                 box-sizing: border-box;
                 height: auto;
                 overflow: visible;
+            }
+
+            .print-area > div:last-child {
+                page-break-after: auto;
+            }
+
+            .print-area > div:not(:last-child) {
+                page-break-after: always;
             }
 
             .print-header {
@@ -471,12 +484,6 @@
 
             .print-oral, .print-vertical {
                 page-break-inside: avoid;
-            }
-
-            /* 确保只有一页 */
-            @page {
-                orphans: 0;
-                widows: 0;
             }
 
             .print-section-title {
@@ -562,6 +569,20 @@
                 padding-bottom: 6px;
                 border-bottom: 2px solid #000;
                 font-size: 0.9rem;
+            }
+
+            .print-page-break {
+                page-break-after: always;
+                height: 0;
+                line-height: 0;
+                font-size: 0;
+                margin: 0;
+                padding: 0;
+            }
+
+            /* 确保打印区域内的最后一个元素不产生额外分页 */
+            .print-area > *:last-child {
+                page-break-after: auto !important;
             }
         }
 
@@ -1684,7 +1705,7 @@
 
                 // 在每份试卷之后添加分页符（除了最后一份）
                 if (copyIndex < copies - 1) {
-                    html += '<div style="page-break-after: always;"></div>';
+                    html += '<div class="print-page-break"></div>';
                 }
             }
 
