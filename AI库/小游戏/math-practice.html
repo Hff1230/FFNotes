@@ -992,8 +992,8 @@
             <div class="card">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <div>
-                        <span id="questionTypeBadge" class="question-type-badge type-oral">第一部分 口算题</span>
-                        <div style="font-size: 1.1rem; font-weight: 600; margin-top: 10px; color: var(--text-secondary);" id="sectionInfo">第一部分 - 第1/10题</div>
+                        <span id="questionTypeBadge" class="question-type-badge type-oral">口算题</span>
+                        <div style="font-size: 1.1rem; font-weight: 600; margin-top: 10px; color: var(--text-secondary);" id="sectionInfo">第1/10题</div>
                         <div style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 5px;">总进度：第 <span id="currentQ">1</span>/<span id="totalQ">20</span> 题</div>
                     </div>
                     <div class="timer" id="timer">00:00</div>
@@ -1508,7 +1508,7 @@
                 }
             }
 
- // 不打乱顺序，保持第一部分口算，第二部分竖式，第三部分应用题
+ // 不打乱顺序，保持题目顺序：口算 → 竖式 → 应用题
 
             // 记录各部分的题目数量
             const oralCount = oralChecked ? parseInt(document.getElementById('oralCount').value) : 0;
@@ -1549,24 +1549,21 @@
 
             if (currentQuestionIndex < oralCount) {
                 return {
-                    section: '第一部分',
-                    sectionName: '口算题',
+                    section: '口算题',
                     current: currentQuestionIndex + 1,
                     total: oralCount,
                     globalIndex: currentQuestionIndex + 1
                 };
             } else if (currentQuestionIndex < oralCount + verticalCount) {
                 return {
-                    section: '第二部分',
-                    sectionName: '竖式题',
+                    section: '竖式题',
                     current: currentQuestionIndex - oralCount + 1,
                     total: verticalCount,
                     globalIndex: currentQuestionIndex + 1
                 };
             } else {
                 return {
-                    section: '第三部分',
-                    sectionName: '应用题',
+                    section: '应用题',
                     current: currentQuestionIndex - oralCount - verticalCount + 1,
                     total: wordProblemCount,
                     globalIndex: currentQuestionIndex + 1
@@ -1603,7 +1600,7 @@
                 document.getElementById('questionText').textContent = q.display;
                 document.getElementById('answerInput').value = '';
                 document.getElementById('questionTypeBadge').className = 'question-type-badge type-oral';
-                document.getElementById('questionTypeBadge').textContent = '📝 第一部分 口算题';
+                document.getElementById('questionTypeBadge').textContent = '📝 口算题';
             } else if (q.type === 'vertical') {
                 // 显示竖式题
                 document.getElementById('oralQuestionArea').style.display = 'none';
@@ -1615,7 +1612,7 @@
                 document.getElementById('verticalAnswerInput').value = '';
                 document.getElementById('verticalHorizontalDisplay').textContent = `${q.display} = ?`;
                 document.getElementById('questionTypeBadge').className = 'question-type-badge type-vertical';
-                document.getElementById('questionTypeBadge').textContent = '✏️ 第二部分 竖式题';
+                document.getElementById('questionTypeBadge').textContent = '✏️ 竖式题';
             } else if (q.type === 'wordProblem') {
                 // 显示应用题
                 document.getElementById('oralQuestionArea').style.display = 'none';
@@ -1624,7 +1621,7 @@
                 document.getElementById('wordProblemText').textContent = q.question;
                 document.getElementById('wordProblemAnswerInput').value = '';
                 document.getElementById('questionTypeBadge').className = 'question-type-badge type-word-problem';
-                document.getElementById('questionTypeBadge').textContent = '📖 第三部分 应用题';
+                document.getElementById('questionTypeBadge').textContent = '📖 应用题';
             }
 
             focusInput();
@@ -1777,7 +1774,7 @@
                 const oralAccuracy = oralCount > 0 ? Math.round((oralCorrect / oralCount) * 100) : 0;
                 sectionStatsHTML += `
                     <div style="padding: 10px; background: white; border-radius: 8px; border-left: 3px solid var(--primary-color);">
-                        <div style="font-size: 0.85rem; color: var(--text-secondary);">第一部分：口算题</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">口算题</div>
                         <div style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">${oralCorrect}/${oralCount}</div>
                         <div style="font-size: 0.85rem; color: var(--text-secondary);">正确率：${oralAccuracy}%</div>
                     </div>
@@ -1788,7 +1785,7 @@
                 const verticalAccuracy = verticalCount > 0 ? Math.round((verticalCorrect / verticalCount) * 100) : 0;
                 sectionStatsHTML += `
                     <div style="padding: 10px; background: white; border-radius: 8px; border-left: 3px solid var(--secondary-color);">
-                        <div style="font-size: 0.85rem; color: var(--text-secondary);">第二部分：竖式题</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">竖式题</div>
                         <div style="font-size: 1.2rem; font-weight: bold; color: var(--secondary-color);">${verticalCorrect}/${verticalCount}</div>
                         <div style="font-size: 0.85rem; color: var(--text-secondary);">正确率：${verticalAccuracy}%</div>
                     </div>
@@ -1799,7 +1796,7 @@
                 const wordProblemAccuracy = wordProblemCount > 0 ? Math.round((wordProblemCorrect / wordProblemCount) * 100) : 0;
                 sectionStatsHTML += `
                     <div style="padding: 10px; background: white; border-radius: 8px; border-left: 3px solid #8b5cf6;">
-                        <div style="font-size: 0.85rem; color: var(--text-secondary);">第三部分：应用题</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">应用题</div>
                         <div style="font-size: 1.2rem; font-weight: bold; color: #8b5cf6;">${wordProblemCorrect}/${wordProblemCount}</div>
                         <div style="font-size: 0.85rem; color: var(--text-secondary);">正确率：${wordProblemAccuracy}%</div>
                     </div>
@@ -1995,13 +1992,10 @@
                 html += '<div>得分：__________</div>';
                 html += '</div>';
 
-                // 打印口算题（第一部分）
+                // 打印口算题
                 if (oralCount > 0) {
                     html += '<div class="print-section">';
-                    // 根据是否有其他题型决定标题
-                    const hasOthers = verticalCount > 0 || wordProblemCount > 0;
-                    const oralTitle = hasOthers ? '第一部分：口算题' : '口算题';
-                    html += '<div class="print-section-title">' + oralTitle + '（每题2分，共' + (oralCount * 2) + '分）</div>';
+                    html += '<div class="print-section-title">口算题（每题2分，共' + (oralCount * 2) + '分）</div>';
                     html += '<div style="display: flex; flex-wrap: wrap; align-items: center;">';
 
                     for (let i = 0; i < oralCount; i++) {
@@ -2015,13 +2009,10 @@
                     html += '</div></div>';
                 }
 
-                // 打印竖式题（第二部分）- 包含横式和竖式
+                // 打印竖式题 - 包含横式和竖式
                 if (verticalCount > 0) {
                     html += '<div class="print-section">';
-                    const beforeVertical = oralCount > 0 ? 1 : 0;
-                    const hasAfter = wordProblemCount > 0;
-                    const verticalTitle = (beforeVertical > 0 || hasAfter) ? '第二部分：竖式题' : '竖式题';
-                    html += '<div class="print-section-title">' + verticalTitle + '（用竖式计算，每题2分，共' + (verticalCount * 2) + '分）</div>';
+                    html += '<div class="print-section-title">竖式题（用竖式计算，每题2分，共' + (verticalCount * 2) + '分）</div>';
                     html += '<div style="display: flex; flex-wrap: wrap;">';
 
                     for (let i = 0; i < verticalCount; i++) {
@@ -2048,12 +2039,10 @@
                     html += '</div></div>';
                 }
 
-                // 打印应用题（第三部分）
+                // 打印应用题
                 if (wordProblemCount > 0) {
                     html += '<div class="print-section">';
-                    const totalSelected = (oralCount > 0 ? 1 : 0) + (verticalCount > 0 ? 1 : 0);
-                    const wordTitle = totalSelected > 0 ? '第三部分：应用题' : '应用题';
-                    html += '<div class="print-section-title">' + wordTitle + '（每题5分，共' + (wordProblemCount * 5) + '分）</div>';
+                    html += '<div class="print-section-title">应用题（每题5分，共' + (wordProblemCount * 5) + '分）</div>';
                     html += '<div style="display: flex; flex-direction: column; gap: 12px;">';
 
                     for (let i = 0; i < wordProblemCount; i++) {
