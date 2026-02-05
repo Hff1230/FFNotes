@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小学数学口算快速出题器</title>
+    <title>小学数学快速出题器 - 口算+竖式</title>
     <style>
         * {
             margin: 0;
@@ -34,6 +34,15 @@
             min-height: 100vh;
             padding: 20px;
             color: var(--text-primary);
+            margin: 0;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
         }
 
         .container {
@@ -210,6 +219,51 @@
             padding: 15px;
         }
 
+        /* 竖式样式 */
+        .vertical-question {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px auto;
+            max-width: 300px;
+            box-shadow: var(--shadow);
+        }
+
+        .vertical-expression {
+            text-align: right;
+            font-size: 1.8rem;
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+        }
+
+        .vertical-number {
+            padding: 5px 15px;
+        }
+
+        .vertical-operator {
+            padding-right: 10px;
+        }
+
+        .vertical-line {
+            border-top: 3px solid #333;
+            margin: 5px 0;
+        }
+
+        .vertical-answer {
+            padding: 5px 15px;
+            font-weight: bold;
+        }
+
+        .vertical-input {
+            width: 150px;
+            font-size: 1.8rem;
+            text-align: center;
+            padding: 8px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            margin-left: auto;
+        }
+
         .progress-bar {
             width: 100%;
             height: 8px;
@@ -325,11 +379,44 @@
             margin: 0 10px;
         }
 
+        /* 题型标签 */
+        .question-type-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .type-oral {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .type-vertical {
+            background: #fce7f3;
+            color: #9d174d;
+        }
+
+        /* 打印样式 */
         .print-area {
             display: none;
         }
 
         @media print {
+            @page {
+                margin: 10mm;
+                size: A4;
+            }
+
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overflow: visible;
+            }
+
             body * {
                 visibility: hidden;
             }
@@ -345,28 +432,110 @@
                 width: 100%;
                 display: block;
                 background: white;
-                padding: 20px;
+                padding: 8mm;
+                box-sizing: border-box;
+                height: auto;
+                overflow: visible;
             }
 
             .print-header {
                 text-align: center;
-                margin-bottom: 20px;
+                margin-bottom: 12px;
                 page-break-after: avoid;
+            }
+
+            .print-section {
+                margin-bottom: 12px;
+                page-break-inside: avoid;
+            }
+
+            .print-section:last-child {
+                margin-bottom: 0;
+            }
+
+            /* 防止内容分页 */
+            #printContent {
+                page-break-inside: avoid;
+            }
+
+            .print-section {
+                page-break-inside: avoid;
+            }
+
+            .print-oral, .print-vertical {
+                page-break-inside: avoid;
+            }
+
+            /* 确保只有一页 */
+            @page {
+                orphans: 0;
+                widows: 0;
+            }
+
+            .print-section-title {
+                font-size: 1.1rem;
+                font-weight: bold;
+                margin-bottom: 10px;
+                padding-bottom: 8px;
+                border-bottom: 2px solid #000;
+            }
+
+            .print-oral {
+                display: inline-block;
+                width: 24%;
+                margin: 5px 0.5%;
+                font-size: 0.95rem;
+                vertical-align: top;
+                font-family: 'Courier New', monospace;
+                white-space: nowrap;
+                overflow: hidden;
+                box-sizing: border-box;
+                text-align: left;
+            }
+
+            .print-oral .eq-align {
+                display: inline-block;
+                width: 100%;
+            }
+
+            .print-vertical {
+                display: inline-block;
+                width: 24%;
+                margin: 6px 0.5%;
+                vertical-align: top;
+                font-family: 'Courier New', monospace;
+                text-align: right;
+                font-size: 0.85rem;
+                line-height: 1.3;
+                background: white;
+                padding: 5px;
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                page-break-inside: avoid;
+                box-sizing: border-box;
+            }
+
+            .print-vertical-horizontal {
+                font-size: 0.75rem;
+                color: #333;
+                margin-bottom: 4px;
+                font-weight: 600;
+                text-align: left;
+                white-space: nowrap;
+                font-family: 'Courier New', monospace;
+            }
+
+            .print-vertical-num {
+                letter-spacing: 0;
             }
 
             .print-info {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 20px;
-                padding-bottom: 10px;
+                margin-bottom: 15px;
+                padding-bottom: 8px;
                 border-bottom: 2px solid #000;
-            }
-
-            .print-question {
-                display: inline-block;
-                width: 30%;
-                margin: 10px 0;
-                font-size: 1.1rem;
+                font-size: 0.95rem;
             }
         }
 
@@ -478,14 +647,23 @@
             .result-stats {
                 grid-template-columns: 1fr;
             }
+
+            .vertical-expression {
+                font-size: 1.4rem;
+            }
+
+            .vertical-input {
+                width: 120px;
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🧮 小学数学口算快速出题器</h1>
-            <p>让数学练习更简单、更有趣！</p>
+            <h1>🧮 小学数学快速出题器</h1>
+            <p>口算 + 竖式，让数学练习更全面！</p>
         </header>
 
         <!-- 主界面 -->
@@ -506,7 +684,20 @@
                 </div>
 
                 <div class="form-group">
-                    <label>✏️ 运算类型</label>
+                    <label>📝 题型选择（可多选）</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="oralCheck" checked> 口算题（横式计算）
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="verticalCheck" checked> 竖式题（笔算计算）
+                        </label>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">💡 提示：可选择其中一种或两种都选，题目将按顺序出现</p>
+                </div>
+
+                <div class="form-group">
+                    <label>✏️ 运算类型（可多选）</label>
                     <div class="checkbox-group">
                         <label class="checkbox-item">
                             <input type="checkbox" value="add" checked> 加法
@@ -519,9 +710,6 @@
                         </label>
                         <label class="checkbox-item">
                             <input type="checkbox" value="divide"> 除法
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" value="mixed"> 混合运算
                         </label>
                     </div>
                 </div>
@@ -536,19 +724,34 @@
                 </div>
 
                 <div class="form-group">
-                    <label>📝 题目数量</label>
-                    <select id="questionCount">
-                        <option value="10">10题（快速练习）</option>
-                        <option value="20" selected>20题（标准练习）</option>
-                        <option value="50">50题（强化训练）</option>
-                        <option value="100">100题（综合测试）</option>
-                    </select>
+                    <label>📊 题目数量设置</label>
+                    <div style="display: flex; gap: 15px; margin-bottom: 10px;">
+                        <div style="flex: 1;">
+                            <label style="font-size: 0.95rem; color: var(--primary-color); font-weight: 600;">📝 第一部分：口算题</label>
+                            <select id="oralCount">
+                                <option value="5">5题</option>
+                                <option value="10" selected>10题</option>
+                                <option value="20">20题</option>
+                                <option value="30">30题</option>
+                            </select>
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="font-size: 0.95rem; color: var(--secondary-color); font-weight: 600;">✏️ 第二部分：竖式题</label>
+                            <select id="verticalCount">
+                                <option value="5">5题</option>
+                                <option value="10" selected>10题</option>
+                                <option value="15">15题</option>
+                                <option value="20">20题</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">📌 题目将按顺序出现：先完成所有口算题，再进行竖式题</p>
                 </div>
 
                 <div class="btn-group">
                     <button class="btn btn-primary" onclick="startPractice()">🎮 开始练习</button>
                     <button class="btn btn-info" onclick="startTimedTest()">⏱️ 计时测试</button>
-                    <button class="btn btn-secondary" onclick="generatePrint()">🖨️ 生成试卷</button>
+                    <button class="btn btn-secondary" onclick="showPrintDialog()">🖨️ 生成试卷</button>
                     <button class="btn btn-primary" onclick="showHistory()">📖 查看记录</button>
                 </div>
             </div>
@@ -581,7 +784,9 @@
             <div class="card">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <div>
-                        <span style="font-size: 1.2rem; font-weight: 600;">第 <span id="currentQ">1</span>/<span id="totalQ">20</span> 题</span>
+                        <span id="questionTypeBadge" class="question-type-badge type-oral">第一部分 口算题</span>
+                        <div style="font-size: 1.1rem; font-weight: 600; margin-top: 10px; color: var(--text-secondary);" id="sectionInfo">第一部分 - 第1/10题</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 5px;">总进度：第 <span id="currentQ">1</span>/<span id="totalQ">20</span> 题</div>
                     </div>
                     <div class="timer" id="timer">00:00</div>
                 </div>
@@ -590,9 +795,28 @@
                     <div class="progress-fill" id="progressFill" style="width: 0%"></div>
                 </div>
 
-                <div class="question-box">
+                <!-- 口算题目显示 -->
+                <div id="oralQuestionArea" class="question-box">
                     <div class="question-text" id="questionText">23 + 15 = ?</div>
                     <input type="number" class="answer-input" id="answerInput" placeholder="输入答案" onkeypress="handleKeyPress(event)">
+                </div>
+
+                <!-- 竖式题目显示 -->
+                <div id="verticalQuestionArea" class="vertical-question" style="display: none;">
+                    <div style="text-align: center; font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 15px;" id="verticalHorizontalDisplay">
+                        123 + 45 = ?
+                    </div>
+                    <div class="vertical-expression">
+                        <div class="vertical-number" id="verticalNum1">123</div>
+                        <div>
+                            <span class="vertical-operator" id="verticalOperator">+</span>
+                            <span class="vertical-number" id="verticalNum2">45</span>
+                        </div>
+                        <div class="vertical-line"></div>
+                        <div>
+                            <input type="number" class="vertical-input" id="verticalAnswerInput" placeholder="?" onkeypress="handleKeyPress(event)">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="btn-group">
@@ -616,7 +840,7 @@
 
                     <div class="result-stats">
                         <div class="result-item">
-                            <div class="result-item-label">题目数量</div>
+                            <div class="result-item-label">题目总数</div>
                             <div class="result-item-value" id="resultTotal">20</div>
                         </div>
                         <div class="result-item">
@@ -631,6 +855,11 @@
                             <div class="result-item-label">用时</div>
                             <div class="result-item-value" id="resultTime">03:45</div>
                         </div>
+                    </div>
+
+                    <div id="sectionStats" style="margin: 20px 0; padding: 15px; background: #f9fafb; border-radius: 10px;">
+                        <h3 style="text-align: center; margin-bottom: 15px; font-size: 1.1rem;">📊 各部分成绩</h3>
+                        <div id="sectionStatsContent"></div>
                     </div>
 
                     <div id="wrongAnswersSection" class="wrong-answers" style="display: none;">
@@ -661,10 +890,48 @@
             </div>
         </div>
 
+        <!-- 打印设置对话框 -->
+        <div id="printDialog" class="section" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px;">
+            <div class="card" style="max-width: 500px; width: 100%; animation: fadeIn 0.3s ease;">
+                <h2 style="margin-bottom: 20px;">🖨️ 生成试卷设置</h2>
+
+                <div class="form-group">
+                    <label>📊 生成份数</label>
+                    <select id="printCopies" style="margin-bottom: 15px;">
+                        <option value="1">1份</option>
+                        <option value="2">2份</option>
+                        <option value="5">5份</option>
+                        <option value="10">10份</option>
+                        <option value="20">20份</option>
+                        <option value="30" selected>30份（全班使用）</option>
+                        <option value="40">40份</option>
+                        <option value="50">50份</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>🎲 题目设置</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="sameQuestions"> 所有份使用相同题目
+                        </label>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">
+                        💡 提示：勾选后所有试卷题目相同；不勾选则每份试卷题目不同（防作弊）
+                    </p>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="confirmGeneratePrint()">✅ 确认生成</button>
+                    <button class="btn btn-secondary" onclick="closePrintDialog()">❌ 取消</button>
+                </div>
+            </div>
+        </div>
+
         <!-- 打印区域 -->
         <div class="print-area" id="printArea">
             <div class="print-header">
-                <h1>小学数学口算练习题</h1>
+                <h1>小学数学练习题</h1>
             </div>
             <div class="print-info">
                 <div>姓名：__________</div>
@@ -672,7 +939,7 @@
                 <div>用时：__________</div>
                 <div>得分：__________</div>
             </div>
-            <div id="printQuestions"></div>
+            <div id="printContent"></div>
         </div>
     </div>
 
@@ -717,128 +984,181 @@
             document.getElementById(sectionId).classList.add('active');
         }
 
-        // 出题算法
-        function generateAddition(grade, difficulty) {
-            let min, max;
-
+        // 获取数字范围
+        function getNumberRange(grade) {
             switch(grade) {
-                case 1: min = 1; max = 10; break;
-                case 2: min = 1; max = 50; break;
-                case 3: min = 1; max = 100; break;
-                case 4: min = 1; max = 500; break;
-                case 5: min = 1; max = 1000; break;
-                case 6: min = 1; max = 5000; break;
-                default: min = 1; max = 100;
-            }
-
-            let a = random(min, max);
-            let b = random(min, max);
-
-            if (difficulty === 'easy') {
-                // 简单：不进位
-                a = random(1, Math.min(9, max));
-                b = random(1, Math.min(9, max));
-            } else if (difficulty === 'hard') {
-                // 困难：大数运算
-                a = random(min, max);
-                b = random(min, max);
-            }
-
-            return {
-                question: `${a} + ${b}`,
-                answer: a + b
-            };
-        }
-
-        function generateSubtraction(grade, difficulty) {
-            let min, max;
-
-            switch(grade) {
-                case 1: min = 1; max = 10; break;
-                case 2: min = 1; max = 50; break;
-                case 3: min = 1; max = 100; break;
-                case 4: min = 1; max = 500; break;
-                case 5: min = 1; max = 1000; break;
-                case 6: min = 1; max = 5000; break;
-                default: min = 1; max = 100;
-            }
-
-            let answer = random(min, max);
-            let b = random(min, answer);
-            let a = answer + b;
-
-            if (difficulty === 'easy') {
-                // 简单：不退位
-                answer = random(1, Math.min(9, max));
-                b = random(1, answer);
-                a = answer + b;
-            }
-
-            return {
-                question: `${a} - ${b}`,
-                answer: answer
-            };
-        }
-
-        function generateMultiplication(grade, difficulty) {
-            if (grade === 2) {
-                // 乘法口诀
-                const a = random(1, 9);
-                const b = random(1, 9);
-                return { question: `${a} × ${b}`, answer: a * b };
-            } else if (grade === 3) {
-                // 两位数乘一位数
-                const a = random(10, 99);
-                const b = random(2, 9);
-                return { question: `${a} × ${b}`, answer: a * b };
-            } else if (grade >= 4) {
-                // 两位数乘两位数
-                const a = random(10, 99);
-                const b = random(10, difficulty === 'easy' ? 20 : 99);
-                return { question: `${a} × ${b}`, answer: a * b };
-            }
-            return { question: '2 × 3', answer: 6 };
-        }
-
-        function generateDivision(grade, difficulty) {
-            let b, answer;
-
-            if (grade === 3) {
-                b = random(2, 9);
-                answer = random(1, 12);
-            } else if (grade >= 4) {
-                b = random(2, difficulty === 'easy' ? 9 : 20);
-                answer = random(1, 50);
-            } else {
-                return { question: '6 ÷ 2', answer: 3 };
-            }
-
-            const a = b * answer;
-            return { question: `${a} ÷ ${b}`, answer: answer };
-        }
-
-        function generateMixed(grade, difficulty) {
-            // 简单的两步运算
-            const types = ['add_multiply', 'subtract_divide'];
-            const type = types[random(0, types.length - 1)];
-
-            if (type === 'add_multiply') {
-                const b = random(2, 9);
-                const c = random(2, 9);
-                const bc = b * c;
-                const a = random(1, 50);
-                return { question: `${a} + ${b} × ${c}`, answer: a + bc };
-            } else {
-                const b = random(2, 9);
-                const answer = random(1, 12);
-                const a = b * answer;
-                const c = random(1, 50);
-                return { question: `${a} ÷ ${b} + ${c}`, answer: answer + c };
+                case 1: return { min: 1, max: 10 };
+                case 2: return { min: 1, max: 50 };
+                case 3: return { min: 1, max: 100 };
+                case 4: return { min: 1, max: 500 };
+                case 5: return { min: 1, max: 1000 };
+                case 6: return { min: 1, max: 5000 };
+                default: return { min: 1, max: 100 };
             }
         }
 
+        // 生成口算题
+        function generateOralQuestion(grade, difficulty, operation) {
+            const { min, max } = getNumberRange(grade);
+
+            switch(operation) {
+                case 'add':
+                    let a1 = random(min, max);
+                    let b1 = random(min, max);
+                    if (difficulty === 'easy') {
+                        a1 = random(1, Math.min(9, max));
+                        b1 = random(1, Math.min(9, max));
+                    }
+                    return { type: 'oral', question: `${a1} + ${b1}`, answer: a1 + b1, display: `${a1} + ${b1} = ?` };
+
+                case 'subtract':
+                    let ans1 = random(min, max);
+                    let b_sub = random(min, ans1);
+                    let a_sub = ans1 + b_sub;
+                    if (difficulty === 'easy') {
+                        ans1 = random(1, Math.min(9, max));
+                        b_sub = random(1, ans1);
+                        a_sub = ans1 + b_sub;
+                    }
+                    return { type: 'oral', question: `${a_sub} - ${b_sub}`, answer: ans1, display: `${a_sub} - ${b_sub} = ?` };
+
+                case 'multiply':
+                    if (grade === 2) {
+                        const ma = random(1, 9);
+                        const mb = random(1, 9);
+                        return { type: 'oral', question: `${ma} × ${mb}`, answer: ma * mb, display: `${ma} × ${mb} = ?` };
+                    } else if (grade === 3) {
+                        const ma = random(10, 99);
+                        const mb = random(2, 9);
+                        return { type: 'oral', question: `${ma} × ${mb}`, answer: ma * mb, display: `${ma} × ${mb} = ?` };
+                    } else {
+                        const ma = random(10, 99);
+                        const mb = random(10, difficulty === 'easy' ? 20 : 99);
+                        return { type: 'oral', question: `${ma} × ${mb}`, answer: ma * mb, display: `${ma} × ${mb} = ?` };
+                    }
+
+                case 'divide':
+                    let db, dans;
+                    if (grade === 3) {
+                        db = random(2, 9);
+                        dans = random(1, 12);
+                    } else {
+                        db = random(2, difficulty === 'easy' ? 9 : 20);
+                        dans = random(1, 50);
+                    }
+                    const da = db * dans;
+                    return { type: 'oral', question: `${da} ÷ ${db}`, answer: dans, display: `${da} ÷ ${db} = ?` };
+
+                default:
+                    return { type: 'oral', question: '2 + 3', answer: 5, display: '2 + 3 = ?' };
+            }
+        }
+
+        // 生成竖式题
+        function generateVerticalQuestion(grade, difficulty, operation) {
+            const { min, max } = getNumberRange(grade);
+
+            switch(operation) {
+                case 'add':
+                    let va1 = random(min, max);
+                    let vb1 = random(min, max);
+                    // 确保是两位数或三位数，适合竖式
+                    if (grade <= 3) {
+                        va1 = random(10, Math.min(99, max));
+                        vb1 = random(10, Math.min(99, max));
+                    } else {
+                        va1 = random(100, Math.min(999, max));
+                        vb1 = random(100, Math.min(999, max));
+                    }
+                    return {
+                        type: 'vertical',
+                        num1: va1,
+                        num2: vb1,
+                        operator: '+',
+                        answer: va1 + vb1,
+                        display: `${va1} + ${vb1}`
+                    };
+
+                case 'subtract':
+                    let vans = random(min, Math.floor(max * 0.7));
+                    let vb_sub = random(Math.floor(min * 0.5), vans);
+                    let va_sub = vans + vb_sub;
+                    if (grade <= 3) {
+                        vans = random(10, Math.min(99, max));
+                        vb_sub = random(10, vans);
+                        va_sub = vans + vb_sub;
+                    } else {
+                        vans = random(100, Math.min(999, max));
+                        vb_sub = random(100, vans);
+                        va_sub = vans + vb_sub;
+                    }
+                    return {
+                        type: 'vertical',
+                        num1: va_sub,
+                        num2: vb_sub,
+                        operator: '-',
+                        answer: vans,
+                        display: `${va_sub} - ${vb_sub}`
+                    };
+
+                case 'multiply':
+                    if (grade === 3) {
+                        const vma = random(11, 99);
+                        const vmb = random(2, 9);
+                        return {
+                            type: 'vertical',
+                            num1: vma,
+                            num2: vmb,
+                            operator: '×',
+                            answer: vma * vmb,
+                            display: `${vma} × ${vmb}`
+                        };
+                    } else {
+                        const vma = random(11, 99);
+                        const vmb = random(11, difficulty === 'easy' ? 20 : 99);
+                        return {
+                            type: 'vertical',
+                            num1: vma,
+                            num2: vmb,
+                            operator: '×',
+                            answer: vma * vmb,
+                            display: `${vma} × ${vmb}`
+                        };
+                    }
+
+                case 'divide':
+                    let vdb, vdans;
+                    if (grade === 3) {
+                        vdb = random(2, 9);
+                        vdans = random(10, 50);
+                    } else {
+                        vdb = random(2, 20);
+                        vdans = random(10, 100);
+                    }
+                    const vda = vdb * vdans;
+                    return {
+                        type: 'vertical',
+                        num1: vda,
+                        num2: vdb,
+                        operator: '÷',
+                        answer: vdans,
+                        display: `${vda} ÷ ${vdb}`
+                    };
+
+                default:
+                    return {
+                        type: 'vertical',
+                        num1: 123,
+                        num2: 45,
+                        operator: '+',
+                        answer: 168,
+                        display: '123 + 45'
+                    };
+            }
+        }
+
+        // 生成所有题目
         function generateQuestions() {
-            const count = parseInt(document.getElementById('questionCount').value);
             const grade = parseInt(document.getElementById('gradeSelect').value);
             const difficulty = document.getElementById('difficultySelect').value;
 
@@ -850,36 +1170,41 @@
                 return false;
             }
 
-            questions = [];
+            const oralChecked = document.getElementById('oralCheck').checked;
+            const verticalChecked = document.getElementById('verticalCheck').checked;
 
-            for (let i = 0; i < count; i++) {
-                const op = operations[random(0, operations.length - 1)];
-                let q;
-
-                switch(op) {
-                    case 'add':
-                        q = generateAddition(grade, difficulty);
-                        break;
-                    case 'subtract':
-                        q = generateSubtraction(grade, difficulty);
-                        break;
-                    case 'multiply':
-                        q = generateMultiplication(grade, difficulty);
-                        break;
-                    case 'divide':
-                        q = generateDivision(grade, difficulty);
-                        break;
-                    case 'mixed':
-                        q = generateMixed(grade, difficulty);
-                        break;
-                    default:
-                        q = generateAddition(grade, difficulty);
-                }
-
-                questions.push(q);
+            if (!oralChecked && !verticalChecked) {
+                showToast('请至少选择一种题型', 'error');
+                return false;
             }
 
-            settings = { grade, difficulty, count };
+            questions = [];
+
+            // 生成口算题
+            if (oralChecked) {
+                const oralCount = parseInt(document.getElementById('oralCount').value);
+                for (let i = 0; i < oralCount; i++) {
+                    const op = operations[random(0, operations.length - 1)];
+                    questions.push(generateOralQuestion(grade, difficulty, op));
+                }
+            }
+
+            // 生成竖式题
+            if (verticalChecked) {
+                const verticalCount = parseInt(document.getElementById('verticalCount').value);
+                for (let i = 0; i < verticalCount; i++) {
+                    const op = operations[random(0, operations.length - 1)];
+                    questions.push(generateVerticalQuestion(grade, difficulty, op));
+                }
+            }
+
+ // 不打乱顺序，保持第一部分口算，第二部分竖式
+
+            // 记录各部分的题目数量
+            const oralCount = oralChecked ? parseInt(document.getElementById('oralCount').value) : 0;
+            const verticalCount = verticalChecked ? parseInt(document.getElementById('verticalCount').value) : 0;
+
+            settings = { grade, difficulty, oralChecked, verticalChecked, oralCount, verticalCount };
             return true;
         }
 
@@ -897,40 +1222,93 @@
 
             showQuestion();
             showSection('practiceSection');
-
-            document.getElementById('answerInput').focus();
+            focusInput();
         }
 
         // 计时测试
         function startTimedTest() {
-            if (!generateQuestions()) return;
+            startPractice();
+        }
 
-            currentQuestionIndex = 0;
-            correctCount = 0;
-            wrongAnswers = [];
-            streak = 0;
+        // 获取当前部分信息
+        function getSectionInfo() {
+            const oralCount = settings.oralCount || 0;
+            const verticalCount = settings.verticalCount || 0;
 
-            startTime = Date.now();
-            timerInterval = setInterval(updateTimer, 1000);
-
-            showQuestion();
-            showSection('practiceSection');
-
-            document.getElementById('answerInput').focus();
+            if (currentQuestionIndex < oralCount) {
+                return {
+                    section: '第一部分',
+                    sectionName: '口算题',
+                    current: currentQuestionIndex + 1,
+                    total: oralCount,
+                    globalIndex: currentQuestionIndex + 1
+                };
+            } else {
+                return {
+                    section: '第二部分',
+                    sectionName: '竖式题',
+                    current: currentQuestionIndex - oralCount + 1,
+                    total: verticalCount,
+                    globalIndex: currentQuestionIndex + 1
+                };
+            }
         }
 
         // 显示题目
         function showQuestion() {
             const q = questions[currentQuestionIndex];
-            document.getElementById('questionText').textContent = q.question + ' = ?';
-            document.getElementById('currentQ').textContent = currentQuestionIndex + 1;
+            const sectionInfo = getSectionInfo();
+
+            // 显示部分信息
+            document.getElementById('currentQ').textContent = sectionInfo.globalIndex;
             document.getElementById('totalQ').textContent = questions.length;
+            document.getElementById('sectionInfo').textContent = `${sectionInfo.section} - 第${sectionInfo.current}/${sectionInfo.total}题`;
 
             const progress = ((currentQuestionIndex) / questions.length) * 100;
             document.getElementById('progressFill').style.width = progress + '%';
 
-            document.getElementById('answerInput').value = '';
-            document.getElementById('answerInput').focus();
+            // 检查是否刚刚切换到新部分，显示提示
+            if (currentQuestionIndex > 0) {
+                const prevQ = questions[currentQuestionIndex - 1];
+                if (prevQ.type !== q.type) {
+                    showToast(`🎯 进入${sectionInfo.section}：${sectionInfo.sectionName}`, 'success');
+                }
+            }
+
+            if (q.type === 'oral') {
+                // 显示口算题
+                document.getElementById('oralQuestionArea').style.display = 'block';
+                document.getElementById('verticalQuestionArea').style.display = 'none';
+                document.getElementById('questionText').textContent = q.display;
+                document.getElementById('answerInput').value = '';
+                document.getElementById('questionTypeBadge').className = 'question-type-badge type-oral';
+                document.getElementById('questionTypeBadge').textContent = '📝 第一部分 口算题';
+            } else {
+                // 显示竖式题
+                document.getElementById('oralQuestionArea').style.display = 'none';
+                document.getElementById('verticalQuestionArea').style.display = 'block';
+                document.getElementById('verticalNum1').textContent = q.num1;
+                document.getElementById('verticalNum2').textContent = q.num2;
+                document.getElementById('verticalOperator').textContent = q.operator;
+                document.getElementById('verticalAnswerInput').value = '';
+                document.getElementById('verticalHorizontalDisplay').textContent = `${q.display} = ?`;
+                document.getElementById('questionTypeBadge').className = 'question-type-badge type-vertical';
+                document.getElementById('questionTypeBadge').textContent = '✏️ 第二部分 竖式题';
+            }
+
+            focusInput();
+        }
+
+        // 聚焦输入框
+        function focusInput() {
+            setTimeout(() => {
+                const q = questions[currentQuestionIndex];
+                if (q.type === 'oral') {
+                    document.getElementById('answerInput').focus();
+                } else {
+                    document.getElementById('verticalAnswerInput').focus();
+                }
+            }, 100);
         }
 
         // 更新计时器
@@ -941,14 +1319,20 @@
 
         // 提交答案
         function submitAnswer() {
-            const userAnswer = parseInt(document.getElementById('answerInput').value);
+            const q = questions[currentQuestionIndex];
+            let userAnswer;
+
+            if (q.type === 'oral') {
+                userAnswer = parseInt(document.getElementById('answerInput').value);
+            } else {
+                userAnswer = parseInt(document.getElementById('verticalAnswerInput').value);
+            }
 
             if (isNaN(userAnswer)) {
                 showToast('请输入答案', 'error');
                 return;
             }
 
-            const q = questions[currentQuestionIndex];
             const isCorrect = userAnswer === q.answer;
 
             if (isCorrect) {
@@ -957,9 +1341,10 @@
                 showToast('✅ 正确！', 'success');
             } else {
                 wrongAnswers.push({
-                    question: q.question,
+                    question: q.display,
                     correctAnswer: q.answer,
-                    userAnswer: userAnswer
+                    userAnswer: userAnswer,
+                    type: q.type
                 });
                 streak = 0;
                 showToast('❌ 错误！', 'error');
@@ -978,9 +1363,10 @@
         function skipQuestion() {
             const q = questions[currentQuestionIndex];
             wrongAnswers.push({
-                question: q.question,
+                question: q.display,
                 correctAnswer: q.answer,
-                userAnswer: '跳过'
+                userAnswer: '跳过',
+                type: q.type
             });
 
             currentQuestionIndex++;
@@ -1005,6 +1391,65 @@
             document.getElementById('resultWrong').textContent = questions.length - correctCount;
             document.getElementById('resultTime').textContent = formatTime(totalTime);
 
+            // 计算各部分成绩
+            const oralCount = settings.oralCount || 0;
+            const verticalCount = settings.verticalCount || 0;
+
+            let oralCorrect = 0;
+            let verticalCorrect = 0;
+
+            wrongAnswers.forEach(w => {
+                if (w.type === 'oral') {
+                    // 错题
+                } else {
+                    // 错题
+                }
+            });
+
+            // 统计各部分正确数
+            for (let i = 0; i < oralCount; i++) {
+                const q = questions[i];
+                const isWrong = wrongAnswers.some(w => w.question === q.display);
+                if (!isWrong) oralCorrect++;
+            }
+
+            for (let i = 0; i < verticalCount; i++) {
+                const q = questions[oralCount + i];
+                if (q) {
+                    const isWrong = wrongAnswers.some(w => w.question === q.display);
+                    if (!isWrong) verticalCorrect++;
+                }
+            }
+
+            // 显示各部分成绩
+            let sectionStatsHTML = '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">';
+
+            if (oralCount > 0) {
+                const oralAccuracy = oralCount > 0 ? Math.round((oralCorrect / oralCount) * 100) : 0;
+                sectionStatsHTML += `
+                    <div style="padding: 10px; background: white; border-radius: 8px; border-left: 3px solid var(--primary-color);">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">第一部分：口算题</div>
+                        <div style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">${oralCorrect}/${oralCount}</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">正确率：${oralAccuracy}%</div>
+                    </div>
+                `;
+            }
+
+            if (verticalCount > 0) {
+                const verticalAccuracy = verticalCount > 0 ? Math.round((verticalCorrect / verticalCount) * 100) : 0;
+                sectionStatsHTML += `
+                    <div style="padding: 10px; background: white; border-radius: 8px; border-left: 3px solid var(--secondary-color);">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">第二部分：竖式题</div>
+                        <div style="font-size: 1.2rem; font-weight: bold; color: var(--secondary-color);">${verticalCorrect}/${verticalCount}</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">正确率：${verticalAccuracy}%</div>
+                    </div>
+                `;
+            }
+
+            sectionStatsHTML += '</div>';
+            document.getElementById('sectionStatsContent').innerHTML = sectionStatsHTML;
+            document.getElementById('sectionStats').style.display = oralCount > 0 && verticalCount > 0 ? 'block' : 'none';
+
             // 评价
             let title = '';
             if (accuracy >= 95) title = '🏆 太棒了！';
@@ -1020,7 +1465,10 @@
                 document.getElementById('wrongAnswersSection').style.display = 'block';
                 document.getElementById('wrongAnswersList').innerHTML = wrongAnswers.map(w => `
                     <div class="wrong-item">
-                        <div class="wrong-question">${w.question} = ?</div>
+                        <div class="wrong-question">
+                            <span style="font-size: 0.85rem; padding: 3px 8px; border-radius: 4px; margin-right: 8px; ${w.type === 'oral' ? 'background: #dbeafe; color: #1e40af;' : 'background: #fce7f3; color: #9d174d;'}">${w.type === 'oral' ? '口算' : '竖式'}</span>
+                            ${w.question}
+                        </div>
                         <div class="wrong-answer-info">
                             正确答案：<span style="color: var(--success-color); font-weight: 600;">${w.correctAnswer}</span>
                             你的答案：<span style="color: var(--danger-color);">${w.userAnswer}</span>
@@ -1049,10 +1497,30 @@
                 return;
             }
 
-            questions = wrongAnswers.map(w => ({
-                question: w.question,
-                answer: w.correctAnswer
-            }));
+            questions = wrongAnswers.map(w => {
+                if (w.type === 'oral') {
+                    return {
+                        type: 'oral',
+                        question: w.question,
+                        answer: w.correctAnswer,
+                        display: w.question
+                    };
+                } else {
+                    // 从 display 解析竖式题
+                    const parts = w.question.split(' ');
+                    const num1 = parseInt(parts[0]);
+                    const operator = parts[1];
+                    const num2 = parseInt(parts[2]);
+                    return {
+                        type: 'vertical',
+                        num1: num1,
+                        num2: num2,
+                        operator: operator,
+                        answer: w.correctAnswer,
+                        display: w.question
+                    };
+                }
+            });
 
             currentQuestionIndex = 0;
             correctCount = 0;
@@ -1073,16 +1541,142 @@
             showSection('homeSection');
         }
 
+        // 显示打印设置对话框
+        function showPrintDialog() {
+            document.getElementById('printDialog').style.display = 'flex';
+        }
+
+        // 关闭打印设置对话框
+        function closePrintDialog() {
+            document.getElementById('printDialog').style.display = 'none';
+        }
+
+        // 确认生成试卷
+        function confirmGeneratePrint() {
+            const copies = parseInt(document.getElementById('printCopies').value);
+            const sameQuestions = document.getElementById('sameQuestions').checked;
+
+            closePrintDialog();
+            generatePrint(copies, sameQuestions);
+        }
+
         // 生成打印试卷
-        function generatePrint() {
-            if (!generateQuestions()) return;
+        function generatePrint(copies = 1, sameQuestions = true) {
+            const printContent = document.getElementById('printContent');
+            let html = '';
 
-            const printQuestions = document.getElementById('printQuestions');
-            printQuestions.innerHTML = questions.map((q, i) => `
-                <div class="print-question">${i + 1}. ${q.question} = ______</div>
-            `).join('');
+            // 保存原始设置
+            const originalSettings = {...settings};
 
-            window.print();
+            for (let copyIndex = 0; copyIndex < copies; copyIndex++) {
+                // 如果不是使用相同题目，则重新生成题目
+                if (!sameQuestions && copyIndex > 0) {
+                    // 重新生成题目
+                    const oralChecked = originalSettings.oralChecked;
+                    const verticalChecked = originalSettings.verticalChecked;
+                    const grade = originalSettings.grade;
+                    const difficulty = originalSettings.difficulty;
+
+                    const operationCheckboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked');
+                    const operations = Array.from(operationCheckboxes).map(cb => cb.value).filter(op => ['add', 'subtract', 'multiply', 'divide'].includes(op));
+
+                    questions = [];
+
+                    if (oralChecked) {
+                        const oralCount = originalSettings.oralCount || 0;
+                        for (let i = 0; i < oralCount; i++) {
+                            const op = operations[random(0, operations.length - 1)];
+                            questions.push(generateOralQuestion(grade, difficulty, op));
+                        }
+                    }
+
+                    if (verticalChecked) {
+                        const verticalCount = originalSettings.verticalCount || 0;
+                        for (let i = 0; i < verticalCount; i++) {
+                            const op = operations[random(0, operations.length - 1)];
+                            questions.push(generateVerticalQuestion(grade, difficulty, op));
+                        }
+                    }
+                } else if (copyIndex > 0) {
+                    // 使用相同题目，不需要重新生成
+                } else {
+                    // 第一份，需要先生成题目
+                    if (!generateQuestions()) return;
+                }
+
+                const oralCount = settings.oralCount || 0;
+                const verticalCount = settings.verticalCount || 0;
+
+                // 如果不是第一份，添加分页符
+                if (copyIndex > 0) {
+                    html += '<div style="page-break-after: always;"></div>';
+                }
+
+                // 添加试卷标题和编号
+                if (copies > 1) {
+                    html += '<div class="print-header">';
+                    html += `<h1>小学数学练习题 - 第${copyIndex + 1}份</h1>`;
+                    html += '</div>';
+                }
+
+                // 打印口算题（第一部分）
+                if (oralCount > 0) {
+                    html += '<div class="print-section">';
+                    html += '<div class="print-section-title">第一部分：口算题（每题2分，共' + (oralCount * 2) + '分）</div>';
+                    html += '<div style="display: flex; flex-wrap: wrap; align-items: center;">';
+
+                    for (let i = 0; i < oralCount; i++) {
+                        const q = questions[i];
+                        const questionText = q.question.toString();
+                        html += `
+                            <div class="print-oral"><span style="color: #999;">${String(i + 1).padStart(2, '0')}.</span>&nbsp;${questionText}&nbsp;=&nbsp;____</div>
+                        `;
+                    }
+
+                    html += '</div></div>';
+                }
+
+                // 打印竖式题（第二部分）- 包含横式和竖式
+                if (verticalCount > 0) {
+                    html += '<div class="print-section">';
+                    html += '<div class="print-section-title">第二部分：竖式题（用竖式计算，每题4分，共' + (verticalCount * 4) + '分）</div>';
+                    html += '<div style="display: flex; flex-wrap: wrap;">';
+
+                    for (let i = 0; i < verticalCount; i++) {
+                        const q = questions[oralCount + i];
+                        const num1Str = q.num1.toString();
+                        const num2Str = q.num2.toString();
+                        const maxLength = Math.max(num1Str.length, num2Str.length);
+
+                        html += `
+                            <div class="print-vertical">
+                                <div class="print-vertical-horizontal"><span style="color: #999;">${String(i + 1).padStart(2, '0')}.</span>&nbsp;${q.display}&nbsp;=&nbsp;____</div>
+                                <div style="margin-top: 5px;">${'&nbsp;'.repeat(maxLength - num1Str.length)}${num1Str}</div>
+                                <div>${q.operator}&nbsp;${'&nbsp;'.repeat(maxLength - num2Str.length)}${num2Str}</div>
+                                <div style="border-top: 2px solid #000; margin: 2px 0;"></div>
+                                <div style="min-height: 14px;"></div>
+                            </div>
+                        `;
+                    }
+
+                    html += '</div></div>';
+                }
+            }
+
+            // 恢复原始设置
+            settings = originalSettings;
+
+            printContent.innerHTML = html;
+
+            // 显示提示
+            if (copies > 1) {
+                showToast(`✅ 已生成${copies}份试卷，准备打印...`, 'success');
+                setTimeout(() => {
+                    window.print();
+                }, 500);
+            } else {
+                window.print();
+            }
         }
 
         // 保存历史记录
@@ -1093,14 +1687,14 @@
                 date: new Date().toLocaleString('zh-CN'),
                 grade: settings.grade,
                 difficulty: settings.difficulty,
-                count: settings.count,
+                count: questions.length,
                 correct: correctCount,
                 total: questions.length,
                 accuracy: accuracy,
-                time: time
+                time: time,
+                types: settings.oralChecked && settings.verticalChecked ? '混合' : (settings.oralChecked ? '口算' : '竖式')
             });
 
-            // 只保留最近50条记录
             if (history.length > 50) history.pop();
 
             localStorage.setItem('mathPracticeHistory', JSON.stringify(history));
@@ -1119,7 +1713,7 @@
 
             historyList.innerHTML = history.map((h, i) => `
                 <div class="history-item">
-                    <div class="history-date">${h.date}</div>
+                    <div class="history-date">${h.date} | ${h.types || '混合'}</div>
                     <div class="history-stats">
                         <span>正确率：${h.accuracy}%</span>
                         <span>题目：${h.correct}/${h.total}</span>
@@ -1149,22 +1743,18 @@
         function loadStats() {
             const history = JSON.parse(localStorage.getItem('mathPracticeHistory') || '[]');
 
-            // 今日练习次数
             const today = new Date().toDateString();
             const todayCount = history.filter(h => new Date(h.date).toDateString() === today).length;
             document.getElementById('todayCount').textContent = todayCount;
 
-            // 平均正确率
             if (history.length > 0) {
                 const avgAcc = Math.round(history.reduce((sum, h) => sum + h.accuracy, 0) / history.length);
                 document.getElementById('avgAccuracy').textContent = avgAcc + '%';
             }
 
-            // 累计做题
             const totalQuestions = history.reduce((sum, h) => sum + h.total, 0);
             document.getElementById('totalQuestions').textContent = totalQuestions;
 
-            // 最佳连续答对
             const bestStreak = parseInt(localStorage.getItem('mathPracticeBestStreak') || '0');
             document.getElementById('bestStreak').textContent = bestStreak;
         }
@@ -1172,10 +1762,17 @@
         // 读题
         function readQuestion() {
             const q = questions[currentQuestionIndex];
-            const text = q.question.replace('×', '乘以').replace('÷', '除以').replace('+', '加').replace('-', '减');
+            let text;
+
+            if (q.type === 'oral') {
+                text = q.question.replace('×', '乘以').replace('÷', '除以').replace('+', '加').replace('-', '减');
+                text += '等于几';
+            } else {
+                text = `${q.num1} ${q.operator === '+' ? '加' : q.operator === '-' ? '减' : q.operator === '×' ? '乘以' : '除以'} ${q.num2}，竖式计算`;
+            }
 
             if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text + '等于几');
+                const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'zh-CN';
                 utterance.rate = 0.8;
                 speechSynthesis.speak(utterance);
@@ -1188,14 +1785,6 @@
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 submitAnswer();
-            }
-        }
-
-        // 更新最佳连续答对
-        function updateBestStreak() {
-            const current = parseInt(localStorage.getItem('mathPracticeBestStreak') || '0');
-            if (streak > current) {
-                localStorage.setItem('mathPracticeBestStreak', streak.toString());
             }
         }
     </script>
