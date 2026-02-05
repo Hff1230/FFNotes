@@ -399,11 +399,6 @@
             color: #9d174d;
         }
 
-        .type-word-problem {
-            background: #ddd6fe;
-            color: #5b21b6;
-        }
-
         /* 打印样式 */
         .print-area {
             display: none;
@@ -633,61 +628,6 @@
                 page-break-inside: avoid;
             }
 
-            /* 草稿区域样式 */
-            .print-draft-area {
-                margin-top: 15px;
-                padding: 10px;
-                border: 1px dashed #999;
-                border-radius: 5px;
-                background: #fafafa;
-                page-break-inside: avoid;
-            }
-
-            .print-draft-title {
-                font-size: 0.9rem;
-                font-weight: bold;
-                color: #666;
-                margin-bottom: 10px;
-                text-align: center;
-            }
-
-            .print-draft-lines {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px 20px;
-            }
-
-            .print-draft-column {
-                position: relative;
-            }
-
-            .print-draft-column::before {
-                content: '';
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 0;
-                bottom: 0;
-                background-image: repeating-linear-gradient(
-                    to bottom,
-                    #e0e0e0 0px,
-                    #e0e0e0 1px,
-                    transparent 1px,
-                    transparent calc(1.8rem + 1px)
-                );
-                background-repeat: repeat-y;
-                background-size: 100% 1.8rem;
-                pointer-events: none;
-                z-index: 1;
-            }
-
-            .print-draft-item {
-                position: relative;
-                min-height: 1.8rem;
-                margin-bottom: calc(1.8rem + 1px);
-                z-index: 2;
-            }
-        }
             /* 确保打印区域的最后一个元素不会产生额外分页 */
             .print-area > *:last-child {
                 page-break-after: auto !important;
@@ -877,11 +817,8 @@
                         <label class="checkbox-item">
                             <input type="checkbox" id="verticalCheck" checked> 竖式题（笔算计算）
                         </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" id="wordProblemCheck"> 应用题（文字题）
-                        </label>
                     </div>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">💡 提示：可单选或多选，题目将按顺序出现</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">💡 提示：可单选或双选，题目将按顺序出现</p>
                 </div>
 
                 <div class="form-group">
@@ -913,42 +850,29 @@
 
                 <div class="form-group">
                     <label>📊 题目数量设置</label>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <div style="display: flex; gap: 15px;">
-                            <div style="flex: 1;">
-                                <label style="font-size: 0.95rem; color: var(--primary-color); font-weight: 600;">📝 口算题</label>
-                                <select id="oralCount">
-                                    <option value="10">10题</option>
-                                    <option value="20" selected>20题</option>
-                                    <option value="30">30题</option>
-                                    <option value="40">40题</option>
-                                    <option value="50">50题</option>
-                                </select>
-                            </div>
-                            <div style="flex: 1;">
-                                <label style="font-size: 0.95rem; color: var(--secondary-color); font-weight: 600;">✏️ 竖式题</label>
-                                <select id="verticalCount">
-                                    <option value="10">10题</option>
-                                    <option value="20" selected>20题</option>
-                                    <option value="30">30题</option>
-                                    <option value="40">40题</option>
-                                    <option value="50">50题</option>
-                                </select>
-                            </div>
+                    <div style="display: flex; gap: 15px; margin-bottom: 10px;">
+                        <div style="flex: 1;">
+                            <label style="font-size: 0.95rem; color: var(--primary-color); font-weight: 600;">📝 第一部分：口算题</label>
+                            <select id="oralCount">
+                                <option value="10">10题</option>
+                                <option value="20" selected>20题</option>
+                                <option value="30">30题</option>
+                                <option value="40">40题</option>
+                                <option value="50">50题</option>
+                            </select>
                         </div>
-                        <div style="display: flex; gap: 15px;">
-                            <div style="flex: 1;">
-                                <label style="font-size: 0.95rem; color: #8b5cf6; font-weight: 600;">📖 应用题</label>
-                                <select id="wordProblemCount">
-                                    <option value="5" selected>5题</option>
-                                    <option value="10">10题</option>
-                                    <option value="15">15题</option>
-                                    <option value="20">20题</option>
-                                </select>
-                            </div>
+                        <div style="flex: 1;">
+                            <label style="font-size: 0.95rem; color: var(--secondary-color); font-weight: 600;">✏️ 第二部分：竖式题</label>
+                            <select id="verticalCount">
+                                <option value="10">10题</option>
+                                <option value="20" selected>20题</option>
+                                <option value="30">30题</option>
+                                <option value="40">40题</option>
+                                <option value="50">50题</option>
+                            </select>
                         </div>
                     </div>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary);">📌 题目将按顺序出现：口算题 → 竖式题 → 应用题</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">📌 题目将按顺序出现：先完成所有口算题，再进行竖式题</p>
                 </div>
 
                 <div class="btn-group">
@@ -1019,17 +943,6 @@
                         <div>
                             <input type="number" class="vertical-input" id="verticalAnswerInput" placeholder="?" onkeypress="handleKeyPress(event)">
                         </div>
-                    </div>
-                </div>
-
-                <!-- 应用题显示 -->
-                <div id="wordProblemArea" class="word-problem-question" style="display: none;">
-                    <div class="word-problem-content" id="wordProblemText" style="font-size: 1.1rem; line-height: 1.8; color: var(--text-primary); margin-bottom: 20px; white-space: pre-wrap;">
-                        题目内容将在这里显示
-                    </div>
-                    <div style="max-width: 300px; margin: 0 auto;">
-                        <label style="font-size: 0.95rem; color: var(--text-secondary); display: block; margin-bottom: 8px;">请输入答案：</label>
-                        <input type="number" class="answer-input" id="wordProblemAnswerInput" placeholder="输入答案" onkeypress="handleKeyPress(event)" style="width: 100%; max-width: 300px;">
                     </div>
                 </div>
 
@@ -1362,89 +1275,6 @@
             }
         }
 
-        // 生成应用题
-        function generateWordProblem(grade, difficulty, operation) {
-            const templates = {
-                add: [
-                    (a, b) => `小明有${a}个苹果，妈妈又给他买了${b}个，小明现在一共有多少个苹果？`,
-                    (a, b) => `图书馆有${a}本故事书，又新买了${b}本，现在一共有多少本故事书？`,
-                    (a, b) => `停车场原来有${a}辆汽车，又开来了${b}辆，现在停车场有多少辆汽车？`,
-                    (a, b) => `小红收集了${a}枚邮票，哥哥又送给她${b}枚，小红现在有多少枚邮票？`,
-                    (a, b) => `养鸡场有${a}只母鸡，公鸡比母鸡少${b}只，养鸡场一共有多少只鸡？`
-                ],
-                subtract: [
-                    (a, b) => `商店有${a}个篮球，卖出了${b}个，还剩多少个篮球？`,
-                    (a, b) => `小明有${a}元钱，买文具用去了${b}元，还剩下多少元？`,
-                    (a, b) => `公交车上有${a}人，到站下去了${b}人，车上还有多少人？`,
-                    (a, b) => `鱼缸里有${a}条金鱼，死了${b}条，还剩下多少条金鱼？`,
-                    (a, b) => `树上有${a}只小鸟，飞走了${b}只，还剩下多少只小鸟？`
-                ],
-                multiply: [
-                    (a, b) => `一支钢笔${a}元，买${b}支钢笔需要多少钱？`,
-                    (a, b) => `每个盒子装${a}个鸡蛋，${b}个盒子一共可以装多少个鸡蛋？`,
-                    (a, b) => `小明每天读${a}页书，${b}天一共读了多少页？`,
-                    (a, b) => `一辆汽车每小时行驶${a}千米，行驶${b}小时能行驶多少千米？`,
-                    (a, b) => `一张桌子${a}元，买${b}张桌子需要多少钱？`
-                ],
-                divide: [
-                    (a, b) => `有${a}个苹果，平均分给${b}个小朋友，每个小朋友能分到几个？`,
-                    (a, b) => `小明有${a}元钱，买铅笔每支${b}元，可以买多少支铅笔？`,
-                    (a, b) => `一本书有${a}页，每天读${b}页，多少天可以读完？`,
-                    (a, b) => `一根绳子长${a}米，剪成每段${b}米，可以剪成多少段？`,
-                    (a, b) => `一盒铅笔有${a}支，平均分给${b}个同学，每个同学分几支？`
-                ]
-            };
-
-            const { min, max } = getNumberRange(grade);
-            let num1, num2, answer;
-
-            // 根据运算类型生成数字
-            switch(operation) {
-                case 'add':
-                    num1 = random(min, Math.floor(max * 0.5));
-                    num2 = random(min, Math.floor(max * 0.5));
-                    answer = num1 + num2;
-                    break;
-                case 'subtract':
-                    answer = random(min, Math.floor(max * 0.6));
-                    num2 = random(Math.floor(min * 0.3), Math.floor(answer * 0.7));
-                    num1 = answer + num2;
-                    break;
-                case 'multiply':
-                    if (grade <= 3) {
-                        num1 = random(2, 9);
-                        num2 = random(2, 9);
-                    } else {
-                        num1 = random(2, 20);
-                        num2 = random(2, 20);
-                    }
-                    answer = num1 * num2;
-                    break;
-                case 'divide':
-                    num2 = random(2, grade <= 3 ? 9 : 15);
-                    answer = random(2, grade <= 3 ? 12 : 20);
-                    num1 = num2 * answer;
-                    break;
-                default:
-                    return null;
-            }
-
-            // 随机选择一个模板
-            const operationTemplates = templates[operation];
-            const template = operationTemplates[random(0, operationTemplates.length - 1)];
-            const question = template(num1, num2);
-
-            return {
-                type: 'wordProblem',
-                question: question,
-                operation: operation,
-                num1: num1,
-                num2: num2,
-                answer: answer,
-                display: `${operation}: ${question.substring(0, 20)}...`
-            };
-        }
-
         // 生成所有题目
         function generateQuestions() {
             const grade = parseInt(document.getElementById('gradeSelect').value);
@@ -1460,11 +1290,10 @@
 
             const oralChecked = document.getElementById('oralCheck').checked;
             const verticalChecked = document.getElementById('verticalCheck').checked;
-            const wordProblemChecked = document.getElementById('wordProblemCheck').checked;
 
             // 验证至少选择一种题型
-            if (!oralChecked && !verticalChecked && !wordProblemChecked) {
-                showToast('⚠️ 请至少选择一种题型（口算题、竖式题或应用题）', 'error');
+            if (!oralChecked && !verticalChecked) {
+                showToast('⚠️ 请至少选择一种题型（口算题或竖式题）', 'error');
                 return false;
             }
 
@@ -1494,23 +1323,13 @@
                 }
             }
 
-            // 生成应用题
-            if (wordProblemChecked) {
-                const wordProblemCount = parseInt(document.getElementById('wordProblemCount').value);
-                for (let i = 0; i < wordProblemCount; i++) {
-                    const op = operations[random(0, operations.length - 1)];
-                    questions.push(generateWordProblem(grade, difficulty, op));
-                }
-            }
-
- // 不打乱顺序，保持第一部分口算，第二部分竖式，第三部分应用题
+ // 不打乱顺序，保持第一部分口算，第二部分竖式
 
             // 记录各部分的题目数量
             const oralCount = oralChecked ? parseInt(document.getElementById('oralCount').value) : 0;
             const verticalCount = verticalChecked ? parseInt(document.getElementById('verticalCount').value) : 0;
-            const wordProblemCount2 = wordProblemChecked ? parseInt(document.getElementById('wordProblemCount').value) : 0;
 
-            settings = { grade, difficulty, oralChecked, verticalChecked, wordProblemChecked, oralCount, verticalCount, wordProblemCount: wordProblemCount2 };
+            settings = { grade, difficulty, oralChecked, verticalChecked, oralCount, verticalCount };
             return true;
         }
 
@@ -1540,7 +1359,6 @@
         function getSectionInfo() {
             const oralCount = settings.oralCount || 0;
             const verticalCount = settings.verticalCount || 0;
-            const wordProblemCount = settings.wordProblemCount || 0;
 
             if (currentQuestionIndex < oralCount) {
                 return {
@@ -1550,20 +1368,12 @@
                     total: oralCount,
                     globalIndex: currentQuestionIndex + 1
                 };
-            } else if (currentQuestionIndex < oralCount + verticalCount) {
+            } else {
                 return {
                     section: '第二部分',
                     sectionName: '竖式题',
                     current: currentQuestionIndex - oralCount + 1,
                     total: verticalCount,
-                    globalIndex: currentQuestionIndex + 1
-                };
-            } else {
-                return {
-                    section: '第三部分',
-                    sectionName: '应用题',
-                    current: currentQuestionIndex - oralCount - verticalCount + 1,
-                    total: wordProblemCount,
                     globalIndex: currentQuestionIndex + 1
                 };
             }
@@ -1594,16 +1404,14 @@
                 // 显示口算题
                 document.getElementById('oralQuestionArea').style.display = 'block';
                 document.getElementById('verticalQuestionArea').style.display = 'none';
-                document.getElementById('wordProblemArea').style.display = 'none';
                 document.getElementById('questionText').textContent = q.display;
                 document.getElementById('answerInput').value = '';
                 document.getElementById('questionTypeBadge').className = 'question-type-badge type-oral';
                 document.getElementById('questionTypeBadge').textContent = '📝 第一部分 口算题';
-            } else if (q.type === 'vertical') {
+            } else {
                 // 显示竖式题
                 document.getElementById('oralQuestionArea').style.display = 'none';
                 document.getElementById('verticalQuestionArea').style.display = 'block';
-                document.getElementById('wordProblemArea').style.display = 'none';
                 document.getElementById('verticalNum1').textContent = q.num1;
                 document.getElementById('verticalNum2').textContent = q.num2;
                 document.getElementById('verticalOperator').textContent = q.operator;
@@ -1611,15 +1419,6 @@
                 document.getElementById('verticalHorizontalDisplay').textContent = `${q.display} = ?`;
                 document.getElementById('questionTypeBadge').className = 'question-type-badge type-vertical';
                 document.getElementById('questionTypeBadge').textContent = '✏️ 第二部分 竖式题';
-            } else if (q.type === 'wordProblem') {
-                // 显示应用题
-                document.getElementById('oralQuestionArea').style.display = 'none';
-                document.getElementById('verticalQuestionArea').style.display = 'none';
-                document.getElementById('wordProblemArea').style.display = 'block';
-                document.getElementById('wordProblemText').textContent = q.question;
-                document.getElementById('wordProblemAnswerInput').value = '';
-                document.getElementById('questionTypeBadge').className = 'question-type-badge type-word-problem';
-                document.getElementById('questionTypeBadge').textContent = '📖 第三部分 应用题';
             }
 
             focusInput();
@@ -1631,10 +1430,8 @@
                 const q = questions[currentQuestionIndex];
                 if (q.type === 'oral') {
                     document.getElementById('answerInput').focus();
-                } else if (q.type === 'vertical') {
+                } else {
                     document.getElementById('verticalAnswerInput').focus();
-                } else if (q.type === 'wordProblem') {
-                    document.getElementById('wordProblemAnswerInput').focus();
                 }
             }, 100);
         }
@@ -1652,10 +1449,8 @@
 
             if (q.type === 'oral') {
                 userAnswer = parseInt(document.getElementById('answerInput').value);
-            } else if (q.type === 'vertical') {
+            } else {
                 userAnswer = parseInt(document.getElementById('verticalAnswerInput').value);
-            } else if (q.type === 'wordProblem') {
-                userAnswer = parseInt(document.getElementById('wordProblemAnswerInput').value);
             }
 
             if (isNaN(userAnswer)) {
@@ -1671,7 +1466,7 @@
                 showToast('✅ 正确！', 'success');
             } else {
                 wrongAnswers.push({
-                    question: q.type === 'wordProblem' ? q.question : q.display,
+                    question: q.display,
                     correctAnswer: q.answer,
                     userAnswer: userAnswer,
                     type: q.type
@@ -1724,18 +1519,14 @@
             // 计算各部分成绩
             const oralCount = settings.oralCount || 0;
             const verticalCount = settings.verticalCount || 0;
-            const wordProblemCount = settings.wordProblemCount || 0;
 
             let oralCorrect = 0;
             let verticalCorrect = 0;
-            let wordProblemCorrect = 0;
 
             wrongAnswers.forEach(w => {
                 if (w.type === 'oral') {
                     // 错题
-                } else if (w.type === 'vertical') {
-                    // 错题
-                } else if (w.type === 'wordProblem') {
+                } else {
                     // 错题
                 }
             });
@@ -1755,18 +1546,8 @@
                 }
             }
 
-            for (let i = 0; i < wordProblemCount; i++) {
-                const q = questions[oralCount + verticalCount + i];
-                if (q) {
-                    const isWrong = wrongAnswers.some(w => w.question === q.question);
-                    if (!isWrong) wordProblemCorrect++;
-                }
-            }
-
             // 显示各部分成绩
-            const sectionCount = (oralCount > 0 ? 1 : 0) + (verticalCount > 0 ? 1 : 0) + (wordProblemCount > 0 ? 1 : 0);
-            const gridCols = sectionCount === 3 ? 'repeat(3, 1fr)' : 'repeat(2, 1fr)';
-            let sectionStatsHTML = `<div style="display: grid; grid-template-columns: ${gridCols}; gap: 10px;">`;
+            let sectionStatsHTML = '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">';
 
             if (oralCount > 0) {
                 const oralAccuracy = oralCount > 0 ? Math.round((oralCorrect / oralCount) * 100) : 0;
@@ -1790,21 +1571,9 @@
                 `;
             }
 
-            if (wordProblemCount > 0) {
-                const wordProblemAccuracy = wordProblemCount > 0 ? Math.round((wordProblemCorrect / wordProblemCount) * 100) : 0;
-                sectionStatsHTML += `
-                    <div style="padding: 10px; background: white; border-radius: 8px; border-left: 3px solid #8b5cf6;">
-                        <div style="font-size: 0.85rem; color: var(--text-secondary);">第三部分：应用题</div>
-                        <div style="font-size: 1.2rem; font-weight: bold; color: #8b5cf6;">${wordProblemCorrect}/${wordProblemCount}</div>
-                        <div style="font-size: 0.85rem; color: var(--text-secondary);">正确率：${wordProblemAccuracy}%</div>
-                    </div>
-                `;
-            }
-
             sectionStatsHTML += '</div>';
             document.getElementById('sectionStatsContent').innerHTML = sectionStatsHTML;
-            const hasMultipleSections = (oralCount > 0 ? 1 : 0) + (verticalCount > 0 ? 1 : 0) + (wordProblemCount > 0 ? 1 : 0) > 1;
-            document.getElementById('sectionStats').style.display = hasMultipleSections ? 'block' : 'none';
+            document.getElementById('sectionStats').style.display = oralCount > 0 && verticalCount > 0 ? 'block' : 'none';
 
             // 评价
             let title = '';
@@ -1953,14 +1722,6 @@
                             questions.push(generateVerticalQuestion(grade, difficulty, op));
                         }
                     }
-
-                    if (wordProblemChecked) {
-                        const wordProblemCount = originalSettings.wordProblemCount || 0;
-                        for (let i = 0; i < wordProblemCount; i++) {
-                            const op = operations[random(0, operations.length - 1)];
-                            questions.push(generateWordProblem(grade, difficulty, op));
-                        }
-                    }
                 } else if (copyIndex > 0) {
                     // 使用相同题目，不需要重新生成
                 } else {
@@ -1970,7 +1731,6 @@
 
                 const oralCount = settings.oralCount || 0;
                 const verticalCount = settings.verticalCount || 0;
-                const wordProblemCount = settings.wordProblemCount || 0;
 
                 // 每份试卷用一个wrapper包裹，避免内部元素被分页规则影响
                 html += '<div class="print-copy-wrapper">';
@@ -1989,9 +1749,8 @@
                 // 打印口算题（第一部分）
                 if (oralCount > 0) {
                     html += '<div class="print-section">';
-                    // 根据是否有其他题型决定标题
-                    const hasOthers = verticalCount > 0 || wordProblemCount > 0;
-                    const oralTitle = hasOthers ? '第一部分：口算题' : '口算题';
+                    // 根据是否有竖式题决定标题
+                    const oralTitle = verticalCount > 0 ? '第一部分：口算题' : '口算题';
                     html += '<div class="print-section-title">' + oralTitle + '（每题2分，共' + (oralCount * 2) + '分）</div>';
                     html += '<div style="display: flex; flex-wrap: wrap; align-items: center;">';
 
@@ -2009,9 +1768,7 @@
                 // 打印竖式题（第二部分）- 包含横式和竖式
                 if (verticalCount > 0) {
                     html += '<div class="print-section">';
-                    const beforeVertical = oralCount > 0 ? 1 : 0;
-                    const hasAfter = wordProblemCount > 0;
-                    const verticalTitle = (beforeVertical > 0 || hasAfter) ? '第二部分：竖式题' : '竖式题';
+                    const verticalTitle = oralCount > 0 ? '第二部分：竖式题' : '竖式题';
                     html += '<div class="print-section-title">' + verticalTitle + '（用竖式计算，每题2分，共' + (verticalCount * 2) + '分）</div>';
                     html += '<div style="display: flex; flex-wrap: wrap;">';
 
@@ -2034,68 +1791,6 @@
                                 </div>
                             </div>
                         `;
-                    }
-
-                    html += '</div></div>';
-                }
-
-                // 打印应用题（第三部分）
-                if (wordProblemCount > 0) {
-                    html += '<div class="print-section">';
-                    const totalSelected = (oralCount > 0 ? 1 : 0) + (verticalCount > 0 ? 1 : 0);
-                    const wordTitle = totalSelected > 0 ? '第三部分：应用题' : '应用题';
-                    html += '<div class="print-section-title">' + wordTitle + '（每题5分，共' + (wordProblemCount * 5) + '分）</div>';
-                    html += '<div style="display: flex; flex-direction: column; gap: 15px;">';
-
-                    for (let i = 0; i < wordProblemCount; i++) {
-                        const q = questions[oralCount + verticalCount + i];
-                        html += `
-                            <div style="padding: 10px; background: #f9f9f9; border-left: 3px solid #8b5cf6; page-break-inside: avoid;">
-                                <div style="font-size: 0.9rem; line-height: 1.8; margin-bottom: 8px;">${i + 1}. ${q.question}</div>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <span style="font-size: 0.85rem; color: var(--text-secondary);">答案：</span>
-                                    <span style="border-bottom: 1px solid #000; padding: 0 20px; min-width: 80px; display: inline-block;"></span>
-                                </div>
-                            </div>
-                        `;
-                    }
-
-                    html += '</div></div>';
-                }
-
-                // 添加草稿区域
-                const totalQuestions = oralCount + verticalCount + wordProblemCount;
-
-                // 智能判断是否需要草稿区
-                const hasVertical = verticalCount > 0;
-                const hasWordProblem = wordProblemCount > 0;
-                const needsDraft = hasVertical || hasWordProblem || totalQuestions <= 25;
-
-                if (needsDraft && totalQuestions <= 50) {
-                    // 根据题目数量和类型决定草稿行数
-                    let draftLinesPerCol = 4;
-
-                    if (hasVertical && hasWordProblem) {
-                        draftLinesPerCol = 3; // 有竖式题和应用题，草稿区可以小一些
-                    } else if (hasWordProblem) {
-                        draftLinesPerCol = 5; // 只有应用题，需要多一些草稿空间
-                    } else if (totalQuestions <= 15) {
-                        draftLinesPerCol = 6; // 题目少，多给些草稿空间
-                    } else {
-                        draftLinesPerCol = 4;
-                    }
-
-                    html += '<div class="print-draft-area">';
-                    html += '<div class="print-draft-title">📝 草稿区（列竖式计算）</div>';
-                    html += '<div class="print-draft-lines">';
-
-                    // 左右两列，每列若干行
-                    for (let col = 0; col < 2; col++) {
-                        html += '<div class="print-draft-column">';
-                        for (let line = 0; line < draftLinesPerCol; line++) {
-                            html += '<div class="print-draft-item"></div>';
-                        }
-                        html += '</div>';
                     }
 
                     html += '</div></div>';
