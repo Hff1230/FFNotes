@@ -174,7 +174,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 377.5
+    "width": 570.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -189,8 +189,9 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "c1b75725ceeb7d18",
+  "active": "7fffa29e9d92e63f",
   "lastOpenFiles": [
+    "AI库/小游戏/小学数学口算快速出题器方案.md.tmp.20068.1770356855348",
     "AI库/小游戏/小学数学口算快速出题器方案.md.tmp.19496.1770349680509",
     "AI库/小游戏/小学数学口算快速出题器方案.md.tmp.19496.1770349629677",
     "AI库/小游戏/math-practice.html.tmp.19496.1770349320735",
@@ -201,7 +202,6 @@
     "AI库/小游戏/math-practice.html.tmp.19496.1770348203892",
     "AI库/小游戏/math-practice.html.tmp.19496.1770348079049",
     "AI库/小游戏/nzpCCE6.tmp",
-    "AI库/小游戏/口算、竖式.zip",
     "AI库/小游戏/立体模型/立体模型H5展示方案.md",
     "AI库/小游戏/立体模型/README.md",
     "AI库/小游戏/小学数学口算快速出题器方案.md",
