@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小学数学快速出题器 - 口算+竖式+应用题+混合运算</title>
+    <title>小学数学快速出题器 v1.2.1 - 口算+竖式+应用题+混合运算+比较题型</title>
     <style>
         * {
             margin: 0;
@@ -900,7 +900,10 @@
                             <input type="checkbox" value="divide"> 除法
                         </label>
                         <label class="checkbox-item">
-                            <input type="checkbox" value="mixed"> 混合运算（三年级起）
+                            <input type="checkbox" value="mixed"> 混合运算
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="compare"> 比较题型（比多比少）
                         </label>
                     </div>
                 </div>
@@ -1559,6 +1562,31 @@
                     (a, b) => `一根绳子长${a}米，剪成每段${b}米，可以剪成多少段？`,
                     (a, b) => `一盒铅笔有${a}支，平均分给${b}个同学，每个同学分几支？`
                 ],
+                compare: [
+                    // 比多问题（A比B多，求A或求总数）
+                    (a, b) => `小明有${a}个苹果，小红比小明多${b}个，小红有多少个苹果？`,
+                    (a, b) => `图书馆有${a}本故事书，科技书比故事书多${b}本，科技书有多少本？`,
+                    (a, b) => `停车场有${a}辆汽车，摩托车比汽车多${b}辆，摩托车有多少辆？`,
+                    (a, b) => `小明有${a}个苹果，小红比小明多${b}个，两人一共有多少个苹果？`,
+                    (a, b) => `一班有${a}人，二班比一班多${b}人，两个班一共有多少人？`,
+                    // 比少问题（A比B少，求A或求总数）
+                    (a, b) => `商店有${a}个篮球，足球比篮球少${b}个，足球有多少个？`,
+                    (a, b) => `小明有${a}元钱，小红比小明少${b}元，小红有多少钱？`,
+                    (a, b) => `动物园有${a}只猴子，老虎比猴子少${b}只，老虎有多少只？`,
+                    (a, b) => `商店有${a}个篮球，足球比篮球少${b}个，篮球和足球一共有多少个？`,
+                    (a, b) => `小红有${a}朵花，小丽比小红少${b}朵，两人一共有多少朵花？`,
+                    // 一样多问题（A和B一样多，求总数）
+                    (a, b) => `小明有${a}个苹果，小红的苹果和小明一样多，两人一共有多少个苹果？`,
+                    (a, b) => `一本书有${a}页，第二天看的和第一天一样多，两天一共看了多少页？`,
+                    (a, b) => `铅笔盒里有${b}支铅笔，钢笔和铅笔一样多，铅笔和钢笔一共有多少支？`,
+                    // 倍数比较（A是B的几倍）
+                    (a, b) => `小明有${a}个苹果，小红的苹果是小明的${b}倍，小红有多少个苹果？`,
+                    (a, b) => `白兔有${a}只，黑兔是白兔的${b}倍，黑兔有多少只？`,
+                    // 求差问题（A和B，求相差）
+                    (a, b) => `小明有${a}个苹果，小红有${b}个苹果，小明比小红多几个？`,
+                    (a, b) => `笼子里有${a}只白兔，${b}只黑兔，白兔比黑兔多几只？`,
+                    (a, b) => `第一条绳子长${a}米，第二条绳子长${b}米，第一条绳子比第二条长多少米？`
+                ],
                 mixed: [
                     // 乘法 + 加法
                     (a, b, c) => `小明买了${b}支铅笔，每支${c}元，又买了一个${a}元的橡皮，小明一共花了多少钱？`,
@@ -1606,6 +1634,9 @@
                     answer = random(2, grade <= 3 ? 12 : 20);
                     num1 = num2 * answer;
                     break;
+                case 'compare':
+                    // 比较类应用题：直接返回 generateCompareWordProblem
+                    return generateCompareWordProblem(grade);
                 case 'mixed':
                     // 传递 operations 数组（过滤掉 'mixed' 本身）
                     const baseOpsForWord = operations.filter(op => op !== 'mixed');
@@ -1629,6 +1660,145 @@
                 num2: num2,
                 answer: answer,
                 display: `${operation}: ${question.substring(0, 20)}...`
+            };
+        }
+
+        // 生成比较类应用题
+        function generateCompareWordProblem(grade) {
+            const { min, max } = getNumberRange(grade);
+
+            const compareTemplates = [
+                // 比多问题（A比B多，求A）
+                (a, b) => {
+                    const answer = a + b;
+                    return {
+                        question: `小明有${a}个苹果，小红比小明多${b}个，小红有多少个苹果？`,
+                        answer: answer,
+                        num1: a,
+                        num2: b
+                    };
+                },
+                (a, b) => {
+                    const answer = a + b;
+                    return {
+                        question: `图书馆有${a}本故事书，科技书比故事书多${b}本，科技书有多少本？`,
+                        answer: answer,
+                        num1: a,
+                        num2: b
+                    };
+                },
+                // 比多问题（A比B多，求总数）
+                (a, b) => {
+                    const other = a + b;
+                    const answer = a + other;
+                    return {
+                        question: `小明有${a}个苹果，小红比小明多${b}个，两人一共有多少个苹果？`,
+                        answer: answer,
+                        num1: a,
+                        num2: b
+                    };
+                },
+                (a, b) => {
+                    const other = a + b;
+                    const answer = a + other;
+                    return {
+                        question: `一班有${a}人，二班比一班多${b}人，两个班一共有多少人？`,
+                        answer: answer,
+                        num1: a,
+                        num2: b
+                    };
+                },
+                // 比少问题（A比B少，求B）
+                (a, b) => {
+                    const larger = random(b + 1, Math.floor(max * 0.5));
+                    const answer = larger - b;
+                    return {
+                        question: `商店有${larger}个篮球，足球比篮球少${b}个，足球有多少个？`,
+                        answer: answer,
+                        num1: larger,
+                        num2: b
+                    };
+                },
+                (a, b) => {
+                    const larger = random(b + 1, Math.floor(max * 0.5));
+                    const answer = larger - b;
+                    return {
+                        question: `小明有${larger}元钱，小红比小明少${b}元，小红有多少钱？`,
+                        answer: answer,
+                        num1: larger,
+                        num2: b
+                    };
+                },
+                // 比少问题（A比B少，求总数）
+                (a, b) => {
+                    const larger = random(b + 1, Math.floor(max * 0.4));
+                    const smaller = larger - b;
+                    const answer = larger + smaller;
+                    return {
+                        question: `商店有${larger}个篮球，足球比篮球少${b}个，篮球和足球一共有多少个？`,
+                        answer: answer,
+                        num1: larger,
+                        num2: b
+                    };
+                },
+                // 一样多问题
+                (a, b) => {
+                    const answer = a * 2;
+                    return {
+                        question: `小明有${a}个苹果，小红的苹果和小明一样多，两人一共有多少个苹果？`,
+                        answer: answer,
+                        num1: a,
+                        num2: b
+                    };
+                },
+                (a, b) => {
+                    const answer = a * 2;
+                    return {
+                        question: `一本书有${a}页，第二天看的和第一天一样多，两天一共看了多少页？`,
+                        answer: answer,
+                        num1: a,
+                        num2: b
+                    };
+                },
+                // 求差问题
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.4));
+                    const num2 = random(min, Math.floor(max * 0.4));
+                    const answer = Math.abs(num1 - num2);
+                    const larger = num1 > num2 ? num1 : num2;
+                    const smaller = num1 > num2 ? num2 : num1;
+                    return {
+                        question: `小明有${num1}个苹果，小红有${num2}个苹果，小明比小红多几个？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.4));
+                    const num2 = random(min, Math.floor(max * 0.4));
+                    const answer = Math.abs(num1 - num2);
+                    return {
+                        question: `笼子里有${num1}只白兔，${num2}只黑兔，白兔比黑兔多几只？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                }
+            ];
+
+            // 随机选择一个模板
+            const template = compareTemplates[random(0, compareTemplates.length - 1)];
+            const result = template(min, max);
+
+            return {
+                type: 'wordProblem',
+                question: result.question,
+                operation: 'compare',
+                num1: result.num1,
+                num2: result.num2,
+                answer: result.answer,
+                display: `比较: ${result.question.substring(0, 20)}...`
             };
         }
 
@@ -1759,7 +1929,7 @@
             const difficulty = document.getElementById('difficultySelect').value;
 
             const operationCheckboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked');
-            const operations = Array.from(operationCheckboxes).map(cb => cb.value).filter(op => ['add', 'subtract', 'multiply', 'divide', 'mixed'].includes(op));
+            const operations = Array.from(operationCheckboxes).map(cb => cb.value).filter(op => ['add', 'subtract', 'multiply', 'divide', 'mixed', 'compare'].includes(op));
 
             if (operations.length === 0) {
                 showToast('请至少选择一种运算类型', 'error');
@@ -2574,9 +2744,9 @@
         }
 
         // 版本信息
-        console.log('小学数学快速出题器 v1.2');
+        console.log('小学数学快速出题器 v1.2.1');
         console.log('更新时间：2026年2月5日');
-        console.log('新功能：混合运算（横式计算和应用题）');
+        console.log('新功能：混合运算 + 比较类应用题（比多比少）');
     </script>
 </body>
 </html>
