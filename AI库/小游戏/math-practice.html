@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小学数学快速出题器 v1.2.1 - 口算+竖式+应用题+混合运算+比较题型</title>
+    <title>小学数学快速出题器 v1.2.2 - 口算+竖式+应用题+混合运算+比较题型+三步运算</title>
     <style>
         * {
             margin: 0;
@@ -1294,6 +1294,14 @@
             // 生成所有可能的混合运算类型（基于用户选择的运算）
             const possibleTypes = [];
 
+            // 加减混合（两个数）
+            if (hasAdd && hasSubtract) {
+                possibleTypes.push('add_subtract', 'subtract_add');
+            }
+            // 加减混合（三个数）
+            if (hasAdd && hasSubtract) {
+                possibleTypes.push('add_subtract_add', 'add_subtract_subtract', 'subtract_add_add');
+            }
             // 加法 + 乘法
             if (hasAdd && hasMultiply) {
                 possibleTypes.push('add_multiply', 'multiply_add');
@@ -1324,6 +1332,65 @@
             const type = possibleTypes[random(0, possibleTypes.length - 1)];
 
             switch(type) {
+                case 'add_subtract':  // a + b - c（两个数，结果为正）
+                    const num1 = random(1, Math.floor(getGradeMax(grade) * 0.4));
+                    const num2 = random(1, num1);
+                    const answer = num1 + num2;
+                    return {
+                        type: 'oral',
+                        question: `${num1} + ${num2} - ${num2}`,
+                        answer: num1,
+                        display: `${num1} + ${num2} - ${num2} = ?`
+                    };
+
+                case 'subtract_add':  // a - b + c（两个数）
+                    const numa = random(5, getGradeMax(grade));
+                    const numb = random(1, numa - 2);
+                    const numc = random(1, getGradeMax(grade) - (numa - numb));
+                    const ans = numa - numb + numc;
+                    return {
+                        type: 'oral',
+                        question: `${numa} - ${numb} + ${numc}`,
+                        answer: ans,
+                        display: `${numa} - ${numb} + ${numc} = ?`
+                    };
+
+                case 'add_subtract_add':  // a + b - c（三个数，确保结果正）
+                    let a1 = random(5, Math.floor(getGradeMax(grade) * 0.3));
+                    let b1 = random(1, Math.floor(getGradeMax(grade) * 0.3));
+                    let c1 = random(1, a1 + b1 - 1);
+                    const ans1 = a1 + b1 - c1;
+                    return {
+                        type: 'oral',
+                        question: `${a1} + ${b1} - ${c1}`,
+                        answer: ans1,
+                        display: `${a1} + ${b1} - ${c1} = ?`
+                    };
+
+                case 'add_subtract_subtract':  // a - b - c（三个数，确保结果正）
+                    let a2 = random(10, getGradeMax(grade));
+                    let b2 = random(1, Math.floor(a2 * 0.4));
+                    let c2 = random(1, a2 - b2 - 1);
+                    const ans2 = a2 - b2 - c2;
+                    return {
+                        type: 'oral',
+                        question: `${a2} - ${b2} - ${c2}`,
+                        answer: ans2,
+                        display: `${a2} - ${b2} - ${c2} = ?`
+                    };
+
+                case 'subtract_add_add':  // a - b + c + d（四个数）
+                    let a3 = random(5, 20);
+                    let b3 = random(1, a3 - 2);
+                    let c3 = random(1, 10);
+                    const ans3 = a3 - b3 + c3;
+                    return {
+                        type: 'oral',
+                        question: `${a3} - ${b3} + ${c3}`,
+                        answer: ans3,
+                        display: `${a3} - ${b3} + ${c3} = ?`
+                    };
+
                 case 'add_multiply':  // a + b × c
                     const mb1 = random(2, 9);
                     const mc1 = random(2, 9);
@@ -1813,6 +1880,11 @@
             // 生成所有可能的混合运算类型（基于用户选择的运算）
             const possibleTypes = [];
 
+            // 加法 + 减法（适合低年级）
+            if (hasAdd && hasSubtract) {
+                possibleTypes.push('add_subtract', 'subtract_add');
+                possibleTypes.push('add_subtract_add', 'add_subtract_subtract', 'subtract_add_add');
+            }
             // 加法 + 乘法
             if (hasAdd && hasMultiply) {
                 possibleTypes.push('multiply_add');
@@ -1847,6 +1919,90 @@
             let question, answer, num1, num2, num3;
 
             switch(type) {
+                case 'add_subtract':  // 先加后减（三个数）
+                    num1 = random(1, 20);  // 第一个数
+                    num2 = random(1, 15);  // 加上的数
+                    num3 = random(1, Math.min(num2, 10));  // 减去的数（不超过加上的数，确保有意义）
+                    answer = num1 + num2 - num3;
+
+                    const asTemplates = [
+                        (a, b, c) => `小明有${a}个苹果，妈妈又给了他${b}个，后来吃掉了${c}个，现在有几个苹果？`,
+                        (a, b, c) => `停车场有${a}辆车，先开来了${b}辆，后来开走了${c}辆，现在有多少辆车？`,
+                        (a, b, c) => `图书角有${a}本书，又买来了${b}本，借出去了${c}本，现在有多少本书？`,
+                        (a, b, c) => `小红有${a}朵花，老师又给了她${b}朵，送给了同学${c}朵，现在有几朵花？`
+                    ];
+                    const asTemplate = asTemplates[random(0, asTemplates.length - 1)];
+                    question = asTemplate(num1, num2, num3);
+                    break;
+
+                case 'subtract_add':  // 先减后加（三个数）
+                    num1 = random(10, 30);  // 第一个数（够减）
+                    num2 = random(1, num1 - 1);  // 减去的数
+                    num3 = random(1, 15);  // 加上的数
+                    answer = num1 - num2 + num3;
+
+                    const saTemplates = [
+                        (a, b, c) => `小明有${a}个苹果，吃掉了${b}个，后来妈妈又给了他${c}个，现在有几个苹果？`,
+                        (a, b, c) => `停车场有${a}辆车，开走了${b}辆，后来又开来了${c}辆，现在有多少辆车？`,
+                        (a, b, c) => `小红有${a}元钱，买文具花了${b}元，后来妈妈又给了她${c}元，现在有多少钱？`,
+                        (a, b, c) => `树上有${a}只小鸟，飞走了${b}只，又飞来了${c}只，现在有几只小鸟？`
+                    ];
+                    const saTemplate = saTemplates[random(0, saTemplates.length - 1)];
+                    question = saTemplate(num1, num2, num3);
+                    break;
+
+                case 'add_subtract_add':  // 加-减-加（四个数）
+                    num1 = random(1, 15);  // 第一个数
+                    num2 = random(1, 10);  // 第一个加上的数
+                    num3 = random(1, Math.min(num1 + num2 - 1, 8));  // 减去的数
+                    const num4 = random(1, 10);  // 第二个加上的数
+                    answer = num1 + num2 - num3 + num4;
+
+                    const asaTemplates = [
+                        (a, b, c, d) => `小明有${a}个苹果，妈妈给了${b}个，吃掉了${c}个，奶奶又给了${d}个，现在有几个苹果？`,
+                        (a, b, c, d) => `停车场有${a}辆车，先开来${b}辆，开走${c}辆，又开来${d}辆，现在有多少辆车？`,
+                        (a, b, c, d) => `小红有${a}元零花钱，挣了${b}元，花了${c}元，又挣了${d}元，现在有多少钱？`
+                    ];
+                    const asaTemplate = asaTemplates[random(0, asaTemplates.length - 1)];
+                    question = asaTemplate(num1, num2, num3, num4);
+                    break;
+
+                case 'add_subtract_subtract':  // 加-减-减（四个数）
+                    num1 = random(5, 25);  // 第一个数（要够减）
+                    num2 = random(1, 10);  // 加上的数
+                    num3 = random(1, 8);  // 第一次减去的数
+                    const num4_sub = random(1, 8);  // 第二次减去的数
+                    // 确保结果非负
+                    while (num1 + num2 - num3 - num4_sub < 0) {
+                        num1 = random(num3 + num4_sub - num2 + 1, 30);
+                    }
+                    answer = num1 + num2 - num3 - num4_sub;
+
+                    const assTemplates = [
+                        (a, b, c, d) => `小明有${a}个苹果，妈妈给了${b}个，早上吃掉了${c}个，下午吃掉了${d}个，现在有几个苹果？`,
+                        (a, b, c, d) => `停车场有${a}辆车，先开来${b}辆，开走${c}辆，又开走${d}辆，现在有多少辆车？`,
+                        (a, b, c, d) => `商店有${a}件商品，进货${b}件，上午卖出${c}件，下午卖出${d}件，还剩多少件？`
+                    ];
+                    const assTemplate = assTemplates[random(0, assTemplates.length - 1)];
+                    question = assTemplate(num1, num2, num3, num4_sub);
+                    break;
+
+                case 'subtract_add_add':  // 减-加-加（四个数）
+                    num1 = random(15, 40);  // 第一个数（要够减）
+                    num2 = random(1, 15);  // 减去的数
+                    num3 = random(1, 10);  // 第一个加上的数
+                    const num4_saa = random(1, 10);  // 第二个加上的数
+                    answer = num1 - num2 + num3 + num4_saa;
+
+                    const saaTemplates = [
+                        (a, b, c, d) => `小明有${a}个苹果，吃掉了${b}个，妈妈给了${c}个，爸爸又给了${d}个，现在有几个苹果？`,
+                        (a, b, c, d) => `停车场有${a}辆车，开走${b}辆，开来${c}辆，又开来${d}辆，现在有多少辆车？`,
+                        (a, b, c, d) => `小红有${a}元零花钱，花了${b}元，挣了${c}元，又挣了${d}元，现在有多少钱？`
+                    ];
+                    const saaTemplate = saaTemplates[random(0, saaTemplates.length - 1)];
+                    question = saaTemplate(num1, num2, num3, num4_saa);
+                    break;
+
                 case 'multiply_add':  // 先乘后加
                     num1 = random(1, 20);  // 加数
                     num2 = random(2, 9);   // 乘数1
@@ -2744,8 +2900,8 @@
         }
 
         // 版本信息
-        console.log('小学数学快速出题器 v1.2.1');
-        console.log('更新时间：2026年2月5日');
+        console.log('小学数学快速出题器 v1.2.2');
+        console.log('更新时间：2026年2月6日');
         console.log('新功能：混合运算 + 比较类应用题（比多比少）');
     </script>
 </body>
