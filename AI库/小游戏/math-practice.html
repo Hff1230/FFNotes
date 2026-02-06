@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小学数学快速出题器 - 口算+竖式</title>
+    <title>小学数学快速出题器 - 口算+竖式+应用题+混合运算</title>
     <style>
         * {
             margin: 0;
@@ -848,7 +848,7 @@
     <div class="container">
         <header>
             <h1>🧮 小学数学快速出题器</h1>
-            <p>口算 + 竖式，让数学练习更全面！</p>
+            <p>口算 + 竖式 + 应用题 + 混合运算，让数学练习更全面！</p>
         </header>
 
         <!-- 主界面 -->
@@ -898,6 +898,9 @@
                         </label>
                         <label class="checkbox-item">
                             <input type="checkbox" value="divide"> 除法
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="mixed"> 混合运算（三年级起）
                         </label>
                     </div>
                 </div>
@@ -1001,6 +1004,12 @@
 
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+
+                <!-- 混合运算提示 -->
+                <div id="mixedOperationHint" style="display: none; background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; margin-bottom: 20px; border-radius: 8px;">
+                    <div style="font-weight: 600; color: #856404; margin-bottom: 5px;">💡 运算顺序提示</div>
+                    <div style="font-size: 0.95rem; color: #856404;">先算乘除，后算加减；有括号先算括号里面的</div>
                 </div>
 
                 <!-- 口算题目显示 -->
@@ -1259,9 +1268,161 @@
                     const da = db * dans;
                     return { type: 'oral', question: `${da} ÷ ${db}`, answer: dans, display: `${da} ÷ ${db} = ?` };
 
+                case 'mixed':
+                    // 传递 operations 数组（过滤掉 'mixed' 本身）
+                    const baseOperations = operations.filter(op => op !== 'mixed');
+                    // 如果没有选择基础运算，使用默认的加法和乘法
+                    const effectiveOps = baseOperations.length > 0 ? baseOperations : ['add', 'multiply'];
+                    return generateMixedOralQuestion(grade, difficulty, effectiveOps);
+
                 default:
                     return { type: 'oral', question: '2 + 3', answer: 5, display: '2 + 3 = ?' };
             }
+        }
+
+        // 生成混合运算口算题
+        function generateMixedOralQuestion(grade, difficulty, selectedOperations) {
+            // 根据用户选择的运算类型生成混合运算组合
+            const hasAdd = selectedOperations.includes('add');
+            const hasSubtract = selectedOperations.includes('subtract');
+            const hasMultiply = selectedOperations.includes('multiply');
+            const hasDivide = selectedOperations.includes('divide');
+
+            // 生成所有可能的混合运算类型（基于用户选择的运算）
+            const possibleTypes = [];
+
+            // 加法 + 乘法
+            if (hasAdd && hasMultiply) {
+                possibleTypes.push('add_multiply', 'multiply_add');
+            }
+            // 减法 + 乘法
+            if (hasSubtract && hasMultiply) {
+                possibleTypes.push('subtract_multiply', 'multiply_subtract');
+            }
+            // 加法 + 除法
+            if (hasAdd && hasDivide) {
+                possibleTypes.push('add_divide', 'divide_add');
+            }
+            // 减法 + 除法
+            if (hasSubtract && hasDivide) {
+                possibleTypes.push('subtract_divide', 'divide_subtract');
+            }
+
+            if (possibleTypes.length === 0) {
+                // 如果没有可以组合的运算类型，返回默认题目
+                return {
+                    type: 'oral',
+                    question: '2 + 3',
+                    answer: 5,
+                    display: '2 + 3 = ?'
+                };
+            }
+
+            const type = possibleTypes[random(0, possibleTypes.length - 1)];
+
+            switch(type) {
+                case 'add_multiply':  // a + b × c
+                    const mb1 = random(2, 9);
+                    const mc1 = random(2, 9);
+                    const bmc1 = mb1 * mc1;
+                    const ma1 = random(1, getGradeMax(grade) - bmc1);
+                    return {
+                        type: 'oral',
+                        question: `${ma1} + ${mb1} × ${mc1}`,
+                        answer: ma1 + bmc1,
+                        display: `${ma1} + ${mb1} × ${mc1} = ?`
+                    };
+
+                case 'subtract_multiply':  // a - b × c
+                    const mb2 = random(2, 9);
+                    const mc2 = random(2, 9);
+                    const bmc2 = mb2 * mc2;
+                    let ma2 = random(bmc2 + 1, getGradeMax(grade));
+                    return {
+                        type: 'oral',
+                        question: `${ma2} - ${mb2} × ${mc2}`,
+                        answer: ma2 - bmc2,
+                        display: `${ma2} - ${mb2} × ${mc2} = ?`
+                    };
+
+                case 'multiply_add':  // a × b + c
+                    const ma3 = random(2, 9);
+                    const mb3 = random(2, 9);
+                    const ma3mb3 = ma3 * mb3;
+                    const mc3 = random(1, getGradeMax(grade) - ma3mb3);
+                    return {
+                        type: 'oral',
+                        question: `${ma3} × ${mb3} + ${mc3}`,
+                        answer: ma3mb3 + mc3,
+                        display: `${ma3} × ${mb3} + ${mc3} = ?`
+                    };
+
+                case 'multiply_subtract':  // a × b - c
+                    const ma4 = random(2, 9);
+                    const mb4 = random(2, 9);
+                    const ma4mb4 = ma4 * mb4;
+                    const mc4 = random(1, ma4mb4 - 1);
+                    return {
+                        type: 'oral',
+                        question: `${ma4} × ${mb4} - ${mc4}`,
+                        answer: ma4mb4 - mc4,
+                        display: `${ma4} × ${mb4} - ${mc4} = ?`
+                    };
+
+                case 'add_divide':  // a + b ÷ c
+                    const mdiv1 = random(2, 9);
+                    const mquot1 = random(1, 12);
+                    const mdivd1 = mdiv1 * mquot1;
+                    const ma5 = random(1, getGradeMax(grade) - mquot1);
+                    return {
+                        type: 'oral',
+                        question: `${ma5} + ${mdivd1} ÷ ${mdiv1}`,
+                        answer: ma5 + mquot1,
+                        display: `${ma5} + ${mdivd1} ÷ ${mdiv1} = ?`
+                    };
+
+                case 'subtract_divide':  // a - b ÷ c
+                    const mdiv2 = random(2, 9);
+                    const mquot2 = random(1, 12);
+                    const mdivd2 = mdiv2 * mquot2;
+                    let ma6 = random(mquot2 + 1, getGradeMax(grade));
+                    return {
+                        type: 'oral',
+                        question: `${ma6} - ${mdivd2} ÷ ${mdiv2}`,
+                        answer: ma6 - mquot2,
+                        display: `${ma6} - ${mdivd2} ÷ ${mdiv2} = ?`
+                    };
+
+                case 'divide_add':  // a ÷ b + c
+                    const mdiv3 = random(2, 9);
+                    const mquot3 = random(1, 12);
+                    const mdivd3 = mdiv3 * mquot3;
+                    const mc7 = random(1, getGradeMax(grade) - mquot3);
+                    return {
+                        type: 'oral',
+                        question: `${mdivd3} ÷ ${mdiv3} + ${mc7}`,
+                        answer: mquot3 + mc7,
+                        display: `${mdivd3} ÷ ${mdiv3} + ${mc7} = ?`
+                    };
+
+                case 'divide_subtract':  // a ÷ b - c
+                    const mdiv4 = random(2, 9);
+                    const mquot4 = random(1, 12);
+                    const mdivd4 = mdiv4 * mquot4;
+                    const mc8 = random(1, mquot4 - 1);
+                    return {
+                        type: 'oral',
+                        question: `${mdivd4} ÷ ${mdiv4} - ${mc8}`,
+                        answer: mquot4 - mc8,
+                        display: `${mdivd4} ÷ ${mdiv4} - ${mc8} = ?`
+                    };
+            }
+        }
+
+        // 获取年级对应的最大值
+        function getGradeMax(grade) {
+            const maxValues = { 3: 100, 4: 500, 5: 1000, 6: 5000 };
+            return maxValues[grade] || 100;
         }
 
         // 生成竖式题
@@ -1397,6 +1558,21 @@
                     (a, b) => `一本书有${a}页，每天读${b}页，多少天可以读完？`,
                     (a, b) => `一根绳子长${a}米，剪成每段${b}米，可以剪成多少段？`,
                     (a, b) => `一盒铅笔有${a}支，平均分给${b}个同学，每个同学分几支？`
+                ],
+                mixed: [
+                    // 乘法 + 加法
+                    (a, b, c) => `小明买了${b}支铅笔，每支${c}元，又买了一个${a}元的橡皮，小明一共花了多少钱？`,
+                    (a, b, c) => `图书馆买了${b}套书，每套${c}本，又买了${a}本故事书，图书馆一共买了多少本书？`,
+                    (a, b, c) => `超市运来${b}箱牛奶，每箱${c}盒，又运来${a}盒酸奶，超市一共运来多少盒饮品？`,
+                    // 乘法 - 减法
+                    (a, b, c) => `商店有${a}个玩具，卖出${b}盒，每盒${c}个，还剩多少个玩具？`,
+                    (a, b, c) => `小明有${a}颗糖，分给${b}个同学，每个同学${c}颗，还剩多少颗糖？`,
+                    // 除法 + 加法
+                    (a, b, c) => `老师把${a}支铅笔平均分给${b}个同学，每个同学分到的再加${c}支，每个同学一共有多少支？`,
+                    (a, b, c) => `有${a}朵花，每${b}朵扎成一束，扎好后又买了${c}朵，现在一共有多少朵花？`,
+                    // 除法 - 减法
+                    (a, b, c) => `妈妈把${a}个苹果平均放在${b}个盘子里，每个盘子吃掉${c}个，每个盘子还剩几个？`,
+                    (a, b, c) => `有${a}颗珠子，每${b}颗串成一串，串好后送人${c}串，还剩多少串？`
                 ]
             };
 
@@ -1430,6 +1606,12 @@
                     answer = random(2, grade <= 3 ? 12 : 20);
                     num1 = num2 * answer;
                     break;
+                case 'mixed':
+                    // 传递 operations 数组（过滤掉 'mixed' 本身）
+                    const baseOpsForWord = operations.filter(op => op !== 'mixed');
+                    // 如果没有选择基础运算，使用默认的加法和乘法
+                    const effectiveOpsForWord = baseOpsForWord.length > 0 ? baseOpsForWord : ['add', 'multiply'];
+                    return generateMixedWordProblem(grade, effectiveOpsForWord);
                 default:
                     return null;
             }
@@ -1450,13 +1632,134 @@
             };
         }
 
+        // 生成混合运算应用题
+        function generateMixedWordProblem(grade, selectedOperations) {
+            // 根据用户选择的运算类型生成混合运算组合
+            const hasAdd = selectedOperations.includes('add');
+            const hasSubtract = selectedOperations.includes('subtract');
+            const hasMultiply = selectedOperations.includes('multiply');
+            const hasDivide = selectedOperations.includes('divide');
+
+            // 生成所有可能的混合运算类型（基于用户选择的运算）
+            const possibleTypes = [];
+
+            // 加法 + 乘法
+            if (hasAdd && hasMultiply) {
+                possibleTypes.push('multiply_add');
+            }
+            // 减法 + 乘法
+            if (hasSubtract && hasMultiply) {
+                possibleTypes.push('multiply_subtract');
+            }
+            // 加法 + 除法
+            if (hasAdd && hasDivide) {
+                possibleTypes.push('divide_add');
+            }
+            // 减法 + 除法
+            if (hasSubtract && hasDivide) {
+                possibleTypes.push('divide_subtract');
+            }
+
+            if (possibleTypes.length === 0) {
+                // 如果没有可以组合的运算类型，返回默认应用题
+                return {
+                    type: 'wordProblem',
+                    question: '小明有5个苹果，妈妈又给他买了3个，小明现在一共有多少个苹果？',
+                    operation: 'add',
+                    num1: 5,
+                    num2: 3,
+                    answer: 8,
+                    display: '加法: 小明有5个苹果...'
+                };
+            }
+
+            const type = possibleTypes[random(0, possibleTypes.length - 1)];
+            let question, answer, num1, num2, num3;
+
+            switch(type) {
+                case 'multiply_add':  // 先乘后加
+                    num1 = random(1, 20);  // 加数
+                    num2 = random(2, 9);   // 乘数1
+                    num3 = random(2, 9);   // 乘数2
+                    answer = num1 + num2 * num3;
+
+                    const maTemplates = [
+                        (a, b, c) => `小明买了${b}支铅笔，每支${c}元，又买了一个${a}元的橡皮，小明一共花了多少钱？`,
+                        (a, b, c) => `图书馆买了${b}套书，每套${c}本，又买了${a}本故事书，图书馆一共买了多少本书？`,
+                        (a, b, c) => `超市运来${b}箱牛奶，每箱${c}盒，又运来${a}盒酸奶，超市一共运来多少盒饮品？`
+                    ];
+                    const maTemplate = maTemplates[random(0, maTemplates.length - 1)];
+                    question = maTemplate(num1, num2, num3);
+                    break;
+
+                case 'multiply_subtract':  // 先乘后减
+                    num1 = random(20, 100);  // 被减数（总数）
+                    num2 = random(2, 9);     // 乘数1
+                    num3 = random(2, 9);     // 乘数2
+                    // 确保结果非负
+                    while (num1 < num2 * num3) {
+                        num1 = random(num2 * num3 + 1, 100);
+                    }
+                    answer = num1 - num2 * num3;
+
+                    const msTemplates = [
+                        (a, b, c) => `商店有${a}个玩具，卖出${b}盒，每盒${c}个，还剩多少个玩具？`,
+                        (a, b, c) => `小明有${a}颗糖，分给${b}个同学，每个同学${c}颗，还剩多少颗糖？`
+                    ];
+                    const msTemplate = msTemplates[random(0, msTemplates.length - 1)];
+                    question = msTemplate(num1, num2, num3);
+                    break;
+
+                case 'divide_add':  // 先除后加
+                    num3 = random(2, 9);     // 除数
+                    num2 = random(1, 12);    // 商
+                    num1 = num3 * num2;      // 被除数
+                    const addNum = random(1, 20);  // 加数
+                    answer = num2 + addNum;
+
+                    const daTemplates = [
+                        (a, b, c) => `老师把${a}支铅笔平均分给${b}个同学，每个同学分到的再加${c}支，每个同学一共有多少支？`,
+                        (a, b, c) => `有${a}朵花，每${b}朵扎成一束，扎好后又买了${c}朵，现在一共有多少朵花？`
+                    ];
+                    const daTemplate = daTemplates[random(0, daTemplates.length - 1)];
+                    question = daTemplate(num1, num3, addNum);
+                    break;
+
+                case 'divide_subtract':  // 先除后减
+                    num3 = random(2, 9);     // 除数
+                    num2 = random(5, 20);    // 商（要够减）
+                    num1 = num3 * num2;      // 被除数
+                    const subNum = random(1, num2 - 1);  // 减数
+                    answer = num2 - subNum;
+
+                    const dsTemplates = [
+                        (a, b, c) => `妈妈把${a}个苹果平均放在${b}个盘子里，每个盘子吃掉${c}个，每个盘子还剩几个？`,
+                        (a, b, c) => `有${a}颗珠子，每${b}颗串成一串，串好后送人${c}串，还剩多少串？`
+                    ];
+                    const dsTemplate = dsTemplates[random(0, dsTemplates.length - 1)];
+                    question = dsTemplate(num1, num3, subNum);
+                    break;
+            }
+
+            return {
+                type: 'wordProblem',
+                question: question,
+                operation: type,
+                num1: num1,
+                num2: num2,
+                num3: num3,
+                answer: answer,
+                display: `混合运算: ${question.substring(0, 20)}...`
+            };
+        }
+
         // 生成所有题目
         function generateQuestions() {
             const grade = parseInt(document.getElementById('gradeSelect').value);
             const difficulty = document.getElementById('difficultySelect').value;
 
             const operationCheckboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked');
-            const operations = Array.from(operationCheckboxes).map(cb => cb.value).filter(op => ['add', 'subtract', 'multiply', 'divide'].includes(op));
+            const operations = Array.from(operationCheckboxes).map(cb => cb.value).filter(op => ['add', 'subtract', 'multiply', 'divide', 'mixed'].includes(op));
 
             if (operations.length === 0) {
                 showToast('请至少选择一种运算类型', 'error');
@@ -1486,7 +1789,14 @@
                 const oralCount = parseInt(document.getElementById('oralCount').value);
                 for (let i = 0; i < oralCount; i++) {
                     const op = operations[random(0, operations.length - 1)];
-                    questions.push(generateOralQuestion(grade, difficulty, op));
+                    // 如果是混合运算，传递所有选择的运算类型
+                    if (op === 'mixed') {
+                        const baseOps = operations.filter(o => o !== 'mixed');
+                        const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
+                        questions.push(generateMixedOralQuestion(grade, difficulty, effectiveOps));
+                    } else {
+                        questions.push(generateOralQuestion(grade, difficulty, op));
+                    }
                 }
             }
 
@@ -1504,7 +1814,14 @@
                 const wordProblemCount = parseInt(document.getElementById('wordProblemCount').value);
                 for (let i = 0; i < wordProblemCount; i++) {
                     const op = operations[random(0, operations.length - 1)];
-                    questions.push(generateWordProblem(grade, difficulty, op));
+                    // 如果是混合运算，传递所有选择的运算类型
+                    if (op === 'mixed') {
+                        const baseOps = operations.filter(o => o !== 'mixed');
+                        const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
+                        questions.push(generateMixedWordProblem(grade, effectiveOps));
+                    } else {
+                        questions.push(generateWordProblem(grade, difficulty, op));
+                    }
                 }
             }
 
@@ -1583,6 +1900,11 @@
 
             const progress = ((currentQuestionIndex) / questions.length) * 100;
             document.getElementById('progressFill').style.width = progress + '%';
+
+            // 显示或隐藏混合运算提示
+            const isMixedQuestion = q.question && (q.question.includes('×') || q.question.includes('÷')) &&
+                                   (q.question.includes('+') || q.question.includes('-'));
+            document.getElementById('mixedOperationHint').style.display = isMixedQuestion ? 'block' : 'none';
 
             // 检查是否刚刚切换到新部分，显示提示
             if (currentQuestionIndex > 0) {
@@ -1937,7 +2259,7 @@
                     const difficulty = originalSettings.difficulty;
 
                     const operationCheckboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked');
-                    const operations = Array.from(operationCheckboxes).map(cb => cb.value).filter(op => ['add', 'subtract', 'multiply', 'divide'].includes(op));
+                    const operations = Array.from(operationCheckboxes).map(cb => cb.value).filter(op => ['add', 'subtract', 'multiply', 'divide', 'mixed'].includes(op));
 
                     questions = [];
 
@@ -1945,7 +2267,14 @@
                         const oralCount = originalSettings.oralCount || 0;
                         for (let i = 0; i < oralCount; i++) {
                             const op = operations[random(0, operations.length - 1)];
-                            questions.push(generateOralQuestion(grade, difficulty, op));
+                            // 如果是混合运算，传递所有选择的运算类型
+                            if (op === 'mixed') {
+                                const baseOps = operations.filter(o => o !== 'mixed');
+                                const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
+                                questions.push(generateMixedOralQuestion(grade, difficulty, effectiveOps));
+                            } else {
+                                questions.push(generateOralQuestion(grade, difficulty, op));
+                            }
                         }
                     }
 
@@ -1961,7 +2290,14 @@
                         const wordProblemCount = originalSettings.wordProblemCount || 0;
                         for (let i = 0; i < wordProblemCount; i++) {
                             const op = operations[random(0, operations.length - 1)];
-                            questions.push(generateWordProblem(grade, difficulty, op));
+                            // 如果是混合运算，传递所有选择的运算类型
+                            if (op === 'mixed') {
+                                const baseOps = operations.filter(o => o !== 'mixed');
+                                const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
+                                questions.push(generateMixedWordProblem(grade, effectiveOps));
+                            } else {
+                                questions.push(generateWordProblem(grade, difficulty, op));
+                            }
                         }
                     }
                 } else if (copyIndex > 0) {
@@ -2236,6 +2572,11 @@
                 submitAnswer();
             }
         }
+
+        // 版本信息
+        console.log('小学数学快速出题器 v1.2');
+        console.log('更新时间：2026年2月5日');
+        console.log('新功能：混合运算（横式计算和应用题）');
     </script>
 </body>
 </html>
