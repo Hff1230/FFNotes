@@ -1227,6 +1227,34 @@
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
             toast.textContent = message;
+
+            // 直接在元素上设置样式，确保生效
+            toast.style.cssText = `
+                position: fixed !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                padding: 60px 100px !important;
+                border-radius: 30px !important;
+                color: #ffffff !important;
+                font-weight: 900 !important;
+                font-size: 5rem !important;
+                text-align: center !important;
+                z-index: 10000 !important;
+                box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5) !important;
+                min-width: 400px !important;
+                max-width: 90vw !important;
+                letter-spacing: 2px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                line-height: 1.2 !important;
+                background: ${type === 'success'
+                    ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
+                    : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'} !important;
+                animation: fadeInScale 0.4s ease !important;
+            `;
+
             document.body.appendChild(toast);
 
             // 添加点击关闭功能
@@ -1234,7 +1262,7 @@
                 toast.remove();
             });
 
-            // 2秒后自动消失（因为现在更大更明显，不需要那么久）
+            // 2秒后自动消失
             setTimeout(() => {
                 if (toast.parentElement) {
                     toast.style.animation = 'fadeOutScale 0.3s ease';
