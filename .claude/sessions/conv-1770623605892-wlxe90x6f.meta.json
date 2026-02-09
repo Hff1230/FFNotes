@@ -1,0 +1,20 @@
+{
+  "id": "conv-1770623605892-wlxe90x6f",
+  "title": "Align tank in grid center",
+  "titleGenerationStatus": "success",
+  "createdAt": 1770623605892,
+  "updatedAt": 1770623997421,
+  "lastResponseAt": 1770623997421,
+  "sessionId": "56eb3f2a-90c8-4e33-8bb8-6d80011667cb",
+  "sdkSessionId": "56eb3f2a-90c8-4e33-8bb8-6d80011667cb",
+  "currentNote": "AI库/小游戏/坦克1999/坦克大战1999策划案.md",
+  "usage": {
+    "model": "opus",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 0,
+    "percentage": 0
+  }
+}
