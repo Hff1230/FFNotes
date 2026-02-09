@@ -1604,72 +1604,200 @@
         function generateWordProblem(grade, difficulty, operation) {
             const templates = {
                 add: [
+                    // 水果食物类
                     (a, b) => `小明有${a}个苹果，妈妈又给他买了${b}个，小明现在一共有多少个苹果？`,
+                    (a, b) => `盘子里有${a}个橘子，又放了${b}个橘子，盘子里一共有多少个橘子？`,
+                    (a, b) => `冰箱里有${a}瓶牛奶，又买了${b}瓶，现在一共有多少瓶牛奶？`,
+                    (a, b) => `蛋糕店上午卖了${a}个蛋糕，下午卖了${b}个，全天一共卖了多少个蛋糕？`,
+                    // 学习用品类
                     (a, b) => `图书馆有${a}本故事书，又新买了${b}本，现在一共有多少本故事书？`,
-                    (a, b) => `停车场原来有${a}辆汽车，又开来了${b}辆，现在停车场有多少辆汽车？`,
                     (a, b) => `小红收集了${a}枚邮票，哥哥又送给她${b}枚，小红现在有多少枚邮票？`,
-                    (a, b) => `养鸡场有${a}只母鸡，公鸡比母鸡少${b}只，养鸡场一共有多少只鸡？`
+                    (a, b) => `文具有${a}支铅笔，又进货${b}支，一共有多少支铅笔？`,
+                    (a, b) => `小华有${a}块橡皮，又买了${b}块，现在一共有多少块橡皮？`,
+                    // 交通工具类
+                    (a, b) => `停车场原来有${a}辆汽车，又开来了${b}辆，现在停车场有多少辆汽车？`,
+                    (a, b) => `公交车站有${a}人在等车，又来了${b}人，现在一共有多少人在等车？`,
+                    // 动物植物类
+                    (a, b) => `池塘里有${a}只鸭子，又游来${b}只，现在池塘里有多少只鸭子？`,
+                    (a, b) => `花园里有${a}只蝴蝶，又飞来${b}只，花园里一共有多少只蝴蝶？`,
+                    (a, b) => `树上有${a}个果子，又长了${b}个，树上一共有多少个果子？`,
+                    // 运动游戏类
+                    (a, b) => `小明投篮进了${a}个，又投进${b}个，一共投进了多少个球？`,
+                    (a, b) => `小红跳绳第一次跳了${a}下，第二次跳了${b}下，一共跳了多少下？`,
+                    // 其他生活场景
+                    (a, b) => `养鸡场有${a}只母鸡，${b}只公鸡，养鸡场一共有多少只鸡？`,
+                    (a, b) => `学校上午来了${a}个学生，下午来了${b}个学生，今天一共来了多少个学生？`,
+                    (a, b) => `超市货架上有${a}盒饼干，又摆上${b}盒，货架上现在有多少盒饼干？`
                 ],
                 subtract: [
+                    // 购物消费类
                     (a, b) => `商店有${a}个篮球，卖出了${b}个，还剩多少个篮球？`,
                     (a, b) => `小明有${a}元钱，买文具用去了${b}元，还剩下多少元？`,
+                    (a, b) => `面包房有${a}个面包，卖掉了${b}个，还剩多少个面包？`,
+                    (a, b) => `超市有${a}瓶果汁，卖出了${b}瓶，还剩多少瓶果汁？`,
+                    // 出行离开类
                     (a, b) => `公交车上有${a}人，到站下去了${b}人，车上还有多少人？`,
+                    (a, b) => `树上有${a}只小鸟，飞走了${b}只，还剩下多少只小鸟？`,
+                    (a, b) => `停车场有${a}辆车，开走了${b}辆，还剩多少辆车？`,
+                    (a, b) => `操场上有${a}个同学，走了${b}个，还剩多少个同学？`,
+                    // 损失丢失类
                     (a, b) => `鱼缸里有${a}条金鱼，死了${b}条，还剩下多少条金鱼？`,
-                    (a, b) => `树上有${a}只小鸟，飞走了${b}只，还剩下多少只小鸟？`
+                    (a, b) => `小华有${a}张贴纸，丢了${b}张，还剩多少张贴纸？`,
+                    (a, b) => `图书馆有${a}本书，借出去了${b}本，还剩多少本？`,
+                    // 借出送出类
+                    (a, b) => `小明有${a}支铅笔，借给同学${b}支，还剩多少支？`,
+                    (a, b) => `小红有${a}颗糖，分给弟弟${b}颗，还剩多少颗？`,
+                    (a, b) => `商店有${a}件衣服，卖出了${b}件，还剩多少件？`,
+                    // 吃掉用掉类
+                    (a, b) => `盘子里有${a}块饼干，吃了${b}块，还剩多少块？`,
+                    (a, b) => `瓶子里有${a}颗药，吃了${b}颗，还剩多少颗？`
                 ],
                 multiply: [
+                    // 购物计算类
                     (a, b) => `一支钢笔${a}元，买${b}支钢笔需要多少钱？`,
+                    (a, b) => `一个书包${a}元，买${b}个书包需要多少钱？`,
+                    (a, b) => `一本笔记本${a}元，买${b}本笔记本需要多少钱？`,
+                    (a, b) => `一个文具盒${a}元，买${b}个文具盒需要多少钱？`,
+                    // 分组装东西类
                     (a, b) => `每个盒子装${a}个鸡蛋，${b}个盒子一共可以装多少个鸡蛋？`,
+                    (a, b) => `每个袋子装${a}个苹果，${b}个袋子一共可以装多少个苹果？`,
+                    (a, b) => `每箱有${a}瓶牛奶，${b}箱一共有多少瓶牛奶？`,
+                    (a, b) => `每盒有${a}块巧克力，${b}盒一共有多少块巧克力？`,
+                    // 重复累积类
                     (a, b) => `小明每天读${a}页书，${b}天一共读了多少页？`,
+                    (a, b) => `小红每天存${a}元钱，${b}天一共存了多少钱？`,
                     (a, b) => `一辆汽车每小时行驶${a}千米，行驶${b}小时能行驶多少千米？`,
-                    (a, b) => `一张桌子${a}元，买${b}张桌子需要多少钱？`
+                    (a, b) => `小明每分钟跑${a}米，跑了${b}分钟，一共跑了多少米？`,
+                    // 排列座位类
+                    (a, b) => `每排坐${a}个学生，${b}排一共坐多少个学生？`,
+                    (a, b) => `每行种${a}棵树，${b}行一共种多少棵树？`,
+                    (a, b) => `一张桌子${a}元，买${b}张桌子需要多少钱？`,
+                    // 身体部位类
+                    (a, b) => `一只手有${a}个手指，${b}只手一共有多少个手指？`,
+                    (a, b) => `一天有${a}节课，${b}天一共有多少节课？`
                 ],
                 divide: [
+                    // 平均分配类
                     (a, b) => `有${a}个苹果，平均分给${b}个小朋友，每个小朋友能分到几个？`,
+                    (a, b) => `有${a}颗糖，平均分给${b}个孩子，每个孩子分到几颗？`,
+                    (a, b) => `有${a}支铅笔，平均分给${b}个同学，每个同学分几支？`,
+                    (a, b) => `有${a}本作业本，平均分给${b}个小组，每个小组分几本？`,
+                    // 购物计算类
                     (a, b) => `小明有${a}元钱，买铅笔每支${b}元，可以买多少支铅笔？`,
+                    (a, b) => `有${a}元钱，买橡皮每块${b}元，可以买多少块橡皮？`,
+                    (a, b) => `小红有${a}元，买笔记本每本${b}元，可以买多少本？`,
+                    // 包含测量类
                     (a, b) => `一本书有${a}页，每天读${b}页，多少天可以读完？`,
                     (a, b) => `一根绳子长${a}米，剪成每段${b}米，可以剪成多少段？`,
-                    (a, b) => `一盒铅笔有${a}支，平均分给${b}个同学，每个同学分几支？`
+                    (a, b) => `一根绳子长${a}厘米，剪成每段${b}厘米，可以剪成多少段？`,
+                    // 装箱包装类
+                    (a, b) => `有${a}个鸡蛋，每盒装${b}个，需要多少个盒子？`,
+                    (a, b) => `有${a}块饼干，每袋装${b}块，需要多少个袋子？`,
+                    (a, b) => `有${a}本书，每层放${b}本，需要放多少层？`,
+                    // 时间速度类
+                    (a, b) => `小明要跑${a}米，每分钟跑${b}米，需要几分钟？`,
+                    (a, b) => `一辆汽车行驶${a}千米，每小时行驶${b}千米，需要几小时？`,
+                    (a, b) => `小红要做${a}道题，每分钟做${b}道，需要几分钟？`
                 ],
                 compare: [
-                    // 比多问题（A比B多，求A或求总数）
+                    // 比多问题（A比B多，求A）
                     (a, b) => `小明有${a}个苹果，小红比小明多${b}个，小红有多少个苹果？`,
                     (a, b) => `图书馆有${a}本故事书，科技书比故事书多${b}本，科技书有多少本？`,
                     (a, b) => `停车场有${a}辆汽车，摩托车比汽车多${b}辆，摩托车有多少辆？`,
+                    (a, b) => `小华有${a}张贴纸，小丽比小华多${b}张，小丽有多少张贴纸？`,
+                    (a, b) => `公鸡有${a}只，母鸡比公鸡多${b}只，母鸡有多少只？`,
+                    (a, b) => `二年级有${a}人，三年级比二年级多${b}人，三年级有多少人？`,
+                    (a, b) => `小狗有${a}条，大狗比小狗多${b}条，大狗有多少条？`,
+                    // 比多问题（A比B多，求总数）
                     (a, b) => `小明有${a}个苹果，小红比小明多${b}个，两人一共有多少个苹果？`,
                     (a, b) => `一班有${a}人，二班比一班多${b}人，两个班一共有多少人？`,
-                    // 比少问题（A比B少，求A或求总数）
+                    (a, b) => `黑板上有${a}个五角星，又比它多${b}个颗红星星，一共有多少颗星星？`,
+                    (a, b) => `花坛里有${a}朵红花，黄花比红花多${b}朵，一共有多少朵花？`,
+                    // 比少问题（A比B少，求A）
                     (a, b) => `商店有${a}个篮球，足球比篮球少${b}个，足球有多少个？`,
                     (a, b) => `小明有${a}元钱，小红比小明少${b}元，小红有多少钱？`,
                     (a, b) => `动物园有${a}只猴子，老虎比猴子少${b}只，老虎有多少只？`,
+                    (a, b) => `大卡车有${a}辆，小汽车比大卡车少${b}辆，小汽车有多少辆？`,
+                    (a, b) => `哥哥有${a}颗糖，弟弟比哥哥少${b}颗，弟弟有多少颗糖？`,
+                    (a, b) => `上午有${a}个学生，下午比上午少${b}个，下午有多少个学生？`,
+                    // 比少问题（A比B少，求总数）
                     (a, b) => `商店有${a}个篮球，足球比篮球少${b}个，篮球和足球一共有多少个？`,
                     (a, b) => `小红有${a}朵花，小丽比小红少${b}朵，两人一共有多少朵花？`,
+                    (a, b) => `鸭有${a}只，鸡比鸭少${b}只，鸡和鸭一共有多少只？`,
                     // 一样多问题（A和B一样多，求总数）
-                    (a, b) => `小明有${a}个苹果，小红的苹果和小明一样多，两人一共有多少个苹果？`,
-                    (a, b) => `一本书有${a}页，第二天看的和第一天一样多，两天一共看了多少页？`,
-                    (a, b) => `铅笔盒里有${b}支铅笔，钢笔和铅笔一样多，铅笔和钢笔一共有多少支？`,
-                    // 倍数比较（A是B的几倍）
+                    (num) => {
+                        const n = random(1, Math.floor(num * 0.3));
+                        const answer = n * 2;
+                        return {
+                            question: `小明有${n}个苹果，小红的苹果和小明一样多，两人一共有多少个苹果？`,
+                            answer: answer,
+                            num1: n,
+                            num2: n
+                        };
+                    },
+                    (num) => {
+                        const pages = random(1, Math.floor(num * 0.3));
+                        const answer = pages * 2;
+                        return {
+                            question: `一本书有${pages}页，第二天看的和第一天一样多，两天一共看了多少页？`,
+                            answer: answer,
+                            num1: pages,
+                            num2: pages
+                        };
+                    },
+                    (a, b) => `铅笔盒里有${a}支铅笔，钢笔和铅笔一样多，铅笔和钢笔一共有多少支？`,
+                    (a, b) => `左边有${a}个三角形，右边和左边一样多，一共有多少个三角形？`,
+                    // 倍数比较（A是B的几倍，求A）
                     (a, b) => `小明有${a}个苹果，小红的苹果是小明的${b}倍，小红有多少个苹果？`,
                     (a, b) => `白兔有${a}只，黑兔是白兔的${b}倍，黑兔有多少只？`,
+                    (a, b) => `钢笔${a}元，书包的价格是钢笔的${b}倍，书包多少元？`,
+                    (a, b) => `小猫有${a}条，大猫的条数是小猫的${b}倍，大猫有多少条？`,
                     // 求差问题（A和B，求相差）
                     (a, b) => `小明有${a}个苹果，小红有${b}个苹果，小明比小红多几个？`,
                     (a, b) => `笼子里有${a}只白兔，${b}只黑兔，白兔比黑兔多几只？`,
-                    (a, b) => `第一条绳子长${a}米，第二条绳子长${b}米，第一条绳子比第二条长多少米？`
+                    (a, b) => `第一条绳子长${a}米，第二条绳子长${b}米，第一条绳子比第二条长多少米？`,
+                    (a, b) => `小华做了${a}道题，小明做了${b}道题，小华比小明多做几道？`,
+                    (a, b) => `上午来了${a}个学生，下午来了${b}个，上午比下午多几个？`
                 ],
                 mixed: [
-                    // 乘法 + 加法
+                    // 乘法 + 加法（先乘后加）
                     (a, b, c) => `小明买了${b}支铅笔，每支${c}元，又买了一个${a}元的橡皮，小明一共花了多少钱？`,
                     (a, b, c) => `图书馆买了${b}套书，每套${c}本，又买了${a}本故事书，图书馆一共买了多少本书？`,
                     (a, b, c) => `超市运来${b}箱牛奶，每箱${c}盒，又运来${a}盒酸奶，超市一共运来多少盒饮品？`,
-                    // 乘法 - 减法
+                    (a, b, c) => `妈妈买了${b}个西瓜，每个${c}元，又买了${a}元的苹果，一共花了多少元？`,
+                    (a, b, c) => `班级有${b}组学生，每组${c}人，又来了${a}个转学生，现在一共有多少个学生？`,
+                    (a, b, c) => `有${b}排桌子，每排${c}张，又搬来${a}张，一共有多少张桌子？`,
+                    // 加法 + 乘法（先加后乘）
+                    (a, b, c) => `小红有${a}支铅笔，小明有${b}支，小丽的铅笔是他们总和的${c}倍，小丽有多少支铅笔？`,
+                    // 乘法 - 减法（先乘后减）
                     (a, b, c) => `商店有${a}个玩具，卖出${b}盒，每盒${c}个，还剩多少个玩具？`,
                     (a, b, c) => `小明有${a}颗糖，分给${b}个同学，每个同学${c}颗，还剩多少颗糖？`,
-                    // 除法 + 加法
+                    (a, b, c) => `图书馆有${a}本书，借出去了${b}包，每包${c}本，还剩多少本？`,
+                    (a, b, c) => `妈妈买了${a}个苹果，吃掉了${b}盘，每盘${c}个，还剩多少个？`,
+                    (a, b, c) => `有${a}朵花，扎成${b}束，每束${c}朵，还剩多少朵？`,
+                    // 减法 + 乘法（先减后乘）
+                    (a, b, c) => `小红有${a}元，买文具花去${b}元，剩下的钱买${c}支铅笔，每支铅笔多少钱？`,
+                    // 除法 + 加法（先除后加）
                     (a, b, c) => `老师把${a}支铅笔平均分给${b}个同学，每个同学分到的再加${c}支，每个同学一共有多少支？`,
                     (a, b, c) => `有${a}朵花，每${b}朵扎成一束，扎好后又买了${c}朵，现在一共有多少朵花？`,
-                    // 除法 - 减法
+                    (a, b, c) => `妈妈把${a}块糖平均分给${b}个孩子，每个孩子再给${c}块，每个孩子一共有多少块？`,
+                    // 加法 + 除法（先加后除）
+                    (a, b, c) => `小明有${a}支铅笔，小红又给了他${b}支，这些铅笔平均分给${c}个同学，每个同学分几支？`,
+                    // 除法 - 减法（先除后减）
                     (a, b, c) => `妈妈把${a}个苹果平均放在${b}个盘子里，每个盘子吃掉${c}个，每个盘子还剩几个？`,
-                    (a, b, c) => `有${a}颗珠子，每${b}颗串成一串，串好后送人${c}串，还剩多少串？`
+                    (a, b, c) => `有${a}颗珠子，每${b}颗串成一串，串好后送人${c}串，还剩多少串？`,
+                    (a, b, c) => `老师有${a}张贴纸，平均分给${b}个小组，每个小组又用了${c}张，每个小组还剩多少张？`,
+                    // 减法 + 除法（先减后除）
+                    (a, b, c) => `小明有${a}元，花去${b}元买书，剩下的钱买${c}支铅笔，每支铅笔多少钱？`,
+                    (a, b, c) => `书架有${a}本书，借出去${b}本，剩下的平均分给${c}个同学，每个同学分几本？`,
+                    // 加法 + 减法
+                    (a, b, c) => `小明有${a}个苹果，妈妈又给了${b}个，他吃了${c}个，现在有多少个？`,
+                    (a, b, c) => `公交车上原有${a}人，第一站上来${b}人，下去${c}人，现在车上有多少人？`,
+                    // 连乘
+                    (a, b, c) => `有${a}盒饼干，每盒${b}袋，每袋${c}块，一共有多少块饼干？`,
+                    (a, b, c) => `教室有${a}排座位，每排${b}座，每座坐${c}人，一共能坐多少人？`,
+                    // 乘除混合
+                    (a, b, c) => `有${a}支铅笔，每${b}支装一盒，平均分给${c}个同学，每个同学分几盒？`
                 ]
             };
 
@@ -1685,7 +1813,7 @@
                     break;
                 case 'subtract':
                     answer = random(min, Math.floor(max * 0.6));
-                    num2 = random(Math.floor(min * 0.3), Math.floor(answer * 0.7));
+                    num2 = random(1, Math.floor(answer * 0.7));  // 确保至少减去1
                     num1 = answer + num2;
                     break;
                 case 'multiply':
@@ -1739,94 +1867,207 @@
             const compareTemplates = [
                 // 比多问题（A比B多，求A）
                 (a, b) => {
-                    const answer = a + b;
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const answer = num1 + num2;
                     return {
-                        question: `小明有${a}个苹果，小红比小明多${b}个，小红有多少个苹果？`,
+                        question: `小明有${num1}个苹果，小红比小明多${num2}个，小红有多少个苹果？`,
                         answer: answer,
-                        num1: a,
-                        num2: b
+                        num1: num1,
+                        num2: num2
                     };
                 },
                 (a, b) => {
-                    const answer = a + b;
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const answer = num1 + num2;
                     return {
-                        question: `图书馆有${a}本故事书，科技书比故事书多${b}本，科技书有多少本？`,
+                        question: `图书馆有${num1}本故事书，科技书比故事书多${num2}本，科技书有多少本？`,
                         answer: answer,
-                        num1: a,
-                        num2: b
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const answer = num1 + num2;
+                    return {
+                        question: `停车场有${num1}辆汽车，摩托车比汽车多${num2}辆，摩托车有多少辆？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const answer = num1 + num2;
+                    return {
+                        question: `小华有${num1}张贴纸，小丽比小华多${num2}张，小丽有多少张贴纸？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const answer = num1 + num2;
+                    return {
+                        question: `公鸡有${num1}只，母鸡比公鸡多${num2}只，母鸡有多少只？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const answer = num1 + num2;
+                    return {
+                        question: `二年级有${num1}人，三年级比二年级多${num2}人，三年级有多少人？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
                     };
                 },
                 // 比多问题（A比B多，求总数）
                 (a, b) => {
-                    const other = a + b;
-                    const answer = a + other;
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const other = num1 + num2;
+                    const answer = num1 + other;
                     return {
-                        question: `小明有${a}个苹果，小红比小明多${b}个，两人一共有多少个苹果？`,
+                        question: `小明有${num1}个苹果，小红比小明多${num2}个，两人一共有多少个苹果？`,
                         answer: answer,
-                        num1: a,
-                        num2: b
+                        num1: num1,
+                        num2: num2
                     };
                 },
                 (a, b) => {
-                    const other = a + b;
-                    const answer = a + other;
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const other = num1 + num2;
+                    const answer = num1 + other;
                     return {
-                        question: `一班有${a}人，二班比一班多${b}人，两个班一共有多少人？`,
+                        question: `一班有${num1}人，二班比一班多${num2}人，两个班一共有多少人？`,
                         answer: answer,
-                        num1: a,
-                        num2: b
+                        num1: num1,
+                        num2: num2
                     };
                 },
-                // 比少问题（A比B少，求B）
                 (a, b) => {
-                    const larger = random(b + 1, Math.floor(max * 0.5));
-                    const answer = larger - b;
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const other = num1 + num2;
+                    const answer = num1 + other;
                     return {
-                        question: `商店有${larger}个篮球，足球比篮球少${b}个，足球有多少个？`,
+                        question: `黑板上有${num1}个五角星，红星星比五角星多${num2}个，一共有多少颗星星？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                // 比少问题（A比B少，求A）
+                (a, b) => {
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const answer = larger - num2;
+                    return {
+                        question: `商店有${larger}个篮球，足球比篮球少${num2}个，足球有多少个？`,
                         answer: answer,
                         num1: larger,
-                        num2: b
+                        num2: num2
                     };
                 },
                 (a, b) => {
-                    const larger = random(b + 1, Math.floor(max * 0.5));
-                    const answer = larger - b;
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const answer = larger - num2;
                     return {
-                        question: `小明有${larger}元钱，小红比小明少${b}元，小红有多少钱？`,
+                        question: `小明有${larger}元钱，小红比小明少${num2}元，小红有多少钱？`,
                         answer: answer,
                         num1: larger,
-                        num2: b
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const answer = larger - num2;
+                    return {
+                        question: `动物园有${larger}只猴子，老虎比猴子少${num2}只，老虎有多少只？`,
+                        answer: answer,
+                        num1: larger,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const answer = larger - num2;
+                    return {
+                        question: `大卡车有${larger}辆，小汽车比大卡车少${num2}辆，小汽车有多少辆？`,
+                        answer: answer,
+                        num1: larger,
+                        num2: num2
                     };
                 },
                 // 比少问题（A比B少，求总数）
                 (a, b) => {
-                    const larger = random(b + 1, Math.floor(max * 0.4));
-                    const smaller = larger - b;
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const smaller = larger - num2;
                     const answer = larger + smaller;
                     return {
-                        question: `商店有${larger}个篮球，足球比篮球少${b}个，篮球和足球一共有多少个？`,
+                        question: `商店有${larger}个篮球，足球比篮球少${num2}个，篮球和足球一共有多少个？`,
                         answer: answer,
                         num1: larger,
-                        num2: b
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const smaller = larger - num2;
+                    const answer = larger + smaller;
+                    return {
+                        question: `小红有${larger}朵花，小丽比小红少${num2}朵，两人一共有多少朵花？`,
+                        answer: answer,
+                        num1: larger,
+                        num2: num2
                     };
                 },
                 // 一样多问题
                 (a, b) => {
-                    const answer = a * 2;
+                    const num = random(min, Math.floor(max * 0.3));
+                    const answer = num * 2;
                     return {
-                        question: `小明有${a}个苹果，小红的苹果和小明一样多，两人一共有多少个苹果？`,
+                        question: `小明有${num}个苹果，小红的苹果和小明一样多，两人一共有多少个苹果？`,
                         answer: answer,
-                        num1: a,
-                        num2: b
+                        num1: num,
+                        num2: num
                     };
                 },
                 (a, b) => {
-                    const answer = a * 2;
+                    const pages = random(min, Math.floor(max * 0.3));
+                    const answer = pages * 2;
                     return {
-                        question: `一本书有${a}页，第二天看的和第一天一样多，两天一共看了多少页？`,
+                        question: `一本书有${pages}页，第二天看的和第一天一样多，两天一共看了多少页？`,
                         answer: answer,
-                        num1: a,
-                        num2: b
+                        num1: pages,
+                        num2: pages
+                    };
+                },
+                (a, b) => {
+                    const num = random(min, Math.floor(max * 0.3));
+                    const answer = num * 2;
+                    return {
+                        question: `铅笔盒里有${num}支铅笔，钢笔和铅笔一样多，铅笔和钢笔一共有多少支？`,
+                        answer: answer,
+                        num1: num,
+                        num2: num
                     };
                 },
                 // 求差问题
@@ -1834,8 +2075,6 @@
                     const num1 = random(min, Math.floor(max * 0.4));
                     const num2 = random(min, Math.floor(max * 0.4));
                     const answer = Math.abs(num1 - num2);
-                    const larger = num1 > num2 ? num1 : num2;
-                    const smaller = num1 > num2 ? num2 : num1;
                     return {
                         question: `小明有${num1}个苹果，小红有${num2}个苹果，小明比小红多几个？`,
                         answer: answer,
@@ -1849,6 +2088,28 @@
                     const answer = Math.abs(num1 - num2);
                     return {
                         question: `笼子里有${num1}只白兔，${num2}只黑兔，白兔比黑兔多几只？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.4));
+                    const num2 = random(min, Math.floor(max * 0.4));
+                    const answer = Math.abs(num1 - num2);
+                    return {
+                        question: `第一条绳子长${num1}米，第二条绳子长${num2}米，第一条绳子比第二条长多少米？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.4));
+                    const num2 = random(min, Math.floor(max * 0.4));
+                    const answer = Math.abs(num1 - num2);
+                    return {
+                        question: `小华做了${num1}道题，小明做了${num2}道题，小华比小明多做几道？`,
                         answer: answer,
                         num1: num1,
                         num2: num2
