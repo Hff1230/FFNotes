@@ -1504,15 +1504,39 @@
 
             switch(operation) {
                 case 'add':
-                    let va1 = random(min, max);
-                    let vb1 = random(min, max);
-                    // 确保是两位数或三位数，适合竖式
-                    if (grade <= 3) {
-                        va1 = random(10, Math.min(99, max));
-                        vb1 = random(10, Math.min(99, max));
+                    let va1, vb1;
+                    // 根据年级和难度生成数字，扩大范围避免重复
+                    if (grade <= 2) {
+                        // 1-2年级：混用一位数、两位数，增加多样性
+                        if (difficulty === 'easy' && random(0, 1) === 0) {
+                            // 30%概率生成一位数加法
+                            va1 = random(1, 9);
+                            vb1 = random(1, 9);
+                        } else {
+                            // 70%概率生成两位数加法
+                            va1 = random(10, Math.min(99, max));
+                            vb1 = random(10, Math.min(99, max));
+                        }
+                    } else if (grade === 3) {
+                        // 3年级：两位数为主，偶尔三位数
+                        if (random(0, 4) === 0) {
+                            // 20%概率生成三位数+两位数
+                            va1 = random(100, Math.min(999, max));
+                            vb1 = random(10, 99);
+                        } else {
+                            va1 = random(10, Math.min(99, max));
+                            vb1 = random(10, Math.min(99, max));
+                        }
                     } else {
-                        va1 = random(100, Math.min(999, max));
-                        vb1 = random(100, Math.min(999, max));
+                        // 4-6年级：以三位数为主
+                        if (random(0, 3) === 0) {
+                            // 25%概率生成四位数
+                            va1 = random(1000, Math.min(9999, max));
+                            vb1 = random(100, Math.min(999, max));
+                        } else {
+                            va1 = random(100, Math.min(999, max));
+                            vb1 = random(100, Math.min(999, max));
+                        }
                     }
                     return {
                         type: 'vertical',
@@ -1524,18 +1548,36 @@
                     };
 
                 case 'subtract':
-                    let vans = random(min, Math.floor(max * 0.7));
-                    let vb_sub = random(Math.floor(min * 0.5), vans);
-                    let va_sub = vans + vb_sub;
-                    if (grade <= 3) {
-                        vans = random(10, Math.min(99, max));
-                        vb_sub = random(10, vans);
-                        va_sub = vans + vb_sub;
+                    let va_sub, vb_sub, vans;
+                    if (grade <= 2) {
+                        // 1-2年级：混用一位数、两位数减法
+                        if (difficulty === 'easy' && random(0, 1) === 0) {
+                            vans = random(1, 9);
+                            vb_sub = random(1, vans);
+                        } else {
+                            vans = random(10, Math.min(99, max));
+                            vb_sub = random(1, vans);
+                        }
+                    } else if (grade === 3) {
+                        // 3年级：两位数减法为主，偶尔三位数
+                        if (random(0, 4) === 0) {
+                            vans = random(100, Math.min(999, max));
+                            vb_sub = random(10, vans);
+                        } else {
+                            vans = random(10, Math.min(99, max));
+                            vb_sub = random(1, vans);
+                        }
                     } else {
-                        vans = random(100, Math.min(999, max));
-                        vb_sub = random(100, vans);
-                        va_sub = vans + vb_sub;
+                        // 4-6年级：三位数减法为主
+                        if (random(0, 3) === 0) {
+                            vans = random(1000, Math.min(9999, max));
+                            vb_sub = random(100, vans);
+                        } else {
+                            vans = random(100, Math.min(999, max));
+                            vb_sub = random(1, vans);
+                        }
                     }
+                    va_sub = vans + vb_sub;
                     return {
                         type: 'vertical',
                         num1: va_sub,
@@ -1546,38 +1588,56 @@
                     };
 
                 case 'multiply':
-                    if (grade === 3) {
-                        const vma = random(11, 99);
-                        const vmb = random(2, 9);
-                        return {
-                            type: 'vertical',
-                            num1: vma,
-                            num2: vmb,
-                            operator: '×',
-                            answer: vma * vmb,
-                            display: `${vma} × ${vmb}`
-                        };
+                    let vma, vmb;
+                    if (grade <= 3) {
+                        // 1-3年级：两位数×一位数
+                        vma = random(11, 99);
+                        vmb = random(2, 9);
                     } else {
-                        const vma = random(11, 99);
-                        const vmb = random(11, difficulty === 'easy' ? 20 : 99);
-                        return {
-                            type: 'vertical',
-                            num1: vma,
-                            num2: vmb,
-                            operator: '×',
-                            answer: vma * vmb,
-                            display: `${vma} × ${vmb}`
-                        };
+                        // 4-6年级：混用两位数×两位数和三位数×一位数
+                        if (random(0, 2) === 0) {
+                            // 两位数×两位数
+                            vma = random(11, 99);
+                            vmb = random(11, 99);
+                        } else {
+                            // 三位数×一位数
+                            vma = random(100, 999);
+                            vmb = random(2, 9);
+                        }
                     }
+                    return {
+                        type: 'vertical',
+                        num1: vma,
+                        num2: vmb,
+                        operator: '×',
+                        answer: vma * vmb,
+                        display: `${vma} × ${vmb}`
+                    };
 
                 case 'divide':
                     let vdb, vdans;
-                    if (grade === 3) {
-                        vdb = random(2, 9);
-                        vdans = random(10, 50);
+                    if (grade <= 3) {
+                        // 1-3年级：一位数或两位数除法
+                        if (random(0, 1) === 0) {
+                            // 一位数除法
+                            vdb = random(2, 9);
+                            vdans = random(10, 50);
+                        } else {
+                            // 两位数除以一位数
+                            vdb = random(2, 9);
+                            vdans = random(10, 99);
+                        }
                     } else {
-                        vdb = random(2, 20);
-                        vdans = random(10, 100);
+                        // 4-6年级：混用不同位数
+                        if (random(0, 2) === 0) {
+                            // 两位数除法
+                            vdb = random(10, 20);
+                            vdans = random(10, 99);
+                        } else {
+                            // 三位数除以一位数
+                            vdb = random(2, 9);
+                            vdans = random(100, 999);
+                        }
                     }
                     const vda = vdb * vdans;
                     return {
