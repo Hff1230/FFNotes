@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AI库/小游戏/小学数学口算快速出题器方案.md",
+                "file": "AI库/小游戏/坦克1999/坦克大战1999策划案.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "小学数学口算快速出题器方案"
+              "title": "坦克大战1999策划案"
             }
           }
         ]
@@ -189,8 +189,11 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "c1b75725ceeb7d18",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
+    "AI库/小游戏/小学数学口算快速出题器方案.md",
+    "AI库/小游戏/坦克1999/坦克大战1999策划案.md",
+    "AI库/小游戏/math-practice.html.tmp.11752.1770623264241",
     "AI库/小游戏/math-practice.html.tmp.30360.1770621699955",
     "AI库/小游戏/math-practice.html.tmp.21936.1770619854419",
     "AI库/小游戏/math-practice.html.tmp.21936.1770619404065",
@@ -201,10 +204,7 @@
     "AI库/小游戏/math-practice.html.tmp.21936.1770608709271",
     "AI库/小游戏/math-practice.html.tmp.21936.1770608518352",
     "AI库/小游戏/math-practice.html.tmp.21936.1770607943478",
-    "AI库/小游戏/math-practice.html.tmp.21936.1770607772417",
-    "AI库/小游戏/math-practice.html.tmp.21936.1770606785740",
     "JoyMeng Note/日记 2026-01-30.md",
-    "AI库/小游戏/小学数学口算快速出题器方案.md",
     "AI库/小游戏/立体模型/立体模型H5展示方案.md",
     "AI库/小游戏/立体模型/README.md",
     "AI库/小游戏/立体模型/三维立体物体展开展示方案.md",
@@ -219,7 +219,6 @@
     "AI库/图片处理/README.md",
     "AI库/图片处理/文档去黑影脚本使用说明.md",
     "AI库/图片处理/老照片修复脚本使用说明.md",
-    "AI库/小游戏/坦克1999/坦克大战1999策划案.md",
     "AI库/小游戏/坦克1999/局域网版使用说明.md",
     "DefaultConfig/A Git Commands.md",
     "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
