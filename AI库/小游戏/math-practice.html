@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小学数学快速出题器 v1.2.2 - 口算+竖式+应用题+混合运算+比较题型+三步运算</title>
+    <title>小学数学快速出题器 v1.2.7 - 口算+竖式+应用题+混合运算+比较题型+三步运算+题目去重</title>
     <style>
         * {
             margin: 0;
@@ -1219,7 +1219,86 @@
             }
         }
 
-        // 生成口算题
+        // ========== 题目去重机制 ==========
+        // 全局题目记录，用于去重（基于题目的数学本质）
+        const generatedQuestions = new Set();
+
+        // 提取题目核心标识符（用于去重判断）
+        function getQuestionCore(question) {
+            // 提取题目的数学本质，忽略格式差异
+            let core = question;
+
+            // 去除所有空格
+            core = core.replace(/\s+/g, '');
+
+            // 统一运算符
+            core = core.replace(/×/g, '*').replace(/÷/g, '/');
+
+            // 统一括号
+            core = core.replace(/（/g, '(').replace(/）/g, ')');
+
+            // 统一大小写
+            core = core.toLowerCase();
+
+            return core;
+        }
+
+        // 生成唯一题目（带去重检查）
+        function generateUniqueQuestion(generatorFunc, grade, difficulty, operation, maxAttempts = 30) {
+            let attempts = 0;
+            let question;
+
+            do {
+                question = generatorFunc(grade, difficulty, operation);
+                attempts++;
+
+                // 如果尝试次数过多，说明题目池太小
+                if (attempts > maxAttempts) {
+                    console.warn(`题目去重尝试${attempts}次仍未成功，题目：${question.question || question.display}`);
+                    break;
+                }
+            } while (generatedQuestions.has(getQuestionCore(question.question || question.display)));
+
+            // 记录已生成题目的核心标识符
+            generatedQuestions.add(getQuestionCore(question.question || question.display));
+
+            return question;
+        }
+
+        // 清空题目历史
+        function clearQuestionHistory() {
+            console.log(`清空题目历史，共清除${generatedQuestions.size}道题目`);
+            generatedQuestions.clear();
+        }
+
+        // 验证题目列表是否有重复
+        function validateNoDuplicates(questions, typeName) {
+            const cores = new Set();
+            const duplicates = [];
+
+            questions.forEach((q, index) => {
+                const core = getQuestionCore(q.question || q.display);
+                if (cores.has(core)) {
+                    duplicates.push({
+                        index: index,
+                        question: q.question || q.display,
+                        core: core
+                    });
+                }
+                cores.add(core);
+            });
+
+            if (duplicates.length > 0) {
+                console.error(`❌ ${typeName}中发现${duplicates.length}道重复题目：`, duplicates);
+                return false;
+            } else {
+                console.log(`✅ ${typeName}无重复，共${questions.length}道题目`);
+                return true;
+            }
+        }
+        // ========== 去重机制结束 ==========
+
+        // 生成口算题（原始生成器）
         function generateOralQuestion(grade, difficulty, operation) {
             const { min, max } = getNumberRange(grade);
 
@@ -2081,6 +2160,9 @@
 
         // 生成所有题目
         function generateQuestions() {
+            // ✅ 生成前清空题目历史，确保每次生成都是全新的去重检查
+            clearQuestionHistory();
+
             const grade = parseInt(document.getElementById('gradeSelect').value);
             const difficulty = document.getElementById('difficultySelect').value;
 
@@ -2110,7 +2192,7 @@
 
             questions = [];
 
-            // 生成口算题
+            // 生成口算题（使用去重）
             if (oralChecked) {
                 const oralCount = parseInt(document.getElementById('oralCount').value);
                 for (let i = 0; i < oralCount; i++) {
@@ -2119,20 +2201,33 @@
                     if (op === 'mixed') {
                         const baseOps = operations.filter(o => o !== 'mixed');
                         const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
-                        questions.push(generateMixedOralQuestion(grade, difficulty, effectiveOps));
+                        // ✅ 使用去重包装器
+                        questions.push(generateUniqueQuestion(generateMixedOralQuestion, grade, difficulty, effectiveOps));
                     } else {
-                        questions.push(generateOralQuestion(grade, difficulty, op));
+                        // ✅ 使用去重包装器
+                        questions.push(generateUniqueQuestion(generateOralQuestion, grade, difficulty, op));
                     }
                 }
+                // ✅ 验证口算题是否有重复
+                validateNoDuplicates(questions.filter(q => q.type === 'oral'), '口算题');
             }
 
-            // 生成竖式题
+            // 生成竖式题（使用去重）
             if (verticalChecked) {
                 const verticalCount = parseInt(document.getElementById('verticalCount').value);
                 for (let i = 0; i < verticalCount; i++) {
                     const op = operations[random(0, operations.length - 1)];
-                    questions.push(generateVerticalQuestion(grade, difficulty, op));
+                    // ✅ 使用去重包装器
+                    questions.push(generateUniqueQuestion(generateVerticalQuestion, grade, difficulty, op));
                 }
+                // ✅ 验证竖式题是否有重复
+                validateNoDuplicates(questions.filter(q => q.type === 'vertical'), '竖式题');
+            }
+
+            // ✅ 最终验证：检查整张试卷（口算+竖式）是否有重复
+            const allCalculationQuestions = questions.filter(q => q.type === 'oral' || q.type === 'vertical');
+            if (allCalculationQuestions.length > 0) {
+                validateNoDuplicates(allCalculationQuestions, '整张试卷（口算+竖式）');
             }
 
             // 生成应用题
