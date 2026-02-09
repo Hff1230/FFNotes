@@ -2544,6 +2544,12 @@
 
         // 显示打印设置对话框
         function showPrintDialog() {
+            // 预先初始化 settings（如果还没有初始化）
+            if (!settings.grade || Object.keys(settings).length === 0) {
+                const success = generateQuestions();
+                if (!success) return;
+            }
+
             const dialog = document.getElementById('printDialog');
             dialog.style.display = 'flex';
             // 强制重绘，确保显示生效
@@ -2572,6 +2578,12 @@
 
         // 生成打印试卷
         function generatePrint(copies = 1, sameQuestions = true) {
+            // 确保 settings 已初始化（如果用户直接点击生成试卷按钮）
+            if (!settings.grade || Object.keys(settings).length === 0) {
+                const success = generateQuestions();
+                if (!success) return;
+            }
+
             const printContent = document.getElementById('printContent');
             let html = '';
 
