@@ -13,15 +13,28 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AI库/小游戏/小学数学口算快速出题器方案.md",
+                "file": "JoyMeng Note/日记 2026-02-06.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "小学数学口算快速出题器方案"
+              "title": "日记 2026-02-06"
+            }
+          },
+          {
+            "id": "6e18177e4aff340a",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.11.7"
+              },
+              "icon": "lucide-book-up",
+              "title": "版本说明 1.11.7"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -189,8 +202,13 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "c1b75725ceeb7d18",
+  "active": "6e18177e4aff340a",
   "lastOpenFiles": [
+    "AI库/小游戏/小学数学口算快速出题器方案.md.tmp.20068.1770360998679",
+    "JoyMeng Note/日记 2026-01-30.md",
+    "JoyMeng Note/日记 2026-02-06.md",
+    "AI库/小游戏/小学数学口算快速出题器方案.md",
+    "AI库/小游戏/小学数学口算快速出题器方案.md.tmp.20068.1770360450477",
     "AI库/小游戏/小学数学口算快速出题器方案.md.tmp.20068.1770358917149",
     "AI库/小游戏/小学数学口算快速出题器方案.md.tmp.20068.1770358415761",
     "AI库/小游戏/小学数学口算快速出题器方案.md.tmp.20068.1770357388122",
@@ -200,11 +218,8 @@
     "AI库/小游戏/math-practice.html.tmp.19496.1770349320735",
     "AI库/小游戏/小学数学口算快速出题器方案.md.tmp.19496.1770348561952",
     "AI库/小游戏/math-practice.html.tmp.19496.1770348455308",
-    "AI库/小游戏/math-practice.html.tmp.19496.1770348407867",
-    "AI库/小游戏/math-practice.html.tmp.19496.1770348331306",
     "AI库/小游戏/立体模型/立体模型H5展示方案.md",
     "AI库/小游戏/立体模型/README.md",
-    "AI库/小游戏/小学数学口算快速出题器方案.md",
     "AI库/小游戏/立体模型/三维立体物体展开展示方案.md",
     "未命名.canvas",
     "AI库/图片处理/CDR文件H5查看器方案.md",
@@ -219,7 +234,6 @@
     "AI库/图片处理/老照片修复脚本使用说明.md",
     "AI库/小游戏/坦克1999/坦克大战1999策划案.md",
     "AI库/小游戏/坦克1999/局域网版使用说明.md",
-    "JoyMeng Note/日记 2026-01-30.md",
     "DefaultConfig/A Git Commands.md",
     "DefaultConfig/Obsidian 全套教程 - 最好用的笔记软件.md",
     "DefaultConfig/MD 语法.md",
@@ -232,7 +246,6 @@
     "JoyMeng Note/日记 2026-01-16.md",
     "JoyMeng Note/日记 2026-01-09.md",
     "JoyMeng Note/日记 2026-01-14.md",
-    "JoyMeng Note/日记 2025-12-31.md",
     "附件仓库/杂项仓库/Pasted image 20250814092251.png",
     "Unity/帝国、红警2/RedAlert/0画布.canvas",
     "Emojs/a-folder.svg",
