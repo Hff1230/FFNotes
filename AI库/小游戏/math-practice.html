@@ -2179,19 +2179,14 @@
                 const oralCount = parseInt(document.getElementById('oralCount').value);
                 for (let i = 0; i < oralCount; i++) {
                     const op = operations[random(0, operations.length - 1)];
-                    // 如果是混合运算，传递所有选择的运算类型
                     if (op === 'mixed') {
                         const baseOps = operations.filter(o => o !== 'mixed');
                         const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
-                        // ✅ 使用去重包装器
                         questions.push(generateUniqueQuestion(generateMixedOralQuestion, grade, difficulty, effectiveOps));
                     } else {
-                        // ✅ 使用去重包装器
                         questions.push(generateUniqueQuestion(generateOralQuestion, grade, difficulty, op));
                     }
                 }
-                // ✅ 验证口算题是否有重复
-                validateNoDuplicates(questions.filter(q => q.type === 'oral'), '口算题');
             }
 
             // 生成竖式题（使用去重）
@@ -2199,20 +2194,7 @@
                 const verticalCount = parseInt(document.getElementById('verticalCount').value);
                 for (let i = 0; i < verticalCount; i++) {
                     const op = operations[random(0, operations.length - 1)];
-                    // ✅ 使用去重包装器
                     questions.push(generateUniqueQuestion(generateVerticalQuestion, grade, difficulty, op));
-                }
-                // ✅ 验证竖式题是否有重复
-                validateNoDuplicates(questions.filter(q => q.type === 'vertical'), '竖式题');
-            }
-
-            // ✅ 最终验证：检查整张试卷（口算+竖式）是否有重复
-            const allCalculationQuestions = questions.filter(q => q.type === 'oral' || q.type === 'vertical');
-            if (allCalculationQuestions.length > 0) {
-                const isValid = validateNoDuplicates(allCalculationQuestions, '整张试卷（口算+竖式）');
-                if (!isValid) {
-                    console.error('❌ 发现重复题目，请检查设置！');
-                    showToast('⚠️ 试卷中发现重复题目，建议扩大数字范围或减少题目数量', 'warning');
                 }
             }
 
