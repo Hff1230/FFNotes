@@ -3,11 +3,10 @@
   "title": "Convert 4-number word problems to 3-number</arg...",
   "titleGenerationStatus": "success",
   "createdAt": 1770349872847,
-  "updatedAt": 1770619425651,
-  "lastResponseAt": 1770619425651,
+  "updatedAt": 1770620081756,
+  "lastResponseAt": 1770620005817,
   "sessionId": "7493e905-8820-4c59-99ec-91d8326159c4",
   "sdkSessionId": "7493e905-8820-4c59-99ec-91d8326159c4",
-  "currentNote": "AI库/小游戏/小学数学口算快速出题器方案.md",
   "usage": {
     "model": "opus",
     "inputTokens": 0,
