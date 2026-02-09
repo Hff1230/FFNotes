@@ -1650,13 +1650,17 @@
                     };
 
                 default:
+                    // 如果传入无效的运算类型，默认生成加法题
+                    console.warn(`generateVerticalQuestion收到无效运算类型: ${operation}，使用加法代替`);
+                    const fallbackNum1 = random(10, Math.min(99, max));
+                    const fallbackNum2 = random(10, Math.min(99, max));
                     return {
                         type: 'vertical',
-                        num1: 123,
-                        num2: 45,
+                        num1: fallbackNum1,
+                        num2: fallbackNum2,
                         operator: '+',
-                        answer: 168,
-                        display: '123 + 45'
+                        answer: fallbackNum1 + fallbackNum2,
+                        display: `${fallbackNum1} + ${fallbackNum2}`
                     };
             }
         }
@@ -2404,14 +2408,46 @@
         }
 
         // 获取题目核心标识符（用于去重）
+        // 规则：a+b=c 和 b+a=c 不算重复（加法交换律）
+        //      a-b=c 和 a-b=c 才是重复（必须 a,b 完全相同）
         function getQuestionKey(question) {
             if (question.type === 'oral') {
+                // 口算题：提取运算符和数字
+                const match = question.question.match(/^(\d+)\s*([\+\−×÷])\s*(\d+)/);
+                if (match) {
+                    const num1 = parseInt(match[1]);
+                    const operator = match[2];
+                    const num2 = parseInt(match[3]);
+
+                    // 加法和乘法可以交换，所以将数字排序
+                    if (operator === '+' || operator === '×') {
+                        const sorted = [num1, num2].sort((a, b) => a - b);
+                        return `oral_${operator}_${sorted[0]}_${sorted[1]}`;
+                    }
+                    // 减法、除法不可交换，保持原顺序
+                    else {
+                        return `oral_${operator}_${num1}_${num2}`;
+                    }
+                }
+                // 混合运算或其他复杂题目，使用原问题文本
                 return `oral_${question.question}`;
             } else if (question.type === 'vertical') {
-                // 竖式题使用 operator 字段（如 '+'），不是 operation
-                return `vertical_${question.num1}_${question.operator}_${question.num2}`;
+                // 竖式题：同样的逻辑
+                const operator = question.operator;
+                const num1 = question.num1;
+                const num2 = question.num2;
+
+                // 加法和乘法可以交换
+                if (operator === '+' || operator === '×') {
+                    const sorted = [num1, num2].sort((a, b) => a - b);
+                    return `vertical_${operator}_${sorted[0]}_${sorted[1]}`;
+                }
+                // 减法、除法不可交换
+                else {
+                    return `vertical_${operator}_${num1}_${num2}`;
+                }
             } else if (question.type === 'wordProblem') {
-                // 应用题使用题目前50个字符作为标识
+                // 应用题：使用题目前50个字符作为标识
                 return `word_${question.question.substring(0, 50)}`;
             }
             return JSON.stringify(question);
@@ -2481,10 +2517,16 @@
             // 生成竖式题（带去重）
             if (verticalChecked) {
                 const verticalCount = parseInt(document.getElementById('verticalCount').value);
+                // 过滤出竖式题支持的运算类型（不包括compare和mixed）
+                const verticalOperations = operations.filter(op => ['add', 'subtract', 'multiply', 'divide'].includes(op));
+
+                // 如果没有支持的运算类型，默认使用加法
+                const effectiveOps = verticalOperations.length > 0 ? verticalOperations : ['add'];
+
                 for (let i = 0; i < verticalCount; i++) {
                     questions.push(generateUniqueQuestion(() => {
                         // 每次重试时都随机选择运算类型
-                        const op = operations[random(0, operations.length - 1)];
+                        const op = effectiveOps[random(0, effectiveOps.length - 1)];
                         return generateVerticalQuestion(grade, difficulty, op);
                     }));
                 }
