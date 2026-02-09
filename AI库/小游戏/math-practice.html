@@ -1122,7 +1122,7 @@
         </div>
 
         <!-- 打印设置对话框 -->
-        <div id="printDialog" class="section" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px;">
+        <div id="printDialog" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px;">
             <div class="card" style="max-width: 500px; width: 100%; animation: fadeIn 0.3s ease;">
                 <h2 style="margin-bottom: 20px;">🖨️ 生成试卷设置</h2>
 
@@ -2544,7 +2544,10 @@
 
         // 显示打印设置对话框
         function showPrintDialog() {
-            document.getElementById('printDialog').style.display = 'flex';
+            const dialog = document.getElementById('printDialog');
+            dialog.style.display = 'flex';
+            // 强制重绘，确保显示生效
+            dialog.offsetHeight;
         }
 
         // 关闭打印设置对话框
