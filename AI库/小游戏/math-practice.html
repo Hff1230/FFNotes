@@ -2157,44 +2157,22 @@
             const operationCheckboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked');
             const operations = Array.from(operationCheckboxes).map(cb => cb.value).filter(op => ['add', 'subtract', 'multiply', 'divide', 'mixed', 'compare'].includes(op));
 
-            if (operations.length === 0) {
-                showToast('请至少选择一种运算类型', 'error');
-                return false;
-            }
-
             const oralChecked = document.getElementById('oralCheck').checked;
             const verticalChecked = document.getElementById('verticalCheck').checked;
             const wordProblemChecked = document.getElementById('wordProblemCheck').checked;
 
             // 验证至少选择一种题型
             if (!oralChecked && !verticalChecked && !wordProblemChecked) {
-                showToast('⚠️ 请至少选择一种题型（口算题、竖式题或应用题）', 'error');
+                showToast('⚠️ 请至少选择一种题型', 'error');
                 return false;
             }
 
-            // 验证运算类型
             if (operations.length === 0) {
-                showToast('⚠️ 请至少选择一种运算类型（加减乘除）', 'error');
+                showToast('⚠️ 请至少选择一种运算类型', 'error');
                 return false;
             }
 
             questions = [];
-
-            const oralChecked = document.getElementById('oralCheck').checked;
-            const verticalChecked = document.getElementById('verticalCheck').checked;
-            const wordProblemChecked = document.getElementById('wordProblemCheck').checked;
-
-            // 验证至少选择一种题型
-            if (!oralChecked && !verticalChecked && !wordProblemChecked) {
-                showToast('⚠️ 请至少选择一种题型（口算题、竖式题或应用题）', 'error');
-                return false;
-            }
-
-            // 验证运算类型
-            if (operations.length === 0) {
-                showToast('⚠️ 请至少选择一种运算类型（加减乘除）', 'error');
-                return false;
-            }
 
             // 生成口算题（使用去重）
             if (oralChecked) {
