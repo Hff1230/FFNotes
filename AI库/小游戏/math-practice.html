@@ -2086,7 +2086,8 @@
             if (question.type === 'oral') {
                 return `oral_${question.question}`;
             } else if (question.type === 'vertical') {
-                return `vertical_${question.num1}_${question.operation}_${question.num2}`;
+                // 竖式题使用 operator 字段（如 '+'），不是 operation
+                return `vertical_${question.num1}_${question.operator}_${question.num2}`;
             } else if (question.type === 'wordProblem') {
                 // 应用题使用题目前50个字符作为标识
                 return `word_${question.question.substring(0, 50)}`;
@@ -2141,8 +2142,9 @@
             if (oralChecked) {
                 const oralCount = parseInt(document.getElementById('oralCount').value);
                 for (let i = 0; i < oralCount; i++) {
-                    const op = operations[random(0, operations.length - 1)];
                     questions.push(generateUniqueQuestion(() => {
+                        // 每次重试时都随机选择运算类型，避免固定运算导致重复
+                        const op = operations[random(0, operations.length - 1)];
                         if (op === 'mixed') {
                             const baseOps = operations.filter(o => o !== 'mixed');
                             const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
@@ -2158,8 +2160,9 @@
             if (verticalChecked) {
                 const verticalCount = parseInt(document.getElementById('verticalCount').value);
                 for (let i = 0; i < verticalCount; i++) {
-                    const op = operations[random(0, operations.length - 1)];
                     questions.push(generateUniqueQuestion(() => {
+                        // 每次重试时都随机选择运算类型
+                        const op = operations[random(0, operations.length - 1)];
                         return generateVerticalQuestion(grade, difficulty, op);
                     }));
                 }
@@ -2169,8 +2172,9 @@
             if (wordProblemChecked) {
                 const wordProblemCount = parseInt(document.getElementById('wordProblemCount').value);
                 for (let i = 0; i < wordProblemCount; i++) {
-                    const op = operations[random(0, operations.length - 1)];
                     questions.push(generateUniqueQuestion(() => {
+                        // 每次重试时都随机选择运算类型
+                        const op = operations[random(0, operations.length - 1)];
                         if (op === 'mixed') {
                             const baseOps = operations.filter(o => o !== 'mixed');
                             const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
@@ -2628,23 +2632,20 @@
             const originalSettings = {...settings};
 
             for (let copyIndex = 0; copyIndex < copies; copyIndex++) {
-                // 如果不是使用相同题目，则重新生成题目
-                if (!sameQuestions && copyIndex > 0) {
-                    // 重置去重记录，生成新的题目
-                    currentQuestionKeys = new Set();
+                // 第一份试卷，需要先生成题目
+                if (copyIndex === 0) {
                     if (!generateQuestions()) {
                         showToast('⚠️ 生成试卷失败，请检查设置', 'error');
                         return;
                     }
-                } else if (copyIndex > 0) {
-                    // 使用相同题目，不需要重新生成，直接使用之前的 questions
-                } else {
-                    // 第一份，需要先生成题目
+                } else if (!sameQuestions) {
+                    // 不使用相同题目，重新生成
                     if (!generateQuestions()) {
                         showToast('⚠️ 生成试卷失败，请检查设置', 'error');
                         return;
                     }
                 }
+                // 如果 sameQuestions = true 且 copyIndex > 0，使用相同的题目，不需要重新生成
 
                 const oralCount = settings.oralCount || 0;
                 const verticalCount = settings.verticalCount || 0;
