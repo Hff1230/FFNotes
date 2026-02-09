@@ -2560,8 +2560,14 @@
             const copies = parseInt(document.getElementById('printCopies').value);
             const sameQuestions = document.getElementById('sameQuestions').checked;
 
-            closePrintDialog();
-            generatePrint(copies, sameQuestions);
+            // 立即关闭对话框
+            const dialog = document.getElementById('printDialog');
+            dialog.style.display = 'none';
+
+            // 使用 setTimeout 确保对话框关闭后再生成，避免事件冲突
+            setTimeout(() => {
+                generatePrint(copies, sameQuestions);
+            }, 100);
         }
 
         // 生成打印试卷
