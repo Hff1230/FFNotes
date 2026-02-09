@@ -1175,6 +1175,7 @@
         let timerInterval = null;
         let settings = {};
         let streak = 0;
+        let currentQuestionKeys = new Set();  // 用于题目去重
 
         // 初始化
         window.onload = function() {
@@ -2080,6 +2081,36 @@
             };
         }
 
+        // 获取题目核心标识符（用于去重）
+        function getQuestionKey(question) {
+            if (question.type === 'oral') {
+                return `oral_${question.question}`;
+            } else if (question.type === 'vertical') {
+                return `vertical_${question.num1}_${question.operation}_${question.num2}`;
+            } else if (question.type === 'wordProblem') {
+                // 应用题使用题目前50个字符作为标识
+                return `word_${question.question.substring(0, 50)}`;
+            }
+            return JSON.stringify(question);
+        }
+
+        // 生成唯一题目（带去重）
+        function generateUniqueQuestion(generatorFunc, maxAttempts = 50) {
+            let question;
+            let attempts = 0;
+            do {
+                question = generatorFunc();
+                const key = getQuestionKey(question);
+                if (!currentQuestionKeys.has(key)) {
+                    currentQuestionKeys.add(key);
+                    return question;
+                }
+                attempts++;
+            } while (attempts < maxAttempts);
+            // 如果尝试多次仍重复，直接返回（避免无限循环）
+            return question;
+        }
+
         // 生成所有题目
         function generateQuestions() {
             const grade = parseInt(document.getElementById('gradeSelect').value);
@@ -2104,44 +2135,50 @@
             }
 
             questions = [];
+            currentQuestionKeys = new Set();  // 重置题目记录
 
-            // 生成口算题（暂时不使用去重）
+            // 生成口算题（带去重）
             if (oralChecked) {
                 const oralCount = parseInt(document.getElementById('oralCount').value);
                 for (let i = 0; i < oralCount; i++) {
                     const op = operations[random(0, operations.length - 1)];
-                    if (op === 'mixed') {
-                        const baseOps = operations.filter(o => o !== 'mixed');
-                        const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
-                        questions.push(generateMixedOralQuestion(grade, difficulty, effectiveOps));
-                    } else {
-                        questions.push(generateOralQuestion(grade, difficulty, op));
-                    }
+                    questions.push(generateUniqueQuestion(() => {
+                        if (op === 'mixed') {
+                            const baseOps = operations.filter(o => o !== 'mixed');
+                            const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
+                            return generateMixedOralQuestion(grade, difficulty, effectiveOps);
+                        } else {
+                            return generateOralQuestion(grade, difficulty, op);
+                        }
+                    }));
                 }
             }
 
-            // 生成竖式题（暂时不使用去重）
+            // 生成竖式题（带去重）
             if (verticalChecked) {
                 const verticalCount = parseInt(document.getElementById('verticalCount').value);
                 for (let i = 0; i < verticalCount; i++) {
                     const op = operations[random(0, operations.length - 1)];
-                    questions.push(generateVerticalQuestion(grade, difficulty, op));
+                    questions.push(generateUniqueQuestion(() => {
+                        return generateVerticalQuestion(grade, difficulty, op);
+                    }));
                 }
             }
 
-            // 生成应用题
+            // 生成应用题（带去重）
             if (wordProblemChecked) {
                 const wordProblemCount = parseInt(document.getElementById('wordProblemCount').value);
                 for (let i = 0; i < wordProblemCount; i++) {
                     const op = operations[random(0, operations.length - 1)];
-                    // 如果是混合运算，传递所有选择的运算类型
-                    if (op === 'mixed') {
-                        const baseOps = operations.filter(o => o !== 'mixed');
-                        const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
-                        questions.push(generateMixedWordProblem(grade, effectiveOps));
-                    } else {
-                        questions.push(generateWordProblem(grade, difficulty, op));
-                    }
+                    questions.push(generateUniqueQuestion(() => {
+                        if (op === 'mixed') {
+                            const baseOps = operations.filter(o => o !== 'mixed');
+                            const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
+                            return generateMixedWordProblem(grade, effectiveOps);
+                        } else {
+                            return generateWordProblem(grade, difficulty, op);
+                        }
+                    }));
                 }
             }
 
@@ -2593,56 +2630,14 @@
             for (let copyIndex = 0; copyIndex < copies; copyIndex++) {
                 // 如果不是使用相同题目，则重新生成题目
                 if (!sameQuestions && copyIndex > 0) {
-                    // 重新生成题目
-                    const oralChecked = originalSettings.oralChecked;
-                    const verticalChecked = originalSettings.verticalChecked;
-                    const wordProblemChecked = originalSettings.wordProblemChecked;
-                    const grade = originalSettings.grade;
-                    const difficulty = originalSettings.difficulty;
-
-                    const operationCheckboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked');
-                    const operations = Array.from(operationCheckboxes).map(cb => cb.value).filter(op => ['add', 'subtract', 'multiply', 'divide', 'mixed'].includes(op));
-
-                    questions = [];
-
-                    if (oralChecked) {
-                        const oralCount = originalSettings.oralCount || 0;
-                        for (let i = 0; i < oralCount; i++) {
-                            const op = operations[random(0, operations.length - 1)];
-                            if (op === 'mixed') {
-                                const baseOps = operations.filter(o => o !== 'mixed');
-                                const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
-                                questions.push(generateMixedOralQuestion(grade, difficulty, effectiveOps));
-                            } else {
-                                questions.push(generateOralQuestion(grade, difficulty, op));
-                            }
-                        }
-                    }
-
-                    if (verticalChecked) {
-                        const verticalCount = originalSettings.verticalCount || 0;
-                        for (let i = 0; i < verticalCount; i++) {
-                            const op = operations[random(0, operations.length - 1)];
-                            questions.push(generateVerticalQuestion(grade, difficulty, op));
-                        }
-                    }
-
-                    if (wordProblemChecked) {
-                        const wordProblemCount = originalSettings.wordProblemCount || 0;
-                        for (let i = 0; i < wordProblemCount; i++) {
-                            const op = operations[random(0, operations.length - 1)];
-                            // 如果是混合运算，传递所有选择的运算类型
-                            if (op === 'mixed') {
-                                const baseOps = operations.filter(o => o !== 'mixed');
-                                const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
-                                questions.push(generateMixedWordProblem(grade, effectiveOps));
-                            } else {
-                                questions.push(generateWordProblem(grade, difficulty, op));
-                            }
-                        }
+                    // 重置去重记录，生成新的题目
+                    currentQuestionKeys = new Set();
+                    if (!generateQuestions()) {
+                        showToast('⚠️ 生成试卷失败，请检查设置', 'error');
+                        return;
                     }
                 } else if (copyIndex > 0) {
-                    // 使用相同题目，不需要重新生成
+                    // 使用相同题目，不需要重新生成，直接使用之前的 questions
                 } else {
                     // 第一份，需要先生成题目
                     if (!generateQuestions()) {
