@@ -1,0 +1,19 @@
+{
+  "id": "conv-1770630729074-cwsty7fpy",
+  "title": "Integrate FGUI with Unity using JS configuration",
+  "titleGenerationStatus": "success",
+  "createdAt": 1770630729074,
+  "updatedAt": 1770630842697,
+  "lastResponseAt": 1770630842697,
+  "sessionId": "6994bae0-5239-4f8a-93ff-30756c322edb",
+  "sdkSessionId": "6994bae0-5239-4f8a-93ff-30756c322edb",
+  "usage": {
+    "model": "opus",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 0,
+    "percentage": 0
+  }
+}

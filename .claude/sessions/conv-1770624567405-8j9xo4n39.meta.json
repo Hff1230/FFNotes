@@ -3,17 +3,17 @@
   "title": "Integrate AI into Unity3D projects",
   "titleGenerationStatus": "success",
   "createdAt": 1770624567405,
-  "updatedAt": 1770624958760,
-  "lastResponseAt": 1770624958759,
+  "updatedAt": 1770630978150,
+  "lastResponseAt": 1770630978150,
   "sessionId": "a3f8ec1a-0160-4c64-b9e7-e36f09a4293e",
   "sdkSessionId": "a3f8ec1a-0160-4c64-b9e7-e36f09a4293e",
   "usage": {
     "model": "opus",
-    "inputTokens": 0,
+    "inputTokens": 33,
     "cacheCreationInputTokens": 0,
-    "cacheReadInputTokens": 0,
+    "cacheReadInputTokens": 37632,
     "contextWindow": 200000,
-    "contextTokens": 0,
-    "percentage": 0
+    "contextTokens": 37665,
+    "percentage": 19
   }
 }
