@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "8b6867b2b89561a7",
+        "id": "7c472a7c0beb8215",
         "type": "tabs",
         "children": [
           {
-            "id": "7fffa29e9d92e63f",
+            "id": "ccce74508dec29b2",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "JoyMeng Note/日记 2026-02-13.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "日记 2026-02-13"
+              "title": "新标签页"
             }
           }
         ]
@@ -189,10 +185,10 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "7fffa29e9d92e63f",
+  "active": "ccce74508dec29b2",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2026-02-06.md",
     "JoyMeng Note/日记 2026-02-13.md",
+    "JoyMeng Note/日记 2026-02-06.md",
     "AI库/小游戏/坦克1999/坦克大战1999策划案.md",
     "AI库/小游戏/小学数学口算快速出题器方案.md",
     "AI库/小游戏/坦克1999/局域网版使用说明.md",
