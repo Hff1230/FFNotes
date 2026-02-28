@@ -11,10 +11,14 @@
             "id": "0eac96eec12c68a1",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "AI库/小游戏/小学数学口算快速出题器方案.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "小学数学口算快速出题器方案"
             }
           }
         ]
@@ -185,7 +189,7 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "a15cc7476493b87c",
+  "active": "0eac96eec12c68a1",
   "lastOpenFiles": [
     "SKILL.md",
     "JoyMeng Note/日记 2026-02-13.md",
