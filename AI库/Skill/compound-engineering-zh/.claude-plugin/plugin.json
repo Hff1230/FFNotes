@@ -1,0 +1,39 @@
+{
+  "name": "compound-engineering-zh",
+  "version": "2.23.1",
+  "description": "AI 驱动的开发工具。27 个代理、21 个命令、13 个技能、2 个 MCP 服务器，用于代码审查、研究、设计和工作流自动化。",
+  "author": {
+    "name": "raycast",
+    "email": "raycast@qq.com",
+    "url": "http://10.80.9.95:4000/raycast"
+  },
+  "homepage": "http://10.80.9.95:4000/raycast/ray-marketplace.git",
+  "repository": "http://10.80.9.95:4000/raycast/ray-marketplace.git",
+  "license": "MIT",
+  "keywords": [
+    "ai-powered",
+    "ray-marketplace",
+    "workflow-automation",
+    "code-review",
+    "rails",
+    "ruby",
+    "python",
+    "typescript",
+    "knowledge-management",
+    "image-generation",
+    "playwright",
+    "browser-automation"
+  ],
+  "mcpServers": {
+    "pw": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "env": {}
+    },
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    }
+  }
+}

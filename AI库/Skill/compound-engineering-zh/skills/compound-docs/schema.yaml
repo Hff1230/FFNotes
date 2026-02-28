@@ -1,0 +1,176 @@
+# CORA 文档架构
+# 在编写任何文档文件之前，必须验证此架构
+
+required_fields:
+  module:
+    type: string
+    description: "CORA 的模块/区域 (例如: '邮件处理', '简报系统', '身份验证')"
+    examples:
+      - "邮件处理"
+      - "简报系统"
+      - "助手"
+      - "身份验证"
+
+  date:
+    type: string
+    pattern: '^\d{4}-\d{2}-\d{2}$'
+    description: "问题解决的日期 (YYYY-MM-DD)"
+
+  problem_type:
+    type: enum
+    values:
+      - build_error          # Rails、bundle、编译错误
+      - test_failure         # 测试失败、不稳定测试
+      - runtime_error        # 执行期间异常、崩溃
+      - performance_issue    # 慢查询、内存问题、N+1 查询
+      - database_issue       # 迁移、查询、架构问题
+      - security_issue       # 身份验证、授权、XSS、SQL 注入
+      - ui_bug               # 前端、Stimulus、Turbo 问题
+      - integration_issue    # 外部服务、API 集成问题
+      - logic_error          # 业务逻辑错误
+      - developer_experience # DX 问题: 工作流、工具、种子数据、开发设置
+      - workflow_issue       # 开发流程、缺失步骤、不明确的实践
+      - best_practice        # 记录要遵循的模式和实践
+      - documentation_gap    # 缺失或不足的文档
+    description: "问题的主要类别"
+
+  component:
+    type: enum
+    values:
+      - rails_model          # ActiveRecord 模型
+      - rails_controller     # ActionController
+      - rails_view           # ERB 模板、ViewComponent
+      - service_object       # 自定义服务类
+      - background_job       # Sidekiq、Active Job
+      - database             # PostgreSQL、迁移、架构
+      - frontend_stimulus    # Stimulus JS 控制器
+      - hotwire_turbo        # Turbo Streams、Turbo Drive
+      - email_processing     # 邮件处理、邮件程序
+      - brief_system         # 简报生成、摘要
+      - assistant            # AI 助手、提示词
+      - authentication       # Devise、用户身份验证
+      - payments             # Stripe、计费
+      - development_workflow # 开发流程、种子数据、工具
+      - testing_framework    # 测试设置、fixtures、VCR
+      - documentation        # README、指南、内联文档
+      - tooling              # 脚本、生成器、CLI 工具
+    description: "涉及的 CORA 组件"
+
+  symptoms:
+    type: array[string]
+    min_items: 1
+    max_items: 5
+    description: "可观察到的症状 (错误消息、视觉问题、崩溃)"
+    examples:
+      - "在简报生成中检测到 N+1 查询"
+      - "简报邮件未出现在摘要中"
+      - "Turbo Stream 响应返回 404"
+
+  root_cause:
+    type: enum
+    values:
+      - missing_association  # 错误的 Rails 关联
+      - missing_include      # 缺少预加载 (N+1)
+      - missing_index        # 数据库性能问题
+      - wrong_api            # 使用已弃用/错误的 Rails API
+      - scope_issue          # 查询范围或过滤不正确
+      - thread_violation     # 实时不安全操作
+      - async_timing         # 异步/后台作业时机
+      - memory_leak          # 内存泄漏或过度分配
+      - config_error         # 配置或环境问题
+      - logic_error          # 算法/业务逻辑错误
+      - test_isolation       # 测试隔离或 fixture 问题
+      - missing_validation   # 缺少模型验证
+      - missing_permission   # 缺少授权检查
+      - missing_workflow_step # 跳过或未记录的工作流步骤
+      - inadequate_documentation # 缺失或不明确的文档
+      - missing_tooling      # 缺少辅助脚本或自动化
+      - incomplete_setup     # 缺少种子数据、fixtures 或配置
+    description: "问题的根本原因"
+
+  resolution_type:
+    type: enum
+    values:
+      - code_fix             # 通过更改源代码修复
+      - migration            # 通过数据库迁移修复
+      - config_change        # 通过更改配置修复
+      - test_fix             # 通过更正测试修复
+      - dependency_update    # 通过更新 gem/依赖项修复
+      - environment_setup    # 通过环境配置修复
+      - workflow_improvement # 改进开发工作流或流程
+      - documentation_update # 添加或更新文档
+      - tooling_addition     # 添加辅助脚本或自动化
+      - seed_data_update     # 更新 db/seeds.rb 或 fixtures
+    description: "应用的修复类型"
+
+  severity:
+    type: enum
+    values:
+      - critical             # 阻止生产或开发 (构建失败、数据丢失)
+      - high                 # 损害核心功能 (功能中断、安全问题)
+      - medium               # 影响特定功能 (UI 中断、性能影响)
+      - low                  # 小问题或边缘情况
+    description: "影响严重程度"
+
+optional_fields:
+  rails_version:
+    type: string
+    pattern: '^\d+\.\d+\.\d+$'
+    description: "遇到此问题的 Rails 版本 (例如: '7.1.0')"
+
+  related_components:
+    type: array[string]
+    description: "与此问题交互的其他组件"
+
+  tags:
+    type: array[string]
+    max_items: 8
+    description: "可搜索的关键词 (小写、连字符分隔)"
+    examples:
+      - "n-plus-one"
+      - "eager-loading"
+      - "test-isolation"
+      - "turbo-stream"
+
+validation_rules:
+  - "module 必须是有效的 CORA 模块名称"
+  - "date 必须是 YYYY-MM-DD 格式"
+  - "problem_type 必须匹配其中一个枚举值"
+  - "component 必须匹配其中一个枚举值"
+  - "symptoms 必须具体且可观察 (不含糊)"
+  - "root_cause 必须是实际原因, 而不是症状"
+  - "resolution_type 必须匹配其中一个枚举值"
+  - "severity 必须匹配其中一个枚举值"
+  - "tags 应该是小写、连字符分隔"
+
+# 有效 front matter 示例:
+# ---
+# module: 邮件处理
+# date: 2025-11-12
+# problem_type: performance_issue
+# component: rails_model
+# symptoms:
+#   - 加载邮件线程时出现 N+1 查询
+#   - 简报生成耗时超过 5 秒
+# root_cause: missing_include
+# rails_version: 7.1.2
+# resolution_type: code_fix
+# severity: high
+# tags: [n-plus-one, eager-loading, performance]
+# ---
+#
+# DX 问题 front matter 示例:
+# ---
+# module: 开发工作流
+# date: 2025-11-13
+# problem_type: developer_experience
+# component: development_workflow
+# symptoms:
+#   - 开发中新功能没有示例数据
+#   - Rails db:seed 未展示新功能
+# root_cause: incomplete_setup
+# rails_version: 7.1.2
+# resolution_type: seed_data_update
+# severity: low
+# tags: [seed-data, dx, workflow]
+# ---
