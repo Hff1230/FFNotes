@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小学数学快速出题器 v1.2.7 - 口算+竖式+应用题+混合运算+比较题型+三步运算+题目去重</title>
+    <title>小学数学快速出题器 v1.2.8 - 口算+竖式+应用题+混合运算+比较题型+三步运算+题目去重+比少防负数</title>
     <style>
         * {
             margin: 0;
@@ -502,10 +502,11 @@
             }
 
             .print-header h1 {
-                font-size: 1.2rem;
+                font-size: 1.5rem;
                 font-weight: bold;
                 margin: 0;
                 padding: 0;
+                color: #000 !important;
             }
 
             .print-section {
@@ -545,25 +546,27 @@
             }
 
             .print-section-title {
-                font-size: 0.95rem;
+                font-size: 1.1rem;
                 font-weight: bold;
                 margin-bottom: 8px;
                 padding-bottom: 6px;
                 border-bottom: 2px solid #000;
+                color: #000 !important;
             }
 
             .print-oral {
                 display: inline-block;
                 width: 20%;
-                margin: 5px 0.5% 8px 0.5%;
-                font-size: 0.85rem;
+                margin: 5px 0.5% 10px 0.5%;
+                font-size: 1rem;
                 vertical-align: top;
                 font-family: 'Courier New', monospace;
                 white-space: nowrap;
                 overflow: hidden;
                 box-sizing: border-box;
                 text-align: left;
-                line-height: 1.4;
+                line-height: 1.6;
+                color: #000 !important;
             }
 
             .print-oral .eq-align {
@@ -574,17 +577,18 @@
             .print-vertical {
                 display: inline-block;
                 width: 20%;
-                margin: 5px 0.5% 8px 0.5%;
+                margin: 5px 0.5% 10px 0.5%;
                 vertical-align: top;
                 font-family: 'Courier New', monospace;
-                font-size: 0.75rem;
-                line-height: 1.2;
+                font-size: 0.9rem;
+                line-height: 1.4;
                 background: white;
-                padding: 4px;
-                border: 1px solid #ddd;
+                padding: 6px;
+                border: 1.5px solid #000;
                 border-radius: 3px;
                 page-break-inside: avoid;
                 box-sizing: border-box;
+                color: #000 !important;
             }
 
             .print-vertical-calculation {
@@ -595,12 +599,13 @@
             .print-vertical-numbers {
                 display: inline-block;
                 text-align: right;
-                font-size: 0.8rem;
+                font-size: 0.95rem;
                 font-family: 'Courier New', Courier, monospace;  /* 使用等宽字体确保数字对齐 */
+                color: #000 !important;
             }
 
             .print-vertical-line {
-                border-top: 0.5px solid #000;
+                border-top: 1.5px solid #000;
                 margin: 2px 0 2px 0;
             }
 
@@ -610,9 +615,9 @@
             }
 
             .print-vertical-horizontal {
-                font-size: 0.7rem;
-                color: #333;
-                margin-bottom: 3px;
+                font-size: 0.9rem;
+                color: #000 !important;
+                margin-bottom: 4px;
                 font-weight: 600;
                 text-align: left;
                 white-space: nowrap;
@@ -626,28 +631,29 @@
             .print-info {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 10px;
-                padding-bottom: 6px;
+                margin-bottom: 12px;
+                padding-bottom: 8px;
                 border-bottom: 2px solid #000;
-                font-size: 0.85rem;
+                font-size: 1rem;
                 page-break-after: avoid;
                 page-break-inside: avoid;
+                color: #000 !important;
             }
 
             /* 草稿区域样式 */
             .print-draft-area {
                 margin-top: 15px;
                 padding: 10px;
-                border: 1px dashed #999;
+                border: 1.5px solid #000;
                 border-radius: 5px;
-                background: #fafafa;
+                background: white;
                 page-break-inside: avoid;
             }
 
             .print-draft-title {
-                font-size: 0.9rem;
+                font-size: 1rem;
                 font-weight: bold;
-                color: #666;
+                color: #000 !important;
                 margin-bottom: 10px;
                 text-align: center;
             }
@@ -2102,11 +2108,13 @@
                         num2: num2
                     };
                 },
-                // 比少问题（A比B少，求A）
+                // ⚠️ 比少问题（A比B少，求A）- 防负数校验！
+                // 关键约束：基准数量(larger)必须 > 少的数量(num2)
+                // 生成顺序：先确定num2(少的数量)，再生成larger(基准数量)，确保 larger > num2
                 (a, b) => {
-                    const num2 = random(1, Math.floor(max * 0.2));
-                    const larger = random(num2 + 1, Math.floor(max * 0.4));
-                    const answer = larger - num2;
+                    const num2 = random(1, Math.floor(max * 0.2));  // 少的数量
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));  // 基准数量必须 > num2，防止负数结果
+                    const answer = larger - num2;  // 结果保证 ≥ 1
                     return {
                         question: `商店有${larger}个篮球，足球比篮球少${num2}个，足球有多少个？`,
                         answer: answer,
@@ -2115,8 +2123,8 @@
                     };
                 },
                 (a, b) => {
-                    const num2 = random(1, Math.floor(max * 0.2));
-                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const num2 = random(1, Math.floor(max * 0.2));  // 少的数量
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));  // 基准数量 > num2
                     const answer = larger - num2;
                     return {
                         question: `小明有${larger}元钱，小红比小明少${num2}元，小红有多少钱？`,
@@ -2126,8 +2134,8 @@
                     };
                 },
                 (a, b) => {
-                    const num2 = random(1, Math.floor(max * 0.2));
-                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const num2 = random(1, Math.floor(max * 0.2));  // 少的数量
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));  // 基准数量 > num2
                     const answer = larger - num2;
                     return {
                         question: `动物园有${larger}只猴子，老虎比猴子少${num2}只，老虎有多少只？`,
@@ -2137,8 +2145,8 @@
                     };
                 },
                 (a, b) => {
-                    const num2 = random(1, Math.floor(max * 0.2));
-                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const num2 = random(1, Math.floor(max * 0.2));  // 少的数量
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));  // 基准数量 > num2
                     const answer = larger - num2;
                     return {
                         question: `大卡车有${larger}辆，小汽车比大卡车少${num2}辆，小汽车有多少辆？`,
@@ -2147,11 +2155,11 @@
                         num2: num2
                     };
                 },
-                // 比少问题（A比B少，求总数）
+                // 比少问题（A比B少，求总数）- 防负数校验！
                 (a, b) => {
-                    const num2 = random(1, Math.floor(max * 0.2));
-                    const larger = random(num2 + 1, Math.floor(max * 0.4));
-                    const smaller = larger - num2;
+                    const num2 = random(1, Math.floor(max * 0.2));  // 少的数量
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));  // 基准数量 > num2
+                    const smaller = larger - num2;  // 较小值，保证 ≥ 1
                     const answer = larger + smaller;
                     return {
                         question: `商店有${larger}个篮球，足球比篮球少${num2}个，篮球和足球一共有多少个？`,
@@ -2161,9 +2169,9 @@
                     };
                 },
                 (a, b) => {
-                    const num2 = random(1, Math.floor(max * 0.2));
-                    const larger = random(num2 + 1, Math.floor(max * 0.4));
-                    const smaller = larger - num2;
+                    const num2 = random(1, Math.floor(max * 0.2));  // 少的数量
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));  // 基准数量 > num2
+                    const smaller = larger - num2;  // 较小值，保证 ≥ 1
                     const answer = larger + smaller;
                     return {
                         question: `小红有${larger}朵花，小丽比小红少${num2}朵，两人一共有多少朵花？`,
@@ -3343,9 +3351,9 @@
         }
 
         // 版本信息
-        console.log('小学数学快速出题器 v1.2.2');
-        console.log('更新时间：2026年2月6日');
-        console.log('新功能：混合运算 + 比较类应用题（比多比少）');
+        console.log('小学数学快速出题器 v1.2.8');
+        console.log('更新时间：2026年2月28日');
+        console.log('新功能：比少类题目防负数校验 + 代码注释说明');
     </script>
 </body>
 </html>

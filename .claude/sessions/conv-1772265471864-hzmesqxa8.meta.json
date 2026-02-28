@@ -3,18 +3,18 @@
   "title": "Solve chicken farm math problem",
   "titleGenerationStatus": "success",
   "createdAt": 1772265471864,
-  "updatedAt": 1772266339754,
-  "lastResponseAt": 1772266339754,
+  "updatedAt": 1772267100603,
+  "lastResponseAt": 1772267100603,
   "sessionId": "275df803-8bbc-4760-be97-4e12b8dcbb4e",
   "sdkSessionId": "275df803-8bbc-4760-be97-4e12b8dcbb4e",
   "currentNote": "AI库/小游戏/小学数学口算快速出题器方案.md",
   "usage": {
     "model": "opus",
-    "inputTokens": 221,
+    "inputTokens": 190,
     "cacheCreationInputTokens": 0,
-    "cacheReadInputTokens": 76864,
+    "cacheReadInputTokens": 90176,
     "contextWindow": 200000,
-    "contextTokens": 77085,
-    "percentage": 39
+    "contextTokens": 90366,
+    "percentage": 45
   }
 }
