@@ -145,42 +145,60 @@
             font-size: 12px;
         }
 
-        /* 公共牌堆 */
+        /* 公共牌堆 - 竖向叠放 */
         .pile-area {
-            min-width: 200px;
-            min-height: 120px;
+            min-width: 100px;
+            min-height: 180px;
             background: rgba(255,255,255,0.1);
             border-radius: 10px;
             border: 2px dashed rgba(255,255,255,0.3);
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             padding: 10px;
-            gap: 5px;
-        }
-
-        .pile-area::before {
-            content: '公共牌堆';
-            position: absolute;
-            color: rgba(255,255,255,0.3);
-            font-size: 12px;
+            position: relative;
         }
 
         .pile-label {
-            width: 100%;
-            text-align: center;
-            color: rgba(255,255,255,0.5);
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.6);
             font-size: 12px;
-            margin-bottom: 5px;
+            white-space: nowrap;
+        }
+
+        .pile-count {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.5);
+            color: #ffd700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .pile-stack {
+            position: relative;
+            width: 60px;
+            min-height: 84px;
+            margin-top: 10px;
+        }
+
+        .pile-stack .card {
+            position: absolute;
+            left: 0;
         }
 
         /* 扑克牌 */
         .card {
-            width: 50px;
-            height: 70px;
+            width: 60px;
+            height: 84px;
             background: white;
-            border-radius: 5px;
+            border-radius: 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -196,12 +214,12 @@
         .card.black { color: #1f2937; }
 
         .card-rank {
-            font-size: 18px;
+            font-size: 20px;
             line-height: 1;
         }
 
         .card-suit {
-            font-size: 16px;
+            font-size: 18px;
             line-height: 1;
         }
 
@@ -386,13 +404,14 @@
         /* 响应式 */
         @media (max-width: 400px) {
             .card {
-                width: 40px;
-                height: 56px;
+                width: 50px;
+                height: 70px;
             }
-            .card-rank { font-size: 14px; }
-            .card-suit { font-size: 12px; }
+            .card-rank { font-size: 16px; }
+            .card-suit { font-size: 14px; }
             .deck { width: 55px; height: 78px; }
-            .pile-area { min-height: 100px; }
+            .pile-area { min-height: 150px; }
+            .pile-stack { width: 50px; min-height: 70px; }
         }
 
         /* 自动进行指示 */
@@ -453,7 +472,9 @@
                 </div>
 
                 <div class="pile-area" id="pileArea">
-                    <div class="pile-label">公共牌堆</div>
+                    <span class="pile-count" id="pileCount">0张</span>
+                    <div class="pile-stack" id="pileStack"></div>
+                    <span class="pile-label">公共牌堆</span>
                 </div>
 
                 <div class="player-deck">
@@ -569,22 +590,40 @@
             document.getElementById('turnCount').textContent = turnCount;
         }
 
-        // 更新公共牌堆显示
+        // 更新公共牌堆显示 - 竖向叠放
         function updatePileDisplay() {
             const pileArea = document.getElementById('pileArea');
-            pileArea.innerHTML = '<div class="pile-label">公共牌堆</div>';
+            pileArea.innerHTML = `
+                <span class="pile-count" id="pileCount">${pile.length}张</span>
+                <div class="pile-stack" id="pileStack"></div>
+                <span class="pile-label">公共牌堆</span>
+            `;
 
-            // 只显示最后几张牌
-            const showCount = Math.min(pile.length, 8);
+            const pileStack = document.getElementById('pileStack');
+
+            if (pile.length === 0) return;
+
+            // 计算叠放：每张牌向下偏移一定距离
+            const cardOffset = 18; // 每张牌的垂直偏移
+            const maxVisible = 12; // 最多显示的牌数
+            const showCount = Math.min(pile.length, maxVisible);
             const startIndex = Math.max(0, pile.length - showCount);
 
             for (let i = startIndex; i < pile.length; i++) {
                 const cardEl = createCardElement(pile[i]);
+                const offset = (i - startIndex) * cardOffset;
+                cardEl.style.top = offset + 'px';
+                cardEl.style.zIndex = i;
+
                 if (i === pile.length - 1) {
                     cardEl.classList.add('new-card');
                 }
-                pileArea.appendChild(cardEl);
+
+                pileStack.appendChild(cardEl);
             }
+
+            // 动态调整牌堆高度
+            pileStack.style.height = (84 + (showCount - 1) * cardOffset) + 'px';
         }
 
         // 显示消息
@@ -703,14 +742,25 @@
 
         // 收牌动画
         function animateCollect(indices, callback) {
-            const pileArea = document.getElementById('pileArea');
-            const cards = pileArea.querySelectorAll('.card');
+            const pileStack = document.getElementById('pileStack');
+            if (!pileStack) {
+                callback();
+                return;
+            }
+            const cards = pileStack.querySelectorAll('.card');
+
+            // indices 是要收走的牌在 pile 中的索引
+            // 显示的牌是从 startIndex 开始的
+            const maxVisible = 12;
+            const showCount = Math.min(pile.length, maxVisible);
+            const startIndex = Math.max(0, pile.length - showCount);
 
             indices.forEach((idx, i) => {
-                const actualIdx = cards.length - pile.length + idx;
-                if (cards[actualIdx]) {
+                // 计算这张牌在显示的 cards 中的位置
+                const displayIdx = idx - startIndex;
+                if (displayIdx >= 0 && displayIdx < cards.length) {
                     setTimeout(() => {
-                        cards[actualIdx].classList.add('collect-card');
+                        cards[displayIdx].classList.add('collect-card');
                     }, i * 50);
                 }
             });
