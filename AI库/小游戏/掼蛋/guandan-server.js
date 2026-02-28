@@ -19,6 +19,12 @@ const RANK_VALUES = {
     '小王': 15, '大王': 16
 };
 
+// 级别转换为牌面
+const LEVEL_TO_RANK = {
+    2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9',
+    10: '10', 11: 'J', 12: 'Q', 13: 'K', 14: 'A'
+};
+
 // 房间类
 class GameRoom {
     constructor(id) {
@@ -27,16 +33,17 @@ class GameRoom {
         this.maxPlayers = 4;
         this.gameState = {
             started: false,
-            currentPlayer: 0,  // 当前出牌玩家索引
-            lastPlay: null,    // 上一手牌
-            lastPlayer: null,  // 上一个出牌玩家
-            passedPlayers: [], // 本轮已过的玩家
-            level: 2,          // 当前级别 (2-A)
-            trumpSuit: '♥',    // 主花色 (逢人配)
-            deck: [],          // 牌堆
-            hands: {},         // 玩家手牌
-            scores: {},        // 分数
-            roundWinner: null  // 本轮胜者
+            currentPlayer: 0,      // 当前出牌玩家索引
+            lastPlay: null,        // 上一手牌
+            lastPlayer: null,      // 上一个出牌玩家
+            passedPlayers: [],     // 本轮已过的玩家
+            // 每个队伍有自己的级牌
+            teamLevels: { 1: 2, 2: 2 },  // 队伍级别 (2=2, 3=3, ..., 11=J, 12=Q, 13=K, 14=A)
+            currentLevelTeam: 1,   // 当前打牌方（输家，逢人配由其级牌决定）
+            deck: [],              // 牌堆
+            hands: {},             // 玩家手牌
+            roundWinner: null,     // 本轮胜者
+            levelUp: 0             // 本轮升级数
         };
     }
 
@@ -46,7 +53,7 @@ class GameRoom {
         }
 
         const playerNum = this.players.size + 1;
-        const team = playerNum <= 2 ? 1 : 2; // 1-2是一队，3-4是一队
+        const team = playerNum <= 2 ? 1 : 2; // 1-2是红队，3-4是蓝队
 
         this.players.set(playerId, {
             ws,
@@ -55,8 +62,8 @@ class GameRoom {
             playerNum,
             team,
             ready: false,
-            finished: false,  // 是否已出完牌
-            rank: 0           // 完成名次
+            finished: false,
+            rank: 0
         });
 
         return true;
@@ -83,9 +90,16 @@ class GameRoom {
         }
     }
 
+    // 获取当前级牌的牌面
+    getCurrentLevelRank() {
+        const level = this.gameState.teamLevels[this.gameState.currentLevelTeam];
+        return LEVEL_TO_RANK[level];
+    }
+
     // 创建一副牌
     createDeck() {
         const deck = [];
+        const trumpRank = this.getCurrentLevelRank();
 
         // 添加两副普通牌
         for (let i = 0; i < 2; i++) {
@@ -96,7 +110,8 @@ class GameRoom {
                         rank,
                         value: RANK_VALUES[rank],
                         isJoker: false,
-                        isTrump: suit === '♥' && rank === this.getLevelRank() // 逢人配
+                        // 逢人配：当前打牌方级牌的红桃牌
+                        isTrump: suit === '♥' && rank === trumpRank
                     });
                 }
             }
@@ -109,14 +124,6 @@ class GameRoom {
         }
 
         return deck;
-    }
-
-    // 获取当前级别对应的牌面
-    getLevelRank() {
-        if (this.gameState.level <= 10) {
-            return this.gameState.level.toString();
-        }
-        return ['J', 'Q', 'K', 'A'][this.gameState.level - 11];
     }
 
     // 洗牌
@@ -152,13 +159,15 @@ class GameRoom {
 
     startGame() {
         this.gameState.started = true;
-        this.gameState.level = 2;
+        this.gameState.teamLevels = { 1: 2, 2: 2 };  // 双方都从2开始
+        this.gameState.currentLevelTeam = 1;          // 初始打牌方
         this.gameState.hands = this.dealCards();
         this.gameState.currentPlayer = 0;
         this.gameState.lastPlay = null;
         this.gameState.lastPlayer = null;
         this.gameState.passedPlayers = [];
         this.gameState.roundWinner = null;
+        this.gameState.levelUp = 0;
 
         // 重置玩家状态
         for (let player of this.players.values()) {
@@ -185,7 +194,7 @@ class GameRoom {
         console.log(`房间 ${this.id} 游戏开始`);
     }
 
-    // 获取公开的游戏状态（隐藏其他玩家手牌）
+    // 获取公开的游戏状态
     getPublicGameState() {
         const playerIds = Array.from(this.players.keys());
         const publicHands = {};
@@ -194,7 +203,6 @@ class GameRoom {
             const pid = playerIds[i];
             publicHands[pid] = {
                 count: this.gameState.hands[pid]?.length || 0,
-                // 不发送具体牌面，只发送数量
             };
         }
 
@@ -203,11 +211,14 @@ class GameRoom {
             currentPlayer: this.gameState.currentPlayer,
             lastPlay: this.gameState.lastPlay,
             lastPlayer: this.gameState.lastPlayer,
-            level: this.gameState.level,
-            trumpRank: this.getLevelRank(),
+            // 级牌信息
+            teamLevels: this.gameState.teamLevels,
+            currentLevelTeam: this.gameState.currentLevelTeam,
+            trumpRank: this.getCurrentLevelRank(),
             hands: publicHands,
             passedPlayers: this.gameState.passedPlayers,
-            roundWinner: this.gameState.roundWinner
+            roundWinner: this.gameState.roundWinner,
+            levelUp: this.gameState.levelUp
         };
     }
 
@@ -274,7 +285,7 @@ class GameRoom {
         // 顺子 (5张及以上连续，不含2和王)
         if (cards.length >= 5) {
             const values = sorted.map(c => c.value);
-            if (values.every(v => v <= 14)) { // 不含王
+            if (values.every(v => v <= 14)) {
                 let isSequence = true;
                 for (let i = 1; i < values.length; i++) {
                     if (values[i] - values[i-1] !== 1) {
@@ -323,7 +334,6 @@ class GameRoom {
                 .sort((a, b) => a - b);
 
             if (triples.length >= 2) {
-                // 检查三张是否连续
                 let consecutive = true;
                 for (let i = 1; i < triples.length; i++) {
                     if (triples[i] - triples[i-1] !== 1) {
@@ -333,11 +343,10 @@ class GameRoom {
                 }
                 if (consecutive) {
                     const tripleCount = triples.length;
-                    const expectedTotal = tripleCount * 3 + tripleCount * 2; // 三带二
                     if (cards.length === tripleCount * 3) {
                         return { valid: true, type: 'plane', value: triples[triples.length - 1], length: tripleCount };
                     }
-                    if (cards.length === expectedTotal) {
+                    if (cards.length === tripleCount * 5) {
                         return { valid: true, type: 'planeWithPair', value: triples[triples.length - 1], length: tripleCount };
                     }
                 }
@@ -346,7 +355,7 @@ class GameRoom {
 
         // 同花顺
         if (cards.length >= 5) {
-            if (cards.every(c => c.suit === cards[0].suit)) {
+            if (cards.every(c => c.suit === cards[0].suit && !c.isJoker)) {
                 const values = sorted.map(c => c.value);
                 let isSequence = true;
                 for (let i = 1; i < values.length; i++) {
@@ -366,23 +375,18 @@ class GameRoom {
 
     // 比较牌型大小
     comparePlay(newPlay, lastPlay) {
-        if (!lastPlay) return true; // 第一个出牌
+        if (!lastPlay) return true;
 
-        // 王炸最大
         if (newPlay.type === 'rocket') return true;
         if (lastPlay.type === 'rocket') return false;
 
-        // 炸弹比普通牌大
         if (newPlay.type === 'bomb' && lastPlay.type !== 'bomb') return true;
         if (lastPlay.type === 'bomb' && newPlay.type !== 'bomb') return false;
 
-        // 同类型比较
         if (newPlay.type === lastPlay.type) {
-            // 顺子、连对、飞机需要长度相同
             if (['straight', 'pairStraight', 'plane', 'planeWithPair', 'flushStraight'].includes(newPlay.type)) {
                 if (newPlay.length !== lastPlay.length) return false;
             }
-            // 炸弹比较张数
             if (newPlay.type === 'bomb') {
                 if (newPlay.length > lastPlay.length) return true;
                 if (newPlay.length < lastPlay.length) return false;
@@ -390,7 +394,6 @@ class GameRoom {
             return newPlay.value > lastPlay.value;
         }
 
-        // 同花顺 > 5张炸弹 > 4张炸弹
         if (newPlay.type === 'flushStraight' && lastPlay.type === 'bomb') {
             if (lastPlay.length <= 5) return true;
             return false;
@@ -399,7 +402,6 @@ class GameRoom {
         return false;
     }
 
-    // 出牌
     playCards(playerId, cards) {
         if (!this.gameState.started) return { success: false, message: '游戏未开始' };
 
@@ -415,26 +417,17 @@ class GameRoom {
             return { success: false, message: '你已经出完牌了' };
         }
 
-        // 验证牌型
         const playResult = this.validatePlay(cards);
         if (!playResult.valid) {
             return { success: false, message: '无效的牌型' };
         }
 
-        // 如果是第一个出牌或新一轮开始，必须包含特定牌
-        if (!this.gameState.lastPlay) {
-            // 第一手必须包含红桃3（第一局）
-            // 这里简化处理，第一手可以是任意牌
-        }
-
-        // 比较牌型
         if (this.gameState.lastPlay && this.gameState.lastPlayer !== playerId) {
             if (!this.comparePlay(playResult, this.gameState.lastPlay)) {
                 return { success: false, message: '牌不够大' };
             }
         }
 
-        // 从手牌中移除
         const hand = this.gameState.hands[playerId];
         for (const card of cards) {
             const index = hand.findIndex(c =>
@@ -446,13 +439,11 @@ class GameRoom {
             hand.splice(index, 1);
         }
 
-        // 更新游戏状态
         this.gameState.lastPlay = playResult;
         this.gameState.lastPlay.cards = cards;
         this.gameState.lastPlayer = playerId;
         this.gameState.passedPlayers = [];
 
-        // 检查是否出完
         if (hand.length === 0) {
             player.finished = true;
             player.rank = this.getFinishedCount() + 1;
@@ -464,7 +455,6 @@ class GameRoom {
             });
         }
 
-        // 检查是否一局结束
         if (this.checkRoundEnd()) {
             this.endRound();
         } else {
@@ -474,7 +464,6 @@ class GameRoom {
         return { success: true };
     }
 
-    // 过牌
     pass(playerId) {
         if (!this.gameState.started) return { success: false, message: '游戏未开始' };
 
@@ -490,7 +479,6 @@ class GameRoom {
             return { success: false, message: '你已经出完牌了' };
         }
 
-        // 如果是新一轮的开始，不能过
         if (!this.gameState.lastPlay || this.gameState.lastPlayer === playerId) {
             return { success: false, message: '你必须出牌' };
         }
@@ -506,7 +494,6 @@ class GameRoom {
         let nextIndex = (this.gameState.currentPlayer + 1) % 4;
         let attempts = 0;
 
-        // 跳过已出完的玩家
         while (attempts < 4) {
             const nextPlayerId = playerIds[nextIndex];
             const player = this.players.get(nextPlayerId);
@@ -519,10 +506,8 @@ class GameRoom {
             attempts++;
         }
 
-        // 检查是否所有人都要不起
         const activePlayers = Array.from(this.players.values()).filter(p => !p.finished);
         if (this.gameState.passedPlayers.length >= activePlayers.length - 1) {
-            // 当前出牌者获得新一轮出牌权
             this.gameState.lastPlay = null;
             this.gameState.lastPlayer = null;
             this.gameState.passedPlayers = [];
@@ -536,26 +521,11 @@ class GameRoom {
     }
 
     checkRoundEnd() {
-        // 检查是否有一方全部出完
-        const team1Finished = Array.from(this.players.values())
-            .filter(p => p.team === 1)
-            .every(p => p.finished);
-
-        const team2Finished = Array.from(this.players.values())
-            .filter(p => p.team === 2)
-            .every(p => p.finished);
-
-        // 检查是否已有三个人出完
         const finishedCount = this.getFinishedCount();
-        if (finishedCount >= 3) {
-            return true;
-        }
-
-        return team1Finished || team2Finished;
+        return finishedCount >= 3;
     }
 
     endRound() {
-        // 计算升级数
         const team1Players = Array.from(this.players.values()).filter(p => p.team === 1);
         const team2Players = Array.from(this.players.values()).filter(p => p.team === 2);
 
@@ -565,36 +535,45 @@ class GameRoom {
         let levelUp = 0;
         let winner = null;
 
-        // 双下：一方获得前两名
+        // 双下：一方获得前两名 → 升3级
         if ((team1Ranks.includes(1) && team1Ranks.includes(2)) ||
             (team2Ranks.includes(1) && team2Ranks.includes(2))) {
             levelUp = 3;
             winner = team1Ranks.includes(1) ? 1 : 2;
         }
-        // 单下：一方获得第一和第三
+        // 单下：一方获得第一和第三 → 升2级
         else if ((team1Ranks.includes(1) && team1Ranks.includes(3)) ||
                  (team2Ranks.includes(1) && team2Ranks.includes(3))) {
             levelUp = 2;
             winner = team1Ranks.includes(1) ? 1 : 2;
         }
-        // 平局
+        // 平局：其他情况（如一方第一第四） → 升1级
         else {
             levelUp = 1;
             winner = team1Ranks.includes(1) ? 1 : 2;
         }
 
         this.gameState.roundWinner = winner;
+        this.gameState.levelUp = levelUp;
+
+        // 只有获胜队伍升级
+        const loser = winner === 1 ? 2 : 1;
+        this.gameState.currentLevelTeam = loser; // 下一局输家打牌
 
         // 广播回合结束
         this.broadcast({
             type: 'roundEnd',
             winner: winner,
             levelUp: levelUp,
+            loser: loser,
+            winnerLevel: this.gameState.teamLevels[winner],
+            loserLevel: this.gameState.teamLevels[loser],
             ranks: Array.from(this.players.values()).map(p => ({
                 name: p.name,
                 team: p.team,
                 rank: p.rank
-            }))
+            })),
+            teamLevels: this.gameState.teamLevels
         });
 
         console.log(`房间 ${this.id} 回合结束，队伍${winner}获胜，升级${levelUp}级`);
@@ -602,14 +581,18 @@ class GameRoom {
 
     // 开始新一局
     startNewRound() {
-        // 更新级别
-        if (this.gameState.roundWinner) {
-            this.gameState.level += 1; // 简化：每局升一级
-            if (this.gameState.level > 14) {
-                // 游戏结束
+        const winner = this.gameState.roundWinner;
+
+        // 获胜队伍升级
+        if (winner) {
+            this.gameState.teamLevels[winner] += this.gameState.levelUp;
+
+            // 检查是否通关（打过A，即级别>14）
+            if (this.gameState.teamLevels[winner] > 14) {
                 this.broadcast({
                     type: 'gameOver',
-                    winner: this.gameState.roundWinner
+                    winner: winner,
+                    finalLevel: LEVEL_TO_RANK[Math.min(this.gameState.teamLevels[winner], 14)]
                 });
                 return;
             }
@@ -628,8 +611,9 @@ class GameRoom {
         this.gameState.lastPlayer = null;
         this.gameState.passedPlayers = [];
         this.gameState.roundWinner = null;
+        this.gameState.levelUp = 0;
 
-        // 找到有红桃3的玩家
+        // 找到有红桃3的玩家先出
         const playerIds = Array.from(this.players.keys());
         for (let i = 0; i < 4; i++) {
             const hand = this.gameState.hands[playerIds[i]];
@@ -649,7 +633,6 @@ class GameRoom {
         const data = JSON.stringify(message);
         this.players.forEach((player, playerId) => {
             if (player.ws.readyState === WebSocket.OPEN) {
-                // 如果是游戏状态，发送玩家的私有状态
                 if (message.type === 'gameStart' || message.type === 'gameState' ||
                     message.type === 'newRound') {
                     player.ws.send(JSON.stringify({
@@ -683,12 +666,10 @@ class GameRoom {
     }
 }
 
-// 生成房间ID
 function generateRoomId() {
     return Math.random().toString(36).substring(2, 8).toUpperCase();
 }
 
-// WebSocket连接处理
 wss.on('connection', (ws) => {
     console.log('新客户端连接');
 
@@ -812,9 +793,7 @@ function joinRoom(ws, roomId, playerName) {
         }))
     }));
 
-    // 广播给其他玩家
     room.broadcastPlayerList();
-
     console.log(`玩家加入: ${roomId}, 玩家: ${playerName}`);
 }
 
