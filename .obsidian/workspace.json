@@ -34,9 +34,23 @@
               "icon": "lucide-file",
               "title": "局域网版使用说明"
             }
+          },
+          {
+            "id": "e72f0f5d47ebd10a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "AI库/小游戏/掼蛋/局域网版使用说明.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "局域网版使用说明"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -204,23 +218,24 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "5dde774a8b896de6",
+  "active": "e72f0f5d47ebd10a",
   "lastOpenFiles": [
     "AI库/小游戏/掼蛋/掼蛋.md",
     "AI库/小游戏/掼蛋/局域网版使用说明.md",
+    "AI库/小游戏/掼蛋/package-lock.json",
+    "AI库/小游戏/掼蛋/node_modules/ws/wrapper.mjs",
+    "AI库/小游戏/掼蛋/node_modules/ws/README.md",
+    "AI库/小游戏/掼蛋/node_modules/ws/package.json",
+    "AI库/小游戏/掼蛋/node_modules/ws/index.js",
+    "AI库/小游戏/掼蛋/node_modules/ws/lib/stream.js",
+    "AI库/小游戏/掼蛋/node_modules/ws/lib/websocket.js",
+    "AI库/小游戏/掼蛋/node_modules/ws/lib/validation.js",
+    "AI库/小游戏/掼蛋/node_modules/ws/lib/websocket-server.js",
+    "AI库/小游戏/掼蛋/node_modules/ws/lib/subprotocol.js",
+    "AI库/小游戏/掼蛋/node_modules/ws/lib/sender.js",
     "AI库/小游戏/掼蛋.md",
-    "AI库/小游戏/掼蛋/package.json",
-    "AI库/小游戏/掼蛋/guandan-lan.html",
-    "AI库/小游戏/掼蛋/guandan-server.js",
     "AI库/小游戏/小猫钓鱼/README.md",
-    "AI库/小游戏/掼蛋",
     "AI库/小游戏/math-practice-android/README.md",
-    "AI库/小游戏/小猫钓鱼/index.html",
-    "AI库/小游戏/math-practice-android/node_modules/xml2js/node_modules/xmlbuilder/typings/index.d.ts",
-    "AI库/小游戏/math-practice-android/node_modules/xml2js/node_modules/xmlbuilder/typings",
-    "AI库/小游戏/小猫钓鱼",
-    "AI库/小游戏/math-practice-android/android/app/capacitor.build.gradle",
-    "AI库/小游戏/math-practice-android/android/capacitor.settings.gradle",
     "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
     "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
     "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
@@ -250,8 +265,6 @@
     "AI库/小游戏/math-practice-android/node_modules/xml2js/README.md",
     "AI库/小游戏/math-practice-android/node_modules/xml2js/node_modules/xmlbuilder/CHANGELOG.md",
     "AI库/小游戏/math-practice-android/node_modules/rimraf/README.md",
-    "AI库/小游戏/math-practice-android/node_modules/elementtree/README.md",
-    "AI库/小游戏/math-practice-android/node_modules/elementtree/CHANGES.md",
     "未命名.canvas",
     "未命名 4.canvas",
     "未命名 5.canvas",
