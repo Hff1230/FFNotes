@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>小猫钓鱼 - 扑克牌游戏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a5f2a 0%, #2d8f4a 50%, #1a5f2a 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            overflow: hidden;
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* 标题 */
+        .title {
+            text-align: center;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: clamp(24px, 5vw, 36px);
+            font-weight: bold;
+            letter-spacing: 4px;
+        }
+
+        .title::before, .title::after {
+            content: '🐟';
+            margin: 0 10px;
+        }
+
+        /* 信息栏 */
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .player-info {
+            text-align: center;
+        }
+
+        .player-info.computer {
+            color: #ff6b6b;
+        }
+
+        .player-info.player {
+            color: #4ecdc4;
+        }
+
+        .player-name {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .card-count {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* 游戏区域 */
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 15px;
+            min-height: 300px;
+        }
+
+        /* 牌堆区 */
+        .card-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .deck {
+            position: relative;
+            width: 70px;
+            height: 100px;
+        }
+
+        .deck-stack {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .deck-stack:nth-child(2) { transform: translate(2px, 2px); }
+        .deck-stack:nth-child(3) { transform: translate(4px, 4px); }
+
+        .deck-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            border: 2px solid #3b82f6;
+        }
+
+        .deck-count {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        /* 公共牌堆 */
+        .pile-area {
+            min-width: 200px;
+            min-height: 120px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            border: 2px dashed rgba(255,255,255,0.3);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            gap: 5px;
+        }
+
+        .pile-area::before {
+            content: '公共牌堆';
+            position: absolute;
+            color: rgba(255,255,255,0.3);
+            font-size: 12px;
+        }
+
+        .pile-label {
+            width: 100%;
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        /* 扑克牌 */
+        .card {
+            width: 50px;
+            height: 70px;
+            background: white;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            position: relative;
+            cursor: default;
+        }
+
+        .card.red { color: #dc2626; }
+        .card.black { color: #1f2937; }
+
+        .card-rank {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .card-suit {
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .card.highlight {
+            animation: pulse 0.5s ease infinite;
+            box-shadow: 0 0 15px #ffd700;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .card.new-card {
+            animation: dealCard 0.3s ease;
+        }
+
+        @keyframes dealCard {
+            from {
+                transform: translateY(-50px) rotate(-10deg);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) rotate(0);
+                opacity: 1;
+            }
+        }
+
+        .card.collect-card {
+            animation: collectCard 0.5s ease forwards;
+        }
+
+        @keyframes collectCard {
+            to {
+                transform: scale(0) rotate(180deg);
+                opacity: 0;
+            }
+        }
+
+        /* 玩家区域 */
+        .player-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .player-deck {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .player-deck-label {
+            color: white;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* 按钮 */
+        .btn {
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn-play {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-play:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
+        }
+
+        .btn-play:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-play:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-restart {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            padding: 8px 20px;
+            font-size: 14px;
+        }
+
+        .btn-restart:hover {
+            transform: scale(1.05);
+        }
+
+        /* 消息 */
+        .message {
+            text-align: center;
+            color: #ffd700;
+            font-size: 16px;
+            min-height: 24px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .message.success {
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* 游戏结束遮罩 */
+        .game-over {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .game-over.show {
+            display: flex;
+        }
+
+        .game-over-content {
+            text-align: center;
+            color: white;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .game-over-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .game-over-title.win { color: #ffd700; }
+        .game-over-title.lose { color: #ff6b6b; }
+
+        .game-over-text {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* 规则提示 */
+        .rules {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            color: rgba(255,255,255,0.8);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .rules-title {
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 400px) {
+            .card {
+                width: 40px;
+                height: 56px;
+            }
+            .card-rank { font-size: 14px; }
+            .card-suit { font-size: 12px; }
+            .deck { width: 55px; height: 78px; }
+            .pile-area { min-height: 100px; }
+        }
+
+        /* 自动进行指示 */
+        .auto-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: #4ecdc4;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: none;
+        }
+
+        .auto-indicator.show {
+            display: block;
+            animation: blink 1s ease infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="auto-indicator" id="autoIndicator">电脑思考中...</div>
+
+    <div class="game-container">
+        <h1 class="title">小猫钓鱼</h1>
+
+        <div class="info-bar">
+            <div class="player-info computer">
+                <div class="player-name">🐱 电脑</div>
+                <div class="card-count" id="computerCount">26</div>
+            </div>
+            <div class="player-info">
+                <div class="player-name">回合</div>
+                <div class="card-count" id="turnCount">1</div>
+            </div>
+            <div class="player-info player">
+                <div class="player-name">👤 玩家</div>
+                <div class="card-count" id="playerCount">26</div>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <div class="player-area">
+                <div class="player-deck">
+                    <div class="deck">
+                        <div class="deck-stack"></div>
+                        <div class="deck-stack"></div>
+                        <div class="deck-stack"></div>
+                        <div class="deck-back">🐱</div>
+                    </div>
+                    <span class="deck-count" id="computerDeckCount">26张</span>
+                </div>
+
+                <div class="pile-area" id="pileArea">
+                    <div class="pile-label">公共牌堆</div>
+                </div>
+
+                <div class="player-deck">
+                    <div class="deck">
+                        <div class="deck-stack"></div>
+                        <div class="deck-stack"></div>
+                        <div class="deck-stack"></div>
+                        <div class="deck-back">👤</div>
+                    </div>
+                    <span class="deck-count" id="playerDeckCount">26张</span>
+                </div>
+            </div>
+
+            <div class="message" id="message">点击"出牌"开始游戏！</div>
+
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-play" id="playBtn" onclick="playerPlay()">出 牌</button>
+                <button class="btn btn-restart" onclick="initGame()">重新开始</button>
+            </div>
+        </div>
+
+        <div class="rules">
+            <div class="rules-title">📜 游戏规则</div>
+            轮流出牌到公共牌堆，当出的牌与牌堆中某张牌<b>点数相同</b>时，收走两张相同牌之间的所有牌。先出完牌的一方输掉游戏！
+        </div>
+    </div>
+
+    <div class="game-over" id="gameOver">
+        <div class="game-over-content">
+            <div class="game-over-title" id="gameOverTitle">🎉 胜利！</div>
+            <div class="game-over-text" id="gameOverText">恭喜你赢得了比赛！</div>
+            <button class="btn btn-play" onclick="initGame()">再来一局</button>
+        </div>
+    </div>
+
+    <script>
+        // 花色定义
+        const SUITS = ['♠', '♥', '♦', '♣'];
+        const SUIT_COLORS = {'♠': 'black', '♥': 'red', '♦': 'red', '♣': 'black'};
+        const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+
+        // 游戏状态
+        let playerDeck = [];
+        let computerDeck = [];
+        let pile = [];
+        let isPlayerTurn = true;
+        let gameOver = false;
+        let turnCount = 1;
+        let isAnimating = false;
+
+        // 创建一副牌
+        function createDeck() {
+            const deck = [];
+            for (let suit of SUITS) {
+                for (let i = 0; i < RANKS.length; i++) {
+                    deck.push({
+                        suit: suit,
+                        rank: RANKS[i],
+                        value: i + 1,
+                        color: SUIT_COLORS[suit]
+                    });
+                }
+            }
+            return deck;
+        }
+
+        // 洗牌
+        function shuffle(deck) {
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+            return deck;
+        }
+
+        // 初始化游戏
+        function initGame() {
+            const deck = shuffle(createDeck());
+            playerDeck = deck.slice(0, 26);
+            computerDeck = deck.slice(26);
+            pile = [];
+            isPlayerTurn = true;
+            gameOver = false;
+            turnCount = 1;
+            isAnimating = false;
+
+            updateUI();
+            updatePileDisplay();
+            document.getElementById('gameOver').classList.remove('show');
+            document.getElementById('autoIndicator').classList.remove('show');
+            document.getElementById('playBtn').disabled = false;
+            showMessage('点击"出牌"开始游戏！');
+        }
+
+        // 创建卡牌元素
+        function createCardElement(card, isNew = false) {
+            const div = document.createElement('div');
+            div.className = `card ${card.color}${isNew ? ' new-card' : ''}`;
+            div.innerHTML = `
+                <span class="card-rank">${card.rank}</span>
+                <span class="card-suit">${card.suit}</span>
+            `;
+            div.dataset.value = card.value;
+            return div;
+        }
+
+        // 更新UI
+        function updateUI() {
+            document.getElementById('playerCount').textContent = playerDeck.length;
+            document.getElementById('computerCount').textContent = computerDeck.length;
+            document.getElementById('playerDeckCount').textContent = playerDeck.length + '张';
+            document.getElementById('computerDeckCount').textContent = computerDeck.length + '张';
+            document.getElementById('turnCount').textContent = turnCount;
+        }
+
+        // 更新公共牌堆显示
+        function updatePileDisplay() {
+            const pileArea = document.getElementById('pileArea');
+            pileArea.innerHTML = '<div class="pile-label">公共牌堆</div>';
+
+            // 只显示最后几张牌
+            const showCount = Math.min(pile.length, 8);
+            const startIndex = Math.max(0, pile.length - showCount);
+
+            for (let i = startIndex; i < pile.length; i++) {
+                const cardEl = createCardElement(pile[i]);
+                if (i === pile.length - 1) {
+                    cardEl.classList.add('new-card');
+                }
+                pileArea.appendChild(cardEl);
+            }
+        }
+
+        // 显示消息
+        function showMessage(msg, isSuccess = false) {
+            const msgEl = document.getElementById('message');
+            msgEl.textContent = msg;
+            msgEl.className = 'message' + (isSuccess ? ' success' : '');
+        }
+
+        // 玩家出牌
+        function playerPlay() {
+            if (gameOver || !isPlayerTurn || isAnimating || playerDeck.length === 0) return;
+
+            isAnimating = true;
+            document.getElementById('playBtn').disabled = true;
+
+            const card = playerDeck.shift();
+            pile.push(card);
+            updatePileDisplay();
+            updateUI();
+
+            // 检查是否收牌
+            setTimeout(() => {
+                const collectResult = checkCollect(card, playerDeck);
+
+                if (collectResult.collected) {
+                    animateCollect(collectResult.indices, () => {
+                        playerDeck = collectResult.newDeck;
+                        pile = collectResult.newPile;
+                        updateUI();
+                        updatePileDisplay();
+                        showMessage(`🎉 收到 ${collectResult.count} 张牌！`, true);
+                        checkGameOver();
+
+                        if (!gameOver) {
+                            isPlayerTurn = false;
+                            setTimeout(computerPlay, 800);
+                        } else {
+                            isAnimating = false;
+                        }
+                    });
+                } else {
+                    showMessage('');
+                    isPlayerTurn = false;
+                    turnCount++;
+                    setTimeout(computerPlay, 800);
+                }
+            }, 300);
+        }
+
+        // 电脑出牌
+        function computerPlay() {
+            if (gameOver || computerDeck.length === 0) {
+                isAnimating = false;
+                document.getElementById('playBtn').disabled = false;
+                return;
+            }
+
+            document.getElementById('autoIndicator').classList.add('show');
+
+            setTimeout(() => {
+                document.getElementById('autoIndicator').classList.remove('show');
+
+                const card = computerDeck.shift();
+                pile.push(card);
+                updatePileDisplay();
+                updateUI();
+
+                setTimeout(() => {
+                    const collectResult = checkCollect(card, computerDeck);
+
+                    if (collectResult.collected) {
+                        animateCollect(collectResult.indices, () => {
+                            computerDeck = collectResult.newDeck;
+                            pile = collectResult.newPile;
+                            updateUI();
+                            updatePileDisplay();
+                            showMessage(`🐱 电脑收到 ${collectResult.count} 张牌！`, true);
+                            checkGameOver();
+
+                            if (!gameOver) {
+                                isPlayerTurn = true;
+                                turnCount++;
+                                isAnimating = false;
+                                document.getElementById('playBtn').disabled = false;
+                            }
+                        });
+                    } else {
+                        isPlayerTurn = true;
+                        turnCount++;
+                        isAnimating = false;
+                        document.getElementById('playBtn').disabled = false;
+                    }
+                }, 300);
+            }, 500);
+        }
+
+        // 检查收牌
+        function checkCollect(card, deck) {
+            const matchIndex = pile.slice(0, -1).findIndex(c => c.value === card.value);
+
+            if (matchIndex !== -1) {
+                // 找到匹配，收牌
+                const collectedCards = pile.slice(matchIndex);
+                return {
+                    collected: true,
+                    indices: Array.from({length: pile.length - matchIndex}, (_, i) => matchIndex + i),
+                    count: collectedCards.length,
+                    newDeck: [...deck, ...collectedCards],
+                    newPile: pile.slice(0, matchIndex)
+                };
+            }
+
+            return { collected: false };
+        }
+
+        // 收牌动画
+        function animateCollect(indices, callback) {
+            const pileArea = document.getElementById('pileArea');
+            const cards = pileArea.querySelectorAll('.card');
+
+            indices.forEach((idx, i) => {
+                const actualIdx = cards.length - pile.length + idx;
+                if (cards[actualIdx]) {
+                    setTimeout(() => {
+                        cards[actualIdx].classList.add('collect-card');
+                    }, i * 50);
+                }
+            });
+
+            setTimeout(callback, indices.length * 50 + 500);
+        }
+
+        // 检查游戏结束
+        function checkGameOver() {
+            if (playerDeck.length === 0) {
+                gameOver = true;
+                showGameOver(false);
+            } else if (computerDeck.length === 0) {
+                gameOver = true;
+                showGameOver(true);
+            }
+        }
+
+        // 显示游戏结束
+        function showGameOver(playerWin) {
+            const overlay = document.getElementById('gameOver');
+            const title = document.getElementById('gameOverTitle');
+            const text = document.getElementById('gameOverText');
+
+            if (playerWin) {
+                title.textContent = '🎉 胜利！';
+                title.className = 'game-over-title win';
+                text.textContent = '恭喜你赢得了比赛！';
+            } else {
+                title.textContent = '😢 失败';
+                title.className = 'game-over-title lose';
+                text.textContent = '电脑赢得了比赛，再接再厉！';
+            }
+
+            overlay.classList.add('show');
+            document.getElementById('playBtn').disabled = true;
+        }
+
+        // 键盘支持
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                playerPlay();
+            }
+        });
+
+        // 初始化
+        initGame();
+    </script>
+</body>
+</html>

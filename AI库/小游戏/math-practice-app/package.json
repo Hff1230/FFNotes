@@ -1,5 +1,5 @@
 {
-  "name": "小学数学口算快速出题器",
+  "name": "math-practice-app",
   "version": "1.2.7",
   "description": "专为小学生设计的数学练习工具，支持自动出题、在线答题、计时测试和打印功能",
   "main": "main.js",

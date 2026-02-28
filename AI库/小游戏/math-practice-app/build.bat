@@ -10,12 +10,12 @@ echo.
 where node >nul 2>&1
 if %errorlevel% neq 0 (
     echo [ERROR] Node.js not found!
-    echo Please install Node.js from: https://nodejs.org/
+    echo Download from: https://nodejs.org/
     pause
     exit /b 1
 )
 
-echo Node.js version:
+echo Node.js:
 node -v
 echo.
 
@@ -24,7 +24,7 @@ if not exist "node_modules" (
     npm config set registry https://registry.npmmirror.com
     call npm install
     if %errorlevel% neq 0 (
-        echo [ERROR] npm install failed
+        echo [ERROR] Install failed
         pause
         exit /b 1
     )
@@ -33,69 +33,50 @@ if not exist "node_modules" (
 :menu
 echo.
 echo ========================================
-echo   Select option:
+echo   Options:
 echo ========================================
-echo   1. Run app (dev mode)
-echo   2. Build installer (.exe)
+echo   1. Run app
+echo   2. Build installer
 echo   3. Build portable
-echo   4. Reinstall dependencies
-echo   5. Clean and reinstall
+echo   4. Reinstall
+echo   5. Clean install
 echo   0. Exit
 echo ========================================
 echo.
 
-set /p choice="Enter option (0-5): "
+set /p c="Choose (0-5): "
 
-if "%choice%"=="1" goto run
-if "%choice%"=="2" goto build_setup
-if "%choice%"=="3" goto build_portable
-if "%choice%"=="4" goto reinstall
-if "%choice%"=="5" goto clean_install
-if "%choice%"=="0" goto end
-echo Invalid option
+if "%c%"=="1" goto run
+if "%c%"=="2" goto build
+if "%c%"=="3" goto portable
+if "%c%"=="4" goto reinstall
+if "%c%"=="5" goto clean
+if "%c%"=="0" goto end
 goto menu
 
 :run
-echo Starting app...
 call npm start
 goto end
 
-:build_setup
-echo Building installer...
+:build
 call npm run build
-if %errorlevel% neq 0 (
-    echo Build failed
-    pause
-    goto menu
-)
-echo Build complete!
 if exist "dist" explorer dist
 goto end
 
-:build_portable
-echo Building portable...
+:portable
 call npx electron-builder --win portable
-if %errorlevel% neq 0 (
-    echo Build failed
-    pause
-    goto menu
-)
-echo Build complete!
 if exist "dist" explorer dist
 goto end
 
 :reinstall
 call npm install
-echo Done
 goto menu
 
-:clean_install
-if exist "node_modules" rmdir /s /q node_modules
-if exist "package-lock.json" del package-lock.json
+:clean
+rmdir /s /q node_modules 2>nul
+del package-lock.json 2>nul
 call npm install
-echo Done
 goto menu
 
 :end
-echo Goodbye!
 pause
