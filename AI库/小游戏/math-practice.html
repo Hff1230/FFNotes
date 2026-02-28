@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小学数学快速出题器 v1.2.8 - 口算+竖式+应用题+混合运算+比较题型+三步运算+题目去重+比少防负数</title>
+    <title>小学数学快速出题器 v1.3.2 - 口算+竖式+应用题+混合运算+比较题型+三步运算+题目去重+打印优化</title>
     <style>
         * {
             margin: 0;
@@ -547,25 +547,26 @@
 
             .print-section-title {
                 font-size: 1.1rem;
-                font-weight: bold;
+                font-weight: 700;
                 margin-bottom: 8px;
                 padding-bottom: 6px;
-                border-bottom: 2px solid #000;
+                border-bottom: 2.5px solid #000;
                 color: #000 !important;
             }
 
             .print-oral {
                 display: inline-block;
                 width: 20%;
-                margin: 5px 0.5% 10px 0.5%;
-                font-size: 1rem;
+                margin: 4px 0.5% 10px 0.5%;
+                font-size: 1.05rem;
+                font-weight: 700;
                 vertical-align: top;
                 font-family: 'Courier New', monospace;
                 white-space: nowrap;
                 overflow: hidden;
                 box-sizing: border-box;
                 text-align: left;
-                line-height: 1.6;
+                line-height: 1.7;
                 color: #000 !important;
             }
 
@@ -580,11 +581,12 @@
                 margin: 5px 0.5% 10px 0.5%;
                 vertical-align: top;
                 font-family: 'Courier New', monospace;
-                font-size: 0.9rem;
-                line-height: 1.4;
+                font-size: 1.05rem;
+                font-weight: 700;
+                line-height: 1.2;
                 background: white;
-                padding: 6px;
-                border: 1.5px solid #000;
+                padding: 8px;
+                border: 3px solid #000;
                 border-radius: 3px;
                 page-break-inside: avoid;
                 box-sizing: border-box;
@@ -593,20 +595,21 @@
 
             .print-vertical-calculation {
                 text-align: right;
-                margin: 3px 0;
+                margin: 4px 0;
             }
 
             .print-vertical-numbers {
                 display: inline-block;
                 text-align: right;
-                font-size: 0.95rem;
+                font-size: 1.05rem;
+                font-weight: 700;
                 font-family: 'Courier New', Courier, monospace;  /* 使用等宽字体确保数字对齐 */
                 color: #000 !important;
             }
 
             .print-vertical-line {
-                border-top: 1.5px solid #000;
-                margin: 2px 0 2px 0;
+                border-top: 3px solid #000;
+                margin: 3px 0 3px 0;
             }
 
             .print-vertical-answer {
@@ -615,10 +618,10 @@
             }
 
             .print-vertical-horizontal {
-                font-size: 0.9rem;
+                font-size: 0.95rem;
                 color: #000 !important;
-                margin-bottom: 4px;
-                font-weight: 600;
+                margin-bottom: 5px;
+                font-weight: 700;
                 text-align: left;
                 white-space: nowrap;
                 font-family: 'Courier New', monospace;
@@ -972,9 +975,9 @@
                             <div style="flex: 1;">
                                 <label style="font-size: 0.95rem; color: var(--secondary-color); font-weight: 600;">✏️ 竖式题</label>
                                 <select id="verticalCount">
-                                    <option value="8">8题</option>
+                                    <option value="8" selected>8题</option>
                                     <option value="12">12题</option>
-                                    <option value="16" selected>16题</option>
+                                    <option value="16">16题</option>
                                     <option value="20">20题</option>
                                     <option value="24">24题</option>
                                 </select>
@@ -985,9 +988,9 @@
                                 <label style="font-size: 0.95rem; color: #8b5cf6; font-weight: 600;">📖 应用题</label>
                                 <select id="wordProblemCount">
                                     <option value="2">2题</option>
-                                    <option value="4">4题</option>
+                                    <option value="4" selected>4题</option>
                                     <option value="6">6题</option>
-                                    <option value="8" selected>8题</option>
+                                    <option value="8">8题</option>
                                     <option value="10">10题</option>
                                     <option value="12">12题</option>
                                 </select>
@@ -1076,7 +1079,7 @@
 
                 <!-- 应用题显示 -->
                 <div id="wordProblemArea" class="word-problem-question" style="display: none;">
-                    <div class="word-problem-content" id="wordProblemText" style="font-size: 1.1rem; line-height: 1.5; color: var(--text-primary); margin-bottom: 15px; white-space: pre-wrap;">
+                    <div class="word-problem-content" id="wordProblemText" style="font-size: 1.1rem; line-height: 1.2; color: var(--text-primary); margin-bottom: 15px; white-space: pre-wrap;">
                         题目内容将在这里显示
                     </div>
                     <div style="max-width: 400px; margin: 0 auto; padding: 15px; border: 2px dashed #ddd; border-radius: 10px; background: #fafafa; min-height: 100px;">
@@ -3094,10 +3097,7 @@
                 // 每份试卷用一个wrapper包裹，避免内部元素被分页规则影响
                 html += '<div class="print-copy-wrapper">';
 
-                // 每份试卷都添加抬头
-                html += '<div class="print-header">';
-                html += '<h1>小学数学练习题</h1>';
-                html += '</div>';
+                // 学生信息栏（移除标题，节约空间）
                 html += '<div class="print-info">';
                 html += '<div>姓名：__________</div>';
                 html += '<div>日期：__________</div>';
@@ -3156,16 +3156,14 @@
                 if (wordProblemCount > 0) {
                     html += '<div class="print-section">';
                     html += '<div class="print-section-title">应用题（每题5分，共' + (wordProblemCount * 5) + '分）</div>';
-                    html += '<div style="display: flex; flex-direction: column; gap: 12px;">';
+                    html += '<div style="display: flex; flex-direction: column; gap: 8px;">';
 
                     for (let i = 0; i < wordProblemCount; i++) {
                         const q = questions[oralCount + verticalCount + i];
                         html += `
-                            <div style="padding: 8px; background: #f9f9f9; border-left: 3px solid #8b5cf6; page-break-inside: avoid;">
-                                <div style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 8px;">${i + 1}. ${q.question}</div>
-                                <div style="border: 1px dashed #ccc; padding: 8px; min-height: 60px; background: white;">
-                                    <div style="font-size: 0.7rem; color: #999; margin-bottom: 3px;">📝 解答区域</div>
-                                </div>
+                            <div style="padding: 4px 0; page-break-inside: avoid;">
+                                <div style="font-size: 1rem; line-height: 1.3; margin-bottom: 2px; color: #000; font-weight: 500;">${i + 1}. ${q.question}</div>
+                                <div style="min-height: 40px;"></div>
                             </div>
                         `;
                     }
@@ -3351,9 +3349,9 @@
         }
 
         // 版本信息
-        console.log('小学数学快速出题器 v1.2.8');
+        console.log('小学数学快速出题器 v1.3.2');
         console.log('更新时间：2026年2月28日');
-        console.log('新功能：比少类题目防负数校验 + 代码注释说明');
+        console.log('新功能：进一步减小行间距，打印更紧凑');
     </script>
 </body>
 </html>
