@@ -436,9 +436,286 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
+
+        /* Agent可视化面板 */
+        .agent-panel {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 280px;
+            max-height: 90vh;
+            background: rgba(0,0,0,0.85);
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            font-size: 12px;
+            overflow-y: auto;
+            z-index: 50;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .agent-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .agent-panel::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+        }
+
+        .agent-panel::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+        }
+
+        .agent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .agent-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+
+        .agent-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .agent-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .agent-section {
+            margin-bottom: 12px;
+        }
+
+        .agent-section-title {
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .agent-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .agent-stat {
+            background: rgba(255,255,255,0.1);
+            padding: 8px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .agent-stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+
+        .agent-stat-label {
+            font-size: 10px;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        .agent-decision {
+            background: rgba(78, 205, 196, 0.2);
+            border-left: 3px solid #4ecdc4;
+            padding: 10px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 10px;
+        }
+
+        .agent-decision-title {
+            color: #4ecdc4;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .agent-decision-text {
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        .agent-memory {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            max-height: 80px;
+            overflow-y: auto;
+        }
+
+        .memory-card {
+            width: 28px;
+            height: 38px;
+            background: white;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .memory-card.red { color: #dc2626; }
+        .memory-card.black { color: #1f2937; }
+        .memory-card.highlight {
+            box-shadow: 0 0 8px #ffd700;
+            transform: scale(1.1);
+        }
+
+        .agent-log {
+            max-height: 100px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        .log-entry {
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-entry.win {
+            color: #4ecdc4;
+        }
+
+        .log-entry.lose {
+            color: #ff6b6b;
+        }
+
+        .log-entry.info {
+            color: #ffd700;
+        }
+
+        .probability-bar {
+            height: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .probability-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ecdc4, #44a08d);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .probability-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3px;
+        }
+
+        .agent-collapsed {
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <!-- Agent可视化面板 -->
+    <div class="agent-panel" id="agentPanel">
+        <div class="agent-header">
+            <span class="agent-title">🐱 Agent 可视化</span>
+            <button class="agent-toggle" onclick="toggleAgentPanel()">收起</button>
+        </div>
+
+        <div id="agentContent">
+            <div class="agent-section">
+                <div class="agent-section-title">📊 状态统计</div>
+                <div class="agent-stats">
+                    <div class="agent-stat">
+                        <div class="agent-stat-value" id="agentCardCount">26</div>
+                        <div class="agent-stat-label">手牌数</div>
+                    </div>
+                    <div class="agent-stat">
+                        <div class="agent-stat-value" id="agentWinRate">50%</div>
+                        <div class="agent-stat-label">胜率预估</div>
+                    </div>
+                    <div class="agent-stat">
+                        <div class="agent-stat-value" id="agentMemoryCount">0</div>
+                        <div class="agent-stat-label">记忆牌数</div>
+                    </div>
+                    <div class="agent-stat">
+                        <div class="agent-stat-value" id="agentCollects">0</div>
+                        <div class="agent-stat-label">收牌次数</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="agent-section">
+                <div class="agent-section-title">🧠 当前决策</div>
+                <div class="agent-decision" id="agentDecision">
+                    <div class="agent-decision-title">等待出牌...</div>
+                    <div class="agent-decision-text">游戏开始后，这里会显示AI的决策分析</div>
+                </div>
+            </div>
+
+            <div class="agent-section">
+                <div class="agent-section-title">
+                    <span>📝 已记忆的牌</span>
+                    <span style="float:right; opacity:0.7;">可匹配的牌</span>
+                </div>
+                <div class="agent-memory" id="agentMemory"></div>
+            </div>
+
+            <div class="agent-section">
+                <div class="agent-section-title">📈 收牌概率</div>
+                <div class="probability-label">
+                    <span>基于公共牌堆分析</span>
+                    <span id="probValue">0%</span>
+                </div>
+                <div class="probability-bar">
+                    <div class="probability-fill" id="probBar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="agent-section">
+                <div class="agent-section-title">📜 决策日志</div>
+                <div class="agent-log" id="agentLog">
+                    <div class="log-entry info">游戏初始化完成</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="agentCollapsed" class="agent-collapsed">
+            <div style="text-align:center; opacity:0.7;">面板已收起</div>
+        </div>
+    </div>
+
     <div class="auto-indicator" id="autoIndicator">电脑思考中...</div>
 
     <div class="game-container">
@@ -525,6 +802,12 @@
         let turnCount = 1;
         let isAnimating = false;
 
+        // Agent状态
+        let agentMemory = new Map(); // 记忆已出的牌
+        let agentCollects = 0; // 收牌次数
+        let agentLog = []; // 决策日志
+        let isPanelCollapsed = false;
+
         // 创建一副牌
         function createDeck() {
             const deck = [];
@@ -561,8 +844,15 @@
             turnCount = 1;
             isAnimating = false;
 
+            // 重置Agent状态
+            agentMemory = new Map();
+            agentCollects = 0;
+            agentLog = [];
+
             updateUI();
             updatePileDisplay();
+            updateAgentPanel();
+            addAgentLog('info', '游戏初始化完成，开始新游戏');
             document.getElementById('gameOver').classList.remove('show');
             document.getElementById('autoIndicator').classList.remove('show');
             document.getElementById('playBtn').disabled = false;
@@ -684,10 +974,35 @@
 
             document.getElementById('autoIndicator').classList.add('show');
 
+            // Agent决策分析
+            const pileValues = new Set(pile.map(c => c.value));
+            const matchingCards = computerDeck.filter(c => pileValues.has(c.value));
+
+            // 更新决策面板
+            let decisionTitle = '🤔 分析中...';
+            let decisionText = `手牌: ${computerDeck.length}张 | 公共牌堆: ${pile.length}张`;
+
+            if (matchingCards.length > 0) {
+                decisionTitle = '😊 发现机会！';
+                decisionText = `手中有 ${matchingCards.length} 张牌可能匹配公共牌堆中的牌。`;
+            } else if (pile.length > 5) {
+                decisionTitle = '😐 等待机会';
+                decisionText = `公共牌堆有 ${pile.length} 张牌，等待匹配机会。`;
+            } else {
+                decisionTitle = '🃏 正常出牌';
+                decisionText = `按顺序出牌，期待好运。`;
+            }
+            updateDecision(decisionTitle, decisionText);
+
             setTimeout(() => {
                 document.getElementById('autoIndicator').classList.remove('show');
 
                 const card = computerDeck.shift();
+
+                // 分析这张牌
+                const analysis = analyzePlay(card, computerDeck);
+                addAgentLog('info', `出牌: ${card.rank}${card.suit}`);
+
                 pile.push(card);
                 updatePileDisplay();
                 updateUI();
@@ -696,11 +1011,16 @@
                     const collectResult = checkCollect(card, computerDeck);
 
                     if (collectResult.collected) {
+                        agentCollects++;
+                        addAgentLog('win', `🎉 收到 ${collectResult.count} 张牌！`);
+                        updateDecision('🎉 收牌成功！', `收到 ${collectResult.count} 张牌，手牌增加到 ${computerDeck.length + collectResult.count} 张`);
+
                         animateCollect(collectResult.indices, () => {
                             computerDeck = collectResult.newDeck;
                             pile = collectResult.newPile;
                             updateUI();
                             updatePileDisplay();
+                            updateAgentPanel();
                             showMessage(`🐱 电脑收到 ${collectResult.count} 张牌！`, true);
                             checkGameOver();
 
@@ -712,10 +1032,14 @@
                             }
                         });
                     } else {
+                        addAgentLog('info', `未匹配，轮到玩家`);
+                        updateDecision('未匹配', `出的牌 ${card.rank}${card.suit} 没有匹配，轮到玩家`);
+
                         isPlayerTurn = true;
                         turnCount++;
                         isAnimating = false;
                         document.getElementById('playBtn').disabled = false;
+                        updateAgentPanel();
                     }
                 }, 300);
             }, 500);
@@ -807,7 +1131,131 @@
             }
         });
 
-        // 初始化
+        // ===== Agent可视化功能 =====
+
+        // 切换面板显示
+        function toggleAgentPanel() {
+            isPanelCollapsed = !isPanelCollapsed;
+            document.getElementById('agentContent').style.display = isPanelCollapsed ? 'none' : 'block';
+            document.getElementById('agentCollapsed').style.display = isPanelCollapsed ? 'block' : 'none';
+            document.querySelector('.agent-toggle').textContent = isPanelCollapsed ? '展开' : '收起';
+        }
+
+        // 更新Agent面板
+        function updateAgentPanel() {
+            // 更新统计
+            document.getElementById('agentCardCount').textContent = computerDeck.length;
+            document.getElementById('agentMemoryCount').textContent = agentMemory.size;
+            document.getElementById('agentCollects').textContent = agentCollects;
+
+            // 计算胜率预估
+            const winRate = calculateWinRate();
+            document.getElementById('agentWinRate').textContent = winRate + '%';
+
+            // 更新记忆的牌
+            updateAgentMemory();
+
+            // 更新概率
+            updateProbability();
+        }
+
+        // 计算胜率预估
+        function calculateWinRate() {
+            const total = computerDeck.length + playerDeck.length + pile.length;
+            if (total === 0) return 50;
+            const ratio = computerDeck.length / (computerDeck.length + playerDeck.length);
+            return Math.round(ratio * 100);
+        }
+
+        // 更新记忆的牌显示
+        function updateAgentMemory() {
+            const container = document.getElementById('agentMemory');
+            container.innerHTML = '';
+
+            // 显示公共牌堆中可匹配的牌
+            const pileValues = new Map();
+            pile.forEach(card => {
+                if (!pileValues.has(card.value)) {
+                    pileValues.set(card.value, []);
+                }
+                pileValues.get(card.value).push(card);
+            });
+
+            // 显示记忆的牌（已出过的牌值）
+            agentMemory.forEach((count, value) => {
+                if (pileValues.has(value)) {
+                    // 公共牌堆中有可匹配的牌
+                    pileValues.get(value).forEach(card => {
+                        const div = document.createElement('div');
+                        div.className = `memory-card ${card.color} highlight`;
+                        div.innerHTML = `<span>${card.rank}</span><span>${card.suit}</span>`;
+                        div.title = `可匹配！公共牌堆中有这张牌`;
+                        container.appendChild(div);
+                    });
+                }
+            });
+
+            if (container.children.length === 0) {
+                container.innerHTML = '<div style="opacity:0.5; padding:10px;">暂无可匹配的牌</div>';
+            }
+        }
+
+        // 更新收牌概率
+        function updateProbability() {
+            if (pile.length === 0) {
+                document.getElementById('probBar').style.width = '0%';
+                document.getElementById('probValue').textContent = '0%';
+                return;
+            }
+
+            // 计算电脑手中牌能匹配公共牌堆的概率
+            const pileValues = new Set(pile.map(c => c.value));
+            const matchCount = computerDeck.filter(c => pileValues.has(c.value)).length;
+            const probability = computerDeck.length > 0 ? Math.round((matchCount / computerDeck.length) * 100) : 0;
+
+            document.getElementById('probBar').style.width = probability + '%';
+            document.getElementById('probValue').textContent = probability + '%';
+        }
+
+        // 添加决策日志
+        function addAgentLog(type, message) {
+            agentLog.unshift({ type, message, time: new Date().toLocaleTimeString() });
+            if (agentLog.length > 20) agentLog.pop();
+
+            const container = document.getElementById('agentLog');
+            container.innerHTML = agentLog.map(log =>
+                `<div class="log-entry ${log.type}">[${log.time}] ${log.message}</div>`
+            ).join('');
+        }
+
+        // 更新决策显示
+        function updateDecision(title, text) {
+            document.getElementById('agentDecision').innerHTML = `
+                <div class="agent-decision-title">${title}</div>
+                <div class="agent-decision-text">${text}</div>
+            `;
+        }
+
+        // 分析出牌
+        function analyzePlay(card, deck) {
+            const pileValues = pile.slice(0, -1).map(c => c.value);
+            const canMatch = pileValues.includes(card.value);
+
+            // 记录到记忆
+            agentMemory.set(card.value, (agentMemory.get(card.value) || 0) + 1);
+
+            let analysis = {
+                card: card,
+                canMatch: canMatch,
+                matchCount: pileValues.filter(v => v === card.value).length,
+                pileSize: pile.length,
+                deckSize: deck.length
+            };
+
+            return analysis;
+        }
+
+        // ===== 初始化 =====
         initGame();
     </script>
 </body>
