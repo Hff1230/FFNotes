@@ -1,0 +1,21 @@
+{
+  "name": "guandan-lan",
+  "version": "1.0.0",
+  "description": "掼蛋 - 安庆热门扑克游戏局域网版",
+  "main": "guandan-server.js",
+  "scripts": {
+    "start": "node guandan-server.js"
+  },
+  "keywords": [
+    "guandan",
+    "card-game",
+    "lan-game",
+    "websocket",
+    "multiplayer"
+  ],
+  "author": "AI Assistant",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^8.14.0"
+  }
+}

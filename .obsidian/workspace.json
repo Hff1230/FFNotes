@@ -25,10 +25,14 @@
             "id": "5dde774a8b896de6",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "AI库/小游戏/掼蛋/局域网版使用说明.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "局域网版使用说明"
             }
           }
         ],
@@ -200,9 +204,14 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "a15cc7476493b87c",
+  "active": "5dde774a8b896de6",
   "lastOpenFiles": [
+    "AI库/小游戏/掼蛋/掼蛋.md",
+    "AI库/小游戏/掼蛋/局域网版使用说明.md",
     "AI库/小游戏/掼蛋.md",
+    "AI库/小游戏/掼蛋/package.json",
+    "AI库/小游戏/掼蛋/guandan-lan.html",
+    "AI库/小游戏/掼蛋/guandan-server.js",
     "AI库/小游戏/小猫钓鱼/README.md",
     "AI库/小游戏/掼蛋",
     "AI库/小游戏/math-practice-android/README.md",
@@ -212,9 +221,6 @@
     "AI库/小游戏/小猫钓鱼",
     "AI库/小游戏/math-practice-android/android/app/capacitor.build.gradle",
     "AI库/小游戏/math-practice-android/android/capacitor.settings.gradle",
-    "AI库/小游戏/math-practice-android/android/app/src/main/res/xml/file_paths.xml",
-    "AI库/小游戏/math-practice-android/android/app/src/main/res/xml/config.xml",
-    "AI库/小游戏/math-practice-android/android/app/src/main/res/xml",
     "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
     "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
     "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
@@ -246,8 +252,6 @@
     "AI库/小游戏/math-practice-android/node_modules/rimraf/README.md",
     "AI库/小游戏/math-practice-android/node_modules/elementtree/README.md",
     "AI库/小游戏/math-practice-android/node_modules/elementtree/CHANGES.md",
-    "AI库/小游戏/math-practice-android/node_modules/kleur/readme.md",
-    "AI库/小游戏/math-practice-android/node_modules/@xmldom/xmldom/readme.md",
     "未命名.canvas",
     "未命名 4.canvas",
     "未命名 5.canvas",
