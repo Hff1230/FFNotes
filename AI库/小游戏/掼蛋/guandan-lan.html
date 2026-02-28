@@ -18,14 +18,61 @@
             overflow-x: hidden;
         }
 
-        #gameContainer {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 10px;
-            position: relative;
+
+        /* 緻加顶部信息栏样式 */
+        #topBar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            margin-bottom: 10px;
         }
 
-        /* 登录界面 */
+        .game-info {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .info-item {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #90ee90;
+            opacity: 0.8;
+        }
+
+        .info-value {
+            font-size: 20px;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        #connectionStatus {
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        #connectionStatus.connected {
+            background: rgba(144, 238, 144, 0.2);
+            color: #90ee90;
+            border: 1px solid #90ee90;
+        }
+
+        #connectionStatus.disconnected {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+        }
+
+        /* 登录界面样式保持不变 */
         #loginScreen {
             position: fixed;
             top: 0;
@@ -38,12 +85,13 @@
             justify-content: center;
             align-items: center;
             z-index: 200;
+            border-radius: 10px;
         }
 
         #loginScreen h1 {
             font-size: 48px;
             color: #ffd700;
-            text-shadow: 0 0 20px #ffd700, 0 0 40px #ff8c00;
+            text-shadow: 0 0 20px #ffd700;
             margin-bottom: 10px;
             animation: glow 2s ease-in-out infinite alternate;
         }
@@ -116,7 +164,6 @@
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
         }
 
         .btn-secondary {
@@ -143,6 +190,7 @@
             justify-content: center;
             align-items: center;
             z-index: 150;
+            border-radius: 10px;
         }
 
         #waitingRoom h2 {
@@ -153,10 +201,10 @@
 
         .room-info {
             background: rgba(0, 0, 0, 0.5);
-            padding: 25px;
-            border-radius: 15px;
+            padding: 20px;
+            border-radius: 10px;
             border: 2px solid #ffd700;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: center;
         }
 
@@ -169,8 +217,7 @@
         .room-info .room-id {
             font-size: 36px;
             font-weight: bold;
-            color: #ffd700;
-            letter-spacing: 5px;
+            letter-spacing: 3px;
         }
 
         .team-container {
@@ -244,7 +291,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             margin-bottom: 10px;
         }
@@ -258,35 +305,16 @@
             text-align: center;
         }
 
-        .info-label {
+        .info-item .info-label {
             font-size: 12px;
             color: #90ee90;
             opacity: 0.8;
         }
 
-        .info-value {
-            font-size: 20px;
+        .info-item .info-value {
+            font-size: 18px;
             color: #ffd700;
             font-weight: bold;
-        }
-
-        #connectionStatus {
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        #connectionStatus.connected {
-            background: rgba(144, 238, 144, 0.2);
-            color: #90ee90;
-            border: 1px solid #90ee90;
-        }
-
-        #connectionStatus.disconnected {
-            background: rgba(255, 107, 107, 0.2);
-            color: #ff6b6b;
-            border: 1px solid #ff6b6b;
         }
 
         /* 游戏桌面 */
@@ -339,7 +367,7 @@
         .card-back {
             width: 30px;
             height: 42px;
-            background: linear-gradient(135deg, #1a3d6e 0%, #0d1f3d 100%);
+            background: linear-gradient(135deg, #1a3d6e 0%, #0d1f30 100%);
             border: 1px solid #2d5a8e;
             border-radius: 3px;
         }
@@ -358,12 +386,6 @@
             flex-wrap: wrap;
         }
 
-        .opponent.current-turn {
-            background: rgba(255, 215, 0, 0.2);
-            border-radius: 10px;
-            border: 2px solid #ffd700;
-        }
-
         .turn-indicator {
             color: #ffd700;
             font-size: 12px;
@@ -378,10 +400,8 @@
         /* 中央出牌区 */
         #centerPlayArea {
             display: flex;
-            justify-content: center;
             align-items: center;
             min-height: 100px;
-            margin: 20px 0;
             padding: 15px;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 10px;
@@ -404,20 +424,12 @@
             justify-content: center;
             align-items: center;
             min-height: 80px;
-            margin-bottom: 15px;
-            padding: 10px;
+            padding: 10px 15px;
             background: rgba(255, 215, 0, 0.1);
-            border-radius: 10px;
             border: 2px dashed #ffd700;
+            border-radius: 10px;
         }
 
-        #myPlayArea .played-cards {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        /* 手牌 */
         #handContainer {
             display: flex;
             justify-content: center;
@@ -447,13 +459,12 @@
             transition: all 0.2s;
             user-select: none;
             border: 2px solid #ddd;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-            font-weight: bold;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .card:hover {
             transform: translateY(-10px);
-            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         .card.selected {
@@ -518,6 +529,7 @@
 
         #actionButtons .btn {
             padding: 12px 30px;
+            font-size: 16px;
         }
 
         /* 聊天框 */
@@ -546,7 +558,7 @@
             margin: 5px 0;
             padding: 5px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
+            border-radius: 3px;
         }
 
         .chat-message .sender {
@@ -597,7 +609,6 @@
             font-weight: bold;
             display: none;
             z-index: 200;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
 
         /* 回合结束弹窗 */
@@ -626,14 +637,13 @@
             background: rgba(255, 255, 255, 0.1);
             padding: 20px 40px;
             border-radius: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .rank-item {
             display: flex;
             justify-content: space-between;
             padding: 10px 20px;
-            margin: 5px 0;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 5px;
             min-width: 200px;
@@ -648,38 +658,36 @@
             color: #ffd700;
         }
 
-        /* 响应式 */
-        @media (max-width: 768px) {
-            #loginScreen h1 {
-                font-size: 36px;
-            }
+        #gameOverModal h2 {
+            color: #ffd700;
+            font-size: 48px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px #ffd700;
+        }
 
-            .team-container {
-                flex-direction: column;
-                gap: 15px;
-            }
+        .score-board {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
 
-            .team-box {
-                min-width: 280px;
-            }
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            min-width: 200px;
+        }
 
-            .card {
-                width: 50px;
-                height: 70px;
-            }
+        .score-item .name {
+            color: #fff;
+            font-weight: bold;
+        }
 
-            .card .suit {
-                font-size: 20px;
-            }
-
-            .card .rank {
-                font-size: 14px;
-            }
-
-            #chatBox {
-                width: 240px;
-                height: 150px;
-            }
+        .score-item .score {
+            color: #ffd700;
         }
     </style>
 </head>
@@ -687,7 +695,7 @@
     <div id="gameContainer">
         <!-- 登录界面 -->
         <div id="loginScreen">
-            <h1>🃏 掼 蛋 🃏</h1>
+            <h1>🃏 掼蛋 🃏</h1>
             <div class="subtitle">安徽安庆热门扑克游戏 · 局域网版</div>
 
             <div class="input-group">
@@ -732,12 +740,14 @@
                 </div>
             </div>
 
-            <p style="color: #90ee90; margin: 20px 0; font-size: 14px;">需要4名玩家才能开始游戏</p>
+            <p style="color: #90ee90; margin: 25px 0; font-size: 14px;">需要4名玩家才能开始游戏</p>
+
             <button class="btn" id="readyBtn" onclick="toggleReady()">准备</button>
         </div>
 
         <!-- 游戏区域 -->
-        <div id="gameArea">
+        <div id="gameArea" style="display: none;">
+        }
             <!-- 顶部信息栏 -->
             <div id="topBar">
                 <div class="game-info">
@@ -852,6 +862,9 @@
     let selectedCards = [];
     let myInfo = null;
 
+    let LEVEL_TO_RANK = { 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9', 10: '10', 11: 'J', 12: 'Q', 13: 'K', 14: 'A' };
+
+
     // ==================== WebSocket连接 ====================
     function connect(serverAddress) {
         return new Promise((resolve, reject) => {
@@ -898,51 +911,39 @@
             case 'roomCreated':
                 handleRoomCreated(data);
                 break;
-
             case 'roomJoined':
                 handleRoomJoined(data);
                 break;
-
             case 'playerList':
                 updatePlayerList(data.players);
                 break;
-
             case 'playerJoined':
                 showNotification(`${data.player.name} 加入了游戏`);
                 break;
-
             case 'playerLeft':
                 showNotification(`${data.playerName} 离开了游戏`);
                 break;
-
             case 'gameStart':
                 handleGameStart(data);
                 break;
-
             case 'gameState':
                 handleGameState(data);
                 break;
-
             case 'playError':
                 showNotification(data.message);
                 break;
-
             case 'playerFinished':
                 showNotification(`🎉 ${data.playerName} 第${data.rank}个出完牌！`);
                 break;
-
             case 'roundEnd':
                 handleRoundEnd(data);
                 break;
-
             case 'newRound':
                 handleNewRound(data);
                 break;
-
             case 'chat':
                 handleChat(data);
                 break;
-
             case 'error':
                 showNotification(data.message);
                 break;
@@ -996,7 +997,7 @@
         gameState = data.gameState;
         myInfo = gameState.myInfo;
 
-        document.getElementById('waitingRoom').style.display = 'none';
+ document.getElementById('waitingRoom').style.display = 'none';
         document.getElementById('gameArea').style.display = 'block';
         document.getElementById('chatBox').style.display = 'flex';
 
@@ -1011,11 +1012,29 @@
     function updateGameUI() {
         if (!gameState || !myInfo) return;
 
-        // 更新级别信息
-        document.getElementById('currentLevel').textContent = gameState.trumpRank;
-        document.getElementById('trumpCard').textContent = '♥' + gameState.trumpRank;
+        // 更新双方级牌
+        const team1Level = gameState.teamLevels[1];
+        const team2Level = gameState.teamLevels[2];
+
+        const level1Text = LEVEL_TO_RANK[team1Level];
+        const level2Text = LEVEL_TO_RANK[team2Level];
+
+        document.getElementById('team1Level').textContent = level1Text;
+        document.getElementById('team2Level').textContent = level2Text;
+
+        // 逢人配（当前打牌方的级牌对应的红桃)
+        const currentLevel = gameState.teamLevels[gameState.currentLevelTeam];
+        const currentLevelRank = LEVEL_TO_RANK[currentLevel];
+        document.getElementById('trumpCard').textContent = '♥' + currentLevelRank;
+
+        // 我的队伍
         document.getElementById('myTeam').textContent = myInfo.team === 1 ? '红队' : '蓝队';
         document.getElementById('myTeam').style.color = myInfo.team === 1 ? '#ff6b6b' : '#4dabf7';
+
+        // 打牌方
+        const currentTeam = gameState.currentLevelTeam;
+        document.getElementById('currentLevelTeam').textContent = currentTeam === 1 ? '红队' : '蓝队';
+        document.getElementById('currentLevelTeam').style.color = currentTeam === 1 ? '#ff6b6b' : '#4dabf7';
 
         // 渲染手牌
         renderMyHand();
@@ -1135,6 +1154,7 @@
             document.getElementById(`opponent${i}`).classList.remove('current-turn');
         }
         document.getElementById('myPlayArea').style.border = '2px dashed #ffd700';
+        document.getElementById('myPlayArea').style.boxShadow = 'none';
 
         // 获取玩家列表
         const playerIds = Array.from(Object.keys(gameState.hands));
@@ -1181,8 +1201,11 @@
         const modal = document.getElementById('roundEndModal');
         modal.style.display = 'flex';
 
-        document.getElementById('roundEndTitle').textContent =
-            data.winner === myInfo.team ? '🎉 胜利！' : '😢 本局失败';
+        const winnerTeam = data.winner === 1 ? '红队' : '蓝队';
+        const myTeam = myInfo.team === 1 ? '红队' : '蓝队';
+        const won = myTeam === winnerTeam;
+
+        document.getElementById('roundEndTitle').textContent = won ? '🎉 胜利！' : '😢 本局失败';
 
         const rankList = document.getElementById('rankList');
         rankList.innerHTML = data.ranks
@@ -1194,8 +1217,9 @@
                 </div>
             `).join('');
 
-        document.getElementById('levelUpInfo').textContent =
-            `升级 ${data.levelUp} 级！`;
+        const levelInfo = document.getElementById('levelUpInfo');
+        levelInfo.textContent = `${winnerTeam} 升级 ${data.levelUp} 级！ 当前级别: ${LEVEL_TO_RANK[data.teamLevels[data.winner]}`;
+        levelInfo.textContent += ` → ${LEVEL_TO_RANK[data.teamLevels[data.winner]]}`;
     }
 
     function handleNewRound(data) {
