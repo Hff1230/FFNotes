@@ -3,17 +3,17 @@
   "title": "Generate掼蛋game documentation for Anqing region",
   "titleGenerationStatus": "success",
   "createdAt": 1772259771646,
-  "updatedAt": 1772264422949,
-  "lastResponseAt": 1772264422949,
+  "updatedAt": 1772265006759,
+  "lastResponseAt": 1772265006759,
   "sessionId": "8bf2b241-1704-4f8c-9144-4e055a3501a7",
   "sdkSessionId": "8bf2b241-1704-4f8c-9144-4e055a3501a7",
   "usage": {
     "model": "opus",
-    "inputTokens": 363,
+    "inputTokens": 0,
     "cacheCreationInputTokens": 0,
-    "cacheReadInputTokens": 151488,
+    "cacheReadInputTokens": 0,
     "contextWindow": 200000,
-    "contextTokens": 151851,
-    "percentage": 76
+    "contextTokens": 0,
+    "percentage": 0
   }
 }
