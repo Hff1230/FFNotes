@@ -1,0 +1,3356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#667eea">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>小学数学快速出题器 v1.2.7 - 口算+竖式+应用题+混合运算+比较题型+三步运算+题目去重</title>
+    <link rel="stylesheet" href="mobile.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #10b981;
+            --primary-dark: #059669;
+            --secondary-color: #8b5cf6;
+            --accent-color: #f59e0b;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
+            --info-color: #3b82f6;
+            --bg-color: #f0fdf4;
+            --card-bg: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        select, input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7c3aed;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-info {
+            background: var(--info-color);
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .question-box {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .question-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .answer-input {
+            font-size: 2rem;
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+        }
+
+        /* 竖式样式 */
+        .vertical-question {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px auto;
+            max-width: 300px;
+            box-shadow: var(--shadow);
+        }
+
+        .vertical-expression {
+            text-align: right;
+            font-size: 1.8rem;
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+        }
+
+        .vertical-number {
+            padding: 5px 15px;
+        }
+
+        .vertical-operator {
+            padding-right: 10px;
+        }
+
+        .vertical-line {
+            border-top: 3px solid #333;
+            margin: 5px 0;
+        }
+
+        .vertical-answer {
+            padding: 5px 15px;
+            font-weight: bold;
+        }
+
+        .vertical-input {
+            width: 150px;
+            font-size: 1.8rem;
+            text-align: center;
+            padding: 8px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            margin-left: auto;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .result-summary {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-direction: column;
+        }
+
+        .score-value {
+            font-size: 3.5rem;
+            font-weight: bold;
+        }
+
+        .score-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .result-item {
+            background: var(--bg-color);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .result-item-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .result-item-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .wrong-answers {
+            background: #fef2f2;
+            border-left: 4px solid var(--danger-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .wrong-answers h3 {
+            color: var(--danger-color);
+            margin-bottom: 15px;
+        }
+
+        .wrong-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wrong-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .wrong-answer-info {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .wrong-answer-info span {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        /* 题型标签 */
+        .question-type-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .type-oral {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .type-vertical {
+            background: #fce7f3;
+            color: #9d174d;
+        }
+
+        .type-word-problem {
+            background: #ddd6fe;
+            color: #5b21b6;
+        }
+
+        /* 打印样式 */
+        .print-area {
+            display: none;
+        }
+
+        @media print {
+            @page {
+                margin: 10mm;
+                size: A4;
+            }
+
+            @page:last {
+                margin: 10mm;
+            }
+
+            /* 强制不打印空白页 */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            html, body {
+                height: auto;
+                margin: 0;
+                padding: 0;
+                overflow: visible;
+                min-height: 0;
+                max-height: none;
+            }
+
+            /* 确保html和body不会产生额外分页 */
+            html::after, body::after {
+                display: none;
+                content: none;
+            }
+
+            @page {
+                orphans: 0;
+                widows: 0;
+            }
+
+            body * {
+                visibility: hidden;
+            }
+
+            .print-area, .print-area * {
+                visibility: visible;
+            }
+
+            .print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                display: block;
+                background: white;
+                padding: 6mm;
+                box-sizing: border-box;
+                height: auto;
+                max-height: none;
+                overflow: visible;
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+
+            /* 试卷wrapper的分页控制 */
+            .print-copy-wrapper {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+
+            /* 只有多个wrapper时才在后面分页 */
+            .print-copy-wrapper:not(:only-child):not(:last-child) {
+                page-break-after: always;
+            }
+
+            /* 唯一一份或最后一份不分页 */
+            .print-copy-wrapper:only-child {
+                page-break-after: auto !important;
+            }
+
+            .print-copy-wrapper:last-child {
+                page-break-after: auto !important;
+            }
+
+            /* 确保wrapper内部所有元素都不会产生额外分页 */
+            .print-copy-wrapper > * {
+                page-break-after: auto !important;
+            }
+
+            .print-header {
+                text-align: center;
+                margin-bottom: 8px;
+                page-break-after: avoid;
+                page-break-inside: avoid;
+            }
+
+            .print-header h1 {
+                font-size: 1.2rem;
+                font-weight: bold;
+                margin: 0;
+                padding: 0;
+            }
+
+            .print-section {
+                margin-bottom: 8px;
+                page-break-inside: avoid;
+            }
+
+            .print-section:last-child {
+                margin-bottom: 0;
+            }
+
+            /* 防止内容分页 */
+            #printContent {
+                page-break-inside: avoid;
+            }
+
+            /* 确保printContent本身和内部最后一个元素不分页 */
+            #printContent > div:last-child {
+                page-break-after: auto !important;
+            }
+
+            /* 特别处理：printContent只有一个子元素时，完全不分页 */
+            #printContent:has(> div:only-child) {
+                page-break-after: avoid !important;
+            }
+
+            #printContent:has(> div:only-child) > div {
+                page-break-after: avoid !important;
+            }
+
+            .print-section {
+                page-break-inside: avoid;
+            }
+
+            .print-oral, .print-vertical {
+                page-break-inside: avoid;
+            }
+
+            .print-section-title {
+                font-size: 0.95rem;
+                font-weight: bold;
+                margin-bottom: 8px;
+                padding-bottom: 6px;
+                border-bottom: 2px solid #000;
+            }
+
+            .print-oral {
+                display: inline-block;
+                width: 20%;
+                margin: 5px 0.5% 8px 0.5%;
+                font-size: 0.85rem;
+                vertical-align: top;
+                font-family: 'Courier New', monospace;
+                white-space: nowrap;
+                overflow: hidden;
+                box-sizing: border-box;
+                text-align: left;
+                line-height: 1.4;
+            }
+
+            .print-oral .eq-align {
+                display: inline-block;
+                width: 100%;
+            }
+
+            .print-vertical {
+                display: inline-block;
+                width: 20%;
+                margin: 5px 0.5% 8px 0.5%;
+                vertical-align: top;
+                font-family: 'Courier New', monospace;
+                font-size: 0.75rem;
+                line-height: 1.2;
+                background: white;
+                padding: 4px;
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                page-break-inside: avoid;
+                box-sizing: border-box;
+            }
+
+            .print-vertical-calculation {
+                text-align: right;
+                margin: 3px 0;
+            }
+
+            .print-vertical-numbers {
+                display: inline-block;
+                text-align: right;
+                font-size: 0.8rem;
+                font-family: 'Courier New', Courier, monospace;  /* 使用等宽字体确保数字对齐 */
+            }
+
+            .print-vertical-line {
+                border-top: 0.5px solid #000;
+                margin: 2px 0 2px 0;
+            }
+
+            .print-vertical-answer {
+                min-height: 20px;
+                margin-top: 2px;
+            }
+
+            .print-vertical-horizontal {
+                font-size: 0.7rem;
+                color: #333;
+                margin-bottom: 3px;
+                font-weight: 600;
+                text-align: left;
+                white-space: nowrap;
+                font-family: 'Courier New', monospace;
+            }
+
+            .print-vertical-num {
+                letter-spacing: 0;
+            }
+
+            .print-info {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                padding-bottom: 6px;
+                border-bottom: 2px solid #000;
+                font-size: 0.85rem;
+                page-break-after: avoid;
+                page-break-inside: avoid;
+            }
+
+            /* 草稿区域样式 */
+            .print-draft-area {
+                margin-top: 15px;
+                padding: 10px;
+                border: 1px dashed #999;
+                border-radius: 5px;
+                background: #fafafa;
+                page-break-inside: avoid;
+            }
+
+            .print-draft-title {
+                font-size: 0.9rem;
+                font-weight: bold;
+                color: #666;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+
+            .print-draft-lines {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px 20px;
+            }
+
+            .print-draft-column {
+                position: relative;
+            }
+
+            .print-draft-column::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                background-image: repeating-linear-gradient(
+                    to bottom,
+                    #e0e0e0 0px,
+                    #e0e0e0 1px,
+                    transparent 1px,
+                    transparent calc(1.8rem + 1px)
+                );
+                background-repeat: repeat-y;
+                background-size: 100% 1.8rem;
+                pointer-events: none;
+                z-index: 1;
+            }
+
+            .print-draft-item {
+                position: relative;
+                min-height: 1.8rem;
+                margin-bottom: calc(1.8rem + 1px);
+                z-index: 2;
+            }
+        }
+            /* 确保打印区域的最后一个元素不会产生额外分页 */
+            .print-area > *:last-child {
+                page-break-after: auto !important;
+            }
+
+            /* 额外的防空白页措施 */
+            #printContent {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            /* 确保body和html在打印时不会产生额外页面 */
+            body {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            html {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            /* 使用break属性的现代浏览器支持 */
+            .print-copy-wrapper {
+                break-inside: avoid;
+            }
+
+            .print-copy-wrapper:only-child {
+                break-after: avoid !important;
+            }
+
+            .print-copy-wrapper:last-child {
+                break-after: avoid !important;
+            }
+        }
+
+        .toast {
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            padding: 60px 100px !important;
+            border-radius: 30px !important;
+            color: #ffffff !important;
+            font-weight: 900 !important;
+            font-size: 5rem !important;
+            text-align: center !important;
+            z-index: 10000 !important;
+            animation: fadeInScale 0.4s ease !important;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5) !important;
+            min-width: 400px !important;
+            max-width: 90vw !important;
+            letter-spacing: 2px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1.2 !important;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @keyframes fadeOutScale {
+            from {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .history-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            background: var(--bg-color);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .history-item:hover {
+            box-shadow: var(--shadow);
+            transform: translateX(5px);
+        }
+
+        .history-date {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .history-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+        }
+
+        .history-stats span {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.6rem;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .question-text {
+                font-size: 2rem;
+            }
+
+            .answer-input {
+                font-size: 1.5rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .result-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .vertical-expression {
+                font-size: 1.4rem;
+            }
+
+            .vertical-input {
+                width: 120px;
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧮 小学数学快速出题器</h1>
+            <p>口算 + 竖式 + 应用题 + 混合运算，让数学练习更全面！</p>
+        </header>
+
+        <!-- 主界面 -->
+        <div id="homeSection" class="section active">
+            <div class="card">
+                <h2 style="margin-bottom: 20px;">🎯 开始练习</h2>
+
+                <div class="form-group">
+                    <label>📚 选择年级</label>
+                    <select id="gradeSelect">
+                        <option value="1">一年级 (6-7岁) - 20以内加减法</option>
+                        <option value="2">二年级 (7-8岁) - 100以内加减法、乘法口诀</option>
+                        <option value="3" selected>三年级 (8-9岁) - 1000以内加减乘除</option>
+                        <option value="4">四年级 (9-10岁) - 大数运算、小数加减</option>
+                        <option value="5">五年级 (10-11岁) - 小数乘除、分数加减</option>
+                        <option value="6">六年级 (11-12岁) - 分数乘除、百分数</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>📝 题型选择（至少选一种）</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="oralCheck" checked> 口算题（横式计算）
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="verticalCheck" checked> 竖式题（笔算计算）
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="wordProblemCheck"> 应用题（文字题）
+                        </label>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">💡 提示：可单选或多选，题目将按顺序出现</p>
+                </div>
+
+                <div class="form-group">
+                    <label>✏️ 运算类型（可多选）</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="add" checked> 加法
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="subtract" checked> 减法
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="multiply"> 乘法
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="divide"> 除法
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="mixed"> 混合运算
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="compare"> 比较题型（比多比少）
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>📊 难度级别</label>
+                    <select id="difficultySelect">
+                        <option value="easy">简单 - 基础运算</option>
+                        <option value="medium" selected>中等 - 需要进退位</option>
+                        <option value="hard">困难 - 复杂运算</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>📊 题目数量设置</label>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: flex; gap: 15px;">
+                            <div style="flex: 1;">
+                                <label style="font-size: 0.95rem; color: var(--primary-color); font-weight: 600;">📝 口算题</label>
+                                <select id="oralCount">
+                                    <option value="12">12题</option>
+                                    <option value="16">16题</option>
+                                    <option value="20" selected>20题</option>
+                                    <option value="24">24题</option>
+                                    <option value="28">28题</option>
+                                    <option value="32">32题</option>
+                                    <option value="36">36题</option>
+                                    <option value="40">40题</option>
+                                </select>
+                            </div>
+                            <div style="flex: 1;">
+                                <label style="font-size: 0.95rem; color: var(--secondary-color); font-weight: 600;">✏️ 竖式题</label>
+                                <select id="verticalCount">
+                                    <option value="8">8题</option>
+                                    <option value="12">12题</option>
+                                    <option value="16" selected>16题</option>
+                                    <option value="20">20题</option>
+                                    <option value="24">24题</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 15px;">
+                            <div style="flex: 1;">
+                                <label style="font-size: 0.95rem; color: #8b5cf6; font-weight: 600;">📖 应用题</label>
+                                <select id="wordProblemCount">
+                                    <option value="2">2题</option>
+                                    <option value="4">4题</option>
+                                    <option value="6">6题</option>
+                                    <option value="8" selected>8题</option>
+                                    <option value="10">10题</option>
+                                    <option value="12">12题</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">📌 题目将按顺序出现：口算题 → 竖式题 → 应用题 | 数量为4的倍数，便于排版</p>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="startPractice()">🎮 开始练习</button>
+                    <button class="btn btn-info" onclick="startTimedTest()">⏱️ 计时测试</button>
+                    <button class="btn btn-secondary" onclick="showPrintDialog()">🖨️ 生成试卷</button>
+                    <button class="btn btn-primary" onclick="showHistory()">📖 查看记录</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 style="margin-bottom: 20px;">📈 学习统计</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="todayCount">0</div>
+                        <div class="stat-label">今日练习（次）</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="avgAccuracy">0%</div>
+                        <div class="stat-label">平均正确率</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalQuestions">0</div>
+                        <div class="stat-label">累计做题（题）</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="bestStreak">0</div>
+                        <div class="stat-label">最佳连续答对</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 答题界面 -->
+        <div id="practiceSection" class="section">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <span id="questionTypeBadge" class="question-type-badge type-oral">口算题</span>
+                        <div style="font-size: 1.1rem; font-weight: 600; margin-top: 10px; color: var(--text-secondary);" id="sectionInfo">第1/10题</div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 5px;">总进度：第 <span id="currentQ">1</span>/<span id="totalQ">20</span> 题</div>
+                    </div>
+                    <div class="timer" id="timer">00:00</div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+
+                <!-- 混合运算提示 -->
+                <div id="mixedOperationHint" style="display: none; background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; margin-bottom: 20px; border-radius: 8px;">
+                    <div style="font-weight: 600; color: #856404; margin-bottom: 5px;">💡 运算顺序提示</div>
+                    <div style="font-size: 0.95rem; color: #856404;">先算乘除，后算加减；有括号先算括号里面的</div>
+                </div>
+
+                <!-- 口算题目显示 -->
+                <div id="oralQuestionArea" class="question-box">
+                    <div class="question-text" id="questionText">23 + 15 = ?</div>
+                    <input type="number" class="answer-input" id="answerInput" placeholder="输入答案" onkeypress="handleKeyPress(event)">
+                </div>
+
+                <!-- 竖式题目显示 -->
+                <div id="verticalQuestionArea" class="vertical-question" style="display: none;">
+                    <div style="text-align: center; font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 15px;" id="verticalHorizontalDisplay">
+                        123 + 45 = ?
+                    </div>
+                    <div class="vertical-expression">
+                        <div class="vertical-number" id="verticalNum1">123</div>
+                        <div>
+                            <span class="vertical-operator" id="verticalOperator">+</span>
+                            <span class="vertical-number" id="verticalNum2">45</span>
+                        </div>
+                        <div class="vertical-line"></div>
+                        <div>
+                            <input type="number" class="vertical-input" id="verticalAnswerInput" placeholder="?" onkeypress="handleKeyPress(event)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 应用题显示 -->
+                <div id="wordProblemArea" class="word-problem-question" style="display: none;">
+                    <div class="word-problem-content" id="wordProblemText" style="font-size: 1.1rem; line-height: 1.5; color: var(--text-primary); margin-bottom: 15px; white-space: pre-wrap;">
+                        题目内容将在这里显示
+                    </div>
+                    <div style="max-width: 400px; margin: 0 auto; padding: 15px; border: 2px dashed #ddd; border-radius: 10px; background: #fafafa; min-height: 100px;">
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); text-align: center; margin-bottom: 10px;">📝 解答区域</p>
+                        <input type="number" class="answer-input" id="wordProblemAnswerInput" placeholder="最终答案" onkeypress="handleKeyPress(event)" style="width: 100%; max-width: 200px; margin: 0 auto; display: block;">
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="submitAnswer()">✅ 提交答案</button>
+                    <button class="btn btn-secondary" onclick="skipQuestion()">⏭️ 跳过</button>
+                    <button class="btn btn-info" onclick="readQuestion()">🔊 读题</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成绩界面 -->
+        <div id="resultSection" class="section">
+            <div class="card">
+                <div class="result-summary">
+                    <div class="score-circle">
+                        <div class="score-value" id="finalScore">90</div>
+                        <div class="score-label">分</div>
+                    </div>
+
+                    <h2 id="resultTitle" style="margin-bottom: 20px;">🎉 太棒了！</h2>
+
+                    <div class="result-stats">
+                        <div class="result-item">
+                            <div class="result-item-label">题目总数</div>
+                            <div class="result-item-value" id="resultTotal">20</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-item-label">正确题数</div>
+                            <div class="result-item-value" style="color: var(--success-color);" id="resultCorrect">18</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-item-label">错误题数</div>
+                            <div class="result-item-value" style="color: var(--danger-color);" id="resultWrong">2</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-item-label">用时</div>
+                            <div class="result-item-value" id="resultTime">03:45</div>
+                        </div>
+                    </div>
+
+                    <div id="sectionStats" style="margin: 20px 0; padding: 15px; background: #f9fafb; border-radius: 10px;">
+                        <h3 style="text-align: center; margin-bottom: 15px; font-size: 1.1rem;">📊 各部分成绩</h3>
+                        <div id="sectionStatsContent"></div>
+                    </div>
+
+                    <div id="wrongAnswersSection" class="wrong-answers" style="display: none;">
+                        <h3>❌ 错题回顾</h3>
+                        <div id="wrongAnswersList"></div>
+                    </div>
+
+                    <div class="btn-group" style="margin-top: 30px;">
+                        <button class="btn btn-primary" onclick="restart()">🔄 再练一次</button>
+                        <button class="btn btn-secondary" onclick="practiceWrong()">📕 重练错题</button>
+                        <button class="btn btn-info" onclick="goHome()">🏠 返回主页</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 历史记录界面 -->
+        <div id="historySection" class="section">
+            <div class="card">
+                <h2 style="margin-bottom: 20px;">📖 练习记录</h2>
+                <div class="history-list" id="historyList">
+                    <p style="text-align: center; color: var(--text-secondary); padding: 40px;">暂无练习记录</p>
+                </div>
+                <div class="btn-group" style="margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="goHome()">🏠 返回主页</button>
+                    <button class="btn btn-danger" onclick="clearHistory()">🗑️ 清空记录</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 打印设置对话框 -->
+        <div id="printDialog" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px;">
+            <div class="card" style="max-width: 500px; width: 100%; animation: fadeIn 0.3s ease;">
+                <h2 style="margin-bottom: 20px;">🖨️ 生成试卷设置</h2>
+
+                <div class="form-group">
+                    <label>📊 生成份数</label>
+                    <select id="printCopies" style="margin-bottom: 15px;">
+                        <option value="1">1份</option>
+                        <option value="2">2份</option>
+                        <option value="5">5份</option>
+                        <option value="10">10份</option>
+                        <option value="20">20份</option>
+                        <option value="30" selected>30份（全班使用）</option>
+                        <option value="40">40份</option>
+                        <option value="50">50份</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>🎲 题目设置</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="sameQuestions"> 所有份使用相同题目
+                        </label>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">
+                        💡 提示：勾选后所有试卷题目相同；不勾选则每份试卷题目不同（防作弊）
+                    </p>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="confirmGeneratePrint()">✅ 确认生成</button>
+                    <button class="btn btn-secondary" onclick="closePrintDialog()">❌ 取消</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 打印区域 -->
+        <div class="print-area" id="printArea">
+            <div id="printContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let correctCount = 0;
+        let wrongAnswers = [];
+        let startTime = null;
+        let timerInterval = null;
+        let settings = {};
+        let streak = 0;
+        let currentQuestionKeys = new Set();  // 用于题目去重
+
+        // 初始化
+        window.onload = function() {
+            loadStats();
+            loadHistory();
+        };
+
+        // 工具函数
+        function random(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+
+            // 直接在元素上设置样式，确保生效
+            toast.style.cssText = `
+                position: fixed !important;
+                top: 70% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                padding: 30px 60px !important;
+                border-radius: 20px !important;
+                color: #ffffff !important;
+                font-weight: 900 !important;
+                font-size: 3rem !important;
+                text-align: center !important;
+                z-index: 10000 !important;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4) !important;
+                min-width: 300px !important;
+                max-width: 90vw !important;
+                letter-spacing: 1px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                line-height: 1.2 !important;
+                background: ${type === 'success'
+                    ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
+                    : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'} !important;
+                animation: fadeInScale 0.3s ease !important;
+            `;
+
+            document.body.appendChild(toast);
+
+            // 添加点击关闭功能
+            toast.addEventListener('click', () => {
+                toast.remove();
+            });
+
+            // 1秒后自动消失
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.animation = 'fadeOutScale 0.2s ease forwards';
+                    setTimeout(() => toast.remove(), 200);
+                }
+            }, 1000);
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // 获取数字范围
+        function getNumberRange(grade) {
+            switch(grade) {
+                case 1: return { min: 1, max: 10 };
+                case 2: return { min: 1, max: 50 };
+                case 3: return { min: 1, max: 100 };
+                case 4: return { min: 1, max: 500 };
+                case 5: return { min: 1, max: 1000 };
+                case 6: return { min: 1, max: 5000 };
+                default: return { min: 1, max: 100 };
+            }
+        }
+
+
+
+        // 生成口算题
+        function generateOralQuestion(grade, difficulty, operation) {
+            const { min, max } = getNumberRange(grade);
+
+            switch(operation) {
+                case 'add':
+                    let a1 = random(min, max);
+                    let b1 = random(min, max);
+                    if (difficulty === 'easy') {
+                        const easyMax = Math.min(20, max);
+                        a1 = random(1, easyMax);
+                        b1 = random(1, easyMax);
+                    }
+                    return { type: 'oral', question: `${a1} + ${b1}`, answer: a1 + b1, display: `${a1} + ${b1} = ?` };
+
+                case 'subtract':
+                    let ans1 = random(min, max);
+                    let b_sub = random(min, ans1);
+                    let a_sub = ans1 + b_sub;
+                    if (difficulty === 'easy') {
+                        const easyMax = Math.min(20, max);
+                        ans1 = random(1, easyMax);
+                        b_sub = random(1, ans1);
+                        a_sub = ans1 + b_sub;
+                    }
+                    return { type: 'oral', question: `${a_sub} - ${b_sub}`, answer: ans1, display: `${a_sub} - ${b_sub} = ?` };
+
+                case 'multiply':
+                    if (grade === 2) {
+                        const ma = random(1, 9);
+                        const mb = random(1, 9);
+                        return { type: 'oral', question: `${ma} × ${mb}`, answer: ma * mb, display: `${ma} × ${mb} = ?` };
+                    } else if (grade === 3) {
+                        const ma = random(10, 99);
+                        const mb = random(2, 9);
+                        return { type: 'oral', question: `${ma} × ${mb}`, answer: ma * mb, display: `${ma} × ${mb} = ?` };
+                    } else {
+                        const ma = random(10, 99);
+                        const mb = random(10, difficulty === 'easy' ? 20 : 99);
+                        return { type: 'oral', question: `${ma} × ${mb}`, answer: ma * mb, display: `${ma} × ${mb} = ?` };
+                    }
+
+                case 'divide':
+                    let db, dans;
+                    if (grade === 3) {
+                        db = random(2, 9);
+                        dans = random(1, 12);
+                    } else {
+                        db = random(2, difficulty === 'easy' ? 9 : 20);
+                        dans = random(1, 50);
+                    }
+                    const da = db * dans;
+                    return { type: 'oral', question: `${da} ÷ ${db}`, answer: dans, display: `${da} ÷ ${db} = ?` };
+
+                case 'mixed':
+                    // 暂时不支持mixed，返回默认题目
+                    return { type: 'oral', question: '2 + 3', answer: 5, display: '2 + 3 = ?' };
+
+                default:
+                    return { type: 'oral', question: '2 + 3', answer: 5, display: '2 + 3 = ?' };
+            }
+        }
+
+        // 生成混合运算口算题
+        function generateMixedOralQuestion(grade, difficulty, selectedOperations) {
+            // 根据用户选择的运算类型生成混合运算组合
+            const hasAdd = selectedOperations.includes('add');
+            const hasSubtract = selectedOperations.includes('subtract');
+            const hasMultiply = selectedOperations.includes('multiply');
+            const hasDivide = selectedOperations.includes('divide');
+
+            // 生成所有可能的混合运算类型（基于用户选择的运算）
+            const possibleTypes = [];
+
+            // 加减混合（两个数）
+            if (hasAdd && hasSubtract) {
+                possibleTypes.push('add_subtract', 'subtract_add');
+            }
+            // 加减混合（三个数）
+            if (hasAdd && hasSubtract) {
+                possibleTypes.push('add_subtract_add', 'add_subtract_subtract', 'subtract_add_add');
+            }
+            // 加法 + 乘法
+            if (hasAdd && hasMultiply) {
+                possibleTypes.push('add_multiply', 'multiply_add');
+            }
+            // 减法 + 乘法
+            if (hasSubtract && hasMultiply) {
+                possibleTypes.push('subtract_multiply', 'multiply_subtract');
+            }
+            // 加法 + 除法
+            if (hasAdd && hasDivide) {
+                possibleTypes.push('add_divide', 'divide_add');
+            }
+            // 减法 + 除法
+            if (hasSubtract && hasDivide) {
+                possibleTypes.push('subtract_divide', 'divide_subtract');
+            }
+
+            if (possibleTypes.length === 0) {
+                // 如果没有可以组合的运算类型，返回默认题目
+                return {
+                    type: 'oral',
+                    question: '2 + 3',
+                    answer: 5,
+                    display: '2 + 3 = ?'
+                };
+            }
+
+            const type = possibleTypes[random(0, possibleTypes.length - 1)];
+
+            switch(type) {
+                case 'add_subtract':  // a + b - c（两个数，结果为正）
+                    const num1 = random(1, Math.floor(getGradeMax(grade) * 0.4));
+                    const num2 = random(1, num1);
+                    const answer = num1 + num2;
+                    return {
+                        type: 'oral',
+                        question: `${num1} + ${num2} - ${num2}`,
+                        answer: num1,
+                        display: `${num1} + ${num2} - ${num2} = ?`
+                    };
+
+                case 'subtract_add':  // a - b + c（两个数）
+                    const numa = random(5, getGradeMax(grade));
+                    const numb = random(1, numa - 2);
+                    const numc = random(1, getGradeMax(grade) - (numa - numb));
+                    const ans = numa - numb + numc;
+                    return {
+                        type: 'oral',
+                        question: `${numa} - ${numb} + ${numc}`,
+                        answer: ans,
+                        display: `${numa} - ${numb} + ${numc} = ?`
+                    };
+
+                case 'add_subtract_add':  // a + b - c（三个数，确保结果正）
+                    let a1 = random(5, Math.floor(getGradeMax(grade) * 0.3));
+                    let b1 = random(1, Math.floor(getGradeMax(grade) * 0.3));
+                    let c1 = random(1, a1 + b1 - 1);
+                    const ans1 = a1 + b1 - c1;
+                    return {
+                        type: 'oral',
+                        question: `${a1} + ${b1} - ${c1}`,
+                        answer: ans1,
+                        display: `${a1} + ${b1} - ${c1} = ?`
+                    };
+
+                case 'add_subtract_subtract':  // a - b - c（三个数，确保结果正）
+                    let a2 = random(10, getGradeMax(grade));
+                    let b2 = random(1, Math.floor(a2 * 0.4));
+                    let c2 = random(1, a2 - b2 - 1);
+                    const ans2 = a2 - b2 - c2;
+                    return {
+                        type: 'oral',
+                        question: `${a2} - ${b2} - ${c2}`,
+                        answer: ans2,
+                        display: `${a2} - ${b2} - ${c2} = ?`
+                    };
+
+                case 'subtract_add_add':  // a - b + c + d（四个数）
+                    let a3 = random(5, 20);
+                    let b3 = random(1, a3 - 2);
+                    let c3 = random(1, 10);
+                    const ans3 = a3 - b3 + c3;
+                    return {
+                        type: 'oral',
+                        question: `${a3} - ${b3} + ${c3}`,
+                        answer: ans3,
+                        display: `${a3} - ${b3} + ${c3} = ?`
+                    };
+
+                case 'add_multiply':  // a + b × c
+                    const mb1 = random(2, 9);
+                    const mc1 = random(2, 9);
+                    const bmc1 = mb1 * mc1;
+                    const ma1 = random(1, getGradeMax(grade) - bmc1);
+                    return {
+                        type: 'oral',
+                        question: `${ma1} + ${mb1} × ${mc1}`,
+                        answer: ma1 + bmc1,
+                        display: `${ma1} + ${mb1} × ${mc1} = ?`
+                    };
+
+                case 'subtract_multiply':  // a - b × c
+                    const mb2 = random(2, 9);
+                    const mc2 = random(2, 9);
+                    const bmc2 = mb2 * mc2;
+                    let ma2 = random(bmc2 + 1, getGradeMax(grade));
+                    return {
+                        type: 'oral',
+                        question: `${ma2} - ${mb2} × ${mc2}`,
+                        answer: ma2 - bmc2,
+                        display: `${ma2} - ${mb2} × ${mc2} = ?`
+                    };
+
+                case 'multiply_add':  // a × b + c
+                    const ma3 = random(2, 9);
+                    const mb3 = random(2, 9);
+                    const ma3mb3 = ma3 * mb3;
+                    const mc3 = random(1, getGradeMax(grade) - ma3mb3);
+                    return {
+                        type: 'oral',
+                        question: `${ma3} × ${mb3} + ${mc3}`,
+                        answer: ma3mb3 + mc3,
+                        display: `${ma3} × ${mb3} + ${mc3} = ?`
+                    };
+
+                case 'multiply_subtract':  // a × b - c
+                    const ma4 = random(2, 9);
+                    const mb4 = random(2, 9);
+                    const ma4mb4 = ma4 * mb4;
+                    const mc4 = random(1, ma4mb4 - 1);
+                    return {
+                        type: 'oral',
+                        question: `${ma4} × ${mb4} - ${mc4}`,
+                        answer: ma4mb4 - mc4,
+                        display: `${ma4} × ${mb4} - ${mc4} = ?`
+                    };
+
+                case 'add_divide':  // a + b ÷ c
+                    const mdiv1 = random(2, 9);
+                    const mquot1 = random(1, 12);
+                    const mdivd1 = mdiv1 * mquot1;
+                    const ma5 = random(1, getGradeMax(grade) - mquot1);
+                    return {
+                        type: 'oral',
+                        question: `${ma5} + ${mdivd1} ÷ ${mdiv1}`,
+                        answer: ma5 + mquot1,
+                        display: `${ma5} + ${mdivd1} ÷ ${mdiv1} = ?`
+                    };
+
+                case 'subtract_divide':  // a - b ÷ c
+                    const mdiv2 = random(2, 9);
+                    const mquot2 = random(1, 12);
+                    const mdivd2 = mdiv2 * mquot2;
+                    let ma6 = random(mquot2 + 1, getGradeMax(grade));
+                    return {
+                        type: 'oral',
+                        question: `${ma6} - ${mdivd2} ÷ ${mdiv2}`,
+                        answer: ma6 - mquot2,
+                        display: `${ma6} - ${mdivd2} ÷ ${mdiv2} = ?`
+                    };
+
+                case 'divide_add':  // a ÷ b + c
+                    const mdiv3 = random(2, 9);
+                    const mquot3 = random(1, 12);
+                    const mdivd3 = mdiv3 * mquot3;
+                    const mc7 = random(1, getGradeMax(grade) - mquot3);
+                    return {
+                        type: 'oral',
+                        question: `${mdivd3} ÷ ${mdiv3} + ${mc7}`,
+                        answer: mquot3 + mc7,
+                        display: `${mdivd3} ÷ ${mdiv3} + ${mc7} = ?`
+                    };
+
+                case 'divide_subtract':  // a ÷ b - c
+                    const mdiv4 = random(2, 9);
+                    const mquot4 = random(1, 12);
+                    const mdivd4 = mdiv4 * mquot4;
+                    const mc8 = random(1, mquot4 - 1);
+                    return {
+                        type: 'oral',
+                        question: `${mdivd4} ÷ ${mdiv4} - ${mc8}`,
+                        answer: mquot4 - mc8,
+                        display: `${mdivd4} ÷ ${mdiv4} - ${mc8} = ?`
+                    };
+            }
+        }
+
+        // 获取年级对应的最大值
+        function getGradeMax(grade) {
+            const maxValues = { 3: 100, 4: 500, 5: 1000, 6: 5000 };
+            return maxValues[grade] || 100;
+        }
+
+        // 生成竖式题
+        function generateVerticalQuestion(grade, difficulty, operation) {
+            const { min, max } = getNumberRange(grade);
+
+            switch(operation) {
+                case 'add':
+                    let va1, vb1;
+                    // 根据年级和难度生成数字，扩大范围避免重复
+                    if (grade <= 2) {
+                        // 1-2年级：混用一位数、两位数，增加多样性
+                        if (difficulty === 'easy' && random(0, 1) === 0) {
+                            // 30%概率生成一位数加法
+                            va1 = random(1, 9);
+                            vb1 = random(1, 9);
+                        } else {
+                            // 70%概率生成两位数加法
+                            va1 = random(10, Math.min(99, max));
+                            vb1 = random(10, Math.min(99, max));
+                        }
+                    } else if (grade === 3) {
+                        // 3年级：两位数为主，偶尔三位数
+                        if (random(0, 4) === 0) {
+                            // 20%概率生成三位数+两位数
+                            va1 = random(100, Math.min(999, max));
+                            vb1 = random(10, 99);
+                        } else {
+                            va1 = random(10, Math.min(99, max));
+                            vb1 = random(10, Math.min(99, max));
+                        }
+                    } else {
+                        // 4-6年级：以三位数为主
+                        if (random(0, 3) === 0) {
+                            // 25%概率生成四位数
+                            va1 = random(1000, Math.min(9999, max));
+                            vb1 = random(100, Math.min(999, max));
+                        } else {
+                            va1 = random(100, Math.min(999, max));
+                            vb1 = random(100, Math.min(999, max));
+                        }
+                    }
+                    return {
+                        type: 'vertical',
+                        num1: va1,
+                        num2: vb1,
+                        operator: '+',
+                        answer: va1 + vb1,
+                        display: `${va1} + ${vb1}`
+                    };
+
+                case 'subtract':
+                    let va_sub, vb_sub, vans;
+                    if (grade <= 2) {
+                        // 1-2年级：混用一位数、两位数减法
+                        if (difficulty === 'easy' && random(0, 1) === 0) {
+                            vans = random(1, 9);
+                            vb_sub = random(1, vans);
+                        } else {
+                            vans = random(10, Math.min(99, max));
+                            vb_sub = random(1, vans);
+                        }
+                    } else if (grade === 3) {
+                        // 3年级：两位数减法为主，偶尔三位数
+                        if (random(0, 4) === 0) {
+                            vans = random(100, Math.min(999, max));
+                            vb_sub = random(10, vans);
+                        } else {
+                            vans = random(10, Math.min(99, max));
+                            vb_sub = random(1, vans);
+                        }
+                    } else {
+                        // 4-6年级：三位数减法为主
+                        if (random(0, 3) === 0) {
+                            vans = random(1000, Math.min(9999, max));
+                            vb_sub = random(100, vans);
+                        } else {
+                            vans = random(100, Math.min(999, max));
+                            vb_sub = random(1, vans);
+                        }
+                    }
+                    va_sub = vans + vb_sub;
+                    return {
+                        type: 'vertical',
+                        num1: va_sub,
+                        num2: vb_sub,
+                        operator: '-',
+                        answer: vans,
+                        display: `${va_sub} - ${vb_sub}`
+                    };
+
+                case 'multiply':
+                    let vma, vmb;
+                    if (grade <= 3) {
+                        // 1-3年级：两位数×一位数
+                        vma = random(11, 99);
+                        vmb = random(2, 9);
+                    } else {
+                        // 4-6年级：混用两位数×两位数和三位数×一位数
+                        if (random(0, 2) === 0) {
+                            // 两位数×两位数
+                            vma = random(11, 99);
+                            vmb = random(11, 99);
+                        } else {
+                            // 三位数×一位数
+                            vma = random(100, 999);
+                            vmb = random(2, 9);
+                        }
+                    }
+                    return {
+                        type: 'vertical',
+                        num1: vma,
+                        num2: vmb,
+                        operator: '×',
+                        answer: vma * vmb,
+                        display: `${vma} × ${vmb}`
+                    };
+
+                case 'divide':
+                    let vdb, vdans;
+                    if (grade <= 3) {
+                        // 1-3年级：一位数或两位数除法
+                        if (random(0, 1) === 0) {
+                            // 一位数除法
+                            vdb = random(2, 9);
+                            vdans = random(10, 50);
+                        } else {
+                            // 两位数除以一位数
+                            vdb = random(2, 9);
+                            vdans = random(10, 99);
+                        }
+                    } else {
+                        // 4-6年级：混用不同位数
+                        if (random(0, 2) === 0) {
+                            // 两位数除法
+                            vdb = random(10, 20);
+                            vdans = random(10, 99);
+                        } else {
+                            // 三位数除以一位数
+                            vdb = random(2, 9);
+                            vdans = random(100, 999);
+                        }
+                    }
+                    const vda = vdb * vdans;
+                    return {
+                        type: 'vertical',
+                        num1: vda,
+                        num2: vdb,
+                        operator: '÷',
+                        answer: vdans,
+                        display: `${vda} ÷ ${vdb}`
+                    };
+
+                default:
+                    // 如果传入无效的运算类型，默认生成加法题
+                    console.warn(`generateVerticalQuestion收到无效运算类型: ${operation}，使用加法代替`);
+                    const fallbackNum1 = random(10, Math.min(99, max));
+                    const fallbackNum2 = random(10, Math.min(99, max));
+                    return {
+                        type: 'vertical',
+                        num1: fallbackNum1,
+                        num2: fallbackNum2,
+                        operator: '+',
+                        answer: fallbackNum1 + fallbackNum2,
+                        display: `${fallbackNum1} + ${fallbackNum2}`
+                    };
+            }
+        }
+
+        // 生成应用题
+        function generateWordProblem(grade, difficulty, operation) {
+            const templates = {
+                add: [
+                    // 水果食物类
+                    (a, b) => `小明有${a}个苹果，妈妈又给他买了${b}个，小明现在一共有多少个苹果？`,
+                    (a, b) => `盘子里有${a}个橘子，又放了${b}个橘子，盘子里一共有多少个橘子？`,
+                    (a, b) => `冰箱里有${a}瓶牛奶，又买了${b}瓶，现在一共有多少瓶牛奶？`,
+                    (a, b) => `蛋糕店上午卖了${a}个蛋糕，下午卖了${b}个，全天一共卖了多少个蛋糕？`,
+                    // 学习用品类
+                    (a, b) => `图书馆有${a}本故事书，又新买了${b}本，现在一共有多少本故事书？`,
+                    (a, b) => `小红收集了${a}枚邮票，哥哥又送给她${b}枚，小红现在有多少枚邮票？`,
+                    (a, b) => `文具有${a}支铅笔，又进货${b}支，一共有多少支铅笔？`,
+                    (a, b) => `小华有${a}块橡皮，又买了${b}块，现在一共有多少块橡皮？`,
+                    // 交通工具类
+                    (a, b) => `停车场原来有${a}辆汽车，又开来了${b}辆，现在停车场有多少辆汽车？`,
+                    (a, b) => `公交车站有${a}人在等车，又来了${b}人，现在一共有多少人在等车？`,
+                    // 动物植物类
+                    (a, b) => `池塘里有${a}只鸭子，又游来${b}只，现在池塘里有多少只鸭子？`,
+                    (a, b) => `花园里有${a}只蝴蝶，又飞来${b}只，花园里一共有多少只蝴蝶？`,
+                    (a, b) => `树上有${a}个果子，又长了${b}个，树上一共有多少个果子？`,
+                    // 运动游戏类
+                    (a, b) => `小明投篮进了${a}个，又投进${b}个，一共投进了多少个球？`,
+                    (a, b) => `小红跳绳第一次跳了${a}下，第二次跳了${b}下，一共跳了多少下？`,
+                    // 其他生活场景
+                    (a, b) => `养鸡场有${a}只母鸡，${b}只公鸡，养鸡场一共有多少只鸡？`,
+                    (a, b) => `学校上午来了${a}个学生，下午来了${b}个学生，今天一共来了多少个学生？`,
+                    (a, b) => `超市货架上有${a}盒饼干，又摆上${b}盒，货架上现在有多少盒饼干？`
+                ],
+                subtract: [
+                    // 购物消费类
+                    (a, b) => `商店有${a}个篮球，卖出了${b}个，还剩多少个篮球？`,
+                    (a, b) => `小明有${a}元钱，买文具用去了${b}元，还剩下多少元？`,
+                    (a, b) => `面包房有${a}个面包，卖掉了${b}个，还剩多少个面包？`,
+                    (a, b) => `超市有${a}瓶果汁，卖出了${b}瓶，还剩多少瓶果汁？`,
+                    // 出行离开类
+                    (a, b) => `公交车上有${a}人，到站下去了${b}人，车上还有多少人？`,
+                    (a, b) => `树上有${a}只小鸟，飞走了${b}只，还剩下多少只小鸟？`,
+                    (a, b) => `停车场有${a}辆车，开走了${b}辆，还剩多少辆车？`,
+                    (a, b) => `操场上有${a}个同学，走了${b}个，还剩多少个同学？`,
+                    // 损失丢失类
+                    (a, b) => `鱼缸里有${a}条金鱼，死了${b}条，还剩下多少条金鱼？`,
+                    (a, b) => `小华有${a}张贴纸，丢了${b}张，还剩多少张贴纸？`,
+                    (a, b) => `图书馆有${a}本书，借出去了${b}本，还剩多少本？`,
+                    // 借出送出类
+                    (a, b) => `小明有${a}支铅笔，借给同学${b}支，还剩多少支？`,
+                    (a, b) => `小红有${a}颗糖，分给弟弟${b}颗，还剩多少颗？`,
+                    (a, b) => `商店有${a}件衣服，卖出了${b}件，还剩多少件？`,
+                    // 吃掉用掉类
+                    (a, b) => `盘子里有${a}块饼干，吃了${b}块，还剩多少块？`,
+                    (a, b) => `瓶子里有${a}颗药，吃了${b}颗，还剩多少颗？`
+                ],
+                multiply: [
+                    // 购物计算类
+                    (a, b) => `一支钢笔${a}元，买${b}支钢笔需要多少钱？`,
+                    (a, b) => `一个书包${a}元，买${b}个书包需要多少钱？`,
+                    (a, b) => `一本笔记本${a}元，买${b}本笔记本需要多少钱？`,
+                    (a, b) => `一个文具盒${a}元，买${b}个文具盒需要多少钱？`,
+                    // 分组装东西类
+                    (a, b) => `每个盒子装${a}个鸡蛋，${b}个盒子一共可以装多少个鸡蛋？`,
+                    (a, b) => `每个袋子装${a}个苹果，${b}个袋子一共可以装多少个苹果？`,
+                    (a, b) => `每箱有${a}瓶牛奶，${b}箱一共有多少瓶牛奶？`,
+                    (a, b) => `每盒有${a}块巧克力，${b}盒一共有多少块巧克力？`,
+                    // 重复累积类
+                    (a, b) => `小明每天读${a}页书，${b}天一共读了多少页？`,
+                    (a, b) => `小红每天存${a}元钱，${b}天一共存了多少钱？`,
+                    (a, b) => `一辆汽车每小时行驶${a}千米，行驶${b}小时能行驶多少千米？`,
+                    (a, b) => `小明每分钟跑${a}米，跑了${b}分钟，一共跑了多少米？`,
+                    // 排列座位类
+                    (a, b) => `每排坐${a}个学生，${b}排一共坐多少个学生？`,
+                    (a, b) => `每行种${a}棵树，${b}行一共种多少棵树？`,
+                    (a, b) => `一张桌子${a}元，买${b}张桌子需要多少钱？`,
+                    // 身体部位类
+                    (a, b) => `一只手有${a}个手指，${b}只手一共有多少个手指？`,
+                    (a, b) => `一天有${a}节课，${b}天一共有多少节课？`
+                ],
+                divide: [
+                    // 平均分配类
+                    (a, b) => `有${a}个苹果，平均分给${b}个小朋友，每个小朋友能分到几个？`,
+                    (a, b) => `有${a}颗糖，平均分给${b}个孩子，每个孩子分到几颗？`,
+                    (a, b) => `有${a}支铅笔，平均分给${b}个同学，每个同学分几支？`,
+                    (a, b) => `有${a}本作业本，平均分给${b}个小组，每个小组分几本？`,
+                    // 购物计算类
+                    (a, b) => `小明有${a}元钱，买铅笔每支${b}元，可以买多少支铅笔？`,
+                    (a, b) => `有${a}元钱，买橡皮每块${b}元，可以买多少块橡皮？`,
+                    (a, b) => `小红有${a}元，买笔记本每本${b}元，可以买多少本？`,
+                    // 包含测量类
+                    (a, b) => `一本书有${a}页，每天读${b}页，多少天可以读完？`,
+                    (a, b) => `一根绳子长${a}米，剪成每段${b}米，可以剪成多少段？`,
+                    (a, b) => `一根绳子长${a}厘米，剪成每段${b}厘米，可以剪成多少段？`,
+                    // 装箱包装类
+                    (a, b) => `有${a}个鸡蛋，每盒装${b}个，需要多少个盒子？`,
+                    (a, b) => `有${a}块饼干，每袋装${b}块，需要多少个袋子？`,
+                    (a, b) => `有${a}本书，每层放${b}本，需要放多少层？`,
+                    // 时间速度类
+                    (a, b) => `小明要跑${a}米，每分钟跑${b}米，需要几分钟？`,
+                    (a, b) => `一辆汽车行驶${a}千米，每小时行驶${b}千米，需要几小时？`,
+                    (a, b) => `小红要做${a}道题，每分钟做${b}道，需要几分钟？`
+                ],
+                compare: [
+                    // 比多问题（A比B多，求A）
+                    (a, b) => `小明有${a}个苹果，小红比小明多${b}个，小红有多少个苹果？`,
+                    (a, b) => `图书馆有${a}本故事书，科技书比故事书多${b}本，科技书有多少本？`,
+                    (a, b) => `停车场有${a}辆汽车，摩托车比汽车多${b}辆，摩托车有多少辆？`,
+                    (a, b) => `小华有${a}张贴纸，小丽比小华多${b}张，小丽有多少张贴纸？`,
+                    (a, b) => `公鸡有${a}只，母鸡比公鸡多${b}只，母鸡有多少只？`,
+                    (a, b) => `二年级有${a}人，三年级比二年级多${b}人，三年级有多少人？`,
+                    (a, b) => `小狗有${a}条，大狗比小狗多${b}条，大狗有多少条？`,
+                    // 比多问题（A比B多，求总数）
+                    (a, b) => `小明有${a}个苹果，小红比小明多${b}个，两人一共有多少个苹果？`,
+                    (a, b) => `一班有${a}人，二班比一班多${b}人，两个班一共有多少人？`,
+                    (a, b) => `黑板上有${a}个五角星，又比它多${b}个颗红星星，一共有多少颗星星？`,
+                    (a, b) => `花坛里有${a}朵红花，黄花比红花多${b}朵，一共有多少朵花？`,
+                    // 比少问题（A比B少，求A）
+                    (a, b) => `商店有${a}个篮球，足球比篮球少${b}个，足球有多少个？`,
+                    (a, b) => `小明有${a}元钱，小红比小明少${b}元，小红有多少钱？`,
+                    (a, b) => `动物园有${a}只猴子，老虎比猴子少${b}只，老虎有多少只？`,
+                    (a, b) => `大卡车有${a}辆，小汽车比大卡车少${b}辆，小汽车有多少辆？`,
+                    (a, b) => `哥哥有${a}颗糖，弟弟比哥哥少${b}颗，弟弟有多少颗糖？`,
+                    (a, b) => `上午有${a}个学生，下午比上午少${b}个，下午有多少个学生？`,
+                    // 比少问题（A比B少，求总数）
+                    (a, b) => `商店有${a}个篮球，足球比篮球少${b}个，篮球和足球一共有多少个？`,
+                    (a, b) => `小红有${a}朵花，小丽比小红少${b}朵，两人一共有多少朵花？`,
+                    (a, b) => `鸭有${a}只，鸡比鸭少${b}只，鸡和鸭一共有多少只？`,
+                    // 一样多问题（A和B一样多，求总数）
+                    (num) => {
+                        const n = random(1, Math.floor(num * 0.3));
+                        const answer = n * 2;
+                        return {
+                            question: `小明有${n}个苹果，小红的苹果和小明一样多，两人一共有多少个苹果？`,
+                            answer: answer,
+                            num1: n,
+                            num2: n
+                        };
+                    },
+                    (num) => {
+                        const pages = random(1, Math.floor(num * 0.3));
+                        const answer = pages * 2;
+                        return {
+                            question: `一本书有${pages}页，第二天看的和第一天一样多，两天一共看了多少页？`,
+                            answer: answer,
+                            num1: pages,
+                            num2: pages
+                        };
+                    },
+                    (a, b) => `铅笔盒里有${a}支铅笔，钢笔和铅笔一样多，铅笔和钢笔一共有多少支？`,
+                    (a, b) => `左边有${a}个三角形，右边和左边一样多，一共有多少个三角形？`,
+                    // 倍数比较（A是B的几倍，求A）
+                    (a, b) => `小明有${a}个苹果，小红的苹果是小明的${b}倍，小红有多少个苹果？`,
+                    (a, b) => `白兔有${a}只，黑兔是白兔的${b}倍，黑兔有多少只？`,
+                    (a, b) => `钢笔${a}元，书包的价格是钢笔的${b}倍，书包多少元？`,
+                    (a, b) => `小猫有${a}条，大猫的条数是小猫的${b}倍，大猫有多少条？`,
+                    // 求差问题（A和B，求相差）
+                    (a, b) => `小明有${a}个苹果，小红有${b}个苹果，小明比小红多几个？`,
+                    (a, b) => `笼子里有${a}只白兔，${b}只黑兔，白兔比黑兔多几只？`,
+                    (a, b) => `第一条绳子长${a}米，第二条绳子长${b}米，第一条绳子比第二条长多少米？`,
+                    (a, b) => `小华做了${a}道题，小明做了${b}道题，小华比小明多做几道？`,
+                    (a, b) => `上午来了${a}个学生，下午来了${b}个，上午比下午多几个？`
+                ],
+                mixed: [
+                    // 乘法 + 加法（先乘后加）
+                    (a, b, c) => `小明买了${b}支铅笔，每支${c}元，又买了一个${a}元的橡皮，小明一共花了多少钱？`,
+                    (a, b, c) => `图书馆买了${b}套书，每套${c}本，又买了${a}本故事书，图书馆一共买了多少本书？`,
+                    (a, b, c) => `超市运来${b}箱牛奶，每箱${c}盒，又运来${a}盒酸奶，超市一共运来多少盒饮品？`,
+                    (a, b, c) => `妈妈买了${b}个西瓜，每个${c}元，又买了${a}元的苹果，一共花了多少元？`,
+                    (a, b, c) => `班级有${b}组学生，每组${c}人，又来了${a}个转学生，现在一共有多少个学生？`,
+                    (a, b, c) => `有${b}排桌子，每排${c}张，又搬来${a}张，一共有多少张桌子？`,
+                    // 加法 + 乘法（先加后乘）
+                    (a, b, c) => `小红有${a}支铅笔，小明有${b}支，小丽的铅笔是他们总和的${c}倍，小丽有多少支铅笔？`,
+                    // 乘法 - 减法（先乘后减）
+                    (a, b, c) => `商店有${a}个玩具，卖出${b}盒，每盒${c}个，还剩多少个玩具？`,
+                    (a, b, c) => `小明有${a}颗糖，分给${b}个同学，每个同学${c}颗，还剩多少颗糖？`,
+                    (a, b, c) => `图书馆有${a}本书，借出去了${b}包，每包${c}本，还剩多少本？`,
+                    (a, b, c) => `妈妈买了${a}个苹果，吃掉了${b}盘，每盘${c}个，还剩多少个？`,
+                    (a, b, c) => `有${a}朵花，扎成${b}束，每束${c}朵，还剩多少朵？`,
+                    // 减法 + 乘法（先减后乘）
+                    (a, b, c) => `小红有${a}元，买文具花去${b}元，剩下的钱买${c}支铅笔，每支铅笔多少钱？`,
+                    // 除法 + 加法（先除后加）
+                    (a, b, c) => `老师把${a}支铅笔平均分给${b}个同学，每个同学分到的再加${c}支，每个同学一共有多少支？`,
+                    (a, b, c) => `有${a}朵花，每${b}朵扎成一束，扎好后又买了${c}朵，现在一共有多少朵花？`,
+                    (a, b, c) => `妈妈把${a}块糖平均分给${b}个孩子，每个孩子再给${c}块，每个孩子一共有多少块？`,
+                    // 加法 + 除法（先加后除）
+                    (a, b, c) => `小明有${a}支铅笔，小红又给了他${b}支，这些铅笔平均分给${c}个同学，每个同学分几支？`,
+                    // 除法 - 减法（先除后减）
+                    (a, b, c) => `妈妈把${a}个苹果平均放在${b}个盘子里，每个盘子吃掉${c}个，每个盘子还剩几个？`,
+                    (a, b, c) => `有${a}颗珠子，每${b}颗串成一串，串好后送人${c}串，还剩多少串？`,
+                    (a, b, c) => `老师有${a}张贴纸，平均分给${b}个小组，每个小组又用了${c}张，每个小组还剩多少张？`,
+                    // 减法 + 除法（先减后除）
+                    (a, b, c) => `小明有${a}元，花去${b}元买书，剩下的钱买${c}支铅笔，每支铅笔多少钱？`,
+                    (a, b, c) => `书架有${a}本书，借出去${b}本，剩下的平均分给${c}个同学，每个同学分几本？`,
+                    // 加法 + 减法
+                    (a, b, c) => `小明有${a}个苹果，妈妈又给了${b}个，他吃了${c}个，现在有多少个？`,
+                    (a, b, c) => `公交车上原有${a}人，第一站上来${b}人，下去${c}人，现在车上有多少人？`,
+                    // 连乘
+                    (a, b, c) => `有${a}盒饼干，每盒${b}袋，每袋${c}块，一共有多少块饼干？`,
+                    (a, b, c) => `教室有${a}排座位，每排${b}座，每座坐${c}人，一共能坐多少人？`,
+                    // 乘除混合
+                    (a, b, c) => `有${a}支铅笔，每${b}支装一盒，平均分给${c}个同学，每个同学分几盒？`
+                ]
+            };
+
+            const { min, max } = getNumberRange(grade);
+            let num1, num2, answer;
+
+            // 根据运算类型生成数字
+            switch(operation) {
+                case 'add':
+                    num1 = random(min, Math.floor(max * 0.5));
+                    num2 = random(min, Math.floor(max * 0.5));
+                    answer = num1 + num2;
+                    break;
+                case 'subtract':
+                    answer = random(min, Math.floor(max * 0.6));
+                    num2 = random(1, Math.floor(answer * 0.7));  // 确保至少减去1
+                    num1 = answer + num2;
+                    break;
+                case 'multiply':
+                    if (grade <= 3) {
+                        num1 = random(2, 9);
+                        num2 = random(2, 9);
+                    } else {
+                        num1 = random(2, 20);
+                        num2 = random(2, 20);
+                    }
+                    answer = num1 * num2;
+                    break;
+                case 'divide':
+                    num2 = random(2, grade <= 3 ? 9 : 15);
+                    answer = random(2, grade <= 3 ? 12 : 20);
+                    num1 = num2 * answer;
+                    break;
+                case 'compare':
+                    // 比较类应用题：直接返回 generateCompareWordProblem
+                    return generateCompareWordProblem(grade);
+                case 'mixed':
+                    // 传递 operations 数组（过滤掉 'mixed' 本身）
+                    const baseOpsForWord = operations.filter(op => op !== 'mixed');
+                    // 如果没有选择基础运算，使用默认的加法和乘法
+                    const effectiveOpsForWord = baseOpsForWord.length > 0 ? baseOpsForWord : ['add', 'multiply'];
+                    return generateMixedWordProblem(grade, effectiveOpsForWord);
+                default:
+                    return null;
+            }
+
+            // 随机选择一个模板
+            const operationTemplates = templates[operation];
+            const template = operationTemplates[random(0, operationTemplates.length - 1)];
+            const question = template(num1, num2);
+
+            return {
+                type: 'wordProblem',
+                question: question,
+                operation: operation,
+                num1: num1,
+                num2: num2,
+                answer: answer,
+                display: `${operation}: ${question.substring(0, 20)}...`
+            };
+        }
+
+        // 生成比较类应用题
+        function generateCompareWordProblem(grade) {
+            const { min, max } = getNumberRange(grade);
+
+            const compareTemplates = [
+                // 比多问题（A比B多，求A）
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const answer = num1 + num2;
+                    return {
+                        question: `小明有${num1}个苹果，小红比小明多${num2}个，小红有多少个苹果？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const answer = num1 + num2;
+                    return {
+                        question: `图书馆有${num1}本故事书，科技书比故事书多${num2}本，科技书有多少本？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const answer = num1 + num2;
+                    return {
+                        question: `停车场有${num1}辆汽车，摩托车比汽车多${num2}辆，摩托车有多少辆？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const answer = num1 + num2;
+                    return {
+                        question: `小华有${num1}张贴纸，小丽比小华多${num2}张，小丽有多少张贴纸？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const answer = num1 + num2;
+                    return {
+                        question: `公鸡有${num1}只，母鸡比公鸡多${num2}只，母鸡有多少只？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const answer = num1 + num2;
+                    return {
+                        question: `二年级有${num1}人，三年级比二年级多${num2}人，三年级有多少人？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                // 比多问题（A比B多，求总数）
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const other = num1 + num2;
+                    const answer = num1 + other;
+                    return {
+                        question: `小明有${num1}个苹果，小红比小明多${num2}个，两人一共有多少个苹果？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const other = num1 + num2;
+                    const answer = num1 + other;
+                    return {
+                        question: `一班有${num1}人，二班比一班多${num2}人，两个班一共有多少人？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.3));
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const other = num1 + num2;
+                    const answer = num1 + other;
+                    return {
+                        question: `黑板上有${num1}个五角星，红星星比五角星多${num2}个，一共有多少颗星星？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                // 比少问题（A比B少，求A）
+                (a, b) => {
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const answer = larger - num2;
+                    return {
+                        question: `商店有${larger}个篮球，足球比篮球少${num2}个，足球有多少个？`,
+                        answer: answer,
+                        num1: larger,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const answer = larger - num2;
+                    return {
+                        question: `小明有${larger}元钱，小红比小明少${num2}元，小红有多少钱？`,
+                        answer: answer,
+                        num1: larger,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const answer = larger - num2;
+                    return {
+                        question: `动物园有${larger}只猴子，老虎比猴子少${num2}只，老虎有多少只？`,
+                        answer: answer,
+                        num1: larger,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const answer = larger - num2;
+                    return {
+                        question: `大卡车有${larger}辆，小汽车比大卡车少${num2}辆，小汽车有多少辆？`,
+                        answer: answer,
+                        num1: larger,
+                        num2: num2
+                    };
+                },
+                // 比少问题（A比B少，求总数）
+                (a, b) => {
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const smaller = larger - num2;
+                    const answer = larger + smaller;
+                    return {
+                        question: `商店有${larger}个篮球，足球比篮球少${num2}个，篮球和足球一共有多少个？`,
+                        answer: answer,
+                        num1: larger,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num2 = random(1, Math.floor(max * 0.2));
+                    const larger = random(num2 + 1, Math.floor(max * 0.4));
+                    const smaller = larger - num2;
+                    const answer = larger + smaller;
+                    return {
+                        question: `小红有${larger}朵花，小丽比小红少${num2}朵，两人一共有多少朵花？`,
+                        answer: answer,
+                        num1: larger,
+                        num2: num2
+                    };
+                },
+                // 一样多问题
+                (a, b) => {
+                    const num = random(min, Math.floor(max * 0.3));
+                    const answer = num * 2;
+                    return {
+                        question: `小明有${num}个苹果，小红的苹果和小明一样多，两人一共有多少个苹果？`,
+                        answer: answer,
+                        num1: num,
+                        num2: num
+                    };
+                },
+                (a, b) => {
+                    const pages = random(min, Math.floor(max * 0.3));
+                    const answer = pages * 2;
+                    return {
+                        question: `一本书有${pages}页，第二天看的和第一天一样多，两天一共看了多少页？`,
+                        answer: answer,
+                        num1: pages,
+                        num2: pages
+                    };
+                },
+                (a, b) => {
+                    const num = random(min, Math.floor(max * 0.3));
+                    const answer = num * 2;
+                    return {
+                        question: `铅笔盒里有${num}支铅笔，钢笔和铅笔一样多，铅笔和钢笔一共有多少支？`,
+                        answer: answer,
+                        num1: num,
+                        num2: num
+                    };
+                },
+                // 求差问题
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.4));
+                    const num2 = random(min, Math.floor(max * 0.4));
+                    const answer = Math.abs(num1 - num2);
+                    return {
+                        question: `小明有${num1}个苹果，小红有${num2}个苹果，小明比小红多几个？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.4));
+                    const num2 = random(min, Math.floor(max * 0.4));
+                    const answer = Math.abs(num1 - num2);
+                    return {
+                        question: `笼子里有${num1}只白兔，${num2}只黑兔，白兔比黑兔多几只？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.4));
+                    const num2 = random(min, Math.floor(max * 0.4));
+                    const answer = Math.abs(num1 - num2);
+                    return {
+                        question: `第一条绳子长${num1}米，第二条绳子长${num2}米，第一条绳子比第二条长多少米？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                },
+                (a, b) => {
+                    const num1 = random(min, Math.floor(max * 0.4));
+                    const num2 = random(min, Math.floor(max * 0.4));
+                    const answer = Math.abs(num1 - num2);
+                    return {
+                        question: `小华做了${num1}道题，小明做了${num2}道题，小华比小明多做几道？`,
+                        answer: answer,
+                        num1: num1,
+                        num2: num2
+                    };
+                }
+            ];
+
+            // 随机选择一个模板
+            const template = compareTemplates[random(0, compareTemplates.length - 1)];
+            const result = template(min, max);
+
+            return {
+                type: 'wordProblem',
+                question: result.question,
+                operation: 'compare',
+                num1: result.num1,
+                num2: result.num2,
+                answer: result.answer,
+                display: `比较: ${result.question.substring(0, 20)}...`
+            };
+        }
+
+        // 生成混合运算应用题
+        function generateMixedWordProblem(grade, selectedOperations) {
+            // 根据用户选择的运算类型生成混合运算组合
+            const hasAdd = selectedOperations.includes('add');
+            const hasSubtract = selectedOperations.includes('subtract');
+            const hasMultiply = selectedOperations.includes('multiply');
+            const hasDivide = selectedOperations.includes('divide');
+
+            // 生成所有可能的混合运算类型（基于用户选择的运算）
+            const possibleTypes = [];
+
+            // 加法 + 减法（适合低年级）
+            if (hasAdd && hasSubtract) {
+                possibleTypes.push('add_subtract', 'subtract_add');
+                possibleTypes.push('add_subtract_add', 'add_subtract_subtract', 'subtract_add_add');
+            }
+            // 加法 + 乘法
+            if (hasAdd && hasMultiply) {
+                possibleTypes.push('multiply_add');
+            }
+            // 减法 + 乘法
+            if (hasSubtract && hasMultiply) {
+                possibleTypes.push('multiply_subtract');
+            }
+            // 加法 + 除法
+            if (hasAdd && hasDivide) {
+                possibleTypes.push('divide_add');
+            }
+            // 减法 + 除法
+            if (hasSubtract && hasDivide) {
+                possibleTypes.push('divide_subtract');
+            }
+
+            if (possibleTypes.length === 0) {
+                // 如果没有可以组合的运算类型，返回默认应用题
+                return {
+                    type: 'wordProblem',
+                    question: '小明有5个苹果，妈妈又给他买了3个，小明现在一共有多少个苹果？',
+                    operation: 'add',
+                    num1: 5,
+                    num2: 3,
+                    answer: 8,
+                    display: '加法: 小明有5个苹果...'
+                };
+            }
+
+            const type = possibleTypes[random(0, possibleTypes.length - 1)];
+            let question, answer, num1, num2, num3;
+
+            switch(type) {
+                case 'add_subtract':  // 先加后减（三个数）
+                    num1 = random(1, 20);  // 第一个数
+                    num2 = random(1, 15);  // 加上的数
+                    num3 = random(1, Math.min(num2, 10));  // 减去的数（不超过加上的数，确保有意义）
+                    answer = num1 + num2 - num3;
+
+                    const asTemplates = [
+                        (a, b, c) => `小明有${a}个苹果，妈妈又给了他${b}个，后来吃掉了${c}个，现在有几个苹果？`,
+                        (a, b, c) => `停车场有${a}辆车，先开来了${b}辆，后来开走了${c}辆，现在有多少辆车？`,
+                        (a, b, c) => `图书角有${a}本书，又买来了${b}本，借出去了${c}本，现在有多少本书？`,
+                        (a, b, c) => `小红有${a}朵花，老师又给了她${b}朵，送给了同学${c}朵，现在有几朵花？`
+                    ];
+                    const asTemplate = asTemplates[random(0, asTemplates.length - 1)];
+                    question = asTemplate(num1, num2, num3);
+                    break;
+
+                case 'subtract_add':  // 先减后加（三个数）
+                    num1 = random(10, 30);  // 第一个数（够减）
+                    num2 = random(1, num1 - 1);  // 减去的数
+                    num3 = random(1, 15);  // 加上的数
+                    answer = num1 - num2 + num3;
+
+                    const saTemplates = [
+                        (a, b, c) => `小明有${a}个苹果，吃掉了${b}个，后来妈妈又给了他${c}个，现在有几个苹果？`,
+                        (a, b, c) => `停车场有${a}辆车，开走了${b}辆，后来又开来了${c}辆，现在有多少辆车？`,
+                        (a, b, c) => `小红有${a}元钱，买文具花了${b}元，后来妈妈又给了她${c}元，现在有多少钱？`,
+                        (a, b, c) => `树上有${a}只小鸟，飞走了${b}只，又飞来了${c}只，现在有几只小鸟？`
+                    ];
+                    const saTemplate = saTemplates[random(0, saTemplates.length - 1)];
+                    question = saTemplate(num1, num2, num3);
+                    break;
+
+                case 'add_subtract_add':  // 加-减-加（四个数）
+                    num1 = random(1, 15);  // 第一个数
+                    num2 = random(1, 10);  // 第一个加上的数
+                    num3 = random(1, Math.min(num1 + num2 - 1, 8));  // 减去的数
+                    const num4 = random(1, 10);  // 第二个加上的数
+                    answer = num1 + num2 - num3 + num4;
+
+                    const asaTemplates = [
+                        (a, b, c, d) => `小明有${a}个苹果，妈妈给了${b}个，吃掉了${c}个，奶奶又给了${d}个，现在有几个苹果？`,
+                        (a, b, c, d) => `停车场有${a}辆车，先开来${b}辆，开走${c}辆，又开来${d}辆，现在有多少辆车？`,
+                        (a, b, c, d) => `小红有${a}元零花钱，挣了${b}元，花了${c}元，又挣了${d}元，现在有多少钱？`
+                    ];
+                    const asaTemplate = asaTemplates[random(0, asaTemplates.length - 1)];
+                    question = asaTemplate(num1, num2, num3, num4);
+                    break;
+
+                case 'add_subtract_subtract':  // 加-减-减（四个数）
+                    num1 = random(5, 25);  // 第一个数（要够减）
+                    num2 = random(1, 10);  // 加上的数
+                    num3 = random(1, 8);  // 第一次减去的数
+                    const num4_sub = random(1, 8);  // 第二次减去的数
+                    // 确保结果非负
+                    while (num1 + num2 - num3 - num4_sub < 0) {
+                        num1 = random(num3 + num4_sub - num2 + 1, 30);
+                    }
+                    answer = num1 + num2 - num3 - num4_sub;
+
+                    const assTemplates = [
+                        (a, b, c, d) => `小明有${a}个苹果，妈妈给了${b}个，早上吃掉了${c}个，下午吃掉了${d}个，现在有几个苹果？`,
+                        (a, b, c, d) => `停车场有${a}辆车，先开来${b}辆，开走${c}辆，又开走${d}辆，现在有多少辆车？`,
+                        (a, b, c, d) => `商店有${a}件商品，进货${b}件，上午卖出${c}件，下午卖出${d}件，还剩多少件？`
+                    ];
+                    const assTemplate = assTemplates[random(0, assTemplates.length - 1)];
+                    question = assTemplate(num1, num2, num3, num4_sub);
+                    break;
+
+                case 'subtract_add_add':  // 减-加-加（四个数）
+                    num1 = random(15, 40);  // 第一个数（要够减）
+                    num2 = random(1, 15);  // 减去的数
+                    num3 = random(1, 10);  // 第一个加上的数
+                    const num4_saa = random(1, 10);  // 第二个加上的数
+                    answer = num1 - num2 + num3 + num4_saa;
+
+                    const saaTemplates = [
+                        (a, b, c, d) => `小明有${a}个苹果，吃掉了${b}个，妈妈给了${c}个，爸爸又给了${d}个，现在有几个苹果？`,
+                        (a, b, c, d) => `停车场有${a}辆车，开走${b}辆，开来${c}辆，又开来${d}辆，现在有多少辆车？`,
+                        (a, b, c, d) => `小红有${a}元零花钱，花了${b}元，挣了${c}元，又挣了${d}元，现在有多少钱？`
+                    ];
+                    const saaTemplate = saaTemplates[random(0, saaTemplates.length - 1)];
+                    question = saaTemplate(num1, num2, num3, num4_saa);
+                    break;
+
+                case 'multiply_add':  // 先乘后加
+                    num1 = random(1, 20);  // 加数
+                    num2 = random(2, 9);   // 乘数1
+                    num3 = random(2, 9);   // 乘数2
+                    answer = num1 + num2 * num3;
+
+                    const maTemplates = [
+                        (a, b, c) => `小明买了${b}支铅笔，每支${c}元，又买了一个${a}元的橡皮，小明一共花了多少钱？`,
+                        (a, b, c) => `图书馆买了${b}套书，每套${c}本，又买了${a}本故事书，图书馆一共买了多少本书？`,
+                        (a, b, c) => `超市运来${b}箱牛奶，每箱${c}盒，又运来${a}盒酸奶，超市一共运来多少盒饮品？`
+                    ];
+                    const maTemplate = maTemplates[random(0, maTemplates.length - 1)];
+                    question = maTemplate(num1, num2, num3);
+                    break;
+
+                case 'multiply_subtract':  // 先乘后减
+                    num1 = random(20, 100);  // 被减数（总数）
+                    num2 = random(2, 9);     // 乘数1
+                    num3 = random(2, 9);     // 乘数2
+                    // 确保结果非负
+                    while (num1 < num2 * num3) {
+                        num1 = random(num2 * num3 + 1, 100);
+                    }
+                    answer = num1 - num2 * num3;
+
+                    const msTemplates = [
+                        (a, b, c) => `商店有${a}个玩具，卖出${b}盒，每盒${c}个，还剩多少个玩具？`,
+                        (a, b, c) => `小明有${a}颗糖，分给${b}个同学，每个同学${c}颗，还剩多少颗糖？`
+                    ];
+                    const msTemplate = msTemplates[random(0, msTemplates.length - 1)];
+                    question = msTemplate(num1, num2, num3);
+                    break;
+
+                case 'divide_add':  // 先除后加
+                    num3 = random(2, 9);     // 除数
+                    num2 = random(1, 12);    // 商
+                    num1 = num3 * num2;      // 被除数
+                    const addNum = random(1, 20);  // 加数
+                    answer = num2 + addNum;
+
+                    const daTemplates = [
+                        (a, b, c) => `老师把${a}支铅笔平均分给${b}个同学，每个同学分到的再加${c}支，每个同学一共有多少支？`,
+                        (a, b, c) => `有${a}朵花，每${b}朵扎成一束，扎好后又买了${c}朵，现在一共有多少朵花？`
+                    ];
+                    const daTemplate = daTemplates[random(0, daTemplates.length - 1)];
+                    question = daTemplate(num1, num3, addNum);
+                    break;
+
+                case 'divide_subtract':  // 先除后减
+                    num3 = random(2, 9);     // 除数
+                    num2 = random(5, 20);    // 商（要够减）
+                    num1 = num3 * num2;      // 被除数
+                    const subNum = random(1, num2 - 1);  // 减数
+                    answer = num2 - subNum;
+
+                    const dsTemplates = [
+                        (a, b, c) => `妈妈把${a}个苹果平均放在${b}个盘子里，每个盘子吃掉${c}个，每个盘子还剩几个？`,
+                        (a, b, c) => `有${a}颗珠子，每${b}颗串成一串，串好后送人${c}串，还剩多少串？`
+                    ];
+                    const dsTemplate = dsTemplates[random(0, dsTemplates.length - 1)];
+                    question = dsTemplate(num1, num3, subNum);
+                    break;
+            }
+
+            return {
+                type: 'wordProblem',
+                question: question,
+                operation: type,
+                num1: num1,
+                num2: num2,
+                num3: num3,
+                answer: answer,
+                display: `混合运算: ${question.substring(0, 20)}...`
+            };
+        }
+
+        // 获取题目核心标识符（用于去重）
+        // 规则：a+b=c 和 b+a=c 不算重复（加法交换律）
+        //      a-b=c 和 a-b=c 才是重复（必须 a,b 完全相同）
+        function getQuestionKey(question) {
+            if (question.type === 'oral') {
+                // 口算题：提取运算符和数字
+                const match = question.question.match(/^(\d+)\s*([\+\−×÷])\s*(\d+)/);
+                if (match) {
+                    const num1 = parseInt(match[1]);
+                    const operator = match[2];
+                    const num2 = parseInt(match[3]);
+
+                    // 加法和乘法可以交换，所以将数字排序
+                    if (operator === '+' || operator === '×') {
+                        const sorted = [num1, num2].sort((a, b) => a - b);
+                        return `oral_${operator}_${sorted[0]}_${sorted[1]}`;
+                    }
+                    // 减法、除法不可交换，保持原顺序
+                    else {
+                        return `oral_${operator}_${num1}_${num2}`;
+                    }
+                }
+                // 混合运算或其他复杂题目，使用原问题文本
+                return `oral_${question.question}`;
+            } else if (question.type === 'vertical') {
+                // 竖式题：同样的逻辑
+                const operator = question.operator;
+                const num1 = question.num1;
+                const num2 = question.num2;
+
+                // 加法和乘法可以交换
+                if (operator === '+' || operator === '×') {
+                    const sorted = [num1, num2].sort((a, b) => a - b);
+                    return `vertical_${operator}_${sorted[0]}_${sorted[1]}`;
+                }
+                // 减法、除法不可交换
+                else {
+                    return `vertical_${operator}_${num1}_${num2}`;
+                }
+            } else if (question.type === 'wordProblem') {
+                // 应用题：使用题目前50个字符作为标识
+                return `word_${question.question.substring(0, 50)}`;
+            }
+            return JSON.stringify(question);
+        }
+
+        // 生成唯一题目（带去重）
+        function generateUniqueQuestion(generatorFunc, maxAttempts = 50) {
+            let question;
+            let attempts = 0;
+            do {
+                question = generatorFunc();
+                const key = getQuestionKey(question);
+                if (!currentQuestionKeys.has(key)) {
+                    currentQuestionKeys.add(key);
+                    return question;
+                }
+                attempts++;
+            } while (attempts < maxAttempts);
+            // 如果尝试多次仍重复，直接返回（避免无限循环）
+            return question;
+        }
+
+        // 生成所有题目
+        function generateQuestions() {
+            const grade = parseInt(document.getElementById('gradeSelect').value);
+            const difficulty = document.getElementById('difficultySelect').value;
+
+            const operationCheckboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked');
+            const operations = Array.from(operationCheckboxes).map(cb => cb.value).filter(op => ['add', 'subtract', 'multiply', 'divide', 'mixed', 'compare'].includes(op));
+
+            const oralChecked = document.getElementById('oralCheck').checked;
+            const verticalChecked = document.getElementById('verticalCheck').checked;
+            const wordProblemChecked = document.getElementById('wordProblemCheck').checked;
+
+            // 验证至少选择一种题型
+            if (!oralChecked && !verticalChecked && !wordProblemChecked) {
+                showToast('⚠️ 请至少选择一种题型', 'error');
+                return false;
+            }
+
+            if (operations.length === 0) {
+                showToast('⚠️ 请至少选择一种运算类型', 'error');
+                return false;
+            }
+
+            questions = [];
+            currentQuestionKeys = new Set();  // 重置题目记录
+
+            // 生成口算题（带去重）
+            if (oralChecked) {
+                const oralCount = parseInt(document.getElementById('oralCount').value);
+                for (let i = 0; i < oralCount; i++) {
+                    questions.push(generateUniqueQuestion(() => {
+                        // 每次重试时都随机选择运算类型，避免固定运算导致重复
+                        const op = operations[random(0, operations.length - 1)];
+                        if (op === 'mixed') {
+                            const baseOps = operations.filter(o => o !== 'mixed');
+                            const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
+                            return generateMixedOralQuestion(grade, difficulty, effectiveOps);
+                        } else {
+                            return generateOralQuestion(grade, difficulty, op);
+                        }
+                    }));
+                }
+            }
+
+            // 生成竖式题（带去重）
+            if (verticalChecked) {
+                const verticalCount = parseInt(document.getElementById('verticalCount').value);
+                // 过滤出竖式题支持的运算类型（不包括compare和mixed）
+                const verticalOperations = operations.filter(op => ['add', 'subtract', 'multiply', 'divide'].includes(op));
+
+                // 如果没有支持的运算类型，默认使用加法
+                const effectiveOps = verticalOperations.length > 0 ? verticalOperations : ['add'];
+
+                for (let i = 0; i < verticalCount; i++) {
+                    questions.push(generateUniqueQuestion(() => {
+                        // 每次重试时都随机选择运算类型
+                        const op = effectiveOps[random(0, effectiveOps.length - 1)];
+                        return generateVerticalQuestion(grade, difficulty, op);
+                    }));
+                }
+            }
+
+            // 生成应用题（带去重）
+            if (wordProblemChecked) {
+                const wordProblemCount = parseInt(document.getElementById('wordProblemCount').value);
+                for (let i = 0; i < wordProblemCount; i++) {
+                    questions.push(generateUniqueQuestion(() => {
+                        // 每次重试时都随机选择运算类型
+                        const op = operations[random(0, operations.length - 1)];
+                        if (op === 'mixed') {
+                            const baseOps = operations.filter(o => o !== 'mixed');
+                            const effectiveOps = baseOps.length > 0 ? baseOps : ['add', 'multiply'];
+                            return generateMixedWordProblem(grade, effectiveOps);
+                        } else {
+                            return generateWordProblem(grade, difficulty, op);
+                        }
+                    }));
+                }
+            }
+
+ // 不打乱顺序，保持题目顺序：口算 → 竖式 → 应用题
+
+            // 记录各部分的题目数量
+            const oralCount = oralChecked ? parseInt(document.getElementById('oralCount').value) : 0;
+            const verticalCount = verticalChecked ? parseInt(document.getElementById('verticalCount').value) : 0;
+            const wordProblemCount2 = wordProblemChecked ? parseInt(document.getElementById('wordProblemCount').value) : 0;
+
+            settings = { grade, difficulty, oralChecked, verticalChecked, wordProblemChecked, oralCount, verticalCount, wordProblemCount: wordProblemCount2 };
+
+            return true;
+        }
+
+        // 开始练习
+        function startPractice() {
+            if (!generateQuestions()) return;
+
+            currentQuestionIndex = 0;
+            correctCount = 0;
+            wrongAnswers = [];
+            streak = 0;
+
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+
+            showQuestion();
+            showSection('practiceSection');
+            focusInput();
+        }
+
+        // 计时测试
+        function startTimedTest() {
+            startPractice();
+        }
+
+        // 获取当前部分信息
+        function getSectionInfo() {
+            const oralCount = settings.oralCount || 0;
+            const verticalCount = settings.verticalCount || 0;
+            const wordProblemCount = settings.wordProblemCount || 0;
+
+            if (currentQuestionIndex < oralCount) {
+                return {
+                    section: '口算题',
+                    current: currentQuestionIndex + 1,
+                    total: oralCount,
+                    globalIndex: currentQuestionIndex + 1
+                };
+            } else if (currentQuestionIndex < oralCount + verticalCount) {
+                return {
+                    section: '竖式题',
+                    current: currentQuestionIndex - oralCount + 1,
+                    total: verticalCount,
+                    globalIndex: currentQuestionIndex + 1
+                };
+            } else {
+                return {
+                    section: '应用题',
+                    current: currentQuestionIndex - oralCount - verticalCount + 1,
+                    total: wordProblemCount,
+                    globalIndex: currentQuestionIndex + 1
+                };
+            }
+        }
+
+        // 显示题目
+        function showQuestion() {
+            const q = questions[currentQuestionIndex];
+            const sectionInfo = getSectionInfo();
+
+            // 显示部分信息
+            document.getElementById('currentQ').textContent = sectionInfo.globalIndex;
+            document.getElementById('totalQ').textContent = questions.length;
+            document.getElementById('sectionInfo').textContent = `${sectionInfo.section} - 第${sectionInfo.current}/${sectionInfo.total}题`;
+
+            const progress = ((currentQuestionIndex) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            // 显示或隐藏混合运算提示
+            const isMixedQuestion = q.question && (q.question.includes('×') || q.question.includes('÷')) &&
+                                   (q.question.includes('+') || q.question.includes('-'));
+            document.getElementById('mixedOperationHint').style.display = isMixedQuestion ? 'block' : 'none';
+
+            // 检查是否刚刚切换到新部分，显示提示
+            if (currentQuestionIndex > 0) {
+                const prevQ = questions[currentQuestionIndex - 1];
+                if (prevQ.type !== q.type) {
+                    showToast(`🎯 进入${sectionInfo.section}：${sectionInfo.sectionName}`, 'success');
+                }
+            }
+
+            if (q.type === 'oral') {
+                // 显示口算题
+                document.getElementById('oralQuestionArea').style.display = 'block';
+                document.getElementById('verticalQuestionArea').style.display = 'none';
+                document.getElementById('wordProblemArea').style.display = 'none';
+                document.getElementById('questionText').textContent = q.display;
+                document.getElementById('answerInput').value = '';
+                document.getElementById('questionTypeBadge').className = 'question-type-badge type-oral';
+                document.getElementById('questionTypeBadge').textContent = '📝 口算题';
+            } else if (q.type === 'vertical') {
+                // 显示竖式题
+                document.getElementById('oralQuestionArea').style.display = 'none';
+                document.getElementById('verticalQuestionArea').style.display = 'block';
+                document.getElementById('wordProblemArea').style.display = 'none';
+                document.getElementById('verticalNum1').textContent = q.num1;
+                document.getElementById('verticalNum2').textContent = q.num2;
+                document.getElementById('verticalOperator').textContent = q.operator;
+                document.getElementById('verticalAnswerInput').value = '';
+                document.getElementById('verticalHorizontalDisplay').textContent = `${q.display} = ?`;
+                document.getElementById('questionTypeBadge').className = 'question-type-badge type-vertical';
+                document.getElementById('questionTypeBadge').textContent = '✏️ 竖式题';
+            } else if (q.type === 'wordProblem') {
+                // 显示应用题
+                document.getElementById('oralQuestionArea').style.display = 'none';
+                document.getElementById('verticalQuestionArea').style.display = 'none';
+                document.getElementById('wordProblemArea').style.display = 'block';
+                document.getElementById('wordProblemText').textContent = q.question;
+                document.getElementById('wordProblemAnswerInput').value = '';
+                document.getElementById('questionTypeBadge').className = 'question-type-badge type-word-problem';
+                document.getElementById('questionTypeBadge').textContent = '📖 应用题';
+            }
+
+            focusInput();
+        }
+
+        // 聚焦输入框
+        function focusInput() {
+            setTimeout(() => {
+                const q = questions[currentQuestionIndex];
+                if (q.type === 'oral') {
+                    document.getElementById('answerInput').focus();
+                } else if (q.type === 'vertical') {
+                    document.getElementById('verticalAnswerInput').focus();
+                } else if (q.type === 'wordProblem') {
+                    document.getElementById('wordProblemAnswerInput').focus();
+                }
+            }, 100);
+        }
+
+        // 更新计时器
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('timer').textContent = formatTime(elapsed);
+        }
+
+        // 提交答案
+        function submitAnswer() {
+            const q = questions[currentQuestionIndex];
+            let userAnswer;
+
+            if (q.type === 'oral') {
+                userAnswer = parseInt(document.getElementById('answerInput').value);
+            } else if (q.type === 'vertical') {
+                userAnswer = parseInt(document.getElementById('verticalAnswerInput').value);
+            } else if (q.type === 'wordProblem') {
+                userAnswer = parseInt(document.getElementById('wordProblemAnswerInput').value);
+            }
+
+            if (isNaN(userAnswer)) {
+                showToast('请输入答案', 'error');
+                return;
+            }
+
+            const isCorrect = userAnswer === q.answer;
+
+            if (isCorrect) {
+                correctCount++;
+                streak++;
+                showToast('✅ 正确！', 'success');
+            } else {
+                wrongAnswers.push({
+                    question: q.type === 'wordProblem' ? q.question : q.display,
+                    correctAnswer: q.answer,
+                    userAnswer: userAnswer,
+                    type: q.type
+                });
+                streak = 0;
+                showToast('❌ 错误！', 'error');
+            }
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex >= questions.length) {
+                showResult();
+            } else {
+                showQuestion();
+            }
+        }
+
+        // 跳过题目
+        function skipQuestion() {
+            const q = questions[currentQuestionIndex];
+            wrongAnswers.push({
+                question: q.display,
+                correctAnswer: q.answer,
+                userAnswer: '跳过',
+                type: q.type
+            });
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex >= questions.length) {
+                showResult();
+            } else {
+                showQuestion();
+            }
+        }
+
+        // 显示结果
+        function showResult() {
+            clearInterval(timerInterval);
+
+            const totalTime = Math.floor((Date.now() - startTime) / 1000);
+            const accuracy = Math.round((correctCount / questions.length) * 100);
+
+            document.getElementById('finalScore').textContent = accuracy;
+            document.getElementById('resultTotal').textContent = questions.length;
+            document.getElementById('resultCorrect').textContent = correctCount;
+            document.getElementById('resultWrong').textContent = questions.length - correctCount;
+            document.getElementById('resultTime').textContent = formatTime(totalTime);
+
+            // 计算各部分成绩
+            const oralCount = settings.oralCount || 0;
+            const verticalCount = settings.verticalCount || 0;
+            const wordProblemCount = settings.wordProblemCount || 0;
+
+            let oralCorrect = 0;
+            let verticalCorrect = 0;
+            let wordProblemCorrect = 0;
+
+            wrongAnswers.forEach(w => {
+                if (w.type === 'oral') {
+                    // 错题
+                } else if (w.type === 'vertical') {
+                    // 错题
+                } else if (w.type === 'wordProblem') {
+                    // 错题
+                }
+            });
+
+            // 统计各部分正确数
+            for (let i = 0; i < oralCount; i++) {
+                const q = questions[i];
+                const isWrong = wrongAnswers.some(w => w.question === q.display);
+                if (!isWrong) oralCorrect++;
+            }
+
+            for (let i = 0; i < verticalCount; i++) {
+                const q = questions[oralCount + i];
+                if (q) {
+                    const isWrong = wrongAnswers.some(w => w.question === q.display);
+                    if (!isWrong) verticalCorrect++;
+                }
+            }
+
+            for (let i = 0; i < wordProblemCount; i++) {
+                const q = questions[oralCount + verticalCount + i];
+                if (q) {
+                    const isWrong = wrongAnswers.some(w => w.question === q.question);
+                    if (!isWrong) wordProblemCorrect++;
+                }
+            }
+
+            // 显示各部分成绩
+            const sectionCount = (oralCount > 0 ? 1 : 0) + (verticalCount > 0 ? 1 : 0) + (wordProblemCount > 0 ? 1 : 0);
+            const gridCols = sectionCount === 3 ? 'repeat(3, 1fr)' : 'repeat(2, 1fr)';
+            let sectionStatsHTML = `<div style="display: grid; grid-template-columns: ${gridCols}; gap: 10px;">`;
+
+            if (oralCount > 0) {
+                const oralAccuracy = oralCount > 0 ? Math.round((oralCorrect / oralCount) * 100) : 0;
+                sectionStatsHTML += `
+                    <div style="padding: 10px; background: white; border-radius: 8px; border-left: 3px solid var(--primary-color);">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">口算题</div>
+                        <div style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">${oralCorrect}/${oralCount}</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">正确率：${oralAccuracy}%</div>
+                    </div>
+                `;
+            }
+
+            if (verticalCount > 0) {
+                const verticalAccuracy = verticalCount > 0 ? Math.round((verticalCorrect / verticalCount) * 100) : 0;
+                sectionStatsHTML += `
+                    <div style="padding: 10px; background: white; border-radius: 8px; border-left: 3px solid var(--secondary-color);">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">竖式题</div>
+                        <div style="font-size: 1.2rem; font-weight: bold; color: var(--secondary-color);">${verticalCorrect}/${verticalCount}</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">正确率：${verticalAccuracy}%</div>
+                    </div>
+                `;
+            }
+
+            if (wordProblemCount > 0) {
+                const wordProblemAccuracy = wordProblemCount > 0 ? Math.round((wordProblemCorrect / wordProblemCount) * 100) : 0;
+                sectionStatsHTML += `
+                    <div style="padding: 10px; background: white; border-radius: 8px; border-left: 3px solid #8b5cf6;">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">应用题</div>
+                        <div style="font-size: 1.2rem; font-weight: bold; color: #8b5cf6;">${wordProblemCorrect}/${wordProblemCount}</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">正确率：${wordProblemAccuracy}%</div>
+                    </div>
+                `;
+            }
+
+            sectionStatsHTML += '</div>';
+            document.getElementById('sectionStatsContent').innerHTML = sectionStatsHTML;
+            const hasMultipleSections = (oralCount > 0 ? 1 : 0) + (verticalCount > 0 ? 1 : 0) + (wordProblemCount > 0 ? 1 : 0) > 1;
+            document.getElementById('sectionStats').style.display = hasMultipleSections ? 'block' : 'none';
+
+            // 评价
+            let title = '';
+            if (accuracy >= 95) title = '🏆 太棒了！';
+            else if (accuracy >= 85) title = '🎉 很优秀！';
+            else if (accuracy >= 70) title = '👍 继续加油！';
+            else if (accuracy >= 60) title = '💪 需要努力！';
+            else title = '📚 多多练习！';
+
+            document.getElementById('resultTitle').textContent = title;
+
+            // 显示错题
+            if (wrongAnswers.length > 0) {
+                document.getElementById('wrongAnswersSection').style.display = 'block';
+                document.getElementById('wrongAnswersList').innerHTML = wrongAnswers.map(w => `
+                    <div class="wrong-item">
+                        <div class="wrong-question">
+                            <span style="font-size: 0.85rem; padding: 3px 8px; border-radius: 4px; margin-right: 8px; ${w.type === 'oral' ? 'background: #dbeafe; color: #1e40af;' : 'background: #fce7f3; color: #9d174d;'}">${w.type === 'oral' ? '口算' : '竖式'}</span>
+                            ${w.question}
+                        </div>
+                        <div class="wrong-answer-info">
+                            正确答案：<span style="color: var(--success-color); font-weight: 600;">${w.correctAnswer}</span>
+                            你的答案：<span style="color: var(--danger-color);">${w.userAnswer}</span>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('wrongAnswersSection').style.display = 'none';
+            }
+
+            // 保存记录
+            saveHistory(accuracy, totalTime);
+
+            showSection('resultSection');
+        }
+
+        // 重新练习
+        function restart() {
+            startPractice();
+        }
+
+        // 重练错题
+        function practiceWrong() {
+            if (wrongAnswers.length === 0) {
+                showToast('没有错题需要重练', 'error');
+                return;
+            }
+
+            questions = wrongAnswers.map(w => {
+                if (w.type === 'oral') {
+                    return {
+                        type: 'oral',
+                        question: w.question,
+                        answer: w.correctAnswer,
+                        display: w.question
+                    };
+                } else {
+                    // 从 display 解析竖式题
+                    const parts = w.question.split(' ');
+                    const num1 = parseInt(parts[0]);
+                    const operator = parts[1];
+                    const num2 = parseInt(parts[2]);
+                    return {
+                        type: 'vertical',
+                        num1: num1,
+                        num2: num2,
+                        operator: operator,
+                        answer: w.correctAnswer,
+                        display: w.question
+                    };
+                }
+            });
+
+            currentQuestionIndex = 0;
+            correctCount = 0;
+            wrongAnswers = [];
+            streak = 0;
+
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+
+            showQuestion();
+            showSection('practiceSection');
+        }
+
+        // 返回主页
+        function goHome() {
+            clearInterval(timerInterval);
+            loadStats();
+            showSection('homeSection');
+        }
+
+        // 显示打印设置对话框
+        function showPrintDialog() {
+            // 预先初始化 settings（如果还没有初始化）
+            if (!settings.grade || Object.keys(settings).length === 0) {
+                const success = generateQuestions();
+                if (!success) return;
+            }
+
+            const dialog = document.getElementById('printDialog');
+            dialog.style.display = 'flex';
+            // 强制重绘，确保显示生效
+            dialog.offsetHeight;
+        }
+
+        // 关闭打印设置对话框
+        function closePrintDialog() {
+            document.getElementById('printDialog').style.display = 'none';
+        }
+
+        // 确认生成试卷
+        function confirmGeneratePrint() {
+            const copies = parseInt(document.getElementById('printCopies').value);
+            const sameQuestions = document.getElementById('sameQuestions').checked;
+
+            // 立即关闭对话框
+            const dialog = document.getElementById('printDialog');
+            dialog.style.display = 'none';
+
+            // 使用 setTimeout 确保对话框关闭后再生成，避免事件冲突
+            setTimeout(() => {
+                generatePrint(copies, sameQuestions);
+            }, 100);
+        }
+
+        // 生成打印试卷
+        function generatePrint(copies = 1, sameQuestions = true) {
+            // 确保 settings 已初始化（如果用户直接点击生成试卷按钮）
+            if (!settings.grade || Object.keys(settings).length === 0) {
+                const success = generateQuestions();
+                if (!success) return;
+            }
+
+            const printContent = document.getElementById('printContent');
+            let html = '';
+
+            // 保存原始设置
+            const originalSettings = {...settings};
+
+            for (let copyIndex = 0; copyIndex < copies; copyIndex++) {
+                // 第一份试卷，需要先生成题目
+                if (copyIndex === 0) {
+                    if (!generateQuestions()) {
+                        showToast('⚠️ 生成试卷失败，请检查设置', 'error');
+                        return;
+                    }
+                } else if (!sameQuestions) {
+                    // 不使用相同题目，重新生成
+                    if (!generateQuestions()) {
+                        showToast('⚠️ 生成试卷失败，请检查设置', 'error');
+                        return;
+                    }
+                }
+                // 如果 sameQuestions = true 且 copyIndex > 0，使用相同的题目，不需要重新生成
+
+                const oralCount = settings.oralCount || 0;
+                const verticalCount = settings.verticalCount || 0;
+                const wordProblemCount = settings.wordProblemCount || 0;
+
+                // 每份试卷用一个wrapper包裹，避免内部元素被分页规则影响
+                html += '<div class="print-copy-wrapper">';
+
+                // 每份试卷都添加抬头
+                html += '<div class="print-header">';
+                html += '<h1>小学数学练习题</h1>';
+                html += '</div>';
+                html += '<div class="print-info">';
+                html += '<div>姓名：__________</div>';
+                html += '<div>日期：__________</div>';
+                html += '<div>用时：__________</div>';
+                html += '<div>得分：__________</div>';
+                html += '</div>';
+
+                // 打印口算题
+                if (oralCount > 0) {
+                    html += '<div class="print-section">';
+                    html += '<div class="print-section-title">口算题（每题2分，共' + (oralCount * 2) + '分）</div>';
+                    html += '<div style="display: flex; flex-wrap: wrap; align-items: center;">';
+
+                    for (let i = 0; i < oralCount; i++) {
+                        const q = questions[i];
+                        const questionText = q.question.toString();
+                        html += `
+                            <div class="print-oral">${questionText}&nbsp;=&nbsp;____</div>
+                        `;
+                    }
+
+                    html += '</div></div>';
+                }
+
+                // 打印竖式题 - 包含横式和竖式
+                if (verticalCount > 0) {
+                    html += '<div class="print-section">';
+                    html += '<div class="print-section-title">竖式题（用竖式计算，每题2分，共' + (verticalCount * 2) + '分）</div>';
+                    html += '<div style="display: flex; flex-wrap: wrap;">';
+
+                    for (let i = 0; i < verticalCount; i++) {
+                        const q = questions[oralCount + i];
+                        const num1Str = q.num1.toString();
+                        const num2Str = q.num2.toString();
+                        const maxLength = Math.max(num1Str.length, num2Str.length);
+
+                        html += `
+                            <div class="print-vertical">
+                                <div class="print-vertical-horizontal">${q.display}&nbsp;=&nbsp;____</div>
+                                <div class="print-vertical-calculation">
+                                    <div class="print-vertical-numbers">
+                                        <div>${'&nbsp;'.repeat(maxLength - num1Str.length)}${num1Str}</div>
+                                        <div>${q.operator}&nbsp;${'&nbsp;'.repeat(maxLength - num2Str.length)}${num2Str}</div>
+                                    </div>
+                                    <div class="print-vertical-line"></div>
+                                    <div class="print-vertical-answer"></div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    html += '</div></div>';
+                }
+
+                // 打印应用题
+                if (wordProblemCount > 0) {
+                    html += '<div class="print-section">';
+                    html += '<div class="print-section-title">应用题（每题5分，共' + (wordProblemCount * 5) + '分）</div>';
+                    html += '<div style="display: flex; flex-direction: column; gap: 12px;">';
+
+                    for (let i = 0; i < wordProblemCount; i++) {
+                        const q = questions[oralCount + verticalCount + i];
+                        html += `
+                            <div style="padding: 8px; background: #f9f9f9; border-left: 3px solid #8b5cf6; page-break-inside: avoid;">
+                                <div style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 8px;">${i + 1}. ${q.question}</div>
+                                <div style="border: 1px dashed #ccc; padding: 8px; min-height: 60px; background: white;">
+                                    <div style="font-size: 0.7rem; color: #999; margin-bottom: 3px;">📝 解答区域</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    html += '</div></div>';
+                }
+
+                // 添加草稿区域（智能判断是否会跨页）
+                const totalQuestions = oralCount + verticalCount + wordProblemCount;
+
+                // 智能判断是否需要草稿区
+                const hasVertical = verticalCount > 0;
+                const hasWordProblem = wordProblemCount > 0;
+                const needsDraft = hasVertical || hasWordProblem || totalQuestions <= 25;
+
+                // 估算页面占用高度（单位：mm）
+                // A4页面可用高度约 270mm（减去页边距）
+                const pageHeight = 270;
+                const headerHeight = 30; // 试卷头部
+                const oralHeight = oralCount * 10; // 每道口算题约10mm
+                const verticalHeight = verticalCount * 30; // 每道竖式题约30mm
+                const wordProblemHeight = wordProblemCount * 40; // 每道应用题约40mm（缩小后）
+
+                // 草稿区高度估算
+                let draftLinesPerCol = 4;
+                if (hasVertical && hasWordProblem) {
+                    draftLinesPerCol = 3;
+                } else if (hasWordProblem) {
+                    draftLinesPerCol = 5;
+                } else if (totalQuestions <= 15) {
+                    draftLinesPerCol = 6;
+                }
+                const draftHeight = 20 + draftLinesPerCol * 2 * 8; // 标题20mm + 每行8mm
+
+                // 计算总高度
+                const currentHeight = headerHeight + oralHeight + verticalHeight + wordProblemHeight;
+                const totalHeight = currentHeight + draftHeight;
+
+                // 只有在不跨页的情况下才添加草稿区
+                if (needsDraft && totalQuestions <= 50 && totalHeight <= pageHeight) {
+                    html += '<div class="print-draft-area">';
+                    html += '<div class="print-draft-title">📝 草稿区（列竖式计算）</div>';
+                    html += '<div class="print-draft-lines">';
+
+                    // 左右两列，每列若干行
+                    for (let col = 0; col < 2; col++) {
+                        html += '<div class="print-draft-column">';
+                        for (let line = 0; line < draftLinesPerCol; line++) {
+                            html += '<div class="print-draft-item"></div>';
+                        }
+                        html += '</div>';
+                    }
+
+                    html += '</div></div>';
+                }
+
+                html += '</div>'; // 结束 print-copy-wrapper
+            }
+
+            // 恢复原始设置
+            settings = originalSettings;
+
+            printContent.innerHTML = html;
+
+            // 显示提示
+            if (copies > 1) {
+                showToast(`✅ 已生成${copies}份试卷，准备打印...`, 'success');
+                setTimeout(() => {
+                    window.print();
+                }, 500);
+            } else {
+                window.print();
+            }
+        }
+
+        // 保存历史记录
+        function saveHistory(accuracy, time) {
+            const history = JSON.parse(localStorage.getItem('mathPracticeHistory') || '[]');
+
+            history.unshift({
+                date: new Date().toLocaleString('zh-CN'),
+                grade: settings.grade,
+                difficulty: settings.difficulty,
+                count: questions.length,
+                correct: correctCount,
+                total: questions.length,
+                accuracy: accuracy,
+                time: time,
+                types: settings.oralChecked && settings.verticalChecked ? '混合' : (settings.oralChecked ? '口算' : '竖式')
+            });
+
+            if (history.length > 50) history.pop();
+
+            localStorage.setItem('mathPracticeHistory', JSON.stringify(history));
+            loadStats();
+        }
+
+        // 加载历史记录
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('mathPracticeHistory') || '[]');
+            const historyList = document.getElementById('historyList');
+
+            if (history.length === 0) {
+                historyList.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">暂无练习记录</p>';
+                return;
+            }
+
+            historyList.innerHTML = history.map((h, i) => `
+                <div class="history-item">
+                    <div class="history-date">${h.date} | ${h.types || '混合'}</div>
+                    <div class="history-stats">
+                        <span>正确率：${h.accuracy}%</span>
+                        <span>题目：${h.correct}/${h.total}</span>
+                        <span>用时：${formatTime(h.time)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 显示历史记录
+        function showHistory() {
+            loadHistory();
+            showSection('historySection');
+        }
+
+        // 清空历史记录
+        function clearHistory() {
+            if (confirm('确定要清空所有练习记录吗？')) {
+                localStorage.removeItem('mathPracticeHistory');
+                loadHistory();
+                loadStats();
+                showToast('记录已清空');
+            }
+        }
+
+        // 加载统计数据
+        function loadStats() {
+            const history = JSON.parse(localStorage.getItem('mathPracticeHistory') || '[]');
+
+            const today = new Date().toDateString();
+            const todayCount = history.filter(h => new Date(h.date).toDateString() === today).length;
+            document.getElementById('todayCount').textContent = todayCount;
+
+            if (history.length > 0) {
+                const avgAcc = Math.round(history.reduce((sum, h) => sum + h.accuracy, 0) / history.length);
+                document.getElementById('avgAccuracy').textContent = avgAcc + '%';
+            }
+
+            const totalQuestions = history.reduce((sum, h) => sum + h.total, 0);
+            document.getElementById('totalQuestions').textContent = totalQuestions;
+
+            const bestStreak = parseInt(localStorage.getItem('mathPracticeBestStreak') || '0');
+            document.getElementById('bestStreak').textContent = bestStreak;
+        }
+
+        // 读题
+        function readQuestion() {
+            const q = questions[currentQuestionIndex];
+            let text;
+
+            if (q.type === 'oral') {
+                text = q.question.replace('×', '乘以').replace('÷', '除以').replace('+', '加').replace('-', '减');
+                text += '等于几';
+            } else {
+                text = `${q.num1} ${q.operator === '+' ? '加' : q.operator === '-' ? '减' : q.operator === '×' ? '乘以' : '除以'} ${q.num2}，竖式计算`;
+            }
+
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'zh-CN';
+                utterance.rate = 0.8;
+                speechSynthesis.speak(utterance);
+            } else {
+                showToast('您的浏览器不支持语音功能', 'error');
+            }
+        }
+
+        // 键盘事件
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                submitAnswer();
+            }
+        }
+
+        // 版本信息
+        console.log('小学数学快速出题器 v1.2.2');
+        console.log('更新时间：2026年2月6日');
+        console.log('新功能：混合运算 + 比较类应用题（比多比少）');
+    </script>
+</body>
+</html>
