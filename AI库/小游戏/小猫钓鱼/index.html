@@ -199,27 +199,47 @@
             height: 84px;
             background: white;
             border-radius: 6px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             font-weight: bold;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             transition: transform 0.3s ease;
             position: relative;
             cursor: default;
+            padding: 3px;
         }
 
         .card.red { color: #dc2626; }
         .card.black { color: #1f2937; }
 
+        /* 左上角 */
+        .card-corner-top {
+            position: absolute;
+            top: 3px;
+            left: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+        }
+
+        /* 右下角（旋转180度） */
+        .card-corner-bottom {
+            position: absolute;
+            bottom: 3px;
+            right: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+            transform: rotate(180deg);
+        }
+
         .card-rank {
-            font-size: 20px;
+            font-size: 14px;
             line-height: 1;
         }
 
         .card-suit {
-            font-size: 18px;
+            font-size: 12px;
             line-height: 1;
         }
 
@@ -407,10 +427,10 @@
                 width: 50px;
                 height: 70px;
             }
-            .card-rank { font-size: 16px; }
-            .card-suit { font-size: 14px; }
+            .card-rank { font-size: 12px; }
+            .card-suit { font-size: 10px; }
             .deck { width: 55px; height: 78px; }
-            .pile-area { min-height: 150px; }
+            .pile-area { min-height: 120px; }
             .pile-stack { width: 50px; min-height: 70px; }
         }
 
@@ -864,8 +884,14 @@
             const div = document.createElement('div');
             div.className = `card ${card.color}${isNew ? ' new-card' : ''}`;
             div.innerHTML = `
-                <span class="card-rank">${card.rank}</span>
-                <span class="card-suit">${card.suit}</span>
+                <div class="card-corner-top">
+                    <span class="card-rank">${card.rank}</span>
+                    <span class="card-suit">${card.suit}</span>
+                </div>
+                <div class="card-corner-bottom">
+                    <span class="card-rank">${card.rank}</span>
+                    <span class="card-suit">${card.suit}</span>
+                </div>
             `;
             div.dataset.value = card.value;
             return div;
@@ -893,16 +919,16 @@
 
             if (pile.length === 0) return;
 
-            // 计算叠放：每张牌向下偏移一定距离
-            const cardOffset = 18; // 每张牌的垂直偏移
-            const maxVisible = 12; // 最多显示的牌数
+            // 计算叠放：向下偏移
+            const cardOffsetY = 20;  // 每张牌的垂直偏移（露出左上角数字）
+            const maxVisible = 10;   // 最多显示的牌数
             const showCount = Math.min(pile.length, maxVisible);
             const startIndex = Math.max(0, pile.length - showCount);
 
             for (let i = startIndex; i < pile.length; i++) {
                 const cardEl = createCardElement(pile[i]);
-                const offset = (i - startIndex) * cardOffset;
-                cardEl.style.top = offset + 'px';
+                const offsetY = (i - startIndex) * cardOffsetY;
+                cardEl.style.top = offsetY + 'px';
                 cardEl.style.zIndex = i;
 
                 if (i === pile.length - 1) {
@@ -912,8 +938,8 @@
                 pileStack.appendChild(cardEl);
             }
 
-            // 动态调整牌堆高度
-            pileStack.style.height = (84 + (showCount - 1) * cardOffset) + 'px';
+            // 动态调整牌堆尺寸
+            pileStack.style.height = (84 + (showCount - 1) * cardOffsetY) + 'px';
         }
 
         // 显示消息

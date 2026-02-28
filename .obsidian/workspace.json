@@ -20,8 +20,19 @@
               "icon": "lucide-file",
               "title": "README"
             }
+          },
+          {
+            "id": "5dde774a8b896de6",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -189,12 +200,12 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "0eac96eec12c68a1",
+  "active": "5dde774a8b896de6",
   "lastOpenFiles": [
+    "AI库/小游戏/小猫钓鱼/README.md",
     "AI库/小游戏/掼蛋",
     "AI库/小游戏/math-practice-android/README.md",
     "AI库/小游戏/小猫钓鱼/index.html",
-    "AI库/小游戏/小猫钓鱼/README.md",
     "AI库/小游戏/math-practice-android/node_modules/xml2js/node_modules/xmlbuilder/typings/index.d.ts",
     "AI库/小游戏/math-practice-android/node_modules/xml2js/node_modules/xmlbuilder/typings",
     "AI库/小游戏/小猫钓鱼",
@@ -203,7 +214,6 @@
     "AI库/小游戏/math-practice-android/android/app/src/main/res/xml/file_paths.xml",
     "AI库/小游戏/math-practice-android/android/app/src/main/res/xml/config.xml",
     "AI库/小游戏/math-practice-android/android/app/src/main/res/xml",
-    "AI库/小游戏/math-practice-android/android/capacitor-cordova-android-plugins/src/main/res",
     "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
     "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
     "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
