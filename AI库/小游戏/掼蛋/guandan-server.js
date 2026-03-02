@@ -59,10 +59,13 @@ const LEVEL_TO_RANK = {
 
 // 房间类
 class GameRoom {
-    constructor(id) {
+    constructor(id, mode = 'normal') {
         this.id = id;
+        this.mode = mode; // 'fast' 或 'normal'
         this.players = new Map();
         this.maxPlayers = 4;
+        this.turnTimeout = mode === 'fast' ? 7 : 15; // 出牌时间
+        this.turnTimer = null;
         this.gameState = {
             started: false,
             currentPlayer: 0,
@@ -74,7 +77,8 @@ class GameRoom {
             deck: [],
             hands: {},
             roundWinner: null,
-            levelUp: 0
+            levelUp: 0,
+            turnTimeLeft: this.turnTimeout
         };
     }
 
@@ -481,6 +485,12 @@ function generateRoomId() {
 wss.on('connection', (ws) => {
     console.log('新客户端连接');
 
+    // 发送当前房间列表
+    ws.send(JSON.stringify({
+        type: 'roomList',
+        rooms: getRoomList()
+    }));
+
     ws.on('message', (msg) => {
         try {
             const data = JSON.parse(msg);
@@ -488,17 +498,19 @@ wss.on('connection', (ws) => {
                 case 'createRoom': {
                     const roomId = generateRoomId();
                     const playerId = 'P_' + Math.random().toString(36).substring(2, 10);
-                    const room = new GameRoom(roomId);
+                    const mode = data.mode || 'normal'; // 默认正常模式
+                    const room = new GameRoom(roomId, mode);
                     room.addPlayer(ws, playerId, data.playerName);
                     rooms.set(roomId, room);
                     playerToRoom.set(playerId, roomId);
                     ws.send(JSON.stringify({
-                        type: 'roomCreated', roomId, playerId,
+                        type: 'roomCreated', roomId, playerId, mode,
                         players: Array.from(room.players.values()).map(p => ({
                             id: p.id, name: p.name, playerNum: p.playerNum, team: p.team, ready: p.ready
                         }))
                     }));
-                    console.log(`房间创建: ${roomId}`);
+                    broadcastRoomList();
+                    console.log(`房间创建: ${roomId} (${mode === 'fast' ? '快速' : '正常'}模式)`);
                     break;
                 }
                 case 'joinRoom': {
@@ -515,6 +527,7 @@ wss.on('connection', (ws) => {
                         }))
                     }));
                     room.broadcastPlayerList();
+                    broadcastRoomList();
                     console.log(`玩家加入: ${data.roomId}`);
                     break;
                 }
@@ -560,6 +573,7 @@ wss.on('connection', (ws) => {
                 if (room.removePlayer(pid)) { rooms.delete(rid); console.log(`房间删除: ${rid}`); }
                 else room.broadcast({ type: 'playerLeft', playerId: pid, playerName: p.name });
                 playerToRoom.delete(pid);
+                broadcastRoomList();
                 break;
             }
         }
@@ -567,6 +581,39 @@ wss.on('connection', (ws) => {
 
     ws.on('error', (e) => console.error('WS错误:', e));
 });
+
+// 获取房间列表
+function getRoomList() {
+    const list = [];
+    rooms.forEach((room, roomId) => {
+        list.push({
+            roomId,
+            mode: room.mode,
+            turnTimeout: room.turnTimeout,
+            playerCount: room.players.size,
+            maxPlayers: room.maxPlayers,
+            started: room.gameState.started,
+            players: Array.from(room.players.values()).map(p => ({
+                name: p.name,
+                ready: p.ready
+            }))
+        });
+    });
+    return list;
+}
+
+// 广播房间列表给所有连接的客户端
+function broadcastRoomList() {
+    const roomList = getRoomList();
+    wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify({
+                type: 'roomList',
+                rooms: roomList
+            }));
+        }
+    });
+}
 
 server.listen(PORT, '0.0.0.0', () => {
     console.log(``);

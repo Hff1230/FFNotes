@@ -689,6 +689,258 @@
         .score-item .score {
             color: #ffd700;
         }
+
+        /* 牌桌列表样式 */
+        .lobby-container {
+            width: 90%;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+
+        .lobby-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        .lobby-header h2 {
+            color: #ffd700;
+            font-size: 24px;
+        }
+
+        .table-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .table-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #2d5a3d;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .table-card:hover {
+            border-color: #ffd700;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .table-card.full {
+            border-color: #ff6b6b;
+            opacity: 0.7;
+        }
+
+        .table-card.full:hover {
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .table-card.playing {
+            border-color: #4dabf7;
+        }
+
+        .table-id {
+            color: #ffd700;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .table-seats {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .seat {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: default;
+            transition: all 0.2s;
+        }
+
+        .seat:not(.occupied) {
+            cursor: pointer;
+            border-style: dashed;
+        }
+
+        .seat:not(.occupied):hover {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.1);
+        }
+
+        .seat.occupied {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.2);
+            cursor: default;
+        }
+
+        .seat.occupied.red {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.2);
+        }
+
+        .seat.occupied.blue {
+            border-color: #4dabf7;
+            background: rgba(77, 171, 247, 0.2);
+        }
+
+        .table-status {
+            text-align: center;
+            font-size: 12px;
+            color: #90ee90;
+        }
+
+        .table-status.full {
+            color: #ff6b6b;
+        }
+
+        .table-status.playing {
+            color: #4dabf7;
+        }
+
+        .table-players {
+            margin-top: 10px;
+            font-size: 11px;
+            color: #888;
+            text-align: center;
+        }
+
+        .create-table-card {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px dashed #ffd700;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+            cursor: pointer;
+        }
+
+        .create-table-card .plus {
+            font-size: 48px;
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        .create-table-card .text {
+            color: #ffd700;
+            font-size: 14px;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .mode-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid;
+        }
+
+        .mode-btn.fast {
+            background: rgba(255, 107, 107, 0.2);
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .mode-btn.fast:hover, .mode-btn.fast.active {
+            background: #ff6b6b;
+            color: #1a3d2a;
+        }
+
+        .mode-btn.normal {
+            background: rgba(77, 171, 247, 0.2);
+            border-color: #4dabf7;
+            color: #4dabf7;
+        }
+
+        .mode-btn.normal:hover, .mode-btn.normal.active {
+            background: #4dabf7;
+            color: #1a3d2a;
+        }
+
+        /* 牌桌模式标签 */
+        .table-mode {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .table-mode.fast {
+            background: #ff6b6b;
+            color: #fff;
+        }
+
+        .table-mode.normal {
+            background: #4dabf7;
+            color: #fff;
+        }
+
+        .table-card {
+            position: relative;
+        }
+
+        .name-bar {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .name-bar label {
+            color: #ffd700;
+            font-size: 14px;
+        }
+
+        .name-bar input {
+            width: 200px;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #ffd700;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .name-bar input:focus {
+            outline: none;
+            box-shadow: 0 0 15px #ffd700;
+        }
+
+        .name-bar input::placeholder {
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -698,25 +950,28 @@
             <h1>🃏 掼蛋 🃏</h1>
             <div class="subtitle">安徽安庆热门扑克游戏 · 局域网版</div>
 
-            <div class="input-group">
-                <label>服务器地址</label>
-                <input type="text" id="serverAddress" value="localhost:8081" placeholder="例如: 192.168.1.100:8081">
+            <!-- 底部名称栏 -->
+            <div class="name-bar">
+                <label>玩家名称:</label>
+                <input type="text" id="playerName" placeholder="输入你的名称" maxlength="10">
             </div>
 
-            <div class="input-group">
-                <label>玩家昵称</label>
-                <input type="text" id="playerName" placeholder="输入你的昵称" maxlength="10">
-            </div>
-
-            <div class="btn-group">
-                <button class="btn" onclick="createRoom()">创建房间</button>
-                <button class="btn btn-secondary" onclick="showJoinRoom()">加入房间</button>
-            </div>
-
-            <div class="input-group" id="joinRoomInput" style="display: none; margin-top: 20px;">
-                <label>房间号</label>
-                <input type="text" id="roomIdInput" placeholder="输入6位房间号" maxlength="6">
-                <button class="btn" onclick="joinRoom()" style="margin-top: 15px; width: 280px;">加入</button>
+            <!-- 牌桌列表 -->
+            <div class="lobby-container">
+                <div class="lobby-header">
+                    <h2>🪑 牌桌列表</h2>
+                </div>
+                <div class="table-grid" id="tableGrid">
+                    <!-- 创建新桌卡片 -->
+                    <div class="table-card create-table-card">
+                        <div class="plus">+</div>
+                        <div class="text">创建新桌</div>
+                        <div class="mode-selector">
+                            <div class="mode-btn fast" onclick="createRoom('fast')">⚡ 快速 7秒</div>
+                            <div class="mode-btn normal active" onclick="createRoom('normal')">🎮 正常 15秒</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -907,6 +1162,9 @@
     // ==================== 消息处理 ====================
     function handleMessage(data) {
         switch(data.type) {
+            case 'roomList':
+                renderTableList(data.rooms);
+                break;
             case 'roomCreated':
                 handleRoomCreated(data);
                 break;
@@ -946,6 +1204,98 @@
             case 'error':
                 showNotification(data.message);
                 break;
+        }
+    }
+
+    // ==================== 牌桌列表 ====================
+    function renderTableList(rooms) {
+        const grid = document.getElementById('tableGrid');
+
+        // 保留创建新桌卡片
+        grid.innerHTML = `
+            <div class="table-card create-table-card">
+                <div class="plus">+</div>
+                <div class="text">创建新桌</div>
+                <div class="mode-selector">
+                    <div class="mode-btn fast" onclick="createRoom('fast')">⚡ 快速 7秒</div>
+                    <div class="mode-btn normal" onclick="createRoom('normal')">🎮 正常 15秒</div>
+                </div>
+            </div>
+        `;
+
+        // 添加现有房间
+        rooms.forEach(room => {
+            const card = document.createElement('div');
+            const isFull = room.playerCount >= room.maxPlayers;
+            const isPlaying = room.started;
+            const isFast = room.mode === 'fast';
+
+            card.className = `table-card ${isFull ? 'full' : ''} ${isPlaying ? 'playing' : ''}`;
+
+            // 模式标签
+            const modeLabel = isFast ? '⚡ 快速' : '🎮 正常';
+            const modeClass = isFast ? 'fast' : 'normal';
+
+            // 生成座位显示（每个座位可单独点击）
+            let seatsHtml = '';
+            for (let i = 0; i < 4; i++) {
+                const occupied = i < room.playerCount;
+                const player = room.players[i];
+                let seatClass = occupied ? 'occupied' : '';
+                if (occupied && player) {
+                    seatClass += (i < 2) ? ' red' : ' blue';
+                }
+                // 空座位添加点击事件
+                const clickHandler = (!occupied && !isPlaying) ? `onclick="event.stopPropagation(); joinRoomById('${room.roomId}')"` : '';
+                const title = occupied && player ? player.name : (isPlaying ? '' : '点击加入');
+                seatsHtml += `<div class="seat ${seatClass}" ${clickHandler} title="${title}">${occupied ? '👤' : '+'}</div>`;
+            }
+
+            // 玩家列表
+            const playerNames = room.players.map(p => p.name).join(', ');
+
+            // 状态文字
+            let statusText = `${room.playerCount}/4 人`;
+            if (isPlaying) statusText = '游戏中';
+            else if (isFull) statusText = '已满';
+
+            card.innerHTML = `
+                <div class="table-mode ${modeClass}">${modeLabel}</div>
+                <div class="table-id">${room.roomId}</div>
+                <div class="table-seats">${seatsHtml}</div>
+                <div class="table-status ${isFull ? 'full' : ''} ${isPlaying ? 'playing' : ''}">${statusText}</div>
+                ${playerNames ? `<div class="table-players">${playerNames}</div>` : ''}
+            `;
+
+            grid.appendChild(card);
+        });
+    }
+
+    function joinRoomById(roomId) {
+        playerName = document.getElementById('playerName').value.trim();
+
+        if (!playerName) {
+            showNotification('请输入玩家名称');
+            return;
+        }
+
+        // 如果还没连接，先连接
+        if (!ws || ws.readyState !== WebSocket.OPEN) {
+            connect(window.location.host).then(() => {
+                send({
+                    type: 'joinRoom',
+                    roomId: roomId,
+                    playerName: playerName
+                });
+            }).catch(() => {
+                showNotification('连接服务器失败');
+            });
+        } else {
+            send({
+                type: 'joinRoom',
+                roomId: roomId,
+                playerName: playerName
+            });
         }
     }
 
@@ -1239,56 +1589,28 @@
     }
 
     // ==================== 游戏操作 ====================
-    async function createRoom() {
+    async function createRoom(mode = 'normal') {
         playerName = document.getElementById('playerName').value.trim();
-        const serverAddress = document.getElementById('serverAddress').value.trim();
 
         if (!playerName) {
-            showNotification('请输入玩家昵称');
+            showNotification('请输入玩家名称');
             return;
         }
 
-        try {
-            await connect(serverAddress);
-            send({
-                type: 'createRoom',
-                playerName: playerName
-            });
-        } catch (e) {
-            showNotification('连接服务器失败');
-        }
-    }
-
-    async function joinRoom() {
-        playerName = document.getElementById('playerName').value.trim();
-        const serverAddress = document.getElementById('serverAddress').value.trim();
-        const roomIdInput = document.getElementById('roomIdInput').value.trim().toUpperCase();
-
-        if (!playerName) {
-            showNotification('请输入玩家昵称');
-            return;
+        // 如果还没连接，先连接
+        if (!ws || ws.readyState !== WebSocket.OPEN) {
+            try {
+                await connect(window.location.host);
+            } catch (e) {
+                showNotification('连接服务器失败');
+                return;
+            }
         }
 
-        if (!roomIdInput) {
-            showNotification('请输入房间号');
-            return;
-        }
-
-        try {
-            await connect(serverAddress);
-            send({
-                type: 'joinRoom',
-                roomId: roomIdInput,
-                playerName: playerName
-            });
-        } catch (e) {
-            showNotification('连接服务器失败');
-        }
-    }
-
-    function showJoinRoom() {
-        const input = document.getElementById('joinRoomInput');
-        input.style.display = input.style.display === 'none' ? 'block' : 'none';
+        send({
+            type: 'createRoom',
+            playerName: playerName,
+        });
     }
 
     function toggleReady() {
