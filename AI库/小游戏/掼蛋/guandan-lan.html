@@ -1527,8 +1527,9 @@
             let seatsHtml = '';
             for (let i = 0; i < 4; i++) {
                 const seatNum = i + 1;
-                const occupied = i < room.playerCount;
-                const player = room.players[i];
+                // 根据 playerNum 查找对应座位的玩家，而不是依赖数组索引
+                const player = room.players.find(p => p.playerNum === seatNum);
+                const occupied = !!player;
                 // 1、3号位是红队（对家），2、4号位是蓝队（对家）
                 const team = (i % 2 === 0) ? 'team1' : 'team2';
                 const occupiedClass = occupied ? 'occupied' : '';

@@ -634,6 +634,7 @@ function getRoomList() {
             started: room.gameState.started,
             players: Array.from(room.players.values()).map(p => ({
                 name: p.name,
+                playerNum: p.playerNum,
                 ready: p.ready
             }))
         });
