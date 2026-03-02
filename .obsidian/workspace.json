@@ -4,39 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "3ba11711e4b4173d",
+        "id": "85c1e196e3c64ad8",
         "type": "tabs",
         "children": [
           {
-            "id": "0eac96eec12c68a1",
+            "id": "f10b3552885dd013",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AI库/小游戏/小猫钓鱼/README.md",
+                "file": "AI库/小游戏/掼蛋/局域网版使用说明.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
-            }
-          },
-          {
-            "id": "5dde774a8b896de6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "JoyMeng Note/日记 2026-02-28.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "日记 2026-02-28"
+              "title": "局域网版使用说明"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -204,10 +189,13 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "5dde774a8b896de6",
+  "active": "f10b3552885dd013",
   "lastOpenFiles": [
-    "JoyMeng Note/日记 2026-02-13.md",
+    "AI库/小游戏/掼蛋/掼蛋.md",
+    "AI库/小游戏/掼蛋/局域网版使用说明.md",
+    "AI库/小游戏/小猫钓鱼/README.md",
     "JoyMeng Note/日记 2026-02-28.md",
+    "JoyMeng Note/日记 2026-02-13.md",
     "AI库/小游戏/小学数学口算快速出题器方案.md",
     "AI库/小游戏/math-practice.html.tmp.22604.1772271750955",
     "AI库/小游戏/math-practice.html.tmp.22604.1772271697304",
@@ -219,9 +207,6 @@
     "AI库/小游戏/math-practice.html.tmp.22604.1772269426301",
     "AI库/小游戏/math-practice.html.tmp.22604.1772269125396",
     "AI库/小游戏/math-practice.html.tmp.22604.1772268737529",
-    "AI库/小游戏/小猫钓鱼/README.md",
-    "AI库/小游戏/掼蛋/局域网版使用说明.md",
-    "AI库/小游戏/掼蛋/掼蛋.md",
     "AI库/小游戏/掼蛋/node_modules/ws/README.md",
     "AI库/小游戏/掼蛋.md",
     "AI库/小游戏/math-practice-android/README.md",
