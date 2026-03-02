@@ -204,9 +204,17 @@ class GameRoom {
     getPublicGameState() {
         const playerIds = Array.from(this.players.keys());
         const publicHands = {};
+        const playerInfo = {};
+
         for (let i = 0; i < 4; i++) {
             const pid = playerIds[i];
+            const player = this.players.get(pid);
             publicHands[pid] = { count: this.gameState.hands[pid]?.length || 0 };
+            playerInfo[pid] = {
+                name: player?.name || '',
+                team: player?.team || 1,
+                playerNum: player?.playerNum || (i + 1)
+            };
         }
 
         return {
@@ -218,6 +226,7 @@ class GameRoom {
             currentLevelTeam: this.gameState.currentLevelTeam,
             trumpRank: this.getCurrentLevelRank(),
             hands: publicHands,
+            playerInfo: playerInfo,
             passedPlayers: this.gameState.passedPlayers,
             roundWinner: this.gameState.roundWinner,
             levelUp: this.gameState.levelUp

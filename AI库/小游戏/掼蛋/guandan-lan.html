@@ -1033,28 +1033,28 @@
 
             <!-- 游戏桌面 -->
             <div id="gameTable">
-                <!-- 对手区域 -->
+                <!-- 对手区域 - 自己始终在下方，其他人按相对位置旋转 -->
                 <div class="opponents-area">
-                    <div class="opponent" id="opponent1">
-                        <div class="opponent-name team1" id="op1Name">玩家1</div>
-                        <div class="opponent-cards" id="op1Cards"></div>
-                        <div class="card-count">剩余: <span id="op1Count">27</span>张</div>
-                        <div class="opponent-play" id="op1Play"></div>
-                        <div class="turn-indicator" id="op1Turn" style="display: none;">▼ 出牌中</div>
+                    <div class="opponent" id="opponentLeft">
+                        <div class="opponent-name" id="opLeftName">玩家</div>
+                        <div class="opponent-cards" id="opLeftCards"></div>
+                        <div class="card-count">剩余: <span id="opLeftCount">27</span>张</div>
+                        <div class="opponent-play" id="opLeftPlay"></div>
+                        <div class="turn-indicator" id="opLeftTurn" style="display: none;">▼ 出牌中</div>
                     </div>
-                    <div class="opponent" id="opponent2">
-                        <div class="opponent-name team2" id="op2Name">玩家2</div>
-                        <div class="opponent-cards" id="op2Cards"></div>
-                        <div class="card-count">剩余: <span id="op2Count">27</span>张</div>
-                        <div class="opponent-play" id="op2Play"></div>
-                        <div class="turn-indicator" id="op2Turn" style="display: none;">▼ 出牌中</div>
+                    <div class="opponent" id="opponentTop">
+                        <div class="opponent-name" id="opTopName">玩家</div>
+                        <div class="opponent-cards" id="opTopCards"></div>
+                        <div class="card-count">剩余: <span id="opTopCount">27</span>张</div>
+                        <div class="opponent-play" id="opTopPlay"></div>
+                        <div class="turn-indicator" id="opTopTurn" style="display: none;">▼ 出牌中</div>
                     </div>
-                    <div class="opponent" id="opponent3">
-                        <div class="opponent-name team1" id="op3Name">玩家3</div>
-                        <div class="opponent-cards" id="op3Cards"></div>
-                        <div class="card-count">剩余: <span id="op3Count">27</span>张</div>
-                        <div class="opponent-play" id="op3Play"></div>
-                        <div class="turn-indicator" id="op3Turn" style="display: none;">▼ 出牌中</div>
+                    <div class="opponent" id="opponentRight">
+                        <div class="opponent-name" id="opRightName">玩家</div>
+                        <div class="opponent-cards" id="opRightCards"></div>
+                        <div class="card-count">剩余: <span id="opRightCount">27</span>张</div>
+                        <div class="opponent-play" id="opRightPlay"></div>
+                        <div class="turn-indicator" id="opRightTurn" style="display: none;">▼ 出牌中</div>
                     </div>
                 </div>
 
@@ -1279,6 +1279,9 @@
             return;
         }
 
+        // 保存用户名
+        savePlayerName(playerName);
+
         // 如果还没连接，先连接
         if (!ws || ws.readyState !== WebSocket.OPEN) {
             connect(window.location.host).then(() => {
@@ -1451,36 +1454,47 @@
     }
 
     function updateOpponents() {
-        // 获取所有玩家ID
-        const playerIds = [];
-        for (let i = 1; i <= 4; i++) {
-            const potentialId = `P_${i}`;
-            if (gameState.hands[potentialId]) {
-                playerIds.push(potentialId);
-            }
+        // 获取所有玩家信息，按playerNum排序
+        const playerList = [];
+        for (let [pid, player] of Object.entries(gameState.playerInfo || {})) {
+            playerList.push({ ...player, playerId: pid });
         }
+        playerList.sort((a, b) => a.playerNum - b.playerNum);
 
-        // 找到对手
-        let opIndex = 1;
-        for (let i = 0; i < playerIds.length; i++) {
-            const pid = playerIds[i];
-            if (pid === playerId) continue;
+        // 找到自己的位置
+        const myPos = myInfo.playerNum - 1; // 0-3
 
-            const count = gameState.hands[pid].count;
-            document.getElementById(`op${opIndex}Count`).textContent = count;
+        // 计算相对位置：左家、上家（对家）、右家
+        const positions = ['Left', 'Top', 'Right'];
+        const relativeOffsets = [3, 2, 1]; // 左家=自己-1, 上家=自己+2, 右家=自己+1
 
-            // 显示牌背
-            const cardsContainer = document.getElementById(`op${opIndex}Cards`);
-            cardsContainer.innerHTML = '';
-            const cardCount = Math.min(count, 10);
-            for (let j = 0; j < cardCount; j++) {
-                const back = document.createElement('div');
-                back.className = 'card-back';
-                cardsContainer.appendChild(back);
+        positions.forEach((pos, idx) => {
+            const targetPlayerNum = ((myPos + relativeOffsets[idx]) % 4) + 1;
+            const targetPlayer = playerList.find(p => p.playerNum === targetPlayerNum);
+
+            if (targetPlayer) {
+                const pid = targetPlayer.playerId;
+                const count = gameState.hands[pid]?.count || 0;
+
+                // 更新牌数
+                document.getElementById(`op${pos}Count`).textContent = count;
+
+                // 更新名字和队伍颜色
+                const nameEl = document.getElementById(`op${pos}Name`);
+                nameEl.textContent = targetPlayer.name;
+                nameEl.className = `opponent-name ${targetPlayer.team === 1 ? 'team1' : 'team2'}`;
+
+                // 显示牌背
+                const cardsContainer = document.getElementById(`op${pos}Cards`);
+                cardsContainer.innerHTML = '';
+                const cardCount = Math.min(count, 10);
+                for (let j = 0; j < cardCount; j++) {
+                    const back = document.createElement('div');
+                    back.className = 'card-back';
+                    cardsContainer.appendChild(back);
+                }
             }
-
-            opIndex++;
-        }
+        });
     }
 
     function updateLastPlay() {
@@ -1498,16 +1512,20 @@
 
     function updateTurnIndicator() {
         // 清除所有指示
-        for (let i = 1; i <= 3; i++) {
-            document.getElementById(`op${i}Turn`).style.display = 'none';
-            document.getElementById(`opponent${i}`).classList.remove('current-turn');
-        }
+        ['Left', 'Top', 'Right'].forEach(pos => {
+            document.getElementById(`op${pos}Turn`).style.display = 'none';
+            document.getElementById(`opponent${pos}`).classList.remove('current-turn');
+        });
         document.getElementById('myPlayArea').style.border = '2px dashed #ffd700';
         document.getElementById('myPlayArea').style.boxShadow = 'none';
 
-        // 获取玩家列表
-        const playerIds = Array.from(Object.keys(gameState.hands));
-        const myIndex = playerIds.indexOf(playerId);
+        // 获取玩家列表（按playerNum排序）
+        const playerList = [];
+        for (let [pid, player] of Object.entries(gameState.playerInfo || {})) {
+            playerList.push({ ...player, playerId: pid });
+        }
+        playerList.sort((a, b) => a.playerNum - b.playerNum);
+        const playerIds = playerList.map(p => p.playerId);
 
         // 判断是否轮到我
         const currentPlayerIndex = gameState.currentPlayer;
@@ -1519,22 +1537,32 @@
         } else {
             document.getElementById('myPlayArea').style.boxShadow = 'none';
 
-            // 找到当前玩家的对手位置
-            let opIndex = 1;
-            for (let i = 0; i < playerIds.length; i++) {
-                if (playerIds[i] === playerId) continue;
-                if (playerIds[i] === currentId) {
-                    document.getElementById(`op${opIndex}Turn`).style.display = 'block';
-                    document.getElementById(`opponent${opIndex}`).classList.add('current-turn');
-                    break;
+            // 找到当前玩家的相对位置
+            const myPos = myInfo.playerNum - 1;
+            const currentPos = playerList.findIndex(p => p.playerId === currentId);
+
+            if (currentPos !== -1) {
+                const relativePos = (currentPos - myPos + 4) % 4;
+                const posMap = { 1: 'Right', 2: 'Top', 3: 'Left' };
+                const targetPos = posMap[relativePos];
+
+                if (targetPos) {
+                    document.getElementById(`op${targetPos}Turn`).style.display = 'block';
+                    document.getElementById(`opponent${targetPos}`).classList.add('current-turn');
                 }
-                opIndex++;
             }
         }
     }
 
     function updateButtons() {
-        const playerIds = Array.from(Object.keys(gameState.hands));
+        // 获取玩家列表（按playerNum排序）
+        const playerList = [];
+        for (let [pid, player] of Object.entries(gameState.playerInfo || {})) {
+            playerList.push({ ...player, playerId: pid });
+        }
+        playerList.sort((a, b) => a.playerNum - b.playerNum);
+        const playerIds = playerList.map(p => p.playerId);
+
         const currentPlayerIndex = gameState.currentPlayer;
         const currentId = playerIds[currentPlayerIndex];
 
@@ -1597,6 +1625,9 @@
             return;
         }
 
+        // 保存用户名
+        savePlayerName(playerName);
+
         // 如果还没连接，先连接
         if (!ws || ws.readyState !== WebSocket.OPEN) {
             try {
@@ -1610,6 +1641,7 @@
         send({
             type: 'createRoom',
             playerName: playerName,
+            mode: mode
         });
     }
 
@@ -1693,14 +1725,27 @@
         }, 3000);
     }
 
-    // 聊天回车发送
+    // 聊天回车发送 & 加载保存的用户名
     document.addEventListener('DOMContentLoaded', () => {
+        // 加载上次使用的用户名
+        const savedName = localStorage.getItem('guandan_player_name');
+        if (savedName) {
+            document.getElementById('playerName').value = savedName;
+        }
+
         document.getElementById('messageInput').addEventListener('keydown', (e) => {
             if (e.code === 'Enter') {
                 sendMessage();
             }
         });
     });
+
+    // 保存用户名到本地存储
+    function savePlayerName(name) {
+        if (name) {
+            localStorage.setItem('guandan_player_name', name);
+        }
+    }
     </script>
 </body>
 </html>
