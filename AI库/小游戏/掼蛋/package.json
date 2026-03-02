@@ -1,10 +1,22 @@
 {
   "name": "guandan-lan",
-  "version": "1.0.0",
+  "version": "1.5.0",
   "description": "掼蛋 - 安庆热门扑克游戏局域网版",
   "main": "guandan-server.js",
   "scripts": {
-    "start": "node guandan-server.js"
+    "start": "node guandan-server.js",
+    "dev": "nodemon guandan-server.js",
+    "dev:verbose": "nodemon guandan-server.js --verbose"
+  },
+  "nodemonConfig": {
+    "watch": ["guandan-server.js", "guandan-lan.html"],
+    "ext": "js html",
+    "ignore": ["node_modules/*", "*.md"],
+    "delay": 1000,
+    "verbose": true,
+    "execMap": {
+      "js": "node"
+    }
   },
   "keywords": [
     "guandan",
@@ -17,5 +29,8 @@
   "license": "MIT",
   "dependencies": {
     "ws": "^8.14.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
   }
 }

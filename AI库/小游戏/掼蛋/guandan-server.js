@@ -82,11 +82,29 @@ class GameRoom {
         };
     }
 
-    addPlayer(ws, playerId, playerName) {
+    addPlayer(ws, playerId, playerName, seatNum = null) {
         if (this.players.size >= this.maxPlayers) return false;
 
-        const playerNum = this.players.size + 1;
-        const team = playerNum <= 2 ? 1 : 2;
+        // 如果指定了座位号，使用指定的；否则找第一个空位
+        let playerNum;
+        if (seatNum !== null && seatNum >= 1 && seatNum <= 4) {
+            // 检查该座位是否已被占用
+            const occupied = Array.from(this.players.values()).some(p => p.playerNum === seatNum);
+            if (occupied) return false;
+            playerNum = seatNum;
+        } else {
+            // 找第一个空位
+            const occupiedSeats = new Set(Array.from(this.players.values()).map(p => p.playerNum));
+            for (let i = 1; i <= 4; i++) {
+                if (!occupiedSeats.has(i)) {
+                    playerNum = i;
+                    break;
+                }
+            }
+        }
+
+        // 逆时针座位：1、3号位红队（对家），2、4号位蓝队（对家）
+        const team = (playerNum % 2 === 1) ? 1 : 2;
 
         this.players.set(playerId, {
             ws, id: playerId, name: playerName,
@@ -527,7 +545,12 @@ wss.on('connection', (ws) => {
                     if (!room) { ws.send(JSON.stringify({ type: 'error', message: '房间不存在' })); return; }
                     if (room.players.size >= 4) { ws.send(JSON.stringify({ type: 'error', message: '房间已满' })); return; }
                     const playerId = 'P_' + Math.random().toString(36).substring(2, 10);
-                    if (!room.addPlayer(ws, playerId, data.playerName)) { ws.send(JSON.stringify({ type: 'error', message: '加入失败' })); return; }
+                    // 支持指定座位号加入
+                    const seatNum = data.seatNum || null;
+                    if (!room.addPlayer(ws, playerId, data.playerName, seatNum)) {
+                        ws.send(JSON.stringify({ type: 'error', message: '该座位已被占用' }));
+                        return;
+                    }
                     playerToRoom.set(playerId, data.roomId);
                     ws.send(JSON.stringify({
                         type: 'roomJoined', roomId: data.roomId, playerId,
@@ -537,7 +560,7 @@ wss.on('connection', (ws) => {
                     }));
                     room.broadcastPlayerList();
                     broadcastRoomList();
-                    console.log(`玩家加入: ${data.roomId}`);
+                    console.log(`玩家加入: ${data.roomId} 座位${seatNum || '自动'}`);
                     break;
                 }
                 case 'ready': {

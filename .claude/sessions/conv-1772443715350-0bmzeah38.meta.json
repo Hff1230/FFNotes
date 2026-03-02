@@ -1,0 +1,20 @@
+{
+  "id": "conv-1772443715350-0bmzeah38",
+  "title": "Update markdown docs and HTML5",
+  "titleGenerationStatus": "success",
+  "createdAt": 1772443715350,
+  "updatedAt": 1772445163017,
+  "lastResponseAt": 1772445163017,
+  "sessionId": "ef2f1df8-5227-496f-9b8d-a53087264783",
+  "sdkSessionId": "ef2f1df8-5227-496f-9b8d-a53087264783",
+  "currentNote": "AI库/小游戏/掼蛋/局域网版使用说明.md",
+  "usage": {
+    "model": "opus",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 0,
+    "percentage": 0
+  }
+}

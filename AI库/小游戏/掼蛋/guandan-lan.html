@@ -873,10 +873,11 @@
             width: 32px;
         }
 
+        /* 逆时针顺序: 1(底) → 2(右) → 3(顶) → 4(左) */
         .mini-seat-1 { bottom: 0; left: 50%; transform: translateX(-50%); }
-        .mini-seat-2 { left: 0; top: 50%; transform: translateY(-50%); }
+        .mini-seat-2 { right: 0; top: 50%; transform: translateY(-50%); }
         .mini-seat-3 { top: 0; left: 50%; transform: translateX(-50%); }
-        .mini-seat-4 { right: 0; top: 50%; transform: translateY(-50%); }
+        .mini-seat-4 { left: 0; top: 50%; transform: translateY(-50%); }
 
         .mini-seat-avatar {
             width: 28px;
@@ -1116,10 +1117,11 @@
             width: 100px;
         }
 
+        /* 逆时针顺序: 1(底) → 2(右) → 3(顶) → 4(左) */
         .seat-1 { bottom: 0; left: 50%; transform: translateX(-50%); }
-        .seat-2 { left: 0; top: 50%; transform: translateY(-50%); }
+        .seat-2 { right: 0; top: 50%; transform: translateY(-50%); }
         .seat-3 { top: 0; left: 50%; transform: translateX(-50%); }
-        .seat-4 { right: 0; top: 50%; transform: translateY(-50%); }
+        .seat-4 { left: 0; top: 50%; transform: translateY(-50%); }
 
         .seat-avatar {
             width: 50px;
@@ -1527,9 +1529,11 @@
                 const seatNum = i + 1;
                 const occupied = i < room.playerCount;
                 const player = room.players[i];
-                const team = i < 2 ? 'team1' : 'team2';
+                // 1、3号位是红队（对家），2、4号位是蓝队（对家）
+                const team = (i % 2 === 0) ? 'team1' : 'team2';
                 const occupiedClass = occupied ? 'occupied' : '';
-                const clickHandler = (!occupied && !isPlaying) ? `onclick="event.stopPropagation(); joinRoomById('${room.roomId}')"` : '';
+                // 点击空位时传递座位号
+                const clickHandler = (!occupied && !isPlaying) ? `onclick="event.stopPropagation(); joinRoomById('${room.roomId}', ${seatNum})"` : '';
                 const title = occupied && player ? player.name : (isPlaying ? '' : '点击加入');
                 const displayChar = occupied ? (player ? player.name.charAt(0) : '?') : '+';
 
@@ -1568,7 +1572,7 @@
         });
     }
 
-    function joinRoomById(roomId) {
+    function joinRoomById(roomId, seatNum = null) {
         playerName = document.getElementById('playerName').value.trim();
 
         if (!playerName) {
@@ -1585,7 +1589,8 @@
                 send({
                     type: 'joinRoom',
                     roomId: roomId,
-                    playerName: playerName
+                    playerName: playerName,
+                    seatNum: seatNum
                 });
             }).catch(() => {
                 showNotification('连接服务器失败');
@@ -1594,7 +1599,8 @@
             send({
                 type: 'joinRoom',
                 roomId: roomId,
-                playerName: playerName
+                playerName: playerName,
+                seatNum: seatNum
             });
         }
     }
