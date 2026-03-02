@@ -579,8 +579,15 @@ wss.on('connection', (ws) => {
             const p = room?.players.get(pid);
             if (p?.ws === ws) {
                 console.log(`玩家断开: ${p.name}`);
-                if (room.removePlayer(pid)) { rooms.delete(rid); console.log(`房间删除: ${rid}`); }
-                else room.broadcast({ type: 'playerLeft', playerId: pid, playerName: p.name });
+                if (room.removePlayer(pid)) {
+                    rooms.delete(rid);
+                    console.log(`房间删除: ${rid}`);
+                } else {
+                    // 广播玩家离开通知
+                    room.broadcast({ type: 'playerLeft', playerId: pid, playerName: p.name });
+                    // 更新房间内玩家列表
+                    room.broadcastPlayerList();
+                }
                 playerToRoom.delete(pid);
                 broadcastRoomList();
                 break;
