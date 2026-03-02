@@ -452,9 +452,7 @@
             background: #fff;
             border-radius: 6px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            position: relative;
             cursor: pointer;
             transition: all 0.2s;
             user-select: none;
@@ -491,13 +489,82 @@
             color: #fff;
         }
 
-        .card .suit {
-            font-size: 24px;
+        /* 卡牌角标 - 左上角 */
+        .card .corner-top {
+            position: absolute;
+            top: 3px;
+            left: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
         }
 
-        .card .rank {
-            font-size: 16px;
-            margin-top: 2px;
+        .card .corner-top .rank {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .card .corner-top .suit {
+            font-size: 12px;
+        }
+
+        /* 卡牌角标 - 右下角（倒置） */
+        .card .corner-bottom {
+            position: absolute;
+            bottom: 3px;
+            right: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+            transform: rotate(180deg);
+        }
+
+        .card .corner-bottom .rank {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .card .corner-bottom .suit {
+            font-size: 12px;
+        }
+
+        /* 卡牌中间大花色 */
+        .card .center-suit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+        }
+
+        /* 小卡牌样式调整 */
+        .card.card-small {
+            width: 45px;
+            height: 63px;
+        }
+
+        .card.card-small .corner-top,
+        .card.card-small .corner-bottom {
+            top: 2px;
+            left: 3px;
+            bottom: 2px;
+            right: 3px;
+        }
+
+        .card.card-small .corner-top .rank,
+        .card.card-small .corner-bottom .rank {
+            font-size: 11px;
+        }
+
+        .card.card-small .corner-top .suit,
+        .card.card-small .corner-bottom .suit {
+            font-size: 9px;
+        }
+
+        .card.card-small .center-suit {
+            font-size: 22px;
         }
 
         .card.trump {
@@ -721,9 +788,10 @@
             background: rgba(0, 0, 0, 0.5);
             border: 2px solid #2d5a3d;
             border-radius: 12px;
-            padding: 20px;
+            padding: 15px;
             cursor: pointer;
             transition: all 0.3s;
+            min-width: 180px;
         }
 
         .table-card:hover {
@@ -747,59 +815,131 @@
             border-color: #4dabf7;
         }
 
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
         .table-id {
             color: #ffd700;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
-            text-align: center;
-            margin-bottom: 15px;
         }
 
-        .table-seats {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 15px;
+        .table-mode-badge {
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(255, 215, 0, 0.2);
         }
 
-        .seat {
-            width: 36px;
-            height: 36px;
+        .table-mode-badge.fast {
+            color: #ffd700;
+        }
+
+        .table-mode-badge.normal {
+            color: #90ee90;
+        }
+
+        /* 牌桌列表中的小型圆桌布局 */
+        .mini-table-layout {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+        }
+
+        .mini-table-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            border: 2px solid #666;
+            background: linear-gradient(135deg, #2d5a3d 0%, #1a3d2a 100%);
+            border: 2px solid #ffd700;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 16px;
-            cursor: default;
+        }
+
+        .mini-seat {
+            position: absolute;
+            text-align: center;
+            width: 32px;
+        }
+
+        .mini-seat-1 { bottom: 0; left: 50%; transform: translateX(-50%); }
+        .mini-seat-2 { left: 0; top: 50%; transform: translateY(-50%); }
+        .mini-seat-3 { top: 0; left: 50%; transform: translateX(-50%); }
+        .mini-seat-4 { right: 0; top: 50%; transform: translateY(-50%); }
+
+        .mini-seat-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 0 auto;
+            border: 2px solid;
+            background: rgba(0, 0, 0, 0.3);
             transition: all 0.2s;
         }
 
-        .seat:not(.occupied) {
-            cursor: pointer;
-            border-style: dashed;
-        }
-
-        .seat:not(.occupied):hover {
-            border-color: #ffd700;
-            background: rgba(255, 215, 0, 0.2);
-            transform: scale(1.1);
-        }
-
-        .seat.occupied {
-            border-color: #ffd700;
-            background: rgba(255, 215, 0, 0.2);
-            cursor: default;
-        }
-
-        .seat.occupied.red {
+        .mini-seat-avatar.team1 {
             border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .mini-seat-avatar.team2 {
+            border-color: #4dabf7;
+            color: #4dabf7;
+        }
+
+        .mini-seat-avatar.occupied {
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        .mini-seat-avatar.occupied.team1 {
             background: rgba(255, 107, 107, 0.2);
         }
 
-        .seat.occupied.blue {
-            border-color: #4dabf7;
+        .mini-seat-avatar.occupied.team2 {
             background: rgba(77, 171, 247, 0.2);
+        }
+
+        .mini-seat-avatar:not(.occupied) {
+            border-style: dashed;
+            border-color: #666;
+            cursor: pointer;
+        }
+
+        .mini-seat-avatar:not(.occupied):hover {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.15);
+        }
+
+        .table-footer {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 11px;
+            color: #90ee90;
+        }
+
+        .table-footer.full {
+            color: #ff6b6b;
+        }
+
+        .table-footer.playing {
+            color: #4dabf7;
         }
 
         .table-status {
@@ -1378,39 +1518,51 @@
             card.className = `table-card ${isFull ? 'full' : ''} ${isPlaying ? 'playing' : ''}`;
 
             // 模式标签
-            const modeLabel = isFast ? '⚡ 快速' : '🎮 正常';
+            const modeLabel = isFast ? '⚡' : '🎮';
             const modeClass = isFast ? 'fast' : 'normal';
 
-            // 生成座位显示（每个座位可单独点击）
+            // 生成圆桌座位显示
             let seatsHtml = '';
             for (let i = 0; i < 4; i++) {
+                const seatNum = i + 1;
                 const occupied = i < room.playerCount;
                 const player = room.players[i];
-                let seatClass = occupied ? 'occupied' : '';
-                if (occupied && player) {
-                    seatClass += (i < 2) ? ' red' : ' blue';
-                }
-                // 空座位添加点击事件
+                const team = i < 2 ? 'team1' : 'team2';
+                const occupiedClass = occupied ? 'occupied' : '';
                 const clickHandler = (!occupied && !isPlaying) ? `onclick="event.stopPropagation(); joinRoomById('${room.roomId}')"` : '';
                 const title = occupied && player ? player.name : (isPlaying ? '' : '点击加入');
-                seatsHtml += `<div class="seat ${seatClass}" ${clickHandler} title="${title}">${occupied ? '👤' : '+'}</div>`;
-            }
+                const displayChar = occupied ? (player ? player.name.charAt(0) : '?') : '+';
 
-            // 玩家列表
-            const playerNames = room.players.map(p => p.name).join(', ');
+                seatsHtml += `
+                    <div class="mini-seat mini-seat-${seatNum}">
+                        <div class="mini-seat-avatar ${team} ${occupiedClass}" ${clickHandler} title="${title}">
+                            ${displayChar}
+                        </div>
+                    </div>
+                `;
+            }
 
             // 状态文字
             let statusText = `${room.playerCount}/4 人`;
-            if (isPlaying) statusText = '游戏中';
+            if (isPlaying) statusText = '🎮 游戏中';
             else if (isFull) statusText = '已满';
 
             card.innerHTML = `
-                <div class="table-mode ${modeClass}">${modeLabel}</div>
-                <div class="table-id">${room.roomId}</div>
-                <div class="table-seats">${seatsHtml}</div>
-                <div class="table-status ${isFull ? 'full' : ''} ${isPlaying ? 'playing' : ''}">${statusText}</div>
-                ${playerNames ? `<div class="table-players">${playerNames}</div>` : ''}
+                <div class="table-header">
+                    <div class="table-id">${room.roomId}</div>
+                    <div class="table-mode-badge ${modeClass}">${modeLabel}</div>
+                </div>
+                <div class="mini-table-layout">
+                    <div class="mini-table-center">🃏</div>
+                    ${seatsHtml}
+                </div>
+                <div class="table-footer ${isFull ? 'full' : ''} ${isPlaying ? 'playing' : ''}">${statusText}</div>
             `;
+
+            // 点击整个卡片也可以加入（如果未满且未开始）
+            if (!isFull && !isPlaying) {
+                card.onclick = () => joinRoomById(room.roomId);
+            }
 
             grid.appendChild(card);
         });
@@ -1584,9 +1736,20 @@
             el.classList.add('trump');
         }
 
+        // 标准扑克牌布局：左上角数字+花色，中间大花色，右下角数字+花色（倒置）
+        const displayRank = card.isJoker ? (card.rank === '大王' ? '大' : '小') : card.rank;
+        const displaySuit = card.isJoker ? '王' : card.suit;
+
         el.innerHTML = `
-            <span class="suit">${card.suit}</span>
-            <span class="rank">${card.rank}</span>
+            <div class="corner-top">
+                <span class="rank">${displayRank}</span>
+                <span class="suit">${displaySuit}</span>
+            </div>
+            <div class="center-suit">${displaySuit}</div>
+            <div class="corner-bottom">
+                <span class="rank">${displayRank}</span>
+                <span class="suit">${displaySuit}</span>
+            </div>
         `;
 
         return el;
