@@ -3,18 +3,18 @@
   "title": "Analyze card game poker hand combinations",
   "titleGenerationStatus": "success",
   "createdAt": 1772437663063,
-  "updatedAt": 1772438726580,
-  "lastResponseAt": 1772438726580,
+  "updatedAt": 1772439748073,
+  "lastResponseAt": 1772439748073,
   "sessionId": "1cdd4d92-8620-489e-97ff-21acdcacdbfc",
   "sdkSessionId": "1cdd4d92-8620-489e-97ff-21acdcacdbfc",
   "currentNote": "AI库/小游戏/掼蛋/局域网版使用说明.md",
   "usage": {
     "model": "opus",
-    "inputTokens": 355,
+    "inputTokens": 0,
     "cacheCreationInputTokens": 0,
-    "cacheReadInputTokens": 92416,
+    "cacheReadInputTokens": 0,
     "contextWindow": 200000,
-    "contextTokens": 92771,
-    "percentage": 46
+    "contextTokens": 0,
+    "percentage": 0
   }
 }

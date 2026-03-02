@@ -941,6 +941,124 @@
         .name-bar input::placeholder {
             color: #666;
         }
+
+        /* 圆桌布局样式 */
+        .table-layout {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            margin: 30px auto;
+        }
+
+        .table-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2d5a3d 0%, #1a3d2a 100%);
+            border: 4px solid #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .table-surface {
+            font-size: 36px;
+        }
+
+        .seat-pos {
+            position: absolute;
+            text-align: center;
+            width: 100px;
+        }
+
+        .seat-1 { bottom: 0; left: 50%; transform: translateX(-50%); }
+        .seat-2 { left: 0; top: 50%; transform: translateY(-50%); }
+        .seat-3 { top: 0; left: 50%; transform: translateX(-50%); }
+        .seat-4 { right: 0; top: 50%; transform: translateY(-50%); }
+
+        .seat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 auto 8px;
+            border: 3px solid;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .team1-avatar {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .team2-avatar {
+            border-color: #4dabf7;
+            color: #4dabf7;
+        }
+
+        .seat-avatar.occupied {
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        .seat-avatar.occupied.team1-avatar {
+            background: rgba(255, 107, 107, 0.2);
+        }
+
+        .seat-avatar.occupied.team2-avatar {
+            background: rgba(77, 171, 247, 0.2);
+        }
+
+        .seat-name {
+            font-size: 12px;
+            color: #fff;
+            max-width: 90px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .seat-status {
+            font-size: 10px;
+            color: #90ee90;
+            margin-top: 4px;
+        }
+
+        .seat-status.ready {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .seat-pos.is-me .seat-avatar {
+            box-shadow: 0 0 15px #ffd700;
+        }
+
+        .team-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 10px;
+        }
+
+        .team-legend-item {
+            font-size: 12px;
+        }
+
+        .team-legend-item.team1 {
+            color: #ff6b6b;
+        }
+
+        .team-legend-item.team2 {
+            color: #4dabf7;
+        }
     </style>
 </head>
 <body>
@@ -984,18 +1102,45 @@
                 <p style="margin-top: 10px; font-size: 14px;">分享房间号给好友加入</p>
             </div>
 
-            <div class="team-container">
-                <div class="team-box team1">
-                    <h3>🔴 红队</h3>
-                    <div id="team1Players"></div>
+            <!-- 圆桌布局 -->
+            <div class="table-layout">
+                <div class="table-center">
+                    <div class="table-surface">
+                        <span>🃏</span>
+                    </div>
                 </div>
-                <div class="team-box team2">
-                    <h3>🔵 蓝队</h3>
-                    <div id="team2Players"></div>
+                <!-- 1号位 - 下方（自己） -->
+                <div class="seat-pos seat-1" id="waitSeat1">
+                    <div class="seat-avatar team1-avatar">1</div>
+                    <div class="seat-name" id="waitSeat1Name">等待加入...</div>
+                    <div class="seat-status" id="waitSeat1Status"></div>
+                </div>
+                <!-- 2号位 - 左边 -->
+                <div class="seat-pos seat-2" id="waitSeat2">
+                    <div class="seat-avatar team2-avatar">2</div>
+                    <div class="seat-name" id="waitSeat2Name">等待加入...</div>
+                    <div class="seat-status" id="waitSeat2Status"></div>
+                </div>
+                <!-- 3号位 - 上方（对家） -->
+                <div class="seat-pos seat-3" id="waitSeat3">
+                    <div class="seat-avatar team1-avatar">3</div>
+                    <div class="seat-name" id="waitSeat3Name">等待加入...</div>
+                    <div class="seat-status" id="waitSeat3Status"></div>
+                </div>
+                <!-- 4号位 - 右边 -->
+                <div class="seat-pos seat-4" id="waitSeat4">
+                    <div class="seat-avatar team2-avatar">4</div>
+                    <div class="seat-name" id="waitSeat4Name">等待加入...</div>
+                    <div class="seat-status" id="waitSeat4Status"></div>
                 </div>
             </div>
 
-            <p style="color: #90ee90; margin: 25px 0; font-size: 14px;">需要4名玩家才能开始游戏</p>
+            <div class="team-legend">
+                <span class="team-legend-item team1">🔴 红队: 1号、3号</span>
+                <span class="team-legend-item team2">🔵 蓝队: 2号、4号</span>
+            </div>
+
+            <p style="color: #90ee90; margin: 15px 0; font-size: 14px;">需要4名玩家才能开始游戏</p>
 
             <button class="btn" id="readyBtn" onclick="toggleReady()">准备</button>
         </div>
@@ -1323,25 +1468,29 @@
     }
 
     function updatePlayerList(players) {
-        const team1 = document.getElementById('team1Players');
-        const team2 = document.getElementById('team2Players');
+        // 清空所有座位
+        for (let i = 1; i <= 4; i++) {
+            document.getElementById(`waitSeat${i}Name`).textContent = '等待加入...';
+            document.getElementById(`waitSeat${i}Status`).textContent = '';
+            document.getElementById(`waitSeat${i}Status`).className = 'seat-status';
+            document.getElementById(`waitSeat${i}`).classList.remove('is-me');
+            document.querySelector(`#waitSeat${i} .seat-avatar`).classList.remove('occupied');
+        }
 
-        team1.innerHTML = '';
-        team2.innerHTML = '';
-
+        // 填充玩家到对应座位
         players.forEach(p => {
-            const slot = document.createElement('div');
-            slot.className = `player-slot ${p.ready ? 'ready' : ''}`;
-            slot.innerHTML = `
-                <span class="player-name">${p.name}${p.id === playerId ? ' (你)' : ''}</span>
-                <span class="player-status">${p.ready ? '✓ 已准备' : '等待中'}</span>
-            `;
+            const seatNum = p.playerNum;
+            const seatEl = document.getElementById(`waitSeat${seatNum}`);
+            const avatarEl = seatEl.querySelector('.seat-avatar');
 
-            if (p.team === 1) {
-                team1.appendChild(slot);
-            } else {
-                team2.appendChild(slot);
+            document.getElementById(`waitSeat${seatNum}Name`).textContent = p.name + (p.id === playerId ? ' (你)' : '');
+            document.getElementById(`waitSeat${seatNum}Status`).textContent = p.ready ? '✓ 已准备' : '等待中';
+            document.getElementById(`waitSeat${seatNum}Status`).className = `seat-status ${p.ready ? 'ready' : ''}`;
+
+            if (p.id === playerId) {
+                seatEl.classList.add('is-me');
             }
+            avatarEl.classList.add('occupied');
         });
     }
 
@@ -1595,7 +1744,7 @@
             `).join('');
 
         const levelInfo = document.getElementById('levelUpInfo');
-        levelInfo.textContent = `${winnerTeam} 升级 ${data.levelUp} 级！ 当前级别: ${LEVEL_TO_RANK[data.teamLevels[data.winner]}`;
+        levelInfo.textContent = `${winnerTeam} 升级 ${data.levelUp} 级！ 当前级别: ${LEVEL_TO_RANK[data.teamLevels[data.winner]]}`;
         levelInfo.textContent += ` → ${LEVEL_TO_RANK[data.teamLevels[data.winner]]}`;
     }
 
@@ -1618,7 +1767,9 @@
 
     // ==================== 游戏操作 ====================
     async function createRoom(mode = 'normal') {
+        console.log('createRoom called, mode:', mode);
         playerName = document.getElementById('playerName').value.trim();
+        console.log('playerName:', playerName);
 
         if (!playerName) {
             showNotification('请输入玩家名称');
@@ -1630,14 +1781,18 @@
 
         // 如果还没连接，先连接
         if (!ws || ws.readyState !== WebSocket.OPEN) {
+            console.log('Connecting to:', window.location.host);
             try {
                 await connect(window.location.host);
+                console.log('Connected!');
             } catch (e) {
+                console.error('Connection failed:', e);
                 showNotification('连接服务器失败');
                 return;
             }
         }
 
+        console.log('Sending createRoom message');
         send({
             type: 'createRoom',
             playerName: playerName,
@@ -1725,13 +1880,18 @@
         }, 3000);
     }
 
-    // 聊天回车发送 & 加载保存的用户名
+    // 聊天回车发送 & 加载保存的用户名 & 初始化连接
     document.addEventListener('DOMContentLoaded', () => {
         // 加载上次使用的用户名
         const savedName = localStorage.getItem('guandan_player_name');
         if (savedName) {
             document.getElementById('playerName').value = savedName;
         }
+
+        // 页面加载时连接服务器，以便接收房间列表
+        connect(window.location.host).catch(e => {
+            console.log('初始连接失败，将在创建/加入房间时重试');
+        });
 
         document.getElementById('messageInput').addEventListener('keydown', (e) => {
             if (e.code === 'Enter') {
