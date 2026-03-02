@@ -1613,9 +1613,10 @@
         // 找到自己的位置
         const myPos = myInfo.playerNum - 1; // 0-3
 
-        // 计算相对位置：左家、上家（对家）、右家
+        // 计算相对位置：左家、上家（对家）、右家（逆时针方向）
+        // 出牌顺序 1→2→3→4，从1号位看：左=2号, 上=3号, 右=4号
         const positions = ['Left', 'Top', 'Right'];
-        const relativeOffsets = [3, 2, 1]; // 左家=自己-1, 上家=自己+2, 右家=自己+1
+        const relativeOffsets = [1, 2, 3]; // 左家=逆时针下一个, 上家=对家, 右家=逆时针上一个
 
         positions.forEach((pos, idx) => {
             const targetPlayerNum = ((myPos + relativeOffsets[idx]) % 4) + 1;
@@ -1692,7 +1693,8 @@
 
             if (currentPos !== -1) {
                 const relativePos = (currentPos - myPos + 4) % 4;
-                const posMap = { 1: 'Right', 2: 'Top', 3: 'Left' };
+                // 逆时针方向：1=左边, 2=上方(对家), 3=右边
+                const posMap = { 1: 'Left', 2: 'Top', 3: 'Right' };
                 const targetPos = posMap[relativePos];
 
                 if (targetPos) {
