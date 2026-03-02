@@ -528,7 +528,7 @@ wss.on('connection', (ws) => {
                     if (room.players.size >= 4) { ws.send(JSON.stringify({ type: 'error', message: '房间已满' })); return; }
                     const playerId = 'P_' + Math.random().toString(36).substring(2, 10);
                     if (!room.addPlayer(ws, playerId, data.playerName)) { ws.send(JSON.stringify({ type: 'error', message: '加入失败' })); return; }
-                    playerToRoom.set(playerId, roomId);
+                    playerToRoom.set(playerId, data.roomId);
                     ws.send(JSON.stringify({
                         type: 'roomJoined', roomId: data.roomId, playerId,
                         players: Array.from(room.players.values()).map(p => ({
