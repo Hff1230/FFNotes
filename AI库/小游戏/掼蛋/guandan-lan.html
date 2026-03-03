@@ -317,7 +317,7 @@
             font-weight: bold;
         }
 
-        /* 游戏桌面 */
+        /* 游戏桌面 - 方桌布局 */
         #gameTable {
             background: linear-gradient(135deg, #1e5631 0%, #0d2818 100%);
             border-radius: 15px;
@@ -326,20 +326,97 @@
             position: relative;
             border: 3px solid #2d5a3d;
             box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            grid-template-columns: 180px 1fr 180px;
+            grid-template-areas:
+                "top-area top-area top-area"
+                "left-area center-area right-area"
+                "bottom-area bottom-area bottom-area";
+            gap: 10px;
         }
 
-        /* 对手区域 */
+        /* 上方对手区 */
+        #opponentTop {
+            grid-area: top-area;
+        }
+
+        /* 左侧对手区 */
+        #opponentLeft {
+            grid-area: left-area;
+        }
+
+        /* 右侧对手区 */
+        #opponentRight {
+            grid-area: right-area;
+        }
+
+        /* 中央出牌区 */
+        #centerPlayArea {
+            grid-area: center-area;
+        }
+
+        /* 玩家区域 */
+        #playerArea {
+            grid-area: bottom-area;
+        }
+
+        /* 对手区域 - 方桌布局 */
         .opponents-area {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            min-height: 120px;
+            display: contents;
         }
 
         .opponent {
             text-align: center;
             padding: 10px;
-            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 左右对手 - 垂直布局 */
+        #opponentLeft, #opponentRight {
+            justify-content: center;
+        }
+
+        #opponentLeft .opponent-cards,
+        #opponentRight .opponent-cards {
+            flex-direction: column;
+            height: auto;
+            min-height: 120px;
+        }
+
+        #opponentLeft .opponent-play,
+        #opponentRight .opponent-play {
+            flex-direction: column;
+            min-height: 80px;
+        }
+
+        /* 上方对手 - 水平布局 */
+        #opponentTop {
+            flex-direction: row;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        #opponentTop .opponent-name {
+            align-self: center;
+        }
+
+        #opponentTop .opponent-cards {
+            flex-direction: row;
+        }
+
+        #opponentTop .opponent-play {
+            flex-direction: row;
+        }
+
+        #opponentTop .card-count {
+            align-self: center;
+        }
+
+        #opponentTop .turn-indicator {
+            align-self: center;
         }
 
         .opponent-name {
@@ -433,8 +510,10 @@
         /* 中央出牌区 */
         #centerPlayArea {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            min-height: 100px;
+            justify-content: center;
+            min-height: 200px;
             padding: 15px;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 10px;
@@ -443,8 +522,22 @@
         #centerPlayArea .played-cards {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 5px;
             flex-wrap: wrap;
+        }
+
+        /* 左右对手的牌背 - 垂直叠加效果 */
+        #opponentLeft .card-back-stack,
+        #opponentRight .card-back-stack {
+            transform: rotate(90deg);
+            margin: 5px 0;
+        }
+
+        /* 左右对手的出牌区 - 垂直布局 */
+        #opponentLeft .opponent-play .card,
+        #opponentRight .opponent-play .card {
+            margin: 2px 0;
         }
 
         /* 玩家区域 */
@@ -1495,31 +1588,24 @@
                 <div id="connectionStatus" class="connected">已连接</div>
             </div>
 
-            <!-- 游戏桌面 -->
+            <!-- 游戏桌面 - 方桌布局 -->
             <div id="gameTable">
-                <!-- 对手区域 - 自己始终在下方，其他人按相对位置旋转 -->
-                <div class="opponents-area">
-                    <div class="opponent" id="opponentLeft">
-                        <div class="opponent-name" id="opLeftName">玩家</div>
-                        <div class="opponent-cards" id="opLeftCards"></div>
-                        <div class="card-count">剩余: <span id="opLeftCount">27</span>张</div>
-                        <div class="opponent-play" id="opLeftPlay"></div>
-                        <div class="turn-indicator" id="opLeftTurn" style="display: none;">▼ 出牌中</div>
-                    </div>
-                    <div class="opponent" id="opponentTop">
-                        <div class="opponent-name" id="opTopName">玩家</div>
-                        <div class="opponent-cards" id="opTopCards"></div>
-                        <div class="card-count">剩余: <span id="opTopCount">27</span>张</div>
-                        <div class="opponent-play" id="opTopPlay"></div>
-                        <div class="turn-indicator" id="opTopTurn" style="display: none;">▼ 出牌中</div>
-                    </div>
-                    <div class="opponent" id="opponentRight">
-                        <div class="opponent-name" id="opRightName">玩家</div>
-                        <div class="opponent-cards" id="opRightCards"></div>
-                        <div class="card-count">剩余: <span id="opRightCount">27</span>张</div>
-                        <div class="opponent-play" id="opRightPlay"></div>
-                        <div class="turn-indicator" id="opRightTurn" style="display: none;">▼ 出牌中</div>
-                    </div>
+                <!-- 上方对手（对家） -->
+                <div class="opponent" id="opponentTop">
+                    <div class="opponent-name" id="opTopName">玩家</div>
+                    <div class="opponent-cards" id="opTopCards"></div>
+                    <div class="card-count">剩余: <span id="opTopCount">27</span>张</div>
+                    <div class="opponent-play" id="opTopPlay"></div>
+                    <div class="turn-indicator" id="opTopTurn" style="display: none;">▼ 出牌中</div>
+                </div>
+
+                <!-- 左侧对手 -->
+                <div class="opponent" id="opponentLeft">
+                    <div class="opponent-name" id="opLeftName">玩家</div>
+                    <div class="opponent-cards" id="opLeftCards"></div>
+                    <div class="card-count">剩余: <span id="opLeftCount">27</span>张</div>
+                    <div class="opponent-play" id="opLeftPlay"></div>
+                    <div class="turn-indicator" id="opLeftTurn" style="display: none;">▼ 出牌中</div>
                 </div>
 
                 <!-- 中央出牌区 -->
@@ -1529,7 +1615,16 @@
                     </div>
                 </div>
 
-                <!-- 玩家区域 -->
+                <!-- 右侧对手 -->
+                <div class="opponent" id="opponentRight">
+                    <div class="opponent-name" id="opRightName">玩家</div>
+                    <div class="opponent-cards" id="opRightCards"></div>
+                    <div class="card-count">剩余: <span id="opRightCount">27</span>张</div>
+                    <div class="opponent-play" id="opRightPlay"></div>
+                    <div class="turn-indicator" id="opRightTurn" style="display: none;">▼ 出牌中</div>
+                </div>
+
+                <!-- 玩家区域（下方） -->
                 <div id="playerArea">
                     <div id="myPlayArea">
                         <div class="played-cards" id="myPlayCards"></div>
@@ -2208,6 +2303,7 @@
             selectedCards.splice(idx, 1);
         }
         renderMyHand();
+        updateButtons();
     }
 
     function updateOpponents() {
