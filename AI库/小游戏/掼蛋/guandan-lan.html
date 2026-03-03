@@ -2155,7 +2155,8 @@
         cards.forEach((card, index) => {
             const cardEl = createCardElement(card, false);
             cardEl.onclick = () => toggleCardSelection(index, card);
-            // 使用索引来判断是否选中，            if (selectedCards.some(sc => sc.index === index)) {
+            // 使用索引来判断是否选中
+            if (selectedCards.some(sc => sc.suit === card.suit && sc.rank === card.rank)) {
                 cardEl.classList.add('selected');
             }
             // 设置 z-index 让后面的牌在上层
