@@ -59,10 +59,12 @@ const LEVEL_TO_RANK = {
 
 // 房间类
 class GameRoom {
-    constructor(id, mode = 'normal') {
+    constructor(id, mode = 'normal', allowSpectator = false) {
         this.id = id;
         this.mode = mode; // 'fast' 或 'normal'
+        this.allowSpectator = allowSpectator; // 是否允许观战
         this.players = new Map();
+        this.spectators = new Map(); // 观战者
         this.maxPlayers = 4;
         this.turnTimeout = mode === 'fast' ? 7 : 15; // 出牌时间
         this.turnTimer = null;
@@ -117,6 +119,74 @@ class GameRoom {
     removePlayer(playerId) {
         this.players.delete(playerId);
         return this.players.size === 0;
+    }
+
+    // 添加观战者
+    addSpectator(ws, spectatorId, spectatorName) {
+        this.spectators.set(spectatorId, {
+            ws, id: spectatorId, name: spectatorName
+        });
+        return true;
+    }
+
+    // 移除观战者
+    removeSpectator(spectatorId) {
+        this.spectators.delete(spectatorId);
+        return this.spectators.size === 0 && this.players.size === 0;
+    }
+
+    // 获取观战者视角的游戏状态（只能看到一个玩家的手牌）
+    getSpectatorGameState(viewPlayerId = null) {
+        const playerIds = Array.from(this.players.keys());
+        const allHands = {};
+        const playerInfo = {};
+
+        // 如果没有指定观看的玩家，默认观看当前出牌玩家
+        let targetPid = viewPlayerId;
+        if (!targetPid && playerIds.length > 0) {
+            targetPid = playerIds[this.gameState.currentPlayer];
+        }
+
+        for (let i = 0; i < 4; i++) {
+            const pid = playerIds[i];
+            const player = this.players.get(pid);
+            // 只有目标玩家可以看到手牌，其他玩家只能看到牌数
+            if (pid === targetPid) {
+                allHands[pid] = {
+                    cards: this.gameState.hands[pid] || [],
+                    count: this.gameState.hands[pid]?.length || 0,
+                    visible: true
+                };
+            } else {
+                allHands[pid] = {
+                    cards: [],
+                    count: this.gameState.hands[pid]?.length || 0,
+                    visible: false
+                };
+            }
+            playerInfo[pid] = {
+                name: player?.name || '',
+                team: player?.team || 1,
+                playerNum: player?.playerNum || (i + 1)
+            };
+        }
+
+        return {
+            started: this.gameState.started,
+            currentPlayer: this.gameState.currentPlayer,
+            lastPlay: this.gameState.lastPlay,
+            lastPlayer: this.gameState.lastPlayer,
+            teamLevels: this.gameState.teamLevels,
+            currentLevelTeam: this.gameState.currentLevelTeam,
+            trumpRank: this.getCurrentLevelRank(),
+            hands: allHands,
+            playerInfo: playerInfo,
+            passedPlayers: this.gameState.passedPlayers,
+            roundWinner: this.gameState.roundWinner,
+            levelUp: this.gameState.levelUp,
+            isSpectator: true,
+            viewPlayerId: targetPid
+        };
     }
 
     setPlayerReady(playerId, ready) {
@@ -481,6 +551,7 @@ class GameRoom {
 
     broadcast(msg) {
         const data = JSON.stringify(msg);
+        // 向玩家发送
         this.players.forEach((p, pid) => {
             if (p.ws.readyState === WebSocket.OPEN) {
                 if (msg.type === 'gameStart' || msg.type === 'gameState' || msg.type === 'newRound') {
@@ -490,6 +561,27 @@ class GameRoom {
                 }
             }
         });
+        // 向观战者发送（保持每个观战者当前查看的玩家）
+        this.spectators.forEach((s, sid) => {
+            if (s.ws.readyState === WebSocket.OPEN) {
+                if (msg.type === 'gameStart' || msg.type === 'gameState' || msg.type === 'newRound') {
+                    // 默认查看当前出牌玩家
+                    const playerIds = Array.from(this.players.keys());
+                    const viewPid = s.viewPlayerId || playerIds[this.gameState.currentPlayer];
+                    s.ws.send(JSON.stringify({ ...msg, gameState: this.getSpectatorGameState(viewPid) }));
+                } else {
+                    s.ws.send(data);
+                }
+            }
+        });
+    }
+
+    // 设置观战者查看的玩家
+    setSpectatorViewPlayer(spectatorId, viewPlayerId) {
+        const spectator = this.spectators.get(spectatorId);
+        if (spectator) {
+            spectator.viewPlayerId = viewPlayerId;
+        }
     }
 
     broadcastGameState() { this.broadcast({ type: 'gameState' }); }
@@ -526,18 +618,19 @@ wss.on('connection', (ws) => {
                     const roomId = generateRoomId();
                     const playerId = 'P_' + Math.random().toString(36).substring(2, 10);
                     const mode = data.mode || 'normal'; // 默认正常模式
-                    const room = new GameRoom(roomId, mode);
+                    const allowSpectator = data.allowSpectator || false; // 是否允许观战
+                    const room = new GameRoom(roomId, mode, allowSpectator);
                     room.addPlayer(ws, playerId, data.playerName);
                     rooms.set(roomId, room);
                     playerToRoom.set(playerId, roomId);
                     ws.send(JSON.stringify({
-                        type: 'roomCreated', roomId, playerId, mode,
+                        type: 'roomCreated', roomId, playerId, mode, allowSpectator,
                         players: Array.from(room.players.values()).map(p => ({
                             id: p.id, name: p.name, playerNum: p.playerNum, team: p.team, ready: p.ready
                         }))
                     }));
                     broadcastRoomList();
-                    console.log(`房间创建: ${roomId} (${mode === 'fast' ? '快速' : '正常'}模式)`);
+                    console.log(`房间创建: ${roomId} (${mode === 'fast' ? '快速' : '正常'}模式, ${allowSpectator ? '允许观战' : '禁止观战'})`);
                     break;
                 }
                 case 'joinRoom': {
@@ -561,6 +654,49 @@ wss.on('connection', (ws) => {
                     room.broadcastPlayerList();
                     broadcastRoomList();
                     console.log(`玩家加入: ${data.roomId} 座位${seatNum || '自动'}`);
+                    break;
+                }
+                case 'spectateRoom': {
+                    // 观战者加入
+                    const room = rooms.get(data.roomId);
+                    if (!room) { ws.send(JSON.stringify({ type: 'error', message: '房间不存在' })); return; }
+                    if (!room.allowSpectator) { ws.send(JSON.stringify({ type: 'error', message: '该房间不允许观战' })); return; }
+                    const spectatorId = 'S_' + Math.random().toString(36).substring(2, 10);
+                    room.addSpectator(ws, spectatorId, data.playerName);
+                    playerToRoom.set(spectatorId, data.roomId);
+
+                    // 发送观战者状态
+                    ws.send(JSON.stringify({
+                        type: 'spectatorJoined',
+                        roomId: data.roomId,
+                        spectatorId: spectatorId,
+                        gameState: room.getSpectatorGameState(data.viewPlayerId),
+                        players: Array.from(room.players.values()).map(p => ({
+                            id: p.id, name: p.name, playerNum: p.playerNum, team: p.team, ready: p.ready
+                        }))
+                    }));
+
+                    // 通知房间内玩家有观战者加入
+                    room.broadcast({
+                        type: 'spectatorJoinedNotify',
+                        spectatorName: data.playerName
+                    });
+
+                    console.log(`观战者加入: ${data.roomId} - ${data.playerName}`);
+                    break;
+                }
+                case 'spectatorViewPlayer': {
+                    // 观战者切换查看的玩家
+                    const rid = playerToRoom.get(data.spectatorId);
+                    const room = rooms.get(rid);
+                    if (room && room.spectators.has(data.spectatorId)) {
+                        room.setSpectatorViewPlayer(data.spectatorId, data.viewPlayerId);
+                        const spectator = room.spectators.get(data.spectatorId);
+                        spectator.ws.send(JSON.stringify({
+                            type: 'spectatorViewState',
+                            gameState: room.getSpectatorGameState(data.viewPlayerId)
+                        }));
+                    }
                     break;
                 }
                 case 'ready': {
@@ -599,6 +735,7 @@ wss.on('connection', (ws) => {
     ws.on('close', () => {
         for (let [pid, rid] of playerToRoom.entries()) {
             const room = rooms.get(rid);
+            // 先检查是否是玩家
             const p = room?.players.get(pid);
             if (p?.ws === ws) {
                 console.log(`玩家断开: ${p.name}`);
@@ -615,6 +752,16 @@ wss.on('connection', (ws) => {
                 broadcastRoomList();
                 break;
             }
+            // 检查是否是观战者
+            const s = room?.spectators.get(pid);
+            if (s?.ws === ws) {
+                console.log(`观战者断开: ${s.name}`);
+                room.removeSpectator(pid);
+                playerToRoom.delete(pid);
+                // 通知房间内玩家
+                room.broadcast({ type: 'spectatorLeft', spectatorName: s.name });
+                break;
+            }
         }
     });
 
@@ -628,9 +775,11 @@ function getRoomList() {
         list.push({
             roomId,
             mode: room.mode,
+            allowSpectator: room.allowSpectator, // 是否允许观战
             turnTimeout: room.turnTimeout,
             playerCount: room.players.size,
             maxPlayers: room.maxPlayers,
+            spectatorCount: room.spectators.size, // 观战者数量
             started: room.gameState.started,
             players: Array.from(room.players.values()).map(p => ({
                 name: p.name,

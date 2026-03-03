@@ -943,6 +943,126 @@
             color: #4dabf7;
         }
 
+        /* 观战按钮样式 */
+        .spectate-btn {
+            background: linear-gradient(180deg, #4dabf7, #2d5a8e);
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .spectate-btn:hover {
+            background: linear-gradient(180deg, #6bb3ff, #4dabf7);
+            transform: scale(1.05);
+        }
+
+        /* 观战者标识 */
+        .spectator-badge {
+            background: rgba(77, 171, 247, 0.2);
+            color: #4dabf7;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        /* 观战者手牌区域 */
+        .spectator-hand-area {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        .spectator-hand-label {
+            font-size: 12px;
+            color: #90ee90;
+            margin-bottom: 5px;
+        }
+
+        .spectator-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            justify-content: center;
+        }
+
+        /* 观战模式开关 */
+        .spectator-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #90ee90;
+        }
+
+        .spectator-toggle input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        /* 观战者玩家选择按钮 */
+        .spectator-player-select {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .spectator-player-btn {
+            padding: 8px 15px;
+            border: 2px solid #666;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 12px;
+        }
+
+        .spectator-player-btn:hover {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .spectator-player-btn.active {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+        }
+
+        .spectator-player-btn.team1 {
+            border-color: #ff6b6b;
+        }
+
+        .spectator-player-btn.team1.active {
+            background: rgba(255, 107, 107, 0.2);
+        }
+
+        .spectator-player-btn.team2 {
+            border-color: #4dabf7;
+        }
+
+        .spectator-player-btn.team2.active {
+            background: rgba(77, 171, 247, 0.2);
+        }
+
+        /* 隐藏手牌显示 */
+        .hidden-hand {
+            display: flex;
+            gap: 2px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
         .table-status {
             text-align: center;
             font-size: 12px;
@@ -1230,6 +1350,10 @@
                             <div class="mode-btn fast" onclick="createRoom('fast')">⚡ 快速 7秒</div>
                             <div class="mode-btn normal active" onclick="createRoom('normal')">🎮 正常 15秒</div>
                         </div>
+                        <div class="spectator-toggle">
+                            <input type="checkbox" id="allowSpectator">
+                            <label for="allowSpectator">👁️ 允许观战（可看一人手牌）</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1402,6 +1526,7 @@
     let gameState = null;
     let selectedCards = [];
     let myInfo = null;
+    let isSpectator = false; // 是否为观战者
 
     let LEVEL_TO_RANK = { 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9', 10: '10', 11: 'J', 12: 'Q', 13: 'K', 14: 'A' };
 
@@ -1466,6 +1591,22 @@
                 break;
             case 'playerLeft':
                 showNotification(`${data.playerName} 离开了游戏`);
+                break;
+            case 'spectatorJoined':
+                // 观战者自己加入成功
+                handleSpectatorJoined(data);
+                break;
+            case 'spectatorJoinedNotify':
+                // 有观战者加入（通知）
+                showNotification(`👁️ ${data.spectatorName} 开始观战`);
+                break;
+            case 'spectatorLeft':
+                showNotification(`👁️ ${data.spectatorName} 停止观战`);
+                break;
+            case 'spectatorViewState':
+                // 观战者切换查看玩家后的状态更新
+                gameState = data.gameState;
+                updateSpectatorUI();
                 break;
             case 'gameStart':
                 handleGameStart(data);
@@ -1549,12 +1690,24 @@
 
             // 状态文字
             let statusText = `${room.playerCount}/4 人`;
+            if (room.allowSpectator && room.spectatorCount > 0) statusText += ` | ${room.spectatorCount}人观战`;
             if (isPlaying) statusText = '🎮 游戏中';
-            else if (isFull) statusText = '已满';
+
+            // 观战按钮（游戏进行中且允许观战时显示）
+            let spectateBtnHtml = '';
+            if (isPlaying && room.allowSpectator) {
+                spectateBtnHtml = `<button class="spectate-btn" onclick="event.stopPropagation(); spectateRoom('${room.roomId}')">👁️ 观战</button>`;
+            }
+
+            // 观战标识
+            let spectatorBadge = '';
+            if (room.allowSpectator) {
+                spectatorBadge = `<span style="font-size:10px;color:#4dabf7;margin-left:5px;">👁️</span>`;
+            }
 
             card.innerHTML = `
                 <div class="table-header">
-                    <div class="table-id">${room.roomId}</div>
+                    <div class="table-id">${room.roomId}${spectatorBadge}</div>
                     <div class="table-mode-badge ${modeClass}">${modeLabel}</div>
                 </div>
                 <div class="mini-table-layout">
@@ -1562,6 +1715,7 @@
                     ${seatsHtml}
                 </div>
                 <div class="table-footer ${isFull ? 'full' : ''} ${isPlaying ? 'playing' : ''}">${statusText}</div>
+                ${spectateBtnHtml}
             `;
 
             // 点击整个卡片也可以加入（如果未满且未开始）
@@ -1606,6 +1760,38 @@
         }
     }
 
+    // 观战者加入
+    function spectateRoom(roomId) {
+        playerName = document.getElementById('playerName').value.trim();
+
+        if (!playerName) {
+            showNotification('请输入玩家名称');
+            return;
+        }
+
+        // 保存用户名
+        savePlayerName(playerName);
+
+        // 如果还没连接，先连接
+        if (!ws || ws.readyState !== WebSocket.OPEN) {
+            connect(window.location.host).then(() => {
+                send({
+                    type: 'spectateRoom',
+                    roomId: roomId,
+                    playerName: playerName
+                });
+            }).catch(() => {
+                showNotification('连接服务器失败');
+            });
+        } else {
+            send({
+                type: 'spectateRoom',
+                roomId: roomId,
+                playerName: playerName
+            });
+        }
+    }
+
     function handleRoomCreated(data) {
         playerId = data.playerId;
         roomId = data.roomId;
@@ -1618,6 +1804,24 @@
         roomId = data.roomId;
         updatePlayerList(data.players);
         showWaitingRoom();
+    }
+
+    function handleSpectatorJoined(data) {
+        playerId = data.spectatorId;
+        roomId = data.roomId;
+        isSpectator = true;
+        gameState = data.gameState;
+        myInfo = { id: playerId, name: playerName };
+
+        // 直接进入游戏界面
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('waitingRoom').style.display = 'none';
+        document.getElementById('gameArea').style.display = 'block';
+        document.getElementById('chatBox').style.display = 'flex';
+
+        // 更新观战者界面
+        updateSpectatorUI();
+        showNotification('👁️ 你已进入观战模式');
     }
 
     function showWaitingRoom() {
@@ -1656,6 +1860,7 @@
     function handleGameStart(data) {
         gameState = data.gameState;
         myInfo = gameState.myInfo;
+        isSpectator = gameState.isSpectator || false;
 
  document.getElementById('waitingRoom').style.display = 'none';
         document.getElementById('gameArea').style.display = 'block';
@@ -1666,11 +1871,22 @@
 
     function handleGameState(data) {
         gameState = data.gameState;
+        // 如果游戏状态中包含 myInfo，更新它
+        if (gameState.myInfo) {
+            myInfo = gameState.myInfo;
+        }
+        isSpectator = gameState.isSpectator || isSpectator;
         updateGameUI();
     }
 
     function updateGameUI() {
         if (!gameState || !myInfo) return;
+
+        // 如果是观战者，使用观战者界面
+        if (isSpectator) {
+            updateSpectatorUI();
+            return;
+        }
 
         // 更新双方级牌
         const team1Level = gameState.teamLevels[1];
@@ -1710,6 +1926,152 @@
 
         // 更新按钮状态
         updateButtons();
+    }
+
+    // 观战者界面更新
+    function updateSpectatorUI() {
+        if (!gameState) return;
+
+        // 更新顶部信息栏
+        const team1Level = gameState.teamLevels[1];
+        const team2Level = gameState.teamLevels[2];
+        document.getElementById('team1Level').textContent = LEVEL_TO_RANK[team1Level];
+        document.getElementById('team2Level').textContent = LEVEL_TO_RANK[team2Level];
+
+        // 逢人配
+        const currentLevel = gameState.teamLevels[gameState.currentLevelTeam];
+        document.getElementById('trumpCard').textContent = '♥' + LEVEL_TO_RANK[currentLevel];
+
+        // 观战者标识
+        document.getElementById('myTeam').textContent = '👁️ 观战者';
+        document.getElementById('myTeam').style.color = '#4dabf7';
+
+        // 打牌方
+        const currentTeam = gameState.currentLevelTeam;
+        document.getElementById('currentLevelTeam').textContent = currentTeam === 1 ? '红队' : '蓝队';
+        document.getElementById('currentLevelTeam').style.color = currentTeam === 1 ? '#ff6b6b' : '#4dabf7';
+
+        // 获取玩家列表并按座位排序
+        const playerList = [];
+        for (let [pid, player] of Object.entries(gameState.playerInfo || {})) {
+            playerList.push({ ...player, playerId: pid });
+        }
+        playerList.sort((a, b) => a.playerNum - b.playerNum);
+
+        // 隐藏操作按钮
+        document.getElementById('actionButtons').style.display = 'none';
+
+        // 当前查看的玩家ID
+        const viewPlayerId = gameState.viewPlayerId;
+
+        // 渲染玩家选择按钮
+        const handContainer = document.getElementById('handContainer');
+        handContainer.innerHTML = '';
+
+        // 玩家选择区
+        const selectArea = document.createElement('div');
+        selectArea.className = 'spectator-player-select';
+
+        playerList.forEach((player, idx) => {
+            const btn = document.createElement('button');
+            const teamClass = player.team === 1 ? 'team1' : 'team2';
+            btn.className = `spectator-player-btn ${teamClass} ${player.playerId === viewPlayerId ? 'active' : ''}`;
+            btn.innerHTML = `${player.name} <span style="opacity:0.7">(${gameState.hands[player.playerId]?.count || 0}张)</span>`;
+            if (gameState.currentPlayer === idx) {
+                btn.innerHTML += ' ▼';
+            }
+            btn.onclick = () => switchViewPlayer(player.playerId);
+            selectArea.appendChild(btn);
+        });
+
+        handContainer.appendChild(selectArea);
+
+        // 显示选中玩家的手牌
+        const viewedPlayer = playerList.find(p => p.playerId === viewPlayerId);
+        if (viewedPlayer) {
+            const hand = gameState.hands[viewPlayerId];
+            const cards = hand?.cards || [];
+            const teamColor = viewedPlayer.team === 1 ? '#ff6b6b' : '#4dabf7';
+
+            // 手牌区域
+            const handArea = document.createElement('div');
+            handArea.className = 'spectator-hand-area';
+            handArea.style.border = `2px solid ${teamColor}`;
+
+            if (cards.length > 0) {
+                const label = document.createElement('div');
+                label.className = 'spectator-hand-label';
+                label.style.color = teamColor;
+                label.innerHTML = `<strong>${viewedPlayer.name}</strong> 的手牌 (${cards.length}张)`;
+                handArea.appendChild(label);
+
+                const cardsDiv = document.createElement('div');
+                cardsDiv.className = 'spectator-cards';
+                cards.forEach(card => {
+                    cardsDiv.appendChild(createCardElement(card, true));
+                });
+                handArea.appendChild(cardsDiv);
+            } else {
+                handArea.innerHTML = `<div style="color:#888;text-align:center;padding:20px;">该玩家手牌为空</div>`;
+            }
+
+            handContainer.appendChild(handArea);
+        }
+
+        // 显示其他玩家（仅显示牌数和牌背）
+        const otherPlayersArea = document.createElement('div');
+        otherPlayersArea.style.cssText = 'display:flex;gap:15px;justify-content:center;flex-wrap:wrap;margin-top:10px;';
+
+        playerList.forEach((player, idx) => {
+            if (player.playerId === viewPlayerId) return;
+
+            const hand = gameState.hands[player.playerId];
+            const count = hand?.count || 0;
+            const teamColor = player.team === 1 ? '#ff6b6b' : '#4dabf7';
+
+            const playerBox = document.createElement('div');
+            playerBox.className = 'spectator-hand-area';
+            playerBox.style.cssText = `flex:1;min-width:120px;max-width:180px;border:2px solid ${teamColor};cursor:pointer;`;
+            playerBox.onclick = () => switchViewPlayer(player.playerId);
+
+            const label = document.createElement('div');
+            label.className = 'spectator-hand-label';
+            label.style.color = teamColor;
+            label.innerHTML = `<strong>${player.name}</strong> (${count}张)`;
+            if (gameState.currentPlayer === idx) {
+                label.innerHTML += ' ▼';
+            }
+            playerBox.appendChild(label);
+
+            // 显示牌背
+            const backDiv = document.createElement('div');
+            backDiv.className = 'hidden-hand';
+            const showCount = Math.min(count, 6);
+            for (let i = 0; i < showCount; i++) {
+                const back = document.createElement('div');
+                back.className = 'card-back';
+                back.style.cssText = 'width:25px;height:35px;';
+                backDiv.appendChild(back);
+            }
+            playerBox.appendChild(backDiv);
+
+            otherPlayersArea.appendChild(playerBox);
+        });
+
+        handContainer.appendChild(otherPlayersArea);
+
+        // 更新上一次出的牌（中央区域）
+        updateLastPlay();
+    }
+
+    // 切换查看的玩家
+    function switchViewPlayer(playerId) {
+        if (!isSpectator) return;
+        send({
+            type: 'spectatorViewPlayer',
+            spectatorId: playerId,
+            viewPlayerId: playerId
+        });
     }
 
     function renderMyHand() {
@@ -1948,6 +2310,9 @@
             return;
         }
 
+        // 获取是否允许观战
+        const allowSpectator = document.getElementById('allowSpectator').checked;
+
         // 保存用户名
         savePlayerName(playerName);
 
@@ -1968,7 +2333,8 @@
         send({
             type: 'createRoom',
             playerName: playerName,
-            mode: mode
+            mode: mode,
+            allowSpectator: allowSpectator
         });
     }
 
