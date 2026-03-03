@@ -1,0 +1,20 @@
+{
+  "id": "conv-1772502396890-xbxsy9jvk",
+  "title": "Debug JavaScript null error in createRoom function",
+  "titleGenerationStatus": "success",
+  "createdAt": 1772502396891,
+  "updatedAt": 1772502633356,
+  "lastResponseAt": 1772502633356,
+  "sessionId": "8220ba63-1be8-44f1-9ea6-b66f8e40bd00",
+  "sdkSessionId": "8220ba63-1be8-44f1-9ea6-b66f8e40bd00",
+  "currentNote": "AI库/小游戏/掼蛋/局域网版使用说明.md",
+  "usage": {
+    "model": "opus",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 0,
+    "percentage": 0
+  }
+}
