@@ -2296,7 +2296,9 @@
     }
 
     function toggleCardSelection(index, card) {
-        const idx = selectedCards.findIndex(sc => sc.suit === card.suit && sc.rank === card.rank);
+        // 确保 card 对象有 value 属性
+        const cardValue = card.value; // 使用 value 属性比较
+        const idx = selectedCards.findIndex(sc => sc.suit === card.suit && sc.rank === card.rank && sc.value === cardValue);
         if (idx === -1) {
             selectedCards.push(card);
         } else {
