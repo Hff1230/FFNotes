@@ -111,7 +111,36 @@ class GameRoom {
         this.players.set(playerId, {
             ws, id: playerId, name: playerName,
             playerNum, team, ready: false,
-            finished: false, rank: 0
+            finished: false, rank: 0, isAI: false
+        });
+        return true;
+    }
+
+    // 添加AI玩家
+    addAIPlayer(playerId, playerName, seatNum = null) {
+        if (this.players.size >= this.maxPlayers) return false;
+
+        let playerNum;
+        if (seatNum !== null && seatNum >= 1 && seatNum <= 4) {
+            const occupied = Array.from(this.players.values()).some(p => p.playerNum === seatNum);
+            if (occupied) return false;
+            playerNum = seatNum;
+        } else {
+            const occupiedSeats = new Set(Array.from(this.players.values()).map(p => p.playerNum));
+            for (let i = 1; i <= 4; i++) {
+                if (!occupiedSeats.has(i)) {
+                    playerNum = i;
+                    break;
+                }
+            }
+        }
+
+        const team = (playerNum % 2 === 1) ? 1 : 2;
+
+        this.players.set(playerId, {
+            ws: null, id: playerId, name: playerName,
+            playerNum, team, ready: true, // AI默认准备
+            finished: false, rank: 0, isAI: true
         });
         return true;
     }
@@ -287,6 +316,13 @@ class GameRoom {
 
         this.broadcast({ type: 'gameStart', gameState: this.getPublicGameState() });
         console.log(`房间 ${this.id} 游戏开始`);
+
+        // 如果轮到AI玩家，延迟后自动出牌
+        const currentPlayerId = playerIds[this.gameState.currentPlayer];
+        const currentPlayer = this.players.get(currentPlayerId);
+        if (currentPlayer && currentPlayer.isAI) {
+            setTimeout(() => this.aiPlayCards(currentPlayerId), 1500);
+        }
     }
 
     getPublicGameState() {
@@ -472,6 +508,181 @@ class GameRoom {
             this.gameState.passedPlayers = [];
         }
         this.broadcastGameState();
+
+        // 如果轮到AI玩家，延迟后自动出牌
+        const currentPlayerId = playerIds[this.gameState.currentPlayer];
+        const currentPlayer = this.players.get(currentPlayerId);
+        if (currentPlayer && currentPlayer.isAI && !currentPlayer.finished) {
+            setTimeout(() => this.aiPlayCards(currentPlayerId), 1000);
+        }
+    }
+
+    // AI出牌逻辑
+    aiPlayCards(playerId) {
+        if (!this.gameState.started) return;
+        const playerIds = Array.from(this.players.keys());
+        if (playerIds[this.gameState.currentPlayer] !== playerId) return;
+
+        const player = this.players.get(playerId);
+        if (player.finished) return;
+
+        const hand = this.gameState.hands[playerId];
+        if (!hand || hand.length === 0) return;
+
+        // 找出可以打的牌
+        const cards = this.selectAICards(hand);
+
+        if (cards && cards.length > 0) {
+            this.playCards(playerId, cards);
+        } else {
+            this.pass(playerId);
+        }
+    }
+
+    // AI选牌逻辑 - 简单策略
+    selectAICards(hand) {
+        // 如果没有上家出牌，出最小的单张
+        if (!this.gameState.lastPlay || this.gameState.lastPlayer === this.getCurrentPlayerId()) {
+            // 出最小的单张
+            return [hand[hand.length - 1]];
+        }
+
+        const lastPlay = this.gameState.lastPlay;
+
+        // 尝试跟牌
+        if (lastPlay.type === 'single') {
+            // 找一张比上家大的牌
+            for (let i = hand.length - 1; i >= 0; i--) {
+                if (hand[i].value > lastPlay.value) {
+                    return [hand[i]];
+                }
+            }
+        } else if (lastPlay.type === 'pair') {
+            // 找一对比上家大的对子
+            const pairs = this.findPairs(hand);
+            for (const pair of pairs) {
+                if (pair[0].value > lastPlay.value) {
+                    return pair;
+                }
+            }
+        } else if (lastPlay.type === 'triple') {
+            // 找三张
+            const triples = this.findTriples(hand);
+            for (const triple of triples) {
+                if (triple[0].value > lastPlay.value) {
+                    return triple;
+                }
+            }
+        } else if (lastPlay.type === 'tripleWithPair') {
+            // 找三带二
+            const triplesWithPairs = this.findTriplesWithPairs(hand);
+            for (const twp of triplesWithPairs) {
+                if (twp.tripleValue > lastPlay.value) {
+                    return [...twp.triple, ...twp.pair];
+                }
+            }
+        }
+
+        // 尝试用炸弹
+        if (lastPlay.type !== 'rocket') {
+            const bombs = this.findBombs(hand);
+            for (const bomb of bombs) {
+                if (lastPlay.type !== 'bomb' || bomb.length > lastPlay.length ||
+                    (bomb.length === lastPlay.length && bomb[0].value > lastPlay.value)) {
+                    return bomb;
+                }
+            }
+            // 检查王炸
+            const rocket = this.findRocket(hand);
+            if (rocket) return rocket;
+        }
+
+        // 无法出牌，返回null表示pass
+        return null;
+    }
+
+    getCurrentPlayerId() {
+        const playerIds = Array.from(this.players.keys());
+        return playerIds[this.gameState.currentPlayer];
+    }
+
+    findPairs(hand) {
+        const pairs = [];
+        const counts = {};
+        hand.forEach(c => {
+            if (!counts[c.value]) counts[c.value] = [];
+            counts[c.value].push(c);
+        });
+        Object.values(counts).forEach(cards => {
+            if (cards.length >= 2) {
+                pairs.push([cards[0], cards[1]]);
+            }
+        });
+        return pairs.sort((a, b) => a[0].value - b[0].value);
+    }
+
+    findTriples(hand) {
+        const triples = [];
+        const counts = {};
+        hand.forEach(c => {
+            if (!counts[c.value]) counts[c.value] = [];
+            counts[c.value].push(c);
+        });
+        Object.values(counts).forEach(cards => {
+            if (cards.length >= 3) {
+                triples.push([cards[0], cards[1], cards[2]]);
+            }
+        });
+        return triples.sort((a, b) => a[0].value - b[0].value);
+    }
+
+    findTriplesWithPairs(hand) {
+        const results = [];
+        const counts = {};
+        hand.forEach(c => {
+            if (!counts[c.value]) counts[c.value] = [];
+            counts[c.value].push(c);
+        });
+
+        const tripleValues = Object.keys(counts).filter(v => counts[v].length >= 3);
+        const pairValues = Object.keys(counts).filter(v => counts[v].length >= 2);
+
+        tripleValues.forEach(tv => {
+            pairValues.forEach(pv => {
+                if (tv !== pv) {
+                    results.push({
+                        triple: [counts[tv][0], counts[tv][1], counts[tv][2]],
+                        pair: [counts[pv][0], counts[pv][1]],
+                        tripleValue: parseInt(tv)
+                    });
+                }
+            });
+        });
+        return results.sort((a, b) => a.tripleValue - b.tripleValue);
+    }
+
+    findBombs(hand) {
+        const bombs = [];
+        const counts = {};
+        hand.forEach(c => {
+            if (!counts[c.value]) counts[c.value] = [];
+            counts[c.value].push(c);
+        });
+        Object.values(counts).forEach(cards => {
+            if (cards.length >= 4) {
+                bombs.push(cards.slice(0, 4));
+            }
+        });
+        return bombs.sort((a, b) => a[0].value - b[0].value);
+    }
+
+    findRocket(hand) {
+        const smallJokers = hand.filter(c => c.rank === '小王');
+        const bigJokers = hand.filter(c => c.rank === '大王');
+        if (smallJokers.length >= 2 && bigJokers.length >= 2) {
+            return [smallJokers[0], smallJokers[1], bigJokers[0], bigJokers[1]];
+        }
+        return null;
     }
 
     getFinishedCount() {
@@ -527,7 +738,7 @@ class GameRoom {
         for (let p of this.players.values()) {
             p.finished = false;
             p.rank = 0;
-            p.ready = false;
+            p.ready = p.isAI ? true : false; // AI玩家自动准备
         }
 
         this.gameState.hands = this.dealCards();
@@ -547,6 +758,13 @@ class GameRoom {
         }
 
         this.broadcast({ type: 'newRound', gameState: this.getPublicGameState() });
+
+        // 如果轮到AI玩家，延迟后自动出牌
+        const currentPlayerId = playerIds[this.gameState.currentPlayer];
+        const currentPlayer = this.players.get(currentPlayerId);
+        if (currentPlayer && currentPlayer.isAI) {
+            setTimeout(() => this.aiPlayCards(currentPlayerId), 1500);
+        }
     }
 
     broadcast(msg) {
@@ -590,7 +808,7 @@ class GameRoom {
         this.broadcast({
             type: 'playerList',
             players: Array.from(this.players.values()).map(p => ({
-                id: p.id, name: p.name, playerNum: p.playerNum, team: p.team, ready: p.ready
+                id: p.id, name: p.name, playerNum: p.playerNum, team: p.team, ready: p.ready, isAI: p.isAI
             }))
         });
     }
@@ -702,6 +920,27 @@ wss.on('connection', (ws) => {
                 case 'ready': {
                     const rid = playerToRoom.get(data.playerId);
                     if (rid) rooms.get(rid)?.setPlayerReady(data.playerId, data.ready);
+                    break;
+                }
+                case 'addAI': {
+                    // 添加AI玩家
+                    const room = rooms.get(data.roomId);
+                    if (!room) { ws.send(JSON.stringify({ type: 'error', message: '房间不存在' })); return; }
+                    if (room.players.size >= 4) { ws.send(JSON.stringify({ type: 'error', message: '房间已满' })); return; }
+
+                    const aiId = 'AI_' + Math.random().toString(36).substring(2, 10);
+                    const aiNames = ['🤖 AI小明', '🤖 AI小红', '🤖 AI小刚', '🤖 AI小丽'];
+                    const aiName = aiNames[room.players.size] || `🤖 AI${room.players.size + 1}`;
+
+                    if (room.addAIPlayer(aiId, aiName, data.seatNum)) {
+                        playerToRoom.set(aiId, data.roomId);
+                        broadcastRoomList();
+                        room.broadcastPlayerList();
+                        room.checkStartGame();
+                        console.log(`AI玩家加入: ${data.roomId} - ${aiName}`);
+                    } else {
+                        ws.send(JSON.stringify({ type: 'error', message: '添加AI失败' }));
+                    }
                     break;
                 }
                 case 'play': {

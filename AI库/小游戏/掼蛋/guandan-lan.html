@@ -1409,6 +1409,7 @@
             <p style="color: #90ee90; margin: 15px 0; font-size: 14px;">需要4名玩家才能开始游戏</p>
 
             <button class="btn" id="readyBtn" onclick="toggleReady()">准备</button>
+            <button class="btn" id="addAIBtn" onclick="addAIPlayer()" style="margin-left: 10px; background: linear-gradient(180deg, #9b59b6, #8e44ad);">🤖 添加AI</button>
         </div>
 
         <!-- 游戏区域 -->
@@ -1850,7 +1851,8 @@
             const seatEl = document.getElementById(`waitSeat${seatNum}`);
             const avatarEl = seatEl.querySelector('.seat-avatar');
 
-            document.getElementById(`waitSeat${seatNum}Name`).textContent = p.name + (p.id === playerId ? ' (你)' : '');
+            const displayName = p.name + (p.id === playerId ? ' (你)' : '') + (p.isAI ? ' 🤖' : '');
+            document.getElementById(`waitSeat${seatNum}Name`).textContent = displayName;
             document.getElementById(`waitSeat${seatNum}Status`).textContent = p.ready ? '✓ 已准备' : '等待中';
             document.getElementById(`waitSeat${seatNum}Status`).className = `seat-status ${p.ready ? 'ready' : ''}`;
 
@@ -1859,6 +1861,12 @@
             }
             avatarEl.classList.add('occupied');
         });
+
+        // 更新AI按钮状态 - 如果已有4人则隐藏
+        const addAIBtn = document.getElementById('addAIBtn');
+        if (addAIBtn) {
+            addAIBtn.style.display = players.length >= 4 ? 'none' : 'inline-block';
+        }
     }
 
     function handleGameStart(data) {
@@ -2353,6 +2361,13 @@
             type: 'ready',
             playerId: playerId,
             ready: isReady
+        });
+    }
+
+    function addAIPlayer() {
+        send({
+            type: 'addAI',
+            roomId: currentRoomId
         });
     }
 
