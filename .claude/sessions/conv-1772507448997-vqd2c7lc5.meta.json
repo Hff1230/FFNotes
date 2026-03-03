@@ -3,18 +3,18 @@
   "title": "Implement overlapping player cards display</arg...",
   "titleGenerationStatus": "success",
   "createdAt": 1772507448997,
-  "updatedAt": 1772508157897,
-  "lastResponseAt": 1772508157897,
+  "updatedAt": 1772509064376,
+  "lastResponseAt": 1772508852586,
   "sessionId": "b5fd2a8f-9f34-4231-9b01-ecbdb31bdb9d",
   "sdkSessionId": "b5fd2a8f-9f34-4231-9b01-ecbdb31bdb9d",
   "currentNote": "AI库/小游戏/掼蛋/局域网版使用说明.md",
   "usage": {
     "model": "opus",
-    "inputTokens": 0,
+    "inputTokens": 2816,
     "cacheCreationInputTokens": 0,
-    "cacheReadInputTokens": 0,
+    "cacheReadInputTokens": 101312,
     "contextWindow": 200000,
-    "contextTokens": 0,
-    "percentage": 0
+    "contextTokens": 104128,
+    "percentage": 52
   }
 }
