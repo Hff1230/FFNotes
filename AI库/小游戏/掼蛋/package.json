@@ -6,12 +6,21 @@
   "scripts": {
     "start": "node guandan-server.js",
     "dev": "nodemon guandan-server.js",
-    "dev:verbose": "nodemon guandan-server.js --verbose"
+    "dev:verbose": "nodemon guandan-server.js --verbose",
+    "test": "jest --colors",
+    "test:watch": "jest --watch --colors",
+    "test:coverage": "jest --coverage --colors"
   },
   "nodemonConfig": {
-    "watch": ["guandan-server.js", "guandan-lan.html"],
+    "watch": [
+      "guandan-server.js",
+      "guandan-lan.html"
+    ],
     "ext": "js html",
-    "ignore": ["node_modules/*", "*.md"],
+    "ignore": [
+      "node_modules/*",
+      "*.md"
+    ],
     "delay": 1000,
     "verbose": true,
     "execMap": {
@@ -31,6 +40,7 @@
     "ws": "^8.14.0"
   },
   "devDependencies": {
+    "jest": "^30.2.0",
     "nodemon": "^3.0.0"
   }
 }

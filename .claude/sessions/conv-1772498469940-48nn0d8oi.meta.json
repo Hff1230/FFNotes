@@ -1,8 +1,20 @@
 {
   "id": "conv-1772498469940-48nn0d8oi",
-  "title": "启动服务器",
-  "titleGenerationStatus": "pending",
+  "title": "Start web server",
+  "titleGenerationStatus": "success",
   "createdAt": 1772498469941,
-  "updatedAt": 1772498469947,
-  "sessionId": null
+  "updatedAt": 1772499426907,
+  "lastResponseAt": 1772499426907,
+  "sessionId": "b8634a00-bc78-4b7d-b785-cc581351f355",
+  "sdkSessionId": "b8634a00-bc78-4b7d-b785-cc581351f355",
+  "currentNote": "AI库/小游戏/掼蛋/局域网版使用说明.md",
+  "usage": {
+    "model": "opus",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 0,
+    "percentage": 0
+  }
 }
