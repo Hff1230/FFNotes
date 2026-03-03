@@ -360,16 +360,49 @@
         .opponent-cards {
             display: flex;
             justify-content: center;
-            gap: 2px;
+            align-items: center;
             margin: 10px 0;
+            position: relative;
+            height: 50px;
         }
 
         .card-back {
-            width: 30px;
-            height: 42px;
+            width: 35px;
+            height: 50px;
             background: linear-gradient(135deg, #1a3d6e 0%, #0d1f30 100%);
-            border: 1px solid #2d5a8e;
-            border-radius: 3px;
+            border: 2px solid #2d5a8e;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        /* 牌背叠加容器 */
+        .card-back-stack {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 35px;
+            height: 50px;
+        }
+
+        .card-back-stack .card-back {
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 牌数量标签 */
+        .card-count-badge {
+            position: absolute;
+            bottom: -8px;
+            right: -10px;
+            background: #ffd700;
+            color: #1a3d2a;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+            z-index: 10;
+            min-width: 20px;
+            text-align: center;
         }
 
         .card-count {
@@ -442,8 +475,26 @@
         #myHand {
             display: flex;
             justify-content: center;
-            gap: 5px;
             flex-wrap: nowrap;
+        }
+
+        /* 玩家手牌叠加样式 */
+        #myHand .card {
+            margin-left: -35px;
+        }
+
+        #myHand .card:first-child {
+            margin-left: 0;
+        }
+
+        /* 让每张牌都能被点击 */
+        #myHand .card {
+            pointer-events: auto;
+        }
+
+        /* 鼠标悬停时提升层级 */
+        #myHand .card:hover {
+            z-index: 100 !important;
         }
 
         .card {
@@ -2058,16 +2109,23 @@
             }
             playerBox.appendChild(label);
 
-            // 显示牌背
+            // 显示牌背（单张牌样式）
             const backDiv = document.createElement('div');
-            backDiv.className = 'hidden-hand';
-            const showCount = Math.min(count, 6);
-            for (let i = 0; i < showCount; i++) {
-                const back = document.createElement('div');
-                back.className = 'card-back';
-                back.style.cssText = 'width:25px;height:35px;';
-                backDiv.appendChild(back);
-            }
+            backDiv.className = 'card-back-stack';
+            backDiv.style.cssText = 'margin: 5px auto;';
+
+            // 只显示一张牌背
+            const back = document.createElement('div');
+            back.className = 'card-back';
+            back.style.cssText = 'width:35px;height:50px;';
+            backDiv.appendChild(back);
+
+            // 添加数量标签
+            const badge = document.createElement('span');
+            badge.className = 'card-count-badge';
+            badge.textContent = count;
+            backDiv.appendChild(badge);
+
             playerBox.appendChild(backDiv);
 
             otherPlayersArea.appendChild(playerBox);
@@ -2097,9 +2155,11 @@
         cards.forEach((card, index) => {
             const cardEl = createCardElement(card, false);
             cardEl.onclick = () => toggleCardSelection(index, card);
-            if (selectedCards.some(sc => sc.suit === card.suit && sc.rank === card.rank)) {
+            // 使用索引来判断是否选中，            if (selectedCards.some(sc => sc.index === index)) {
                 cardEl.classList.add('selected');
             }
+            // 设置 z-index 让后面的牌在上层
+            cardEl.style.zIndex = index;
             hand.appendChild(cardEl);
         });
     }
@@ -2181,14 +2241,27 @@
                 nameEl.textContent = targetPlayer.name;
                 nameEl.className = `opponent-name ${targetPlayer.team === 1 ? 'team1' : 'team2'}`;
 
-                // 显示牌背
+                // 显示牌背（叠加样式）
                 const cardsContainer = document.getElementById(`op${pos}Cards`);
                 cardsContainer.innerHTML = '';
-                const cardCount = Math.min(count, 10);
-                for (let j = 0; j < cardCount; j++) {
+
+                if (count > 0) {
+                    // 创建牌背叠加容器
+                    const stackDiv = document.createElement('div');
+                    stackDiv.className = 'card-back-stack';
+
+                    // 只显示一张牌背
                     const back = document.createElement('div');
                     back.className = 'card-back';
-                    cardsContainer.appendChild(back);
+                    stackDiv.appendChild(back);
+
+                    // 添加数量标签
+                    const badge = document.createElement('span');
+                    badge.className = 'card-count-badge';
+                    badge.textContent = count;
+                    stackDiv.appendChild(badge);
+
+                    cardsContainer.appendChild(stackDiv);
                 }
             }
         });
@@ -2267,6 +2340,19 @@
         const isMyTurn = currentId === playerId;
         const canPlay = isMyTurn && selectedCards.length > 0;
         const canPass = isMyTurn && gameState.lastPlay && gameState.lastPlayer !== playerId;
+
+
+        console.log('=== updateButtons ===');
+        console.log('isMyTurn:', isMyTurn, 'currentId:', currentId);
+        console.log('playerId:', playerId);
+        console.log('canPlay:', canPlay, 'selectedCards.length:', selectedCards.length);
+        console.log('canPass:', canPass);
+        console.log('lastPlay:', gameState.lastPlay);
+        console.log('lastPlayer:', gameState.lastPlayer);
+
+        document.getElementById('playBtn').disabled = !canPlay;
+        document.getElementById('passBtn').disabled = !canPass;
+    }
 
         document.getElementById('playBtn').disabled = !canPlay;
         document.getElementById('passBtn').disabled = !canPass;
