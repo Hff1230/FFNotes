@@ -769,9 +769,9 @@ class GameRoom {
 
     broadcast(msg) {
         const data = JSON.stringify(msg);
-        // 向玩家发送
+        // 向玩家发送（跳过AI玩家，他们没有ws连接）
         this.players.forEach((p, pid) => {
-            if (p.ws.readyState === WebSocket.OPEN) {
+            if (p.ws && p.ws.readyState === WebSocket.OPEN) {
                 if (msg.type === 'gameStart' || msg.type === 'gameState' || msg.type === 'newRound') {
                     p.ws.send(JSON.stringify({ ...msg, gameState: this.getPlayerGameState(pid) }));
                 } else {

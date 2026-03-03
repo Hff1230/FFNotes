@@ -2368,13 +2368,13 @@
     function addAIPlayer() {
         send({
             type: 'addAI',
-            roomId: currentRoomId
+            roomId: roomId
         });
     }
 
     // AI自动测试 - 添加3个AI并自动准备
     function startAITest() {
-        if (!currentRoomId) {
+        if (!roomId) {
             showNotification('请先创建或加入房间');
             return;
         }
@@ -2383,7 +2383,7 @@
         let aiCount = 0;
         const addAI = () => {
             if (aiCount < 3) {
-                send({ type: 'addAI', roomId: currentRoomId });
+                send({ type: 'addAI', roomId: roomId });
                 aiCount++;
                 setTimeout(addAI, 300);
             } else {
