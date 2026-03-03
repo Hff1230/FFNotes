@@ -2304,11 +2304,8 @@
         } else {
             selectedCards.splice(idx, 1);
         }
-        renderMyHand();
-        updateButtons();
-    }
-
-    function updateOpponents() {
+        // 渲染完成后更新按钮状态
+        updateButtons();    function updateOpponents() {
         // 获取所有玩家信息，按playerNum排序
         const playerList = [];
         for (let [pid, player] of Object.entries(gameState.playerInfo || {})) {
