@@ -1803,6 +1803,15 @@
             </div>
         `;
 
+        // 添加模式按钮点击事件委托
+        grid.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const mode = this.getAttribute('data-mode');
+                createRoom(mode);
+            });
+        });
+
         // 添加现有房间
         rooms.forEach(room => {
             const card = document.createElement('div');
