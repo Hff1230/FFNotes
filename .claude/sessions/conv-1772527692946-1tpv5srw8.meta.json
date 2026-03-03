@@ -1,0 +1,20 @@
+{
+  "id": "conv-1772527692946-1tpv5srw8",
+  "title": "Fix room creation issue and restart server",
+  "titleGenerationStatus": "success",
+  "createdAt": 1772527692946,
+  "updatedAt": 1772527887245,
+  "lastResponseAt": 1772527887245,
+  "sessionId": "2c7cab39-652c-46e7-b54f-1a8016488741",
+  "sdkSessionId": "2c7cab39-652c-46e7-b54f-1a8016488741",
+  "currentNote": "AI库/小游戏/掼蛋/局域网版使用说明.md",
+  "usage": {
+    "model": "opus",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 0,
+    "percentage": 0
+  }
+}

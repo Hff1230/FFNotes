@@ -3,18 +3,18 @@
   "title": "Start AI self-testing",
   "titleGenerationStatus": "success",
   "createdAt": 1772520359473,
-  "updatedAt": 1772521658051,
-  "lastResponseAt": 1772521658051,
+  "updatedAt": 1772527638706,
+  "lastResponseAt": 1772527638706,
   "sessionId": "f07d41db-dde7-4eea-916c-a69fda4e162f",
   "sdkSessionId": "f07d41db-dde7-4eea-916c-a69fda4e162f",
   "currentNote": "AI库/小游戏/掼蛋/局域网版使用说明.md",
   "usage": {
     "model": "opus",
-    "inputTokens": 0,
+    "inputTokens": 1469,
     "cacheCreationInputTokens": 0,
-    "cacheReadInputTokens": 0,
+    "cacheReadInputTokens": 67456,
     "contextWindow": 200000,
-    "contextTokens": 0,
-    "percentage": 0
+    "contextTokens": 68925,
+    "percentage": 34
   }
 }
