@@ -2068,7 +2068,7 @@
         document.getElementById('team1Level').textContent = level1Text;
         document.getElementById('team2Level').textContent = level2Text;
 
-        // 逢人配（当前打牌方的级牌对应的红桃)
+        // 逢人配（当前打牌方的级牌对应的红桃）
         const currentLevel = gameState.teamLevels[gameState.currentLevelTeam];
         const currentLevelRank = LEVEL_TO_RANK[currentLevel];
         document.getElementById('trumpCard').textContent = '♥' + currentLevelRank;
@@ -2314,7 +2314,10 @@
             selectedCards.splice(idx, 1);
         }
         // 渲染完成后更新按钮状态
-        updateButtons();    function updateOpponents() {
+        updateButtons();
+    }
+
+    function updateOpponents() {
         // 获取所有玩家信息，按playerNum排序
         const playerList = [];
         for (let [pid, player] of Object.entries(gameState.playerInfo || {})) {
