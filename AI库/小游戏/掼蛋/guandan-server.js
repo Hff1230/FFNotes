@@ -978,14 +978,40 @@ wss.on('connection', (ws) => {
             const p = room?.players.get(pid);
             if (p?.ws === ws) {
                 console.log(`玩家断开: ${p.name}`);
-                if (room.removePlayer(pid)) {
-                    rooms.delete(rid);
-                    console.log(`房间删除: ${rid}`);
-                } else {
-                    // 广播玩家离开通知
-                    room.broadcast({ type: 'playerLeft', playerId: pid, playerName: p.name });
-                    // 更新房间内玩家列表
+
+                // 如果游戏正在进行中，将该玩家替换为AI而不是删除
+                if (room.gameState.started) {
+                    console.log(`游戏进行中，将 ${p.name} 替换为AI接管`);
+                    p.ws = null;
+                    p.isAI = true;
+                    p.name = '🤖 ' + p.name.replace('🤖 ', ''); // 添加AI前缀
+                    p.ready = true; // AI自动准备
+
+                    // 广播玩家被AI接管的通知
+                    room.broadcast({
+                        type: 'playerReplacedByAI',
+                        playerId: pid,
+                        playerName: p.name,
+                        message: `${p.name.replace('🤖 ', '')} 已离线，由AI接管`
+                    });
                     room.broadcastPlayerList();
+
+                    // 如果当前轮到该玩家，让AI立即出牌
+                    const playerIds = Array.from(room.players.keys());
+                    if (playerIds[room.gameState.currentPlayer] === pid) {
+                        setTimeout(() => room.aiPlayCards(pid), 1000);
+                    }
+                } else {
+                    // 游戏未开始，正常移除玩家
+                    if (room.removePlayer(pid)) {
+                        rooms.delete(rid);
+                        console.log(`房间删除: ${rid}`);
+                    } else {
+                        // 广播玩家离开通知
+                        room.broadcast({ type: 'playerLeft', playerId: pid, playerName: p.name });
+                        // 更新房间内玩家列表
+                        room.broadcastPlayerList();
+                    }
                 }
                 playerToRoom.delete(pid);
                 broadcastRoomList();
