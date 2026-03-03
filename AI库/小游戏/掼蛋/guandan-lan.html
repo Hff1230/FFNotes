@@ -1410,6 +1410,7 @@
 
             <button class="btn" id="readyBtn" onclick="toggleReady()">准备</button>
             <button class="btn" id="addAIBtn" onclick="addAIPlayer()" style="margin-left: 10px; background: linear-gradient(180deg, #9b59b6, #8e44ad);">🤖 添加AI</button>
+            <button class="btn" id="autoTestBtn" onclick="startAITest()" style="margin-left: 10px; background: linear-gradient(180deg, #e74c3c, #c0392b);">🎮 AI自动测试</button>
         </div>
 
         <!-- 游戏区域 -->
@@ -2369,6 +2370,33 @@
             type: 'addAI',
             roomId: currentRoomId
         });
+    }
+
+    // AI自动测试 - 添加3个AI并自动准备
+    function startAITest() {
+        if (!currentRoomId) {
+            showNotification('请先创建或加入房间');
+            return;
+        }
+
+        // 连续添加3个AI玩家
+        let aiCount = 0;
+        const addAI = () => {
+            if (aiCount < 3) {
+                send({ type: 'addAI', roomId: currentRoomId });
+                aiCount++;
+                setTimeout(addAI, 300);
+            } else {
+                // 3个AI添加完后，自动准备
+                setTimeout(() => {
+                    if (!isReady) {
+                        toggleReady();
+                    }
+                }, 500);
+            }
+        };
+        addAI();
+        showNotification('🤖 AI测试模式启动！');
     }
 
     function playSelectedCards() {
