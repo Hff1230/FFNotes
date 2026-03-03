@@ -1890,6 +1890,8 @@
         }
         isSpectator = gameState.isSpectator || isSpectator;
         updateGameUI();
+        // 自动出牌
+        autoPlayIfEnabled();
     }
 
     function updateGameUI() {
@@ -2373,6 +2375,8 @@
     }
 
     // AI自动测试 - 添加3个AI并自动准备
+    let autoPlayEnabled = false;
+
     function startAITest() {
         if (!roomId) {
             showNotification('请先创建或加入房间');
@@ -2392,11 +2396,47 @@
                     if (!isReady) {
                         toggleReady();
                     }
+                    // 启用自动出牌
+                    autoPlayEnabled = true;
                 }, 500);
             }
         };
         addAI();
-        showNotification('🤖 AI测试模式启动！');
+        showNotification('🤖 AI测试模式启动！自动出牌已开启');
+    }
+
+    // 自动出牌 - 出最小的单张
+    function autoPlayIfEnabled() {
+        if (!autoPlayEnabled || !gameState || !gameState.hands) return;
+
+        const playerIds = Object.keys(gameState.hands);
+        const currentPid = playerIds[gameState.currentPlayer];
+
+        // 只有轮到自己时才自动出牌
+        if (currentPid !== playerId) return;
+
+        const myHand = gameState.hands[playerId];
+        if (!myHand || myHand.length === 0) return;
+
+        // 延迟1秒后自动出牌
+        setTimeout(() => {
+            // 检查是否需要跟牌还是自由出牌
+            if (gameState.lastPlay && gameState.lastPlayer !== playerId) {
+                // 需要跟牌 - 尝试出一张比上家大的牌
+                const lastValue = gameState.lastPlay.value;
+                for (let i = myHand.length - 1; i >= 0; i--) {
+                    if (myHand[i].value > lastValue) {
+                        send({ type: 'play', playerId: playerId, cards: [myHand[i]] });
+                        return;
+                    }
+                }
+                // 没有能压过的牌，不出
+                send({ type: 'pass', playerId: playerId });
+            } else {
+                // 自由出牌 - 出最小的单张
+                send({ type: 'play', playerId: playerId, cards: [myHand[myHand.length - 1]] });
+            }
+        }, 1000);
     }
 
     function playSelectedCards() {
