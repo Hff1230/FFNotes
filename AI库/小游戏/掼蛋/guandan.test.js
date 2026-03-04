@@ -605,6 +605,100 @@ describe('🃏 掼蛋游戏逻辑测试', () => {
             console.log(`   1000次洗牌耗时: ${elapsed}ms`);
         });
     });
+
+    // ========== 级牌排序测试 ==========
+    describe('级牌排序 (sortHand)', () => {
+        // 模拟排序函数
+        function sortHand(hand, trumpRank) {
+            hand.sort((a, b) => {
+                const getSortValue = (card) => {
+                    if (card.isJoker) return card.value;
+                    if (card.rank === trumpRank) return 14.5; // 级牌排在小王和A之间
+                    return card.value;
+                };
+                const aVal = getSortValue(a);
+                const bVal = getSortValue(b);
+                if (aVal !== bVal) return bVal - aVal; // 从大到小排序
+                return SUITS.indexOf(a.suit) - SUITS.indexOf(b.suit);
+            });
+        }
+
+        test('✅ 级牌5排在王牌和A之间', () => {
+            // 创建包含级牌5、A、王牌的手牌
+            const hand = [
+                createCard('♠', '5'),  // 级牌5
+                createCard('♠', 'A'),  // A
+                createCard('🃏', '大王'), // 大王
+                createCard('🃏', '小王'), // 小王
+                createCard('♠', '6'),  // 6
+            ];
+
+            sortHand(hand, '5');
+
+            // 排序后应该是：大王 > 小王 > 级牌5 > A > 6
+            expect(hand[0].rank).toBe('大王');
+            expect(hand[1].rank).toBe('小王');
+            expect(hand[2].rank).toBe('5');
+            expect(hand[3].rank).toBe('A');
+            expect(hand[4].rank).toBe('6');
+        });
+
+        test('✅ 级牌K排在王牌和A之间', () => {
+            // 当打K时，K成为级牌
+            const hand = [
+                createCard('♠', 'K'),  // 级牌K
+                createCard('♠', 'A'),  // A
+                createCard('🃏', '小王'), // 小王
+                createCard('♠', 'Q'),  // Q
+            ];
+
+            sortHand(hand, 'K');
+
+            // 排序后应该是：小王 > 级牌K > A > Q
+            expect(hand[0].rank).toBe('小王');
+            expect(hand[1].rank).toBe('K');
+            expect(hand[2].rank).toBe('A');
+            expect(hand[3].rank).toBe('Q');
+        });
+
+        test('✅ 级牌比普通牌大', () => {
+            // 级牌5应该比A大
+            const hand = [
+                createCard('♠', '5'),  // 级牌5 (排序值14.5)
+                createCard('♠', 'A'),  // A (排序值14)
+            ];
+
+            sortHand(hand, '5');
+
+            expect(hand[0].rank).toBe('5');
+            expect(hand[1].rank).toBe('A');
+        });
+
+        test('✅ 所有花色的级牌都在王牌和A之间', () => {
+            const hand = [
+                createCard('♠', '3'),  // 黑桃3（级牌）
+                createCard('♥', '3'),  // 红桃3（级牌，逢人配）
+                createCard('♦', '3'),  // 方块3（级牌）
+                createCard('♣', '3'),  // 梅花3（级牌）
+                createCard('♠', 'A'),  // A
+                createCard('🃏', '小王'), // 小王
+            ];
+
+            sortHand(hand, '3');
+
+            // 小王应该排第一
+            expect(hand[0].rank).toBe('小王');
+
+            // 接下来应该是4张级牌3（按花色排序）
+            expect(hand[1].rank).toBe('3');
+            expect(hand[2].rank).toBe('3');
+            expect(hand[3].rank).toBe('3');
+            expect(hand[4].rank).toBe('3');
+
+            // 最后是A
+            expect(hand[5].rank).toBe('A');
+        });
+    });
 });
 
 // ==================== WebSocket 连接测试（可选）====================
