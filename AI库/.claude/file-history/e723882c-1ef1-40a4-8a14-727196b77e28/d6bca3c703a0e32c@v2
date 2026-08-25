@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>麻将大图分割工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: #1a1a2e;
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .controls {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .controls label {
+            display: inline-block;
+            margin-right: 15px;
+        }
+        .controls input {
+            width: 80px;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            margin-left: 5px;
+        }
+        .controls button {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .controls button:hover {
+            background: #ff6b6b;
+        }
+        .preview {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .preview h3 {
+            margin-bottom: 15px;
+            color: #4ecca3;
+        }
+        #sourceImage {
+            max-width: 100%;
+            border: 2px solid #4ecca3;
+        }
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 5px;
+            margin-top: 20px;
+        }
+        .tile-item {
+            background: #0f3460;
+            padding: 5px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .tile-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .tile-item .name {
+            font-size: 10px;
+            color: #aaa;
+            margin-top: 3px;
+        }
+        .status {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .status .success {
+            color: #4ecca3;
+        }
+        #downloadAll {
+            background: #4ecca3;
+            color: #1a1a2e;
+        }
+        #downloadAll:hover {
+            background: #7fdbda;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🀄麻将大图分割工具</h1>
+
+        <div class="controls">
+            <label>图片宽度: <input type="number" id="imgWidth" value="617"></label>
+            <label>图片高度: <input type="number" id="imgHeight" value="373"></label>
+            <label>牌宽度: <input type="number" id="tileWidth" value="61.7" step="0.1"></label>
+            <label>牌高度: <input type="number" id="tileHeight" value="93.25" step="0.01"></label>
+            <br><br>
+            <button onclick="loadImage()">加载图片</button>
+            <button onclick="splitImage()">分割图片</button>
+            <button id="downloadAll" onclick="downloadAll()">下载全部</button>
+        </div>
+
+        <div class="status">
+            <span id="statusText">请先加载麻将大图</span>
+        </div>
+
+        <div class="preview">
+            <h3>原图预览</h3>
+            <input type="file" id="fileInput" accept="image/*" style="display:none">
+            <img id="sourceImage" style="display:none">
+            <canvas id="sourceCanvas" style="display:none"></canvas>
+        </div>
+
+        <div class="preview">
+            <h3>分割结果</h3>
+            <div class="tiles-grid" id="tilesGrid"></div>
+        </div>
+    </div>
+
+    <script>
+        // 麻将牌命名映射
+        const TILE_NAMES = [
+            // 第0行: 筒1-9
+            ['back', 'tong1', 'tong2', 'tong3', 'tong4', 'tong5', 'tong6', 'tong7', 'tong8', 'tong9'],
+            // 第1行: 条1-9
+            ['back', 'tiao1', 'tiao2', 'tiao3', 'tiao4', 'tiao5', 'tiao6', 'tiao7', 'tiao8', 'tiao9'],
+            // 第2行: 万1-9
+            ['wan1', 'wan2', 'wan3', 'wan4', 'wan5', 'wan6', 'wan7', 'wan8', 'wan9', 'back'],
+            // 第3行: 风牌和箭牌
+            ['feng_dong', 'feng_nan', 'feng_xi', 'feng_bei', 'jian_zhong', 'jian_fa', 'jian_bai', 'back', 'back', 'back']
+        ];
+
+        let sourceImage = null;
+        let splitCanvases = [];
+
+        function loadImage() {
+            document.getElementById('fileInput').click();
+        }
+
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    sourceImage = new Image();
+                    sourceImage.onload = function() {
+                        document.getElementById('sourceImage').src = event.target.result;
+                        document.getElementById('sourceImage').style.display = 'block';
+                        document.getElementById('statusText').innerHTML = `<span class="success">图片加载成功！尺寸: ${sourceImage.width} x ${sourceImage.height}</span>`;document.getElementById('imgWidth').value = sourceImage.width;
+                        document.getElementById('imgHeight').value = sourceImage.height;
+                    };
+                    sourceImage.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function splitImage() {
+            if (!sourceImage) {
+                alert('请先加载图片！');
+                return;
+            }
+
+            const tileWidth = parseFloat(document.getElementById('tileWidth').value);
+            const tileHeight = parseFloat(document.getElementById('tileHeight').value);
+            const rows = TILE_NAMES.length;
+            const cols = TILE_NAMES[0].length;
+
+            splitCanvases = [];
+            const grid = document.getElementById('tilesGrid');
+            grid.innerHTML = '';
+
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const tileName = TILE_NAMES[row][col];
+
+                    if (tileName === 'back') continue;
+
+                    // 创建canvas
+                    const canvas = document.createElement('canvas');
+                    canvas.width = Math.round(tileWidth);
+                    canvas.height = Math.round(tileHeight);
+                    const ctx = canvas.getContext('2d');
+
+                    // 绘制裁剪的图片
+                    ctx.drawImage(
+                        sourceImage,
+                        col * tileWidth, row * tileHeight, tileWidth, tileHeight,
+                        0, 0, tileWidth, tileHeight
+                    );
+
+                    splitCanvases.push({ name: tileName, canvas: canvas });
+
+                    // 显示预览
+                    const item = document.createElement('div');
+                    item.className = 'tile-item';
+                    item.innerHTML = `
+                        <img src="${canvas.toDataURL('image/png')}">
+                        <div class="name">${tileName}</div>
+                    `;
+                    grid.appendChild(item);
+                }
+            }
+
+            document.getElementById('statusText').innerHTML = `<span class="success">分割完成！共 ${splitCanvases.length} 张牌</span>`;
+        }
+
+        function downloadAll() {
+            if (splitCanvases.length === 0) {
+                alert('请先分割图片！');
+                return;
+            }
+
+            // 逐个下载
+            splitCanvases.forEach((item, index) => {
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.download = `${item.name}.png`;
+                    link.href = item.canvas.toDataURL('image/png');
+                    link.click();
+                }, index * 100); // 每个文件间隔100ms
+            });
+
+            document.getElementById('statusText').innerHTML = `<span class="success">正在下载 ${splitCanvases.length} 张图片...</span>`;
+        }
+
+        // 页面加载时自动加载默认图片
+        window.onload = function() {
+            // 尝试自动加载麻将大图.jpg
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = function() {
+                sourceImage = img;
+                document.getElementById('sourceImage').src = '麻将大图.jpg';
+                document.getElementById('sourceImage').style.display = 'block';
+                document.getElementById('statusText').innerHTML = `<span class="success">自动加载麻将大图成功！尺寸: ${img.width} x ${img.height}</span>`;
+                document.getElementById('imgWidth').value = img.width;
+                document.getElementById('imgHeight').value = img.height;
+            };
+            img.onerror = function() {
+                document.getElementById('statusText').textContent = '请手动选择麻将大图文件';
+            };
+            img.src = '麻将大图.jpg';
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "sessionId": "eb84d314-a7db-450b-aa6b-67e2a8984984",
+      "fullPath": "C:\\Users\\hufeifei.JOY\\.claude\\projects\\C--Windows-System32\\eb84d314-a7db-450b-aa6b-67e2a8984984.jsonl",
+      "fileMtime": 1774938001074,
+      "firstPrompt": "1",
+      "summary": "MCP 配置检查与用户中断",
+      "messageCount": 3,
+      "created": "2026-03-31T05:54:16.547Z",
+      "modified": "2026-03-31T06:19:03.692Z",
+      "gitBranch": "",
+      "projectPath": "C:\\Windows\\System32",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "6a2541fd-a17e-42bf-a56d-3d71b507fb2d",
+      "fullPath": "C:\\Users\\hufeifei.JOY\\.claude\\projects\\C--Windows-System32\\6a2541fd-a17e-42bf-a56d-3d71b507fb2d.jsonl",
+      "fileMtime": 1775715170586,
+      "firstPrompt": "帮我修复乱码问题。",
+      "summary": "修复bat文件编码及清理乱码文件",
+      "messageCount": 16,
+      "created": "2026-03-31T06:22:57.121Z",
+      "modified": "2026-03-31T06:41:27.808Z",
+      "gitBranch": "",
+      "projectPath": "C:\\Windows\\System32",
+      "isSidechain": false
+    }
+  ],
+  "originalPath": "C:\\Windows\\System32"
+}

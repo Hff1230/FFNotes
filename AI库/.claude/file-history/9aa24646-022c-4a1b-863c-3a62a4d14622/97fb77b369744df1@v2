@@ -1,0 +1,36 @@
+# Unity3D 开发指南索引
+
+## 文档列表
+
+| 文档 | 路径 | 描述 |
+|------|------|------|
+| 代码规范 | `C:\Users\hufeifei.JOY\.claude\unity3d-code-standards.md` | Unity3D C# 代码编写规范 |
+| AI Agent 指南 | `C:\Users\hufeifei.JOY\.claude\unity-ai-agent-guide.md` | Unity MCP 自动化操作指南 |
+
+## 快速参考
+
+### 命名规范速查
+- **类名**: PascalCase (如 `PlayerController`)
+- **接口**: IPascalCase (如 `IDamageable`)
+- **私有字段**: _camelCase (如 `_currentHealth`)
+- **常量**: UPPER_SNAKE_CASE (如 `MAX_HEALTH`)
+
+### 核心 Skills
+- `unity-mcp-skill`: Unity 编辑器自动化
+- `browser-automation`: Web 应用测试
+- `simplify`: 代码简化审查
+
+### 性能优化要点
+1. 缓存组件引用（transform, GetComponent 结果）
+2. 使用 Animator.StringToHash 缓存参数哈希
+3. 复用 WaitForSeconds 对象
+4. 避免在 Update 中分配内存
+
+### 事件模式
+```csharp
+public static event Action OnEvent;
+public static void TriggerEvent() => OnEvent?.Invoke();
+```
+
+---
+*最后更新: 2026-03-20*

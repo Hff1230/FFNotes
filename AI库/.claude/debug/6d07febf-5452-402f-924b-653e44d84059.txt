@@ -1,0 +1,233 @@
+2026-04-09T06:12:11.713Z [DEBUG] Watching for changes in setting files C:\Users\hufeifei.JOY\.claude, C:\Windows\System32\.claude...
+2026-04-09T06:12:11.718Z [DEBUG] [init] configureGlobalMTLS starting
+2026-04-09T06:12:11.718Z [DEBUG] [init] configureGlobalMTLS complete
+2026-04-09T06:12:11.718Z [DEBUG] [init] configureGlobalAgents starting
+2026-04-09T06:12:11.718Z [DEBUG] [init] configureGlobalAgents complete
+2026-04-09T06:12:12.538Z [DEBUG] Using bash path: "D:\Program Files\Git\bin\bash.exe"
+2026-04-09T06:12:12.572Z [DEBUG] Applying permission update: Adding 39 allow rule(s) to destination 'userSettings': ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-04-09T06:12:12.573Z [DEBUG] Applying permission update: Adding 8 allow rule(s) to destination 'localSettings': ["Bash(powershell -Command \"[System.IO.File]::ReadAllText\\(''F:\\\\HFF\\\\Obsidian\\\\FFNotes\\\\迷你传奇\\\\更新游戏.bat'', [System.Text.Encoding]::GetEncoding\\(''GBK''\\)\\)\")","Bash(powershell -Command \"[System.IO.File]::ReadAllText\\(''F:\\\\HFF\\\\Obsidian\\\\FFNotes\\\\迷你传奇\\\\修复游戏.bat'', [System.Text.Encoding]::GetEncoding\\(''GBK''\\)\\)\")","Bash(powershell -Command:*)","Bash(powershell -File - <<'PSEOF'\n$content = [System.IO.File]::ReadAllText\\('F:\\\\HFF\\\\Obsidian\\\\FFNotes\\\\迷你传奇\\\\更新游戏.bat', [System.Text.Encoding]::GetEncoding\\('GBK'\\)\\)\n$utf8 = New-Object System.Text.UTF8Encoding\\($true\\)\n[System.IO.File]::WriteAllText\\('F:\\\\HFF\\\\Obsidian\\\\FFNotes\\\\迷你传奇\\\\更新游戏.bat', $content, $utf8\\)\nWrite-Host \"更新游戏.bat converted successfully\"\nPSEOF)","Bash(powershell -File - <<'PSEOF'\nGet-ChildItem 'F:\\\\HFF\\\\Obsidian\\\\FFNotes\\\\迷你传奇' | ForEach-Object {\n    Write-Host $_.Name\n}\nPSEOF)","Bash(powershell -File - <<'PSEOF'\n$dir = 'F:\\\\HFF\\\\Obsidian\\\\FFNotes\\\\迷你传奇'\n$items = Get-ChildItem $dir\nforeach \\($item in $items\\) {\n    $bytes = [System.Text.Encoding]::UTF8.GetBytes\\($item.Name\\)\n    $hex = [System.BitConverter]::ToString\\($bytes\\)\n    Write-Host \"$\\($item.Name\\) | HEX: $hex\"\n}\nPSEOF)","Bash(powershell:*)","Bash(del:*)"]
+2026-04-09T06:12:13.580Z [DEBUG] Applying permission update: Adding 1 directory with destination 'cliArg': ["f:\\HFF\\Obsidian\\FFNotes\\AI库\\Skill\\compound-engineering-zh\\skills"]
+2026-04-09T06:12:13.580Z [DEBUG] [STARTUP] Loading MCP configs...
+2026-04-09T06:12:13.584Z [DEBUG] [ToolSearch:optimistic] mode=standard, ENABLE_TOOL_SEARCH=0, result=false
+2026-04-09T06:12:13.584Z [DEBUG] [STARTUP] Running setup()...
+2026-04-09T06:12:13.585Z [DEBUG] Found 0 plugins (0 enabled, 0 disabled)
+2026-04-09T06:12:13.588Z [DEBUG] Loading skills from: managed=C:\ProgramData\ClaudeCode\.claude\skills, user=C:\Users\hufeifei.JOY\.claude\skills, project=[]
+2026-04-09T06:12:13.607Z [DEBUG] Error log sink initialized
+2026-04-09T06:12:13.611Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-04-09T06:12:13.611Z [DEBUG] Total plugin skills loaded: 0
+2026-04-09T06:12:13.611Z [DEBUG] Total plugin commands loaded: 0
+2026-04-09T06:12:13.611Z [DEBUG] Registered 0 hooks from 0 plugins
+2026-04-09T06:12:13.611Z [DEBUG] [STARTUP] setup() completed in 27ms
+2026-04-09T06:12:13.611Z [DEBUG] [STARTUP] Loading commands and agents...
+2026-04-09T06:12:13.614Z [DEBUG] Total plugin agents loaded: 0
+2026-04-09T06:12:13.616Z [DEBUG] Loaded 12 unique skills (managed: 0, user: 12, project: 0, legacy commands: 0)
+2026-04-09T06:12:13.617Z [DEBUG] getSkills returning: 12 skill dir commands, 0 plugin skills, 1 bundled skills
+2026-04-09T06:12:13.618Z [DEBUG] [STARTUP] Commands and agents loaded in 7ms
+2026-04-09T06:12:13.618Z [DEBUG] [STARTUP] Running showSetupScreens()...
+2026-04-09T06:12:13.620Z [DEBUG] [render] initLayout starting
+2026-04-09T06:12:13.620Z [DEBUG] Layout engine: yoga
+2026-04-09T06:12:13.642Z [DEBUG] [render] initLayout complete
+2026-04-09T06:12:13.646Z [DEBUG] [render] first ink render: 3035ms since process start
+2026-04-09T06:12:13.650Z [DEBUG] [Claude in Chrome] Found chrome profiles: Default
+2026-04-09T06:12:13.657Z [DEBUG] [keybindings] KeybindingSetup initialized with 99 bindings, 0 warnings
+2026-04-09T06:12:13.709Z [DEBUG] [keybindings] Skipping file watcher - user customization disabled
+2026-04-09T06:12:13.840Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-04-09T06:12:13.884Z [DEBUG] [STARTUP] showSetupScreens() completed in 266ms
+2026-04-09T06:12:13.884Z [DEBUG] [LSP MANAGER] initializeLspServerManager() called
+2026-04-09T06:12:13.884Z [DEBUG] [LSP MANAGER] Created manager instance, state=pending
+2026-04-09T06:12:13.884Z [DEBUG] [LSP MANAGER] Starting async initialization (generation 1)
+2026-04-09T06:12:13.886Z [DEBUG] Total LSP servers loaded: 0
+2026-04-09T06:12:13.886Z [DEBUG] [STARTUP] MCP configs loaded in 306ms
+2026-04-09T06:12:13.895Z [DEBUG] MCP server "chrome-devtools": Starting connection with timeout of 30000ms
+2026-04-09T06:12:13.933Z [DEBUG] MCP server "zai-mcp-server": Starting connection with timeout of 30000ms
+2026-04-09T06:12:13.974Z [DEBUG] MCP server "firecrawl-mcp": Initializing HTTP transport to http://3.38.179.98:25152/mcp
+2026-04-09T06:12:13.974Z [DEBUG] MCP server "firecrawl-mcp": Node version: v24.12.0, Platform: win32
+2026-04-09T06:12:13.974Z [DEBUG] MCP server "firecrawl-mcp": Environment: {"NODE_OPTIONS":"not set","UV_THREADPOOL_SIZE":"default","HTTP_PROXY":"not set","HTTPS_PROXY":"not set","NO_PROXY":"not set"}
+2026-04-09T06:12:13.976Z [DEBUG] MCP server "unity-mcp": Initializing HTTP transport to http://localhost:9998/mcp
+2026-04-09T06:12:13.976Z [DEBUG] MCP server "unity-mcp": Node version: v24.12.0, Platform: win32
+2026-04-09T06:12:13.976Z [DEBUG] MCP server "unity-mcp": Environment: {"NODE_OPTIONS":"not set","UV_THREADPOOL_SIZE":"default","HTTP_PROXY":"not set","HTTPS_PROXY":"not set","NO_PROXY":"not set"}
+2026-04-09T06:12:13.978Z [DEBUG] MCP server "web-search-mcp": Initializing HTTP transport to http://8.213.135.91:25152/mcp
+2026-04-09T06:12:13.978Z [DEBUG] MCP server "web-search-mcp": Node version: v24.12.0, Platform: win32
+2026-04-09T06:12:13.978Z [DEBUG] MCP server "web-search-mcp": Environment: {"NODE_OPTIONS":"not set","UV_THREADPOOL_SIZE":"default","HTTP_PROXY":"not set","HTTPS_PROXY":"not set","NO_PROXY":"not set"}
+2026-04-09T06:12:14.056Z [DEBUG] [Reconnection] computeInitialTeamContext: No teammate context set (not a teammate)
+2026-04-09T06:12:14.073Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.27548.1775715134073
+2026-04-09T06:12:14.074Z [DEBUG] Preserving file permissions: 100666
+2026-04-09T06:12:14.076Z [DEBUG] Temp file written successfully, size: 11942 bytes
+2026-04-09T06:12:14.076Z [DEBUG] Applied original permissions to temp file
+2026-04-09T06:12:14.076Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.27548.1775715134073 to C:\Users\hufeifei.JOY\.claude.json
+2026-04-09T06:12:14.079Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-04-09T06:12:14.175Z [DEBUG] [LSP SERVER MANAGER] getAllLspServers returned 0 server(s)
+2026-04-09T06:12:14.175Z [DEBUG] LSP manager initialized with 0 servers
+2026-04-09T06:12:14.176Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-04-09T06:12:14.176Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-04-09T06:12:14.179Z [DEBUG] Getting matching hook commands for SessionStart with query: startup
+2026-04-09T06:12:14.179Z [DEBUG] Found 0 hook matchers in settings
+2026-04-09T06:12:14.179Z [DEBUG] Matched 0 unique hooks for query "startup" (0 before deduplication)
+2026-04-09T06:12:14.179Z [DEBUG] LSP server manager initialized successfully
+2026-04-09T06:12:14.180Z [DEBUG] LSP notification handlers registered successfully for all 0 server(s)
+2026-04-09T06:12:14.180Z [DEBUG] MCP server "firecrawl-mcp": Proxy options: default
+2026-04-09T06:12:14.180Z [DEBUG] MCP server "firecrawl-mcp": HTTP transport options: {"url":"http://3.38.179.98:25152/mcp","headers":{"User-Agent":"claude-code/2.1.25","Authorization":"[REDACTED]"},"hasAuthProvider":true,"timeoutMs":60000}
+2026-04-09T06:12:14.180Z [DEBUG] MCP server "firecrawl-mcp": HTTP transport created successfully
+2026-04-09T06:12:14.181Z [DEBUG] MCP server "firecrawl-mcp": Client created, setting up request handler
+2026-04-09T06:12:14.181Z [DEBUG] MCP server "firecrawl-mcp": Starting connection with timeout of 30000ms
+2026-04-09T06:12:14.181Z [DEBUG] MCP server "firecrawl-mcp": Testing basic HTTP connectivity to http://3.38.179.98:25152/mcp
+2026-04-09T06:12:14.181Z [DEBUG] MCP server "firecrawl-mcp": Parsed URL: host=3.38.179.98, port=25152, protocol=http:
+2026-04-09T06:12:14.181Z [DEBUG] MCP server "unity-mcp": Proxy options: default
+2026-04-09T06:12:14.181Z [DEBUG] MCP server "unity-mcp": HTTP transport options: {"url":"http://localhost:9998/mcp","headers":{"User-Agent":"claude-code/2.1.25"},"hasAuthProvider":true,"timeoutMs":60000}
+2026-04-09T06:12:14.181Z [DEBUG] MCP server "unity-mcp": HTTP transport created successfully
+2026-04-09T06:12:14.182Z [DEBUG] MCP server "unity-mcp": Client created, setting up request handler
+2026-04-09T06:12:14.182Z [DEBUG] MCP server "unity-mcp": Starting connection with timeout of 30000ms
+2026-04-09T06:12:14.182Z [DEBUG] MCP server "unity-mcp": Testing basic HTTP connectivity to http://localhost:9998/mcp
+2026-04-09T06:12:14.182Z [DEBUG] MCP server "unity-mcp": Parsed URL: host=localhost, port=9998, protocol=http:
+2026-04-09T06:12:14.182Z [DEBUG] MCP server "unity-mcp": Using loopback address: localhost
+2026-04-09T06:12:14.182Z [DEBUG] MCP server "web-search-mcp": Proxy options: default
+2026-04-09T06:12:14.183Z [DEBUG] MCP server "web-search-mcp": HTTP transport options: {"url":"http://8.213.135.91:25152/mcp","headers":{"User-Agent":"claude-code/2.1.25","Authorization":"[REDACTED]"},"hasAuthProvider":true,"timeoutMs":60000}
+2026-04-09T06:12:14.183Z [DEBUG] MCP server "web-search-mcp": HTTP transport created successfully
+2026-04-09T06:12:14.183Z [DEBUG] MCP server "web-search-mcp": Client created, setting up request handler
+2026-04-09T06:12:14.183Z [DEBUG] MCP server "web-search-mcp": Starting connection with timeout of 30000ms
+2026-04-09T06:12:14.183Z [DEBUG] MCP server "web-search-mcp": Testing basic HTTP connectivity to http://8.213.135.91:25152/mcp
+2026-04-09T06:12:14.183Z [DEBUG] MCP server "web-search-mcp": Parsed URL: host=8.213.135.91, port=25152, protocol=http:
+2026-04-09T06:12:14.189Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-04-09T06:12:14.189Z [DEBUG] MCP server "unity-mcp": No token data found
+2026-04-09T06:12:14.190Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-04-09T06:12:14.190Z [DEBUG] [render] initLayout starting
+2026-04-09T06:12:14.199Z [DEBUG] [render] initLayout complete
+2026-04-09T06:12:14.200Z [DEBUG] [render] first ink render: 3589ms since process start
+2026-04-09T06:12:14.478Z [DEBUG] Git remote URL: null
+2026-04-09T06:12:14.478Z [DEBUG] No git remote URL found
+2026-04-09T06:12:14.478Z [DEBUG] Not in a GitHub repository, skipping path mapping update
+2026-04-09T06:12:14.481Z [DEBUG] Watching for changes in skill/command directories: C:\Users\hufeifei.JOY\.claude\skills...
+2026-04-09T06:12:14.506Z [DEBUG] [keybindings] KeybindingSetup initialized with 99 bindings, 0 warnings
+2026-04-09T06:12:14.668Z [DEBUG] MCP server "unity-mcp": HTTP Connection failed after 692ms: fetch failed (code: none, errno: none)
+2026-04-09T06:12:14.668Z [ERROR] MCP server "unity-mcp" TypeError: fetch failed
+2026-04-09T06:12:14.685Z [DEBUG] MCP server "unity-mcp": Connection failed after 708ms: fetch failed
+2026-04-09T06:12:14.685Z [ERROR] MCP server "unity-mcp" Connection failed: fetch failed
+2026-04-09T06:12:14.752Z [DEBUG] [keybindings] Skipping file watcher - user customization disabled
+2026-04-09T06:12:14.752Z [DEBUG] [REPL:mount] REPL mounted, disabled=false
+2026-04-09T06:12:14.839Z [DEBUG] Official marketplace auto-install skipped: already_attempted
+2026-04-09T06:12:14.841Z [DEBUG] performStartupChecks called
+2026-04-09T06:12:14.842Z [DEBUG] Starting background plugin installations
+2026-04-09T06:12:14.843Z [DEBUG] performBackgroundPluginInstallations called
+2026-04-09T06:12:14.856Z [DEBUG] [claudeai-mcp] Checking gate (cached)...
+2026-04-09T06:12:14.856Z [DEBUG] [claudeai-mcp] Gate returned: false
+2026-04-09T06:12:14.856Z [DEBUG] [claudeai-mcp] Disabled via gate
+2026-04-09T06:12:14.859Z [DEBUG] Setting installation status: 0 marketplaces, 0 installable plugins, 0 uninstallable plugins
+2026-04-09T06:12:14.861Z [DEBUG] Loaded plugins - Enabled: 0, Disabled: 0, Commands: 0, Agents: 0, Errors: 0
+2026-04-09T06:12:14.868Z [DEBUG] Ripgrep first use test: PASSED (mode=builtin, path=E:\Program Files\nodejs\node_global\node_modules\@anthropic-ai\claude-code\vendor\ripgrep\x64-win32\rg.exe)
+2026-04-09T06:12:14.881Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-04-09T06:12:15.130Z [DEBUG] [Claude in Chrome] Found edge profiles: Default
+2026-04-09T06:12:15.160Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.27548.1775715135160
+2026-04-09T06:12:15.161Z [DEBUG] Preserving file permissions: 100666
+2026-04-09T06:12:15.162Z [DEBUG] Temp file written successfully, size: 11942 bytes
+2026-04-09T06:12:15.163Z [DEBUG] Applied original permissions to temp file
+2026-04-09T06:12:15.163Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.27548.1775715135160 to C:\Users\hufeifei.JOY\.claude.json
+2026-04-09T06:12:15.165Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-04-09T06:12:15.169Z [DEBUG] [Claude in Chrome] Extension not found in any browser
+2026-04-09T06:12:15.177Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-04-09T06:12:15.185Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-04-09T06:12:15.186Z [DEBUG] MCP server "web-search-mcp": Successfully connected to http server in 1208ms
+2026-04-09T06:12:15.186Z [DEBUG] MCP server "web-search-mcp": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"firecrawl-fastmcp","version":"3.0.0"}}
+2026-04-09T06:12:15.187Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-04-09T06:12:15.240Z [DEBUG] MCP server "web-search-mcp": HTTP connection dropped after 0s uptime
+2026-04-09T06:12:15.240Z [DEBUG] MCP server "web-search-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-04-09T06:12:15.240Z [DEBUG] MCP server "web-search-mcp": HTTP connection dropped after 0s uptime
+2026-04-09T06:12:15.241Z [DEBUG] MCP server "web-search-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-04-09T06:12:15.752Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-04-09T06:12:15.752Z [DEBUG] MCP server "firecrawl-mcp": Successfully connected to http server in 1778ms
+2026-04-09T06:12:15.752Z [DEBUG] MCP server "firecrawl-mcp": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"firecrawl-fastmcp","version":"3.0.0"}}
+2026-04-09T06:12:15.753Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-04-09T06:12:16.031Z [DEBUG] MCP server "firecrawl-mcp": HTTP connection dropped after 0s uptime
+2026-04-09T06:12:16.031Z [DEBUG] MCP server "firecrawl-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-04-09T06:12:16.031Z [DEBUG] MCP server "firecrawl-mcp": HTTP connection dropped after 0s uptime
+2026-04-09T06:12:16.031Z [DEBUG] MCP server "firecrawl-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-04-09T06:12:16.710Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-04-09T06:12:17.314Z [DEBUG] rg error (signal=undefined, code=ABORT_ERR, stderr: rg: C:\Windows\System32\LogFiles\WMI\RtBackup: 拒绝访问。 (os error 5)
+), 18637 results
+2026-04-09T06:12:19.053Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-04-09T06:12:19.053Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 5164ms
+2026-04-09T06:12:19.053Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.21.0"}}
+2026-04-09T06:12:19.281Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-04-09T06:12:19.266Z] INFO: MCP Server Application initialized
+[2026-04-09T06:12:19.266Z] INFO: Starting MCP server...
+[2026-04-09T06:12:19.267Z] INFO: UI to Artifact tool registered successfully
+[2026-04-09T06:12:19.268Z] INFO: Text Extraction tool registered successfully
+[2026-04-09T06:12:19.268Z] INFO: Error Diagnosis tool registered successfully
+[2026-04-09T06:12:19.268Z] INFO: Diagram Analysis tool registered successfully
+[2026-04-09T06:12:19.268Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-04-09T06:12:19.269Z] INFO: UI Diff Check tool registered successfully
+[2026-04-09T06:12:19.269Z] INFO: General Image Analysis tool registered successfully
+[2026-04-09T06:12:19.269Z] INFO: Video analysis tool registered successfully
+[2026-04-09T06:12:19.269Z] INFO: Successfully registered all tools
+[2026-04-09T06:12:19.269Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-04-09T06:12:19.281Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 5349ms
+2026-04-09T06:12:19.281Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-04-09T06:12:44.817Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-04-09T06:12:49.078Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.27548.1775715169078
+2026-04-09T06:12:49.078Z [DEBUG] Preserving file permissions: 100666
+2026-04-09T06:12:49.079Z [DEBUG] Temp file written successfully, size: 12029 bytes
+2026-04-09T06:12:49.079Z [DEBUG] Applied original permissions to temp file
+2026-04-09T06:12:49.079Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.27548.1775715169078 to C:\Users\hufeifei.JOY\.claude.json
+2026-04-09T06:12:49.081Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-04-09T06:12:49.082Z [DEBUG] Metadata string for skill-creator:
+2026-04-09T06:12:49.082Z [DEBUG] <command-message>skill-creator</command-message>
+<command-name>/skill-creator</command-name>
+2026-04-09T06:12:49.082Z [DEBUG] command-message tags in metadata: 1
+2026-04-09T06:12:49.085Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-04-09T06:12:49.085Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-04-09T06:12:49.603Z [DEBUG] Sending 12 skills via attachment (initial, 12 total sent)
+2026-04-09T06:12:49.603Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-04-09T06:12:49.603Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-04-09T06:12:49.604Z [DEBUG] processPromptSlashCommand creating 4 messages for skill-creator
+2026-04-09T06:12:49.604Z [DEBUG] Message 1: <command-message>skill-creator</command-message>
+<command-name>/skill-creator</command-name>
+2026-04-09T06:12:49.604Z [DEBUG] Message 2 [META]: [{"type":"text","text":"Base directory for this skill: C:\\Users\\hufeifei.JOY\\.claude\\skills\\sickn33-skill-creator\n\n# skill-creator\n\n## Purpose\n\nTo create new CLI skills following Anthropic'
+2026-04-09T06:12:49.604Z [DEBUG] Message 3: [ATTACHMENT]
+2026-04-09T06:12:49.604Z [DEBUG] Message 4: [ATTACHMENT]
+2026-04-09T06:12:49.606Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-04-09T06:12:49.606Z [DEBUG] Found 0 hook matchers in settings
+2026-04-09T06:12:49.606Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-04-09T06:12:49.611Z [DEBUG] FileHistory: Added snapshot for 7e422d63-4311-4744-a411-d20e772632e9, tracking 0 files
+2026-04-09T06:12:49.664Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-04-09T06:12:49.668Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\6d07febf-5452-402f-924b-653e44d84059-agent-6d07febf-5452-402f-924b-653e44d84059.json.tmp.27548.1775715169668
+2026-04-09T06:12:49.669Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-04-09T06:12:49.669Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\6d07febf-5452-402f-924b-653e44d84059-agent-6d07febf-5452-402f-924b-653e44d84059.json.tmp.27548.1775715169668 to C:\Users\hufeifei.JOY\.claude\todos\6d07febf-5452-402f-924b-653e44d84059-agent-6d07febf-5452-402f-924b-653e44d84059.json
+2026-04-09T06:12:49.670Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\6d07febf-5452-402f-924b-653e44d84059-agent-6d07febf-5452-402f-924b-653e44d84059.json written atomically
+2026-04-09T06:12:49.751Z [DEBUG] Total plugin output styles loaded: 0
+2026-04-09T06:12:49.845Z [DEBUG] Summarizing all 80 messages (~0 tokens)
+2026-04-09T06:12:49.848Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-04-09T06:12:49.850Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.22a; cc_entrypoint=cli;
+2026-04-09T06:12:49.852Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-04-09T06:12:49.852Z [DEBUG] [API:auth] OAuth token check starting
+2026-04-09T06:12:49.854Z [DEBUG] [API:auth] OAuth token check complete
+2026-04-09T06:12:49.878Z [DEBUG] Stats cache is up to date
+2026-04-09T06:12:49.958Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-04-09T06:12:49.967Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-04-09T06:12:49.967Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-04-09T06:12:49.967Z [DEBUG] [API:auth] OAuth token check starting
+2026-04-09T06:12:49.968Z [DEBUG] [API:auth] OAuth token check complete
+2026-04-09T06:12:50.423Z [DEBUG] Stream started - received first chunk
+2026-04-09T06:12:50.500Z [DEBUG] Stream started - received first chunk
+2026-04-09T06:12:50.587Z [DEBUG] Generated summary for session 6a2541fd-a17e-42bf-a56d-3d71b507fb2d: "修复bat文件编码及清理乱码文件"
+2026-04-09T06:12:50.592Z [DEBUG] Session index: added 1, updated 0, removed 0, summaries generated 1 (total: 2)
+2026-04-09T06:12:50.779Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-04-09T06:12:57.322Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.27548.1775715177322
+2026-04-09T06:12:57.322Z [DEBUG] Preserving file permissions: 100666
+2026-04-09T06:12:57.323Z [DEBUG] Temp file written successfully, size: 12029 bytes
+2026-04-09T06:12:57.324Z [DEBUG] Applied original permissions to temp file
+2026-04-09T06:12:57.324Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.27548.1775715177322 to C:\Users\hufeifei.JOY\.claude.json
+2026-04-09T06:12:57.325Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-04-09T06:13:00.373Z [ERROR] Stream completed with message_start but no content blocks completed - triggering non-streaming fallback
+2026-04-09T06:13:00.373Z [ERROR] Error streaming, falling back to non-streaming mode: Stream ended without receiving any events
+2026-04-09T06:13:00.373Z [ERROR] Error in non-streaming fallback: Request was aborted.
+2026-04-09T06:13:00.579Z [DEBUG] FileHistory: Making snapshot for message 064d3a66-094a-4132-8fcc-6183c15fc1ad
+2026-04-09T06:13:00.580Z [DEBUG] FileHistory: Added snapshot for 064d3a66-094a-4132-8fcc-6183c15fc1ad, tracking 0 files
+2026-04-09T06:13:00.891Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-04-09T06:13:00.891Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.3cc; cc_entrypoint=cli;
+2026-04-09T06:13:00.891Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-04-09T06:13:00.891Z [DEBUG] [API:auth] OAuth token check starting
+2026-04-09T06:13:00.893Z [DEBUG] [API:auth] OAuth token check complete
+2026-04-09T06:13:01.010Z [DEBUG] Getting matching hook commands for SessionEnd with query: prompt_input_exit
+2026-04-09T06:13:01.010Z [DEBUG] Found 0 hook matchers in settings
+2026-04-09T06:13:01.010Z [DEBUG] Matched 0 unique hooks for query "prompt_input_exit" (0 before deduplication)

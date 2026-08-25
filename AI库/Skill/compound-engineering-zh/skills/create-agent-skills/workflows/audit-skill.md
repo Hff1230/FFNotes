@@ -54,7 +54,7 @@ ls ~/.claude/skills/{skill-name}/references/ 2>/dev/null
 
 ### 结构
 - [ ] SKILL.md 不超过 500 行
-- [ ] 纯 XML 结构（正文中无 markdown 标题 #）
+- [ ] 纯 XML 结构（正文中无 markdown 标题 ）
 - [ ] 所有 XML 标签正确关闭
 - [ ] 有必需标签：objective 或 essential_principles
 - [ ] 有 success_criteria

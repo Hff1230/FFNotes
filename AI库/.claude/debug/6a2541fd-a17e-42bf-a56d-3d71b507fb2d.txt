@@ -1,0 +1,1633 @@
+2026-03-31T06:19:19.390Z [DEBUG] Watching for changes in setting files C:\Users\hufeifei.JOY\.claude...
+2026-03-31T06:19:19.393Z [DEBUG] [init] configureGlobalMTLS starting
+2026-03-31T06:19:19.394Z [DEBUG] [init] configureGlobalMTLS complete
+2026-03-31T06:19:19.394Z [DEBUG] [init] configureGlobalAgents starting
+2026-03-31T06:19:19.394Z [DEBUG] [init] configureGlobalAgents complete
+2026-03-31T06:19:20.146Z [DEBUG] Using bash path: "D:\Program Files\Git\bin\bash.exe"
+2026-03-31T06:19:20.164Z [DEBUG] Applying permission update: Adding 39 allow rule(s) to destination 'userSettings': ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-31T06:19:21.121Z [DEBUG] Applying permission update: Adding 1 directory with destination 'cliArg': ["f:\\HFF\\Obsidian\\FFNotes\\AI库\\Skill\\compound-engineering-zh\\skills"]
+2026-03-31T06:19:21.121Z [DEBUG] [STARTUP] Loading MCP configs...
+2026-03-31T06:19:21.125Z [DEBUG] [ToolSearch:optimistic] mode=standard, ENABLE_TOOL_SEARCH=0, result=false
+2026-03-31T06:19:21.125Z [DEBUG] [STARTUP] Running setup()...
+2026-03-31T06:19:21.126Z [DEBUG] Found 0 plugins (0 enabled, 0 disabled)
+2026-03-31T06:19:21.129Z [DEBUG] Loading skills from: managed=C:\ProgramData\ClaudeCode\.claude\skills, user=C:\Users\hufeifei.JOY\.claude\skills, project=[]
+2026-03-31T06:19:21.146Z [DEBUG] Error log sink initialized
+2026-03-31T06:19:21.150Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-31T06:19:21.150Z [DEBUG] Total plugin skills loaded: 0
+2026-03-31T06:19:21.150Z [DEBUG] Total plugin commands loaded: 0
+2026-03-31T06:19:21.150Z [DEBUG] Registered 0 hooks from 0 plugins
+2026-03-31T06:19:21.150Z [DEBUG] [STARTUP] setup() completed in 25ms
+2026-03-31T06:19:21.150Z [DEBUG] [STARTUP] Loading commands and agents...
+2026-03-31T06:19:21.152Z [DEBUG] Total plugin agents loaded: 0
+2026-03-31T06:19:21.154Z [DEBUG] Loaded 12 unique skills (managed: 0, user: 12, project: 0, legacy commands: 0)
+2026-03-31T06:19:21.155Z [DEBUG] getSkills returning: 12 skill dir commands, 0 plugin skills, 1 bundled skills
+2026-03-31T06:19:21.156Z [DEBUG] [STARTUP] Commands and agents loaded in 6ms
+2026-03-31T06:19:21.156Z [DEBUG] [STARTUP] Running showSetupScreens()...
+2026-03-31T06:19:21.158Z [DEBUG] [render] initLayout starting
+2026-03-31T06:19:21.158Z [DEBUG] Layout engine: yoga
+2026-03-31T06:19:21.175Z [DEBUG] [render] initLayout complete
+2026-03-31T06:19:21.179Z [DEBUG] [render] first ink render: 2680ms since process start
+2026-03-31T06:19:21.184Z [DEBUG] [keybindings] KeybindingSetup initialized with 99 bindings, 0 warnings
+2026-03-31T06:19:21.212Z [DEBUG] [keybindings] Skipping file watcher - user customization disabled
+2026-03-31T06:19:21.335Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-31T06:19:21.366Z [DEBUG] [STARTUP] showSetupScreens() completed in 210ms
+2026-03-31T06:19:21.366Z [DEBUG] [LSP MANAGER] initializeLspServerManager() called
+2026-03-31T06:19:21.366Z [DEBUG] [LSP MANAGER] Created manager instance, state=pending
+2026-03-31T06:19:21.366Z [DEBUG] [LSP MANAGER] Starting async initialization (generation 1)
+2026-03-31T06:19:21.368Z [DEBUG] Total LSP servers loaded: 0
+2026-03-31T06:19:21.368Z [DEBUG] [STARTUP] MCP configs loaded in 247ms
+2026-03-31T06:19:21.374Z [DEBUG] MCP server "chrome-devtools": Starting connection with timeout of 30000ms
+2026-03-31T06:19:21.406Z [DEBUG] MCP server "zai-mcp-server": Starting connection with timeout of 30000ms
+2026-03-31T06:19:21.438Z [DEBUG] MCP server "firecrawl-mcp": Initializing HTTP transport to http://3.38.179.98:25152/mcp
+2026-03-31T06:19:21.438Z [DEBUG] MCP server "firecrawl-mcp": Node version: v24.12.0, Platform: win32
+2026-03-31T06:19:21.438Z [DEBUG] MCP server "firecrawl-mcp": Environment: {"NODE_OPTIONS":"not set","UV_THREADPOOL_SIZE":"default","HTTP_PROXY":"not set","HTTPS_PROXY":"not set","NO_PROXY":"not set"}
+2026-03-31T06:19:21.439Z [DEBUG] MCP server "unity-mcp": Initializing HTTP transport to http://localhost:9998/mcp
+2026-03-31T06:19:21.439Z [DEBUG] MCP server "unity-mcp": Node version: v24.12.0, Platform: win32
+2026-03-31T06:19:21.440Z [DEBUG] MCP server "unity-mcp": Environment: {"NODE_OPTIONS":"not set","UV_THREADPOOL_SIZE":"default","HTTP_PROXY":"not set","HTTPS_PROXY":"not set","NO_PROXY":"not set"}
+2026-03-31T06:19:21.440Z [DEBUG] MCP server "web-search-mcp": Initializing HTTP transport to http://8.213.135.91:25152/mcp
+2026-03-31T06:19:21.441Z [DEBUG] MCP server "web-search-mcp": Node version: v24.12.0, Platform: win32
+2026-03-31T06:19:21.441Z [DEBUG] MCP server "web-search-mcp": Environment: {"NODE_OPTIONS":"not set","UV_THREADPOOL_SIZE":"default","HTTP_PROXY":"not set","HTTPS_PROXY":"not set","NO_PROXY":"not set"}
+2026-03-31T06:19:21.508Z [DEBUG] [Reconnection] computeInitialTeamContext: No teammate context set (not a teammate)
+2026-03-31T06:19:21.519Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.31780.1774937961519
+2026-03-31T06:19:21.519Z [DEBUG] Preserving file permissions: 100666
+2026-03-31T06:19:21.520Z [DEBUG] Temp file written successfully, size: 11942 bytes
+2026-03-31T06:19:21.521Z [DEBUG] Applied original permissions to temp file
+2026-03-31T06:19:21.521Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.31780.1774937961519 to C:\Users\hufeifei.JOY\.claude.json
+2026-03-31T06:19:21.522Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-03-31T06:19:21.597Z [DEBUG] [LSP SERVER MANAGER] getAllLspServers returned 0 server(s)
+2026-03-31T06:19:21.597Z [DEBUG] LSP manager initialized with 0 servers
+2026-03-31T06:19:21.598Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-03-31T06:19:21.598Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-31T06:19:21.600Z [DEBUG] Getting matching hook commands for SessionStart with query: startup
+2026-03-31T06:19:21.600Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:19:21.600Z [DEBUG] Matched 0 unique hooks for query "startup" (0 before deduplication)
+2026-03-31T06:19:21.600Z [DEBUG] LSP server manager initialized successfully
+2026-03-31T06:19:21.600Z [DEBUG] LSP notification handlers registered successfully for all 0 server(s)
+2026-03-31T06:19:21.601Z [DEBUG] MCP server "firecrawl-mcp": Proxy options: default
+2026-03-31T06:19:21.601Z [DEBUG] MCP server "firecrawl-mcp": HTTP transport options: {"url":"http://3.38.179.98:25152/mcp","headers":{"User-Agent":"claude-code/2.1.25","Authorization":"[REDACTED]"},"hasAuthProvider":true,"timeoutMs":60000}
+2026-03-31T06:19:21.601Z [DEBUG] MCP server "firecrawl-mcp": HTTP transport created successfully
+2026-03-31T06:19:21.602Z [DEBUG] MCP server "firecrawl-mcp": Client created, setting up request handler
+2026-03-31T06:19:21.602Z [DEBUG] MCP server "firecrawl-mcp": Starting connection with timeout of 30000ms
+2026-03-31T06:19:21.602Z [DEBUG] MCP server "firecrawl-mcp": Testing basic HTTP connectivity to http://3.38.179.98:25152/mcp
+2026-03-31T06:19:21.602Z [DEBUG] MCP server "firecrawl-mcp": Parsed URL: host=3.38.179.98, port=25152, protocol=http:
+2026-03-31T06:19:21.602Z [DEBUG] MCP server "unity-mcp": Proxy options: default
+2026-03-31T06:19:21.602Z [DEBUG] MCP server "unity-mcp": HTTP transport options: {"url":"http://localhost:9998/mcp","headers":{"User-Agent":"claude-code/2.1.25"},"hasAuthProvider":true,"timeoutMs":60000}
+2026-03-31T06:19:21.603Z [DEBUG] MCP server "unity-mcp": HTTP transport created successfully
+2026-03-31T06:19:21.603Z [DEBUG] MCP server "unity-mcp": Client created, setting up request handler
+2026-03-31T06:19:21.603Z [DEBUG] MCP server "unity-mcp": Starting connection with timeout of 30000ms
+2026-03-31T06:19:21.603Z [DEBUG] MCP server "unity-mcp": Testing basic HTTP connectivity to http://localhost:9998/mcp
+2026-03-31T06:19:21.603Z [DEBUG] MCP server "unity-mcp": Parsed URL: host=localhost, port=9998, protocol=http:
+2026-03-31T06:19:21.603Z [DEBUG] MCP server "unity-mcp": Using loopback address: localhost
+2026-03-31T06:19:21.603Z [DEBUG] MCP server "web-search-mcp": Proxy options: default
+2026-03-31T06:19:21.603Z [DEBUG] MCP server "web-search-mcp": HTTP transport options: {"url":"http://8.213.135.91:25152/mcp","headers":{"User-Agent":"claude-code/2.1.25","Authorization":"[REDACTED]"},"hasAuthProvider":true,"timeoutMs":60000}
+2026-03-31T06:19:21.604Z [DEBUG] MCP server "web-search-mcp": HTTP transport created successfully
+2026-03-31T06:19:21.604Z [DEBUG] MCP server "web-search-mcp": Client created, setting up request handler
+2026-03-31T06:19:21.604Z [DEBUG] MCP server "web-search-mcp": Starting connection with timeout of 30000ms
+2026-03-31T06:19:21.604Z [DEBUG] MCP server "web-search-mcp": Testing basic HTTP connectivity to http://8.213.135.91:25152/mcp
+2026-03-31T06:19:21.604Z [DEBUG] MCP server "web-search-mcp": Parsed URL: host=8.213.135.91, port=25152, protocol=http:
+2026-03-31T06:19:21.608Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-03-31T06:19:21.609Z [DEBUG] MCP server "unity-mcp": No token data found
+2026-03-31T06:19:21.609Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-03-31T06:19:21.609Z [DEBUG] [render] initLayout starting
+2026-03-31T06:19:21.617Z [DEBUG] [render] initLayout complete
+2026-03-31T06:19:21.618Z [DEBUG] [render] first ink render: 3119ms since process start
+2026-03-31T06:19:21.841Z [DEBUG] [Claude in Chrome] Found chrome profiles: Default
+2026-03-31T06:19:21.846Z [DEBUG] Git remote URL: null
+2026-03-31T06:19:21.846Z [DEBUG] No git remote URL found
+2026-03-31T06:19:21.846Z [DEBUG] Not in a GitHub repository, skipping path mapping update
+2026-03-31T06:19:21.860Z [DEBUG] [keybindings] KeybindingSetup initialized with 99 bindings, 0 warnings
+2026-03-31T06:19:21.946Z [DEBUG] Watching for changes in skill/command directories: C:\Users\hufeifei.JOY\.claude\skills...
+2026-03-31T06:19:21.951Z [DEBUG] MCP server "unity-mcp": HTTP Connection failed after 512ms: fetch failed (code: none, errno: none)
+2026-03-31T06:19:21.952Z [ERROR] MCP server "unity-mcp" TypeError: fetch failed
+2026-03-31T06:19:21.965Z [DEBUG] MCP server "unity-mcp": Connection failed after 525ms: fetch failed
+2026-03-31T06:19:21.965Z [ERROR] MCP server "unity-mcp" Connection failed: fetch failed
+2026-03-31T06:19:22.024Z [DEBUG] [keybindings] Skipping file watcher - user customization disabled
+2026-03-31T06:19:22.024Z [DEBUG] [REPL:mount] REPL mounted, disabled=false
+2026-03-31T06:19:22.107Z [DEBUG] Official marketplace auto-install skipped: already_attempted
+2026-03-31T06:19:22.109Z [DEBUG] performStartupChecks called
+2026-03-31T06:19:22.110Z [DEBUG] Starting background plugin installations
+2026-03-31T06:19:22.111Z [DEBUG] performBackgroundPluginInstallations called
+2026-03-31T06:19:22.124Z [DEBUG] [claudeai-mcp] Checking gate (cached)...
+2026-03-31T06:19:22.124Z [DEBUG] [claudeai-mcp] Gate returned: false
+2026-03-31T06:19:22.124Z [DEBUG] [claudeai-mcp] Disabled via gate
+2026-03-31T06:19:22.128Z [DEBUG] Setting installation status: 0 marketplaces, 0 installable plugins, 0 uninstallable plugins
+2026-03-31T06:19:22.128Z [DEBUG] Loaded plugins - Enabled: 0, Disabled: 0, Commands: 0, Agents: 0, Errors: 0
+2026-03-31T06:19:22.151Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-03-31T06:19:22.156Z [DEBUG] Ripgrep first use test: PASSED (mode=builtin, path=E:\Program Files\nodejs\node_global\node_modules\@anthropic-ai\claude-code\vendor\ripgrep\x64-win32\rg.exe)
+2026-03-31T06:19:22.240Z [DEBUG] [Claude in Chrome] Found edge profiles: Default
+2026-03-31T06:19:22.251Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.31780.1774937962251
+2026-03-31T06:19:22.252Z [DEBUG] Preserving file permissions: 100666
+2026-03-31T06:19:22.253Z [DEBUG] Temp file written successfully, size: 11942 bytes
+2026-03-31T06:19:22.255Z [DEBUG] Applied original permissions to temp file
+2026-03-31T06:19:22.255Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.31780.1774937962251 to C:\Users\hufeifei.JOY\.claude.json
+2026-03-31T06:19:22.257Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-03-31T06:19:22.262Z [DEBUG] [Claude in Chrome] Extension not found in any browser
+2026-03-31T06:19:22.299Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-03-31T06:19:22.301Z [DEBUG] MCP server "web-search-mcp": Successfully connected to http server in 861ms
+2026-03-31T06:19:22.302Z [DEBUG] MCP server "web-search-mcp": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"firecrawl-fastmcp","version":"3.0.0"}}
+2026-03-31T06:19:22.303Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-03-31T06:19:22.345Z [DEBUG] MCP server "web-search-mcp": HTTP connection dropped after 0s uptime
+2026-03-31T06:19:22.345Z [DEBUG] MCP server "web-search-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-03-31T06:19:22.346Z [DEBUG] MCP server "web-search-mcp": HTTP connection dropped after 0s uptime
+2026-03-31T06:19:22.346Z [DEBUG] MCP server "web-search-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-03-31T06:19:22.381Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-03-31T06:19:23.450Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:19:24.391Z [DEBUG] rg error (signal=null, code=2, stderr: rg: C:\Windows\System32\LogFiles\WMI\RtBackup: 拒绝访问。 (os error 5)
+), 18673 results
+2026-03-31T06:19:25.412Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-31T06:19:25.395Z] INFO: MCP Server Application initialized
+[2026-03-31T06:19:25.395Z] INFO: Starting MCP server...
+[2026-03-31T06:19:25.397Z] INFO: UI to Artifact tool registered successfully
+[2026-03-31T06:19:25.397Z] INFO: Text Extraction tool registered successfully
+[2026-03-31T06:19:25.397Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-31T06:19:25.398Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-31T06:19:25.398Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-31T06:19:25.398Z] INFO: UI Diff Check tool registered successfully
+[2026-03-31T06:19:25.398Z] INFO: General Image Analysis tool registered successfully
+[2026-03-31T06:19:25.398Z] INFO: Video analysis tool registered successfully
+[2026-03-31T06:19:25.398Z] INFO: Successfully registered all tools
+[2026-03-31T06:19:25.399Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-31T06:19:25.412Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 4007ms
+2026-03-31T06:19:25.412Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-31T06:19:25.522Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-31T06:19:25.522Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 4152ms
+2026-03-31T06:19:25.522Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.20.3"}}
+2026-03-31T06:19:26.490Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-03-31T06:19:26.490Z [DEBUG] MCP server "firecrawl-mcp": Successfully connected to http server in 5052ms
+2026-03-31T06:19:26.490Z [DEBUG] MCP server "firecrawl-mcp": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"firecrawl-fastmcp","version":"3.0.0"}}
+2026-03-31T06:19:26.490Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-03-31T06:19:26.948Z [DEBUG] MCP server "firecrawl-mcp": HTTP connection dropped after 0s uptime
+2026-03-31T06:19:26.949Z [DEBUG] MCP server "firecrawl-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-03-31T06:19:26.949Z [DEBUG] MCP server "firecrawl-mcp": HTTP connection dropped after 0s uptime
+2026-03-31T06:19:26.949Z [DEBUG] MCP server "firecrawl-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-03-31T06:19:57.797Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:19:57.797Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:19:58.287Z [DEBUG] Sending 12 skills via attachment (initial, 12 total sent)
+2026-03-31T06:19:58.287Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:19:58.287Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:19:58.290Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-03-31T06:19:58.290Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:19:58.290Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-31T06:19:58.294Z [DEBUG] FileHistory: Added snapshot for 2854b37c-7dc9-4177-a266-b014ad4244e0, tracking 0 files
+2026-03-31T06:19:58.318Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-31T06:19:58.321Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\6a2541fd-a17e-42bf-a56d-3d71b507fb2d-agent-6a2541fd-a17e-42bf-a56d-3d71b507fb2d.json.tmp.31780.1774937998321
+2026-03-31T06:19:58.322Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-31T06:19:58.322Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\6a2541fd-a17e-42bf-a56d-3d71b507fb2d-agent-6a2541fd-a17e-42bf-a56d-3d71b507fb2d.json.tmp.31780.1774937998321 to C:\Users\hufeifei.JOY\.claude\todos\6a2541fd-a17e-42bf-a56d-3d71b507fb2d-agent-6a2541fd-a17e-42bf-a56d-3d71b507fb2d.json
+2026-03-31T06:19:58.323Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\6a2541fd-a17e-42bf-a56d-3d71b507fb2d-agent-6a2541fd-a17e-42bf-a56d-3d71b507fb2d.json written atomically
+2026-03-31T06:19:58.397Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:19:58.399Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.d16; cc_entrypoint=cli;
+2026-03-31T06:19:58.400Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:19:58.400Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:19:58.401Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-31T06:19:58.401Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:19:58.491Z [DEBUG] Summarizing all 11 messages (~0 tokens)
+2026-03-31T06:19:58.492Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:19:58.492Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.22a; cc_entrypoint=cli;
+2026-03-31T06:19:58.492Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:19:58.492Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:19:58.493Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:19:58.499Z [DEBUG] Stats cache is up to date
+2026-03-31T06:19:58.573Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:19:58.580Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:19:58.581Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:19:58.581Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:19:58.581Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:19:58.926Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:19:58.959Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:20:00.865Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:20:01.074Z [DEBUG] Generated summary for session eb84d314-a7db-450b-aa6b-67e2a8984984: "MCP 配置检查与用户中断"
+2026-03-31T06:20:01.078Z [DEBUG] Session index: added 1, updated 0, removed 0, summaries generated 1 (total: 1)
+2026-03-31T06:20:24.842Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-03-31T06:20:24.842Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:20:24.842Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-31T06:21:01.218Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:21:01.218Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:21:01.753Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:21:01.753Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:21:02.175Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-03-31T06:21:02.175Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:21:02.175Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-31T06:21:02.176Z [DEBUG] FileHistory: Making snapshot for message 9a08e8eb-bb7e-4883-abff-7ef9d60dd96b
+2026-03-31T06:21:02.177Z [DEBUG] FileHistory: Added snapshot for 9a08e8eb-bb7e-4883-abff-7ef9d60dd96b, tracking 0 files
+2026-03-31T06:21:02.327Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:21:02.329Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.0ad; cc_entrypoint=cli;
+2026-03-31T06:21:02.329Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:21:02.329Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:21:02.331Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:21:02.437Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:21:02.442Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:21:02.443Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:21:02.443Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:21:02.444Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:21:02.861Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:21:09.587Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:21:11.821Z [DEBUG] executePreToolHooks called for tool: Read
+2026-03-31T06:21:11.822Z [DEBUG] Getting matching hook commands for PreToolUse with query: Read
+2026-03-31T06:21:11.822Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:21:11.822Z [DEBUG] Matched 0 unique hooks for query "Read" (0 before deduplication)
+2026-03-31T06:21:27.963Z [DEBUG] Permission suggestions for Read: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Read",
+        "ruleContent": "//f/HFF/Obsidian/FFNotes/迷你传奇/**"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "session"
+  }
+]
+2026-03-31T06:21:27.964Z [DEBUG] executePermissionRequestHooks called for tool: Read
+2026-03-31T06:21:27.965Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Read
+2026-03-31T06:21:27.965Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:21:27.965Z [DEBUG] Matched 0 unique hooks for query "Read" (0 before deduplication)
+2026-03-31T06:21:33.139Z [DEBUG] Getting matching hook commands for PostToolUse with query: Read
+2026-03-31T06:21:33.139Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:21:33.139Z [DEBUG] Matched 1 unique hooks for query "Read" (1 before deduplication)
+2026-03-31T06:21:33.141Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:21:33.141Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:21:34.908Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:21:34.908Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:21:34.911Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:21:34.914Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:21:34.914Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:21:34.914Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:21:34.915Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:21:35.509Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:21:35.964Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:22:02.364Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-03-31T06:22:02.364Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:22:02.364Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-31T06:22:02.706Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:22:02.711Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:22:02.711Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:22:02.711Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:22:02.712Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:22:02.948Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:22:04.538Z [ERROR] Stream completed with message_start but no content blocks completed - triggering non-streaming fallback
+2026-03-31T06:22:04.538Z [ERROR] Error streaming, falling back to non-streaming mode: Stream ended without receiving any events
+2026-03-31T06:22:04.538Z [ERROR] Error in non-streaming fallback: Request was aborted.
+2026-03-31T06:22:04.539Z [DEBUG] Forked agent [prompt_suggestion] received message: type=user
+2026-03-31T06:22:04.879Z [DEBUG] Forked agent [prompt_suggestion] finished: 1 messages, types=[user], totalUsage: input=0 output=0 cacheRead=0 cacheCreate=0
+2026-03-31T06:22:27.762Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:22:27.763Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:22:27.763Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:22:27.763Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:22:27.764Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-03-31T06:22:27.764Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:22:27.764Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-31T06:22:27.765Z [DEBUG] FileHistory: Making snapshot for message 9bb38b1e-9446-4f56-94a2-b97be24b1ba9
+2026-03-31T06:22:27.766Z [DEBUG] FileHistory: Added snapshot for 9bb38b1e-9446-4f56-94a2-b97be24b1ba9, tracking 0 files
+2026-03-31T06:22:27.910Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:22:27.911Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.a10; cc_entrypoint=cli;
+2026-03-31T06:22:27.911Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:22:27.911Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:22:27.911Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:22:28.024Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:22:28.027Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:22:28.028Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:22:28.028Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:22:28.028Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:22:28.370Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:22:28.379Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:22:45.247Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-03-31T06:22:45.247Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:22:45.247Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-31T06:22:45.613Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:22:45.616Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:22:45.616Z [ERROR] Error in non-streaming fallback: Request was aborted.
+2026-03-31T06:22:45.617Z [DEBUG] Forked agent [prompt_suggestion] received message: type=user
+2026-03-31T06:22:45.962Z [DEBUG] Forked agent [prompt_suggestion] finished: 1 messages, types=[user], totalUsage: input=0 output=0 cacheRead=0 cacheCreate=0
+2026-03-31T06:22:57.121Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:22:57.121Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:22:57.121Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:22:57.121Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:22:57.122Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-03-31T06:22:57.122Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:22:57.122Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-31T06:22:57.122Z [DEBUG] FileHistory: Making snapshot for message 929e7d26-62c0-4f4d-9d2d-660bdbfc4bef
+2026-03-31T06:22:57.123Z [DEBUG] FileHistory: Added snapshot for 929e7d26-62c0-4f4d-9d2d-660bdbfc4bef, tracking 0 files
+2026-03-31T06:22:57.268Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:22:57.269Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.f58; cc_entrypoint=cli;
+2026-03-31T06:22:57.269Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:22:57.269Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:22:57.270Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:22:57.378Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:22:57.381Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:22:57.382Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:22:57.382Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:22:57.382Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:22:57.690Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:22:57.871Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:23:03.314Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:23:03.316Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:23:03.316Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:23:03.316Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:23:03.366Z [DEBUG] tree-sitter: loaded from disk
+2026-03-31T06:23:03.830Z [DEBUG] Creating shell snapshot for bash (D:\Program Files\Git\bin\bash.exe)
+2026-03-31T06:23:03.830Z [DEBUG] Looking for shell config file: C:\Users\hufeifei.JOY\.bashrc
+2026-03-31T06:23:03.831Z [DEBUG] Shell config file not found: C:\Users\hufeifei.JOY\.bashrc, creating snapshot with Claude Code defaults only
+2026-03-31T06:23:03.831Z [DEBUG] Snapshots directory: C:\Users\hufeifei.JOY\.claude\shell-snapshots
+2026-03-31T06:23:04.018Z [DEBUG] Creating snapshot at: C:\Users\hufeifei.JOY\.claude\shell-snapshots\snapshot-bash-1774938183831-n56usm.sh
+2026-03-31T06:23:04.019Z [DEBUG] Shell binary exists: true
+2026-03-31T06:23:04.019Z [DEBUG] Execution timeout: 10000ms
+2026-03-31T06:23:07.725Z [DEBUG] Shell snapshot created successfully (369 bytes)
+2026-03-31T06:23:08.739Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:23:13.487Z [DEBUG] Getting matching hook commands for PostToolUseFailure with query: Bash
+2026-03-31T06:23:13.487Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:23:13.487Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:23:13.487Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:23:13.487Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:23:13.487Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:23:13.487Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:23:13.490Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:23:13.493Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:23:13.494Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:23:13.494Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:23:13.494Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:23:14.072Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:23:14.753Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.31780.1774938194753
+2026-03-31T06:23:14.754Z [DEBUG] Preserving file permissions: 100666
+2026-03-31T06:23:14.754Z [DEBUG] Temp file written successfully, size: 11942 bytes
+2026-03-31T06:23:14.755Z [DEBUG] Applied original permissions to temp file
+2026-03-31T06:23:14.755Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.31780.1774938194753 to C:\Users\hufeifei.JOY\.claude.json
+2026-03-31T06:23:14.756Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-03-31T06:23:35.085Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:23:35.086Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:23:35.086Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:23:35.086Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:23:35.089Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:23:35.089Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:23:35.089Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:23:35.090Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:23:35.090Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:23:35.090Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:23:35.090Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:23:35.090Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:23:35.091Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:23:35.091Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:23:35.864Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:23:35.948Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:23:36.058Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "cmd /c \"dir /b F:\\HFF\\Obsidian\\FFNotes\\迷你传奇\"\""
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-31T06:23:36.059Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-31T06:23:36.060Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-31T06:23:36.060Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:23:36.060Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:23:38.291Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:23:39.366Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:23:43.218Z [DEBUG] Getting matching hook commands for PostToolUseFailure with query: Bash
+2026-03-31T06:23:43.218Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:23:43.218Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:23:43.218Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:23:43.218Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:23:43.219Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:23:43.219Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:23:43.223Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:23:43.226Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:23:43.226Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:23:43.226Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:23:43.227Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:23:43.704Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:23:49.928Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:23:49.929Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:23:49.929Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:23:49.929Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:23:49.932Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:23:49.932Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:23:49.932Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:23:49.932Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:23:49.933Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:23:50.966Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:23:51.002Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "cmd /c chcp 936 \"&\" dir /b \"F:\\HFF\\Obsidian\\FFNotes\\迷你传奇\""
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-31T06:23:51.002Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-31T06:23:51.003Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-31T06:23:51.003Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:23:51.003Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:23:58.790Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:23:59.898Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:24:04.124Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:24:04.125Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.c97; cc_entrypoint=cli;
+2026-03-31T06:24:04.125Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:24:04.125Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:24:04.126Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:24:04.126Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:24:04.126Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:24:04.126Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:24:04.129Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:24:04.129Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:24:04.129Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:24:04.129Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:24:04.131Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:24:04.134Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:24:04.134Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:24:04.134Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:24:04.135Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:24:04.622Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:24:04.695Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:24:10.971Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:24:10.972Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:24:10.972Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:24:10.972Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:24:10.975Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:24:10.975Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:24:10.975Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:24:10.975Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:24:10.975Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:24:10.975Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:24:10.976Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:24:10.976Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:24:10.977Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:24:10.977Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:24:11.428Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:24:11.579Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:24:11.701Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -Command \"Get-ChildItem ''F:\\HFF\\Obsidian\\FFNotes\\迷你传奇'' | Select-Object Name, Length\""
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-31T06:24:11.701Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-31T06:24:11.703Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-31T06:24:11.703Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:24:11.703Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:24:14.109Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:24:15.196Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:24:20.882Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:24:20.882Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:24:20.883Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:24:20.883Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:24:20.884Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:24:20.884Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:24:20.884Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:24:20.884Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:24:20.886Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:24:20.886Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:24:20.887Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:24:20.887Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:24:20.889Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:24:20.892Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:24:20.892Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:24:20.892Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:24:20.893Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:24:21.353Z [DEBUG] Metrics opt-out check failed: No API key available
+2026-03-31T06:24:21.353Z [DEBUG] Metrics check failed, defaulting to disabled
+2026-03-31T06:24:21.353Z [DEBUG] Metrics export disabled by organization setting
+2026-03-31T06:24:21.361Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:24:21.481Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:24:29.601Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:24:29.602Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:24:29.602Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:24:29.602Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:24:29.604Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:24:29.604Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:24:29.604Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:24:29.605Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:24:29.605Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:24:29.605Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:24:29.605Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:24:29.605Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:24:29.606Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:24:29.606Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:24:30.095Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:24:30.109Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:24:30.137Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -Command \"Get-ChildItem ''F:\\HFF\\Obsidian\\FFNotes\\迷你传奇\\data'' | Select-Object Name, Length\""
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-31T06:24:30.137Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-31T06:24:30.138Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-31T06:24:30.138Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:24:30.138Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:24:34.226Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:24:35.302Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:24:40.445Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:24:40.445Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:24:40.445Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:24:40.445Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:24:40.447Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:24:40.447Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:24:40.447Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:24:40.447Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:24:40.449Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:24:40.449Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:24:40.449Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:24:40.449Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:24:40.452Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:24:40.455Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:24:40.455Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:24:40.455Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:24:40.455Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:24:40.893Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:24:40.927Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:24:47.348Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:24:47.349Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:24:47.349Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:24:47.349Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:24:47.351Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:24:47.351Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:24:47.351Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:24:47.351Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:24:47.351Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:24:47.351Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:24:47.352Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:24:47.352Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:24:47.352Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:24:47.353Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:24:47.753Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:24:47.935Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:24:48.150Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell:*"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-31T06:24:48.150Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-31T06:24:48.151Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-31T06:24:48.151Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:24:48.151Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:24:54.178Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-31T06:24:54.178Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:24:54.178Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-31T06:25:34.525Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:25:35.624Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:25:40.687Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:25:40.688Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:25:40.688Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:25:40.688Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:25:40.689Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:25:40.689Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:25:40.689Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:25:40.689Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:25:40.692Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:25:40.692Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:25:40.692Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:25:40.692Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:25:40.694Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:25:40.697Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:25:40.698Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:25:40.698Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:25:40.698Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:25:41.139Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:25:41.224Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:25:52.646Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:25:52.647Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:25:52.647Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:25:52.647Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:25:52.649Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:25:52.649Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:25:52.650Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:25:52.650Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:25:52.650Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:25:52.650Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:25:52.650Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:25:52.650Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:25:52.651Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:25:52.651Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:25:53.729Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:25:53.738Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:25:54.257Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -Command \"[System.IO.File]::ReadAllText(''F:\\HFF\\Obsidian\\FFNotes\\迷你传奇\\更新游戏.bat'', [System.Text.Encoding]::GetEncoding(''GBK''))\""
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-31T06:25:54.257Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-31T06:25:54.258Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-31T06:25:54.258Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:25:54.258Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:26:00.276Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-31T06:26:00.276Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:26:00.276Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-31T06:26:09.152Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2026-03-31T06:26:09.152Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2026-03-31T06:26:09.155Z [DEBUG] Writing to temp file: C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774938369155
+2026-03-31T06:26:09.155Z [DEBUG] Temp file written successfully, size: 228 bytes
+2026-03-31T06:26:09.155Z [DEBUG] Renaming C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774938369155 to C:\Windows\System32\.claude\settings.local.json
+2026-03-31T06:26:09.157Z [DEBUG] File C:\Windows\System32\.claude\settings.local.json written atomically
+2026-03-31T06:26:09.219Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(powershell -Command \"[System.IO.File]::ReadAllText\\(''F:\\\\HFF\\\\Obsidian\\\\FFNotes\\\\迷你传奇\\\\更新游戏.bat'', [System.Text.Encoding]::GetEncoding\\(''GBK''\\)\\)\")"]
+2026-03-31T06:26:10.306Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:26:11.404Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:26:16.217Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:26:16.217Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:26:16.217Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:26:16.217Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:26:16.219Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:26:16.219Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:26:16.219Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:26:16.219Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:26:16.221Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:26:16.221Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:26:16.221Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:26:16.221Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:26:16.224Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:26:16.227Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:26:16.227Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:26:16.227Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:26:16.228Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:26:16.727Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:26:21.470Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:26:25.556Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:26:25.557Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:26:25.557Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:26:25.557Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:26:25.560Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:26:25.560Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:26:25.560Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:26:25.560Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:26:25.560Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:26:25.560Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:26:25.560Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:26:25.560Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:26:25.561Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:26:25.562Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:26:26.374Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:26:26.377Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:26:26.474Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -Command \"[System.IO.File]::ReadAllText(''F:\\HFF\\Obsidian\\FFNotes\\迷你传奇\\修复游戏.bat'', [System.Text.Encoding]::GetEncoding(''GBK''))\""
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-31T06:26:26.474Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-31T06:26:26.475Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-31T06:26:26.475Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:26:26.475Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:26:28.846Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2026-03-31T06:26:28.847Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2026-03-31T06:26:28.855Z [DEBUG] Writing to temp file: C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774938388855
+2026-03-31T06:26:28.855Z [DEBUG] Preserving file permissions: 100666
+2026-03-31T06:26:28.856Z [DEBUG] Temp file written successfully, size: 409 bytes
+2026-03-31T06:26:28.856Z [DEBUG] Applied original permissions to temp file
+2026-03-31T06:26:28.856Z [DEBUG] Renaming C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774938388855 to C:\Windows\System32\.claude\settings.local.json
+2026-03-31T06:26:28.858Z [DEBUG] File C:\Windows\System32\.claude\settings.local.json written atomically
+2026-03-31T06:26:28.911Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(powershell -Command \"[System.IO.File]::ReadAllText\\(''F:\\\\HFF\\\\Obsidian\\\\FFNotes\\\\迷你传奇\\\\修复游戏.bat'', [System.Text.Encoding]::GetEncoding\\(''GBK''\\)\\)\")"]
+2026-03-31T06:26:29.979Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:26:31.065Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:26:36.133Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:26:36.134Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:26:36.134Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:26:36.134Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:26:36.135Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:26:36.135Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:26:36.135Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:26:36.135Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:26:36.138Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:26:36.138Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:26:37.919Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:26:37.919Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:26:37.922Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:26:37.925Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:26:37.925Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:26:37.925Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:26:37.926Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:26:38.340Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:26:38.447Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:26:50.322Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:26:50.323Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:26:50.323Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:26:50.323Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:26:50.326Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:26:50.326Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:26:50.326Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:26:50.326Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:26:50.326Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:26:50.326Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:26:50.326Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:26:50.326Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:26:50.327Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:26:50.327Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:26:50.813Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:26:50.952Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:26:51.047Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -Command:*"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-31T06:26:51.048Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-31T06:26:51.049Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-31T06:26:51.049Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:26:51.049Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:26:57.079Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-31T06:26:57.079Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:26:57.079Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-31T06:28:51.040Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2026-03-31T06:28:51.040Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2026-03-31T06:28:51.050Z [DEBUG] Writing to temp file: C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774938531050
+2026-03-31T06:28:51.050Z [DEBUG] Preserving file permissions: 100666
+2026-03-31T06:28:51.051Z [DEBUG] Temp file written successfully, size: 446 bytes
+2026-03-31T06:28:51.051Z [DEBUG] Applied original permissions to temp file
+2026-03-31T06:28:51.051Z [DEBUG] Renaming C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774938531050 to C:\Windows\System32\.claude\settings.local.json
+2026-03-31T06:28:51.053Z [DEBUG] File C:\Windows\System32\.claude\settings.local.json written atomically
+2026-03-31T06:28:51.114Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(powershell -Command:*)"]
+2026-03-31T06:28:52.046Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:28:53.147Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:28:57.900Z [DEBUG] Getting matching hook commands for PostToolUseFailure with query: Bash
+2026-03-31T06:28:57.900Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:28:57.900Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:28:57.901Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:28:57.901Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:28:59.654Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:28:59.654Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:28:59.657Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:28:59.660Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:28:59.661Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:28:59.661Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:28:59.661Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:29:00.153Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:29:12.184Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:29:12.185Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:29:12.185Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:29:12.185Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:29:12.189Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:29:12.190Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:29:12.190Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:29:12.190Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:29:12.190Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:29:12.614Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:29:12.690Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -File - <<'PSEOF'\n$content = [System.IO.File]::ReadAllText('F:\\HFF\\Obsidian\\FFNotes\\迷你传奇\\更新游戏.bat', [System.Text.Encoding]::GetEncoding('GBK'))\n$utf8 = New-Object System.Text.UTF8Encoding($true)\n[System.IO.File]::WriteAllText('F:\\HFF\\Obsidian\\FFNotes\\迷你传奇\\更新游戏.bat', $content, $utf8)\nWrite-Host \"更新游戏.bat converted successfully\"\nPSEOF"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-31T06:29:12.691Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-31T06:29:12.692Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-31T06:29:12.692Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:29:12.692Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:29:18.719Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-31T06:29:18.719Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:29:18.719Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-31T06:29:21.355Z [DEBUG] Metrics opt-out check failed: No API key available
+2026-03-31T06:29:21.356Z [DEBUG] Metrics check failed, defaulting to disabled
+2026-03-31T06:29:21.356Z [DEBUG] Metrics export disabled by organization setting
+2026-03-31T06:29:38.062Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2026-03-31T06:29:38.062Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2026-03-31T06:29:38.070Z [DEBUG] Writing to temp file: C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774938578070
+2026-03-31T06:29:38.071Z [DEBUG] Preserving file permissions: 100666
+2026-03-31T06:29:38.071Z [DEBUG] Temp file written successfully, size: 860 bytes
+2026-03-31T06:29:38.072Z [DEBUG] Applied original permissions to temp file
+2026-03-31T06:29:38.072Z [DEBUG] Renaming C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774938578070 to C:\Windows\System32\.claude\settings.local.json
+2026-03-31T06:29:38.073Z [DEBUG] File C:\Windows\System32\.claude\settings.local.json written atomically
+2026-03-31T06:29:38.133Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(powershell -File - <<'PSEOF'\n$content = [System.IO.File]::ReadAllText\\('F:\\\\HFF\\\\Obsidian\\\\FFNotes\\\\迷你传奇\\\\更新游戏.bat', [System.Text.Encoding]::GetEncoding\\('GBK'\\)\\)\n$utf8 = New-Object System.Text.UTF8Encoding\\($true\\)\n[System.IO.File]::WriteAllText\\('F:\\\\HFF\\\\Obsidian\\\\FFNotes\\\\迷你传奇\\\\更新游戏.bat', $content, $utf8\\)\nWrite-Host \"更新游戏.bat converted successfully\"\nPSEOF)"]
+2026-03-31T06:29:39.103Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:29:40.224Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:29:45.360Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:29:45.360Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:29:45.360Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:29:45.360Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:29:45.362Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:29:45.362Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:29:45.362Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:29:45.362Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:29:45.364Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:29:45.364Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:29:45.364Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:29:45.364Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:29:45.367Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:29:45.370Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:29:45.370Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:29:45.370Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:29:45.371Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:29:45.870Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:29:45.943Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:29:51.339Z [DEBUG] executePreToolHooks called for tool: Read
+2026-03-31T06:29:51.340Z [DEBUG] Getting matching hook commands for PreToolUse with query: Read
+2026-03-31T06:29:51.340Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:29:51.340Z [DEBUG] Matched 0 unique hooks for query "Read" (0 before deduplication)
+2026-03-31T06:30:07.850Z [DEBUG] Permission suggestions for Read: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Read",
+        "ruleContent": "//f/HFF/Obsidian/FFNotes/迷你传奇/**"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "session"
+  }
+]
+2026-03-31T06:30:07.850Z [DEBUG] executePermissionRequestHooks called for tool: Read
+2026-03-31T06:30:07.851Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Read
+2026-03-31T06:30:07.851Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:30:07.851Z [DEBUG] Matched 0 unique hooks for query "Read" (0 before deduplication)
+2026-03-31T06:30:14.960Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'session': ["Read(//f/HFF/Obsidian/FFNotes/迷你传奇/**)"]
+2026-03-31T06:30:14.962Z [DEBUG] Getting matching hook commands for PostToolUseFailure with query: Read
+2026-03-31T06:30:14.962Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:30:14.962Z [DEBUG] Matched 0 unique hooks for query "Read" (0 before deduplication)
+2026-03-31T06:30:14.963Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:30:14.963Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:30:16.720Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:30:16.720Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:30:16.723Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:30:16.726Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:30:16.727Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:30:16.727Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:30:16.727Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:30:17.426Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:30:17.906Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:30:22.813Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:30:22.814Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:30:22.814Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:30:22.814Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:30:23.869Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:30:54.473Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:30:54.473Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:30:54.474Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:30:54.474Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:30:54.475Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:30:54.475Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:30:54.475Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:30:54.475Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:30:54.477Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:30:54.477Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:30:54.478Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:30:54.478Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:30:54.480Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:30:54.484Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:30:54.484Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:30:54.484Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:30:54.485Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:30:54.926Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:30:55.035Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:31:06.176Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.31780.1774938666176
+2026-03-31T06:31:06.176Z [DEBUG] Preserving file permissions: 100666
+2026-03-31T06:31:06.177Z [DEBUG] Temp file written successfully, size: 11942 bytes
+2026-03-31T06:31:06.177Z [DEBUG] Applied original permissions to temp file
+2026-03-31T06:31:06.177Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.31780.1774938666176 to C:\Users\hufeifei.JOY\.claude.json
+2026-03-31T06:31:06.179Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-03-31T06:31:08.304Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:31:08.305Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:31:08.305Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:31:08.305Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:31:09.293Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:31:15.086Z [DEBUG] Getting matching hook commands for PostToolUseFailure with query: Bash
+2026-03-31T06:31:15.086Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:31:15.086Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:31:15.086Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:31:15.086Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:31:15.086Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:31:15.086Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:31:15.090Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:31:15.093Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:31:15.093Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:31:15.093Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:31:15.094Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:31:15.579Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:31:22.844Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:31:22.845Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:31:22.845Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:31:22.845Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:31:23.794Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:31:29.662Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:31:29.662Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:31:29.663Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:31:29.663Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:31:29.664Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:31:29.664Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:31:29.664Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:31:29.664Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:31:29.666Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:31:29.666Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:31:29.666Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:31:29.666Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:31:29.669Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:31:29.672Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:31:29.672Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:31:29.672Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:31:29.672Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:31:30.122Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:31:33.407Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:31:38.028Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:31:38.029Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:31:38.029Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:31:38.029Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:31:38.967Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:31:45.036Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:31:45.036Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:31:45.036Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:31:45.036Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:31:45.038Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:31:45.038Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:31:45.038Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:31:45.038Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:31:45.040Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:31:45.040Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:31:45.040Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:31:45.040Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:31:45.043Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:31:45.046Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:31:45.046Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:31:45.046Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:31:45.046Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:31:45.468Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:31:45.532Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:31:54.913Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:31:54.914Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:31:54.914Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:31:54.914Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:31:54.917Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:31:54.917Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:31:54.917Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:31:54.917Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:31:54.918Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:31:55.784Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:31:55.907Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -File - <<'PSEOF'\n$files = Get-ChildItem 'F:\\HFF\\Obsidian\\FFNotes\\迷你传奇' -Filter '*.bat'\nforeach ($f in $files) {\n    Write-Host \"File: $($f.Name)\"\n    Write-Host \"FullName: $($f.FullName)\"\n}\nPSEOF"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-31T06:31:55.907Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-31T06:31:55.908Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-31T06:31:55.908Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:31:55.908Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:31:59.235Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:32:00.431Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:32:05.088Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:32:05.089Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:32:05.089Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:32:05.089Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:32:05.091Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:32:05.091Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:32:05.091Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:32:05.091Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:32:05.093Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:32:05.093Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:32:05.093Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:32:05.093Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:32:05.096Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:32:05.099Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:32:05.099Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:32:05.099Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:32:05.100Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:32:05.577Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:32:05.675Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:32:13.772Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:32:13.774Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:32:13.774Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:32:13.774Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:32:13.776Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:32:13.776Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:32:13.776Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:32:13.776Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:32:13.777Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:32:14.859Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:32:14.949Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -File - <<'PSEOF'\nGet-ChildItem 'F:\\HFF\\Obsidian\\FFNotes\\迷你传奇' | ForEach-Object {\n    Write-Host $_.Name\n}\nPSEOF"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-31T06:32:14.949Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-31T06:32:14.950Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-31T06:32:14.950Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:32:14.950Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:32:18.382Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2026-03-31T06:32:18.382Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2026-03-31T06:32:18.392Z [DEBUG] Writing to temp file: C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774938738392
+2026-03-31T06:32:18.392Z [DEBUG] Preserving file permissions: 100666
+2026-03-31T06:32:18.393Z [DEBUG] Temp file written successfully, size: 1015 bytes
+2026-03-31T06:32:18.393Z [DEBUG] Applied original permissions to temp file
+2026-03-31T06:32:18.394Z [DEBUG] Renaming C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774938738392 to C:\Windows\System32\.claude\settings.local.json
+2026-03-31T06:32:18.395Z [DEBUG] File C:\Windows\System32\.claude\settings.local.json written atomically
+2026-03-31T06:32:18.449Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(powershell -File - <<'PSEOF'\nGet-ChildItem 'F:\\\\HFF\\\\Obsidian\\\\FFNotes\\\\迷你传奇' | ForEach-Object {\n    Write-Host $_.Name\n}\nPSEOF)"]
+2026-03-31T06:32:19.397Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:32:20.483Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:32:25.693Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:32:25.693Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:32:25.693Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:32:25.693Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:32:25.695Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:32:25.695Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:32:25.695Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:32:25.695Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:32:25.697Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:32:25.697Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:32:25.697Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:32:25.697Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:32:25.700Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:32:25.703Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:32:25.703Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:32:25.703Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:32:25.703Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:32:26.159Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:32:26.702Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:32:32.628Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:32:32.629Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:32:32.629Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:32:32.629Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:32:33.572Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:32:39.267Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:32:39.268Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:32:39.268Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:32:39.268Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:32:39.269Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:32:39.269Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:32:39.269Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:32:39.269Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:32:39.271Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:32:39.271Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:32:39.271Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:32:39.271Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:32:39.274Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:32:39.277Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:32:39.277Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:32:39.277Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:32:39.278Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:32:39.676Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:32:39.827Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:34:01.022Z [WARN] Streaming stall detected: 81.3s gap between events (stall #1)
+2026-03-31T06:34:01.030Z [WARN] Streaming completed with 1 stall(s), total stall time: 81.3s
+2026-03-31T06:34:01.031Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:34:01.032Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:34:01.032Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:34:01.032Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:34:01.035Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:34:01.035Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:34:01.036Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:34:01.036Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:34:01.036Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:34:01.421Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:34:01.483Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -File - <<'PSEOF'\n$dir = 'F:\\HFF\\Obsidian\\FFNotes\\迷你传奇'\n$items = Get-ChildItem $dir\nforeach ($item in $items) {\n    $bytes = [System.Text.Encoding]::UTF8.GetBytes($item.Name)\n    $hex = [System.BitConverter]::ToString($bytes)\n    Write-Host \"$($item.Name) | HEX: $hex\"\n}\nPSEOF"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-31T06:34:01.483Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-31T06:34:01.484Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-31T06:34:01.484Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:34:01.484Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:34:03.213Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2026-03-31T06:34:03.213Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2026-03-31T06:34:03.221Z [DEBUG] Writing to temp file: C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774938843221
+2026-03-31T06:34:03.221Z [DEBUG] Preserving file permissions: 100666
+2026-03-31T06:34:03.222Z [DEBUG] Temp file written successfully, size: 1356 bytes
+2026-03-31T06:34:03.222Z [DEBUG] Applied original permissions to temp file
+2026-03-31T06:34:03.222Z [DEBUG] Renaming C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774938843221 to C:\Windows\System32\.claude\settings.local.json
+2026-03-31T06:34:03.224Z [DEBUG] File C:\Windows\System32\.claude\settings.local.json written atomically
+2026-03-31T06:34:03.278Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(powershell -File - <<'PSEOF'\n$dir = 'F:\\\\HFF\\\\Obsidian\\\\FFNotes\\\\迷你传奇'\n$items = Get-ChildItem $dir\nforeach \\($item in $items\\) {\n    $bytes = [System.Text.Encoding]::UTF8.GetBytes\\($item.Name\\)\n    $hex = [System.BitConverter]::ToString\\($bytes\\)\n    Write-Host \"$\\($item.Name\\) | HEX: $hex\"\n}\nPSEOF)"]
+2026-03-31T06:34:04.254Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:34:05.343Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:34:10.288Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:34:10.288Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:34:10.289Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:34:10.289Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:34:10.290Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:34:10.290Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:34:10.290Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:34:10.290Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:34:10.293Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:34:10.293Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:34:10.293Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:34:10.293Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:34:10.295Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:34:10.299Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:34:10.299Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:34:10.299Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:34:10.299Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:34:10.831Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:34:11.043Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:34:19.620Z [DEBUG] executePreToolHooks called for tool: Write
+2026-03-31T06:34:19.621Z [DEBUG] Getting matching hook commands for PreToolUse with query: Write
+2026-03-31T06:34:19.621Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:34:19.621Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-31T06:34:26.797Z [DEBUG] Permission suggestions for Write: [
+  {
+    "type": "setMode",
+    "mode": "acceptEdits",
+    "destination": "session"
+  }
+]
+2026-03-31T06:34:26.798Z [DEBUG] executePermissionRequestHooks called for tool: Write
+2026-03-31T06:34:26.799Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Write
+2026-03-31T06:34:26.799Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:34:26.799Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-31T06:34:27.750Z [DEBUG] Metrics opt-out check failed: No API key available
+2026-03-31T06:34:27.750Z [DEBUG] Metrics check failed, defaulting to disabled
+2026-03-31T06:34:27.750Z [DEBUG] Metrics export disabled by organization setting
+2026-03-31T06:34:27.756Z [DEBUG] FileHistory: Tracked file modification for C:\Windows\System32\check_files.ps1
+2026-03-31T06:34:27.853Z [DEBUG] [lspRecommendation] Looking for LSP plugins for .ps1
+2026-03-31T06:34:28.756Z [DEBUG] rg error (signal=undefined, code=ABORT_ERR, stderr: rg: C:\Windows\System32\config\BBI: 另一个程序正在使用此文件，进程无法访问。 (os error 32)
+rg: C:\Windows\System32\config\DEFAULT: 另一个程序正在使用此文件，进程无法访问。 (os error 32)
+rg: C:\Windows\System32\config\SAM: 另一个程序正在使用此文件，进程无法访问。 (os error 32)
+rg: C:\Windows\System32\config\SECURITY: 另一个程序正在使用此文件，进程无法访问。 (os error 32)
+rg: C:\Windows\System32\config\SOFTWARE: 另一个程序正在使用此文件，进程无法访问。 (os error 32)
+rg: C:\Windows\System32\config\SYSTEM: 另一个程序正在使用此文件，进程无法访问。 (os error 32)
+), 245 results
+2026-03-31T06:34:28.777Z [DEBUG] Writing to temp file: C:\Windows\System32\check_files.ps1.tmp.31780.1774938868777
+2026-03-31T06:34:28.778Z [DEBUG] Temp file written successfully, size: 260 bytes
+2026-03-31T06:34:28.778Z [DEBUG] Renaming C:\Windows\System32\check_files.ps1.tmp.31780.1774938868777 to C:\Windows\System32\check_files.ps1
+2026-03-31T06:34:28.779Z [DEBUG] File C:\Windows\System32\check_files.ps1 written atomically
+2026-03-31T06:34:28.782Z [DEBUG] Getting matching hook commands for PostToolUse with query: Write
+2026-03-31T06:34:28.782Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:34:28.782Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-31T06:34:28.783Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:34:28.783Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:34:29.229Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:34:29.229Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:34:29.232Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:34:29.235Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:34:29.235Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:34:29.235Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:34:29.236Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:34:29.239Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:34:29.909Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:34:35.037Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:34:35.038Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:34:35.038Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:34:35.038Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:34:35.040Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:34:35.040Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:34:35.040Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:34:35.041Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:34:35.041Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:34:35.041Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:34:35.041Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:34:35.041Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:34:35.042Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:34:35.042Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:34:35.729Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:34:35.903Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:34:35.949Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell:*"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-31T06:34:35.949Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-31T06:34:35.950Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-31T06:34:35.950Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:34:35.950Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:34:38.573Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2026-03-31T06:34:38.573Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2026-03-31T06:34:38.581Z [DEBUG] Writing to temp file: C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774938878581
+2026-03-31T06:34:38.581Z [DEBUG] Preserving file permissions: 100666
+2026-03-31T06:34:38.582Z [DEBUG] Temp file written successfully, size: 1384 bytes
+2026-03-31T06:34:38.582Z [DEBUG] Applied original permissions to temp file
+2026-03-31T06:34:38.582Z [DEBUG] Renaming C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774938878581 to C:\Windows\System32\.claude\settings.local.json
+2026-03-31T06:34:38.584Z [DEBUG] File C:\Windows\System32\.claude\settings.local.json written atomically
+2026-03-31T06:34:38.640Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(powershell:*)"]
+2026-03-31T06:34:39.596Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:34:40.678Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:34:45.496Z [DEBUG] Getting matching hook commands for PostToolUseFailure with query: Bash
+2026-03-31T06:34:45.496Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:34:45.496Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:34:45.496Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:34:45.496Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:34:45.979Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:34:45.979Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:34:45.982Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:34:45.985Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:34:45.986Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:34:45.986Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:34:45.986Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:34:46.461Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:34:54.097Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:34:54.098Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:34:54.099Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:34:54.099Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:34:55.084Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:35:03.485Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:35:03.485Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:35:03.485Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:35:03.485Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:35:03.487Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:35:03.487Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:35:03.487Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:35:03.487Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:35:03.488Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:35:03.488Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:35:03.903Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:35:03.903Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:35:03.906Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:35:03.909Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:35:03.909Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:35:03.909Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:35:03.909Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:35:05.354Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:35:05.595Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:35:08.464Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.31780.1774938908464
+2026-03-31T06:35:08.464Z [DEBUG] Preserving file permissions: 100666
+2026-03-31T06:35:08.465Z [DEBUG] Temp file written successfully, size: 11942 bytes
+2026-03-31T06:35:08.465Z [DEBUG] Applied original permissions to temp file
+2026-03-31T06:35:08.465Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.31780.1774938908464 to C:\Users\hufeifei.JOY\.claude.json
+2026-03-31T06:35:08.466Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-03-31T06:35:33.468Z [DEBUG] executePreToolHooks called for tool: Write
+2026-03-31T06:35:33.469Z [DEBUG] Getting matching hook commands for PreToolUse with query: Write
+2026-03-31T06:35:33.469Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:35:33.469Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-31T06:35:40.526Z [DEBUG] Permission suggestions for Write: [
+  {
+    "type": "setMode",
+    "mode": "acceptEdits",
+    "destination": "session"
+  }
+]
+2026-03-31T06:35:40.526Z [DEBUG] executePermissionRequestHooks called for tool: Write
+2026-03-31T06:35:40.527Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Write
+2026-03-31T06:35:40.527Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:35:40.527Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-31T06:35:47.494Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-31T06:35:47.494Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:35:47.494Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-31T06:35:48.793Z [DEBUG] Applying permission update: Setting mode to 'acceptEdits'
+2026-03-31T06:35:48.796Z [DEBUG] FileHistory: Tracked file modification for C:\Windows\System32\cleanup.ps1
+2026-03-31T06:35:48.796Z [DEBUG] Writing to temp file: C:\Windows\System32\cleanup.ps1.tmp.31780.1774938948796
+2026-03-31T06:35:48.797Z [DEBUG] Temp file written successfully, size: 1141 bytes
+2026-03-31T06:35:48.797Z [DEBUG] Renaming C:\Windows\System32\cleanup.ps1.tmp.31780.1774938948796 to C:\Windows\System32\cleanup.ps1
+2026-03-31T06:35:48.798Z [DEBUG] File C:\Windows\System32\cleanup.ps1 written atomically
+2026-03-31T06:35:48.801Z [DEBUG] Getting matching hook commands for PostToolUse with query: Write
+2026-03-31T06:35:48.801Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:35:48.801Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-31T06:35:48.801Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:35:48.801Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:35:49.657Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:35:49.657Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:35:49.661Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:35:49.665Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:35:49.665Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:35:49.665Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:35:49.666Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:35:49.687Z [DEBUG] Full reset (scrollback changes): scrollbackRows=337, firstChangeY=323
+  prev: "● Write(cleanup.ps1)                                                                                                    "
+  next: "● Write(cleanup.ps1)                                                                                                    "
+2026-03-31T06:35:49.840Z [DEBUG] [lspRecommendation] Looking for LSP plugins for .ps1
+2026-03-31T06:35:50.328Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:35:50.828Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:35:57.899Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:35:57.900Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:35:57.900Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:35:57.900Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:35:58.883Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:36:05.055Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:36:05.056Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:36:05.056Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:36:05.056Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:36:05.057Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:36:05.057Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:36:05.057Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:36:05.057Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:36:05.059Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:36:05.059Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:36:05.930Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:36:05.930Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:36:05.932Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:36:05.936Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:36:05.936Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:36:05.936Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:36:05.937Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:36:06.406Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:36:06.444Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:37:49.038Z [WARN] Streaming stall detected: 91.2s gap between events (stall #1)
+2026-03-31T06:37:49.041Z [WARN] Streaming completed with 1 stall(s), total stall time: 91.2s
+2026-03-31T06:37:49.521Z [DEBUG] executePreToolHooks called for tool: Write
+2026-03-31T06:37:49.522Z [DEBUG] Getting matching hook commands for PreToolUse with query: Write
+2026-03-31T06:37:49.522Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:37:49.522Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-31T06:37:55.494Z [DEBUG] FileHistory: Tracked file modification for C:\Windows\System32\rebuild_bat.ps1
+2026-03-31T06:37:55.494Z [DEBUG] Writing to temp file: C:\Windows\System32\rebuild_bat.ps1.tmp.31780.1774939075494
+2026-03-31T06:37:55.495Z [DEBUG] Temp file written successfully, size: 2303 bytes
+2026-03-31T06:37:55.495Z [DEBUG] Renaming C:\Windows\System32\rebuild_bat.ps1.tmp.31780.1774939075494 to C:\Windows\System32\rebuild_bat.ps1
+2026-03-31T06:37:55.496Z [DEBUG] File C:\Windows\System32\rebuild_bat.ps1 written atomically
+2026-03-31T06:37:55.499Z [DEBUG] Getting matching hook commands for PostToolUse with query: Write
+2026-03-31T06:37:55.499Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:37:55.499Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-31T06:37:55.499Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:37:55.499Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:37:57.225Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:37:57.225Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:37:57.228Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:37:57.232Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:37:57.232Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:37:57.232Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:37:57.233Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:37:57.257Z [DEBUG] [lspRecommendation] Looking for LSP plugins for .ps1
+2026-03-31T06:37:57.749Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:38:02.825Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:38:02.826Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:38:02.826Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:38:02.826Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:38:03.806Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:38:09.751Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:38:09.751Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:38:09.751Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:38:09.751Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:38:09.753Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:38:09.753Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:38:09.753Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:38:09.753Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:38:09.755Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:38:09.755Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:38:10.628Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:38:10.628Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:38:10.631Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:38:10.634Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:38:10.634Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:38:10.634Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:38:10.635Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:38:11.097Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:38:11.188Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:38:27.147Z [DEBUG] executePreToolHooks called for tool: Write
+2026-03-31T06:38:27.148Z [DEBUG] Getting matching hook commands for PreToolUse with query: Write
+2026-03-31T06:38:27.148Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:38:27.148Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-31T06:38:33.021Z [DEBUG] FileHistory: Tracked file modification for C:\Windows\System32\check_garbled.ps1
+2026-03-31T06:38:33.022Z [DEBUG] Writing to temp file: C:\Windows\System32\check_garbled.ps1.tmp.31780.1774939113022
+2026-03-31T06:38:33.022Z [DEBUG] Temp file written successfully, size: 516 bytes
+2026-03-31T06:38:33.022Z [DEBUG] Renaming C:\Windows\System32\check_garbled.ps1.tmp.31780.1774939113022 to C:\Windows\System32\check_garbled.ps1
+2026-03-31T06:38:33.024Z [DEBUG] File C:\Windows\System32\check_garbled.ps1 written atomically
+2026-03-31T06:38:33.026Z [DEBUG] Getting matching hook commands for PostToolUse with query: Write
+2026-03-31T06:38:33.026Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:38:33.026Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-31T06:38:33.026Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:38:33.026Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:38:34.749Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:38:34.749Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:38:34.752Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:38:34.755Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:38:34.755Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:38:34.755Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:38:34.756Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:38:34.778Z [DEBUG] [lspRecommendation] Looking for LSP plugins for .ps1
+2026-03-31T06:38:35.239Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:38:44.123Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:38:44.124Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:38:44.124Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:38:44.124Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:38:45.163Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:38:51.059Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:38:51.059Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:38:51.059Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:38:51.059Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:38:51.061Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:38:51.061Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:38:51.061Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:38:51.061Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:38:51.063Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:38:51.063Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:38:51.977Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:38:51.977Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:38:51.980Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:38:51.983Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:38:51.984Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:38:51.984Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:38:51.984Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:38:52.497Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:38:52.567Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:39:08.852Z [DEBUG] executePreToolHooks called for tool: Write
+2026-03-31T06:39:08.854Z [DEBUG] Getting matching hook commands for PreToolUse with query: Write
+2026-03-31T06:39:08.854Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:39:08.854Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-31T06:39:14.475Z [DEBUG] FileHistory: Tracked file modification for C:\Windows\System32\delete_garbled.ps1
+2026-03-31T06:39:14.475Z [DEBUG] Writing to temp file: C:\Windows\System32\delete_garbled.ps1.tmp.31780.1774939154475
+2026-03-31T06:39:14.476Z [DEBUG] Temp file written successfully, size: 374 bytes
+2026-03-31T06:39:14.476Z [DEBUG] Renaming C:\Windows\System32\delete_garbled.ps1.tmp.31780.1774939154475 to C:\Windows\System32\delete_garbled.ps1
+2026-03-31T06:39:14.477Z [DEBUG] File C:\Windows\System32\delete_garbled.ps1 written atomically
+2026-03-31T06:39:14.480Z [DEBUG] Getting matching hook commands for PostToolUse with query: Write
+2026-03-31T06:39:14.480Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:39:14.480Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-31T06:39:14.480Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:39:14.480Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:39:15.961Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:39:15.961Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:39:15.963Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:39:15.967Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:39:15.967Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:39:15.967Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:39:15.967Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:39:16.003Z [DEBUG] [lspRecommendation] Looking for LSP plugins for .ps1
+2026-03-31T06:39:16.527Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:39:24.270Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:39:24.271Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:39:24.271Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:39:24.271Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:39:25.234Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:39:27.758Z [DEBUG] Metrics opt-out check failed: No API key available
+2026-03-31T06:39:27.758Z [DEBUG] Metrics check failed, defaulting to disabled
+2026-03-31T06:39:27.758Z [DEBUG] Metrics export disabled by organization setting
+2026-03-31T06:39:31.383Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:39:31.383Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-31T06:39:31.383Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:39:31.383Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:39:31.385Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:39:31.385Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:39:31.385Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:39:31.385Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:39:31.387Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:39:31.387Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:39:32.743Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:39:32.743Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:39:32.745Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:39:32.749Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:39:32.749Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:39:32.749Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:39:32.749Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:39:42.071Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:39:42.166Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:39:53.303Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:39:53.304Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:39:53.304Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:39:53.304Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:39:53.307Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:39:53.307Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:39:53.307Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:39:53.308Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:39:53.308Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:39:53.308Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-31T06:39:53.308Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:39:53.308Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:39:53.309Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:39:53.309Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:39:53.861Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:39:53.866Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:39:53.921Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "del:*"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-31T06:39:53.921Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-31T06:39:53.922Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-31T06:39:53.922Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:39:53.922Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:39:59.946Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-31T06:39:59.946Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:39:59.946Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-31T06:40:04.972Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2026-03-31T06:40:04.973Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2026-03-31T06:40:04.981Z [DEBUG] Writing to temp file: C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774939204981
+2026-03-31T06:40:04.982Z [DEBUG] Preserving file permissions: 100666
+2026-03-31T06:40:04.982Z [DEBUG] Temp file written successfully, size: 1405 bytes
+2026-03-31T06:40:04.983Z [DEBUG] Applied original permissions to temp file
+2026-03-31T06:40:04.983Z [DEBUG] Renaming C:\Windows\System32\.claude\settings.local.json.tmp.31780.1774939204981 to C:\Windows\System32\.claude\settings.local.json
+2026-03-31T06:40:04.984Z [DEBUG] File C:\Windows\System32\.claude\settings.local.json written atomically
+2026-03-31T06:40:05.048Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(del:*)"]
+2026-03-31T06:40:06.008Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:40:07.089Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-31T06:40:11.080Z [DEBUG] Getting matching hook commands for PostToolUseFailure with query: Bash
+2026-03-31T06:40:11.080Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:40:11.080Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:40:11.080Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:40:11.080Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:40:12.834Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:40:12.834Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:40:12.837Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:40:12.841Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:40:12.841Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:40:12.841Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:40:12.842Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:40:13.431Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:40:21.614Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-31T06:40:21.615Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-31T06:40:21.615Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:40:21.615Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:41:11.799Z [DEBUG] Session environment not yet supported on Windows
+2026-03-31T06:41:27.808Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:41:27.808Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.682; cc_entrypoint=cli;
+2026-03-31T06:41:27.808Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:41:27.808Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:41:27.810Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-31T06:41:27.810Z [DEBUG] Found 3 hook matchers in settings
+2026-03-31T06:41:27.810Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-31T06:41:27.810Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:41:27.812Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-31T06:41:27.812Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-31T06:41:28.677Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-31T06:41:28.677Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-31T06:41:28.680Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:41:28.683Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:41:28.683Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:41:28.683Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:41:28.684Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:41:31.293Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:41:38.402Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:41:47.079Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-03-31T06:41:47.079Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:41:47.079Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-31T06:41:47.469Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-31T06:41:47.472Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-31T06:41:47.473Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-31T06:41:47.473Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-31T06:41:47.473Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-31T06:41:47.996Z [DEBUG] Stream started - received first chunk
+2026-03-31T06:41:51.583Z [DEBUG] Forked agent [prompt_suggestion] received message: type=assistant
+2026-03-31T06:41:51.922Z [DEBUG] Getting matching hook commands for SubagentStop with query: undefined
+2026-03-31T06:41:51.922Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T06:41:51.922Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-31T06:41:51.922Z [DEBUG] Forked agent [prompt_suggestion] finished: 1 messages, types=[assistant], totalUsage: input=663 output=6 cacheRead=44928 cacheCreate=0

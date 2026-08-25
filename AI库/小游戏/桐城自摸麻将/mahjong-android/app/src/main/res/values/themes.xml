@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Mahjong" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#2d5a3d</item>
+        <item name="colorPrimaryDark">#1a472a</item>
+        <item name="colorAccent">#ffd700</item>
+    </style>
+    <style name="Theme.Mahjong.FullScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:colorPrimaryDark">#1a472a</item>
+    </style>
+</resources>

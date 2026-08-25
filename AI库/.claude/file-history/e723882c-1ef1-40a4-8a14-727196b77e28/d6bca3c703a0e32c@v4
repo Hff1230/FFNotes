@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>麻将大图分割工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: #1a1a2e;
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .controls {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .controls label {
+            display: inline-block;
+            margin-right: 15px;
+            margin-bottom: 10px;
+        }
+        .controls input[type="number"] {
+            width: 80px;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            margin-left: 5px;
+            background: #0f3460;
+            color: #fff;
+        }
+        .controls input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        .controls button {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+        .controls button:hover {
+            background: #ff6b6b;
+        }
+        .preview {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .preview h3 {
+            margin-bottom: 15px;
+            color: #4ecca3;
+        }
+        .image-container {
+            position: relative;
+            display: inline-block;
+            border: 2px solid #4ecca3;
+            background: #000;
+        }
+        #sourceImage {
+            display: block;
+            max-width: 100%;
+        }
+        /* 辅助线层 */
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        /* 垂直辅助线 */
+        .v-line {
+            position: absolute;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background: rgba(255, 0, 0, 0.7);
+            pointer-events: auto;
+            cursor: ew-resize;
+        }
+        .v-line::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -4px;
+            width: 9px;
+            height: 9px;
+            background: #ff0;
+            border-radius: 50%;
+            border: 1px solid #333;
+        }
+        .v-line::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: -4px;
+            width: 9px;
+            height: 9px;
+            background: #ff0;
+            border-radius: 50%;
+            border: 1px solid #333;
+        }
+        /* 水平辅助线 */
+        .h-line {
+            position: absolute;
+            left: 0;
+            height: 1px;
+            width: 100%;
+            background: rgba(0, 255, 0, 0.7);
+            pointer-events: auto;
+            cursor: ns-resize;
+        }
+        .h-line::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: -4px;
+            width: 9px;
+            height: 9px;
+            background: #0ff;
+            border-radius: 50%;
+            border: 1px solid #333;
+        }
+        .h-line::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -4px;
+            width: 9px;
+            height: 9px;
+            background: #0ff;
+            border-radius: 50%;
+            border: 1px solid #333;
+        }
+        /* 交叉锚点 */
+        .anchor {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #f0f;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            transform: translate(-50%, -50%);
+            pointer-events: auto;
+            cursor: move;
+            z-index: 10;
+            box-shadow: 0 0 5px rgba(255, 0, 255, 0.8);
+        }
+        .anchor:hover {
+            transform: translate(-50%, -50%) scale(1.3);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 1);
+        }
+        /* 信息提示 */
+        .line-info {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 2px 6px;
+            font-size: 10px;
+            border-radius: 3px;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        .v-line .line-info {
+            top: 2px;
+            left: 5px;
+        }
+        .h-line .line-info {
+            left: 2px;
+            top: 5px;
+        }
+        /* 列宽标注 */
+        .col-width-label {
+            position: absolute;
+            bottom: -25px;
+            background: rgba(255, 215, 0, 0.9);
+            color: #000;
+            padding: 2px 6px;
+            font-size: 11px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        /* 行高标注 */
+        .row-height-label {
+            position: absolute;
+            right: -45px;
+            background: rgba(0, 255, 136, 0.9);
+            color: #000;
+            padding: 2px 6px;
+            font-size: 11px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 5px;
+            margin-top: 20px;
+        }
+        .tile-item {
+            background: #0f3460;
+            padding: 5px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .tile-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .tile-item .name {
+            font-size: 10px;
+            color: #aaa;
+            margin-top: 3px;
+        }
+        .status {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .status .success {
+            color: #4ecca3;
+        }
+        #downloadAll {
+            background: #4ecca3;
+            color: #1a1a2e;
+        }
+        #downloadAll:hover {
+            background: #7fdbda;
+        }
+        .hidden {
+            display: none;
+        }
+        /* 坐标显示 */
+        .coord-display {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.9);
+            color: #0f0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+        /* 参数组 */
+        .param-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .param-box {
+            background: #0f3460;
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+        .param-box-title {
+            color: #ffd700;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        /* 快捷按钮 */
+        .quick-btns {
+            margin-top: 10px;
+        }
+        .quick-btns button {
+            padding: 5px 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🀄麻将大图分割工具</h1>
+
+        <div class="controls">
+            <div class="param-group">
+                <div class="param-box">
+                    <div class="param-box-title">图片尺寸</div>
+                    <label>宽度: <input type="number" id="imgWidth" value="617"></label>
+                    <label>高度: <input type="number" id="imgHeight" value="373"></label>
+                </div>
+                <div class="param-box">
+                    <div class="param-box-title">牌尺寸</div>
+                    <label>牌宽: <input type="number" id="tileWidth" value="61.7" step="0.1"></label>
+                    <label>牌高: <input type="number" id="tileHeight" value="93.25" step="0.01"></label>
+                </div>
+                <div class="param-box">
+                    <div class="param-box-title">偏移量</div>
+                    <label>X偏移: <input type="number" id="offsetX" value="0" step="0.1"></label>
+                    <label>Y偏移: <input type="number" id="offsetY" value="0" step="0.1"></label>
+                </div>
+                <div class="param-box">
+                    <div class="param-box-title">显示选项</div>
+                    <label><input type="checkbox" id="showGrid" checked> 显示辅助线</label>
+                    <label><input type="checkbox" id="showAnchors" checked> 显示锚点</label>
+                    <label><input type="checkbox" id="showLabels" checked> 显示尺寸标注</label>
+                </div>
+            </div>
+            <div class="quick-btns">
+                <button onclick="loadImage()">📁 加载图片</button>
+                <button onclick="splitImage()">✂️ 分割图片</button>
+                <button onclick="updateGrid()">🔄 更新网格</button>
+                <button id="downloadAll" onclick="downloadAll()">💾 下载全部</button>
+                <button onclick="resetParams()" style="background:#607D8B">↺ 重置参数</button>
+            </div>
+        </div>
+
+        <div class="status">
+            <span id="statusText">请先加载麻将大图</span>
+        </div>
+
+        <div class="preview">
+            <h3>原图预览 (拖动辅助线或锚点调整分割位置)</h3>
+            <input type="file" id="fileInput" accept="image/*" style="display:none">
+            <div class="image-container" id="imageContainer" style="display:none">
+                <img id="sourceImage">
+                <div class="grid-overlay" id="gridOverlay"></div>
+            </div>
+        </div>
+
+        <div class="preview">
+            <h3>分割结果</h3>
+            <div class="tiles-grid" id="tilesGrid"></div>
+        </div>
+    </div>
+
+    <!-- 坐标显示 -->
+    <div class="coord-display" id="coordDisplay"></div>
+
+    <script>
+        // 麻将牌命名映射（根据 majiang-lan.html 中的精灵图配置）
+        // 图片布局: 617x373, 每张牌 61.7x93.25
+        // 第0行: 红中(0), 一筒(1)~九筒(9)
+        // 第1行: 一条(0)~九条(8), 空(9)
+        // 第2行: 一万(0)~九万(8), 东风(9)
+        // 第3行: 南(0), 西(1), 北(2), 红(3), 发(4), 白(5), 空(6-9)
+        const TILE_NAMES = [
+            // 第0行: 红中, 筒1-9
+            ['jian_zhong', 'tong1', 'tong2', 'tong3', 'tong4', 'tong5', 'tong6', 'tong7', 'tong8', 'tong9'],
+            // 第1行: 条1-9, 空
+            ['tiao1', 'tiao2', 'tiao3', 'tiao4', 'tiao5', 'tiao6', 'tiao7', 'tiao8', 'tiao9', 'back'],
+            // 第2行: 万1-9, 东风
+            ['wan1', 'wan2', 'wan3', 'wan4', 'wan5', 'wan6', 'wan7', 'wan8', 'wan9', 'feng_dong'],
+            // 第3行: 南西北, 红发白
+            ['feng_nan', 'feng_xi', 'feng_bei', 'jian_zhong2', 'jian_fa', 'jian_bai', 'back', 'back', 'back', 'back']
+        ];
+
+        let sourceImage = null;
+        let splitCanvases = [];
+        let vLines = []; // 垂直线位置
+        let hLines = []; // 水平线位置
+        let dragging = null;
+        let imageScale = 1; // 图片显示缩放比例
+
+        function loadImage() {
+            document.getElementById('fileInput').click();
+        }
+
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    sourceImage = new Image();
+                    sourceImage.onload = function() {
+                        displayImage();
+                    };
+                    sourceImage.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function displayImage() {
+            const img = document.getElementById('sourceImage');
+            img.src = sourceImage.src;
+
+            const container = document.getElementById('imageContainer');
+            container.style.display = 'inline-block';
+
+            // 计算缩放比例
+            const maxWidth = container.parentElement.clientWidth - 40;
+            imageScale = Math.min(1, maxWidth / sourceImage.width);
+            img.style.width = (sourceImage.width * imageScale) + 'px';
+
+            document.getElementById('imgWidth').value = sourceImage.width;
+            document.getElementById('imgHeight').value = sourceImage.height;
+
+            initGridLines();
+            updateStatus(`<span class="success">图片加载成功！尺寸: ${sourceImage.width} x ${sourceImage.height}</span>`);
+        }
+
+        function initGridLines() {
+            const tileWidth = parseFloat(document.getElementById('tileWidth').value);
+            const tileHeight = parseFloat(document.getElementById('tileHeight').value);
+            const cols = 10;
+            const rows = 4;
+
+            // 初始化垂直线位置 (11条线，10列)
+            vLines = [];
+            for (let i = 0; i <= cols; i++) {
+                vLines.push(i * tileWidth);
+            }
+
+            // 初始化水平线位置 (5条线，4行)
+            hLines = [];
+            for (let i = 0; i <= rows; i++) {
+                hLines.push(i * tileHeight);
+            }
+
+            renderGridLines();
+        }
+
+        function renderGridLines() {
+            const overlay = document.getElementById('gridOverlay');
+            overlay.innerHTML = '';
+
+            const showGrid = document.getElementById('showGrid').checked;
+            const showAnchors = document.getElementById('showAnchors').checked;
+            const showLabels = document.getElementById('showLabels').checked;
+
+            if (!showGrid && !showAnchors) return;
+
+            // 渲染垂直线
+            if (showGrid) {
+                vLines.forEach((x, i) => {
+                    const line = document.createElement('div');
+                    line.className = 'v-line';
+                    line.style.left = (x * imageScale) + 'px';
+                    line.dataset.index = i;
+                    line.dataset.type = 'v';
+
+                    // 添加位置标签
+                    const info = document.createElement('div');
+                    info.className = 'line-info';
+                    info.textContent = Math.round(x);
+                    line.appendChild(info);
+
+                    // 拖拽事件
+                    line.addEventListener('mousedown', startDrag);
+
+                    overlay.appendChild(line);
+                });
+            }
+
+            // 渲染水平线
+            if (showGrid) {
+                hLines.forEach((y, i) => {
+                    const line = document.createElement('div');
+                    line.className = 'h-line';
+                    line.style.top = (y * imageScale) + 'px';
+                    line.dataset.index = i;
+                    line.dataset.type = 'h';
+
+                    const info = document.createElement('div');
+                    info.className = 'line-info';
+                    info.textContent = Math.round(y);
+                    line.appendChild(info);
+
+                    line.addEventListener('mousedown', startDrag);
+
+                    overlay.appendChild(line);
+                });
+            }
+
+            // 渲染交叉锚点
+            if (showAnchors) {
+                for (let row = 0; row < hLines.length; row++) {
+                    for (let col = 0; col < vLines.length; col++) {
+                        const anchor = document.createElement('div');
+                        anchor.className = 'anchor';
+                        anchor.style.left = (vLines[col] * imageScale) + 'px';
+                        anchor.style.top = (hLines[row] * imageScale) + 'px';
+                        anchor.dataset.row = row;
+                        anchor.dataset.col = col;
+
+                        anchor.addEventListener('mousedown', startDragAnchor);
+
+                        overlay.appendChild(anchor);
+                    }
+                }
+            }
+
+            // 渲染尺寸标注
+            if (showLabels) {
+                // 列宽标注
+                for (let i = 0; i < vLines.length - 1; i++) {
+                    const width = vLines[i + 1] - vLines[i];
+                    const label = document.createElement('div');
+                    label.className = 'col-width-label';
+                    label.style.left = ((vLines[i] + width / 2) * imageScale) + 'px';
+                    label.style.transform = 'translateX(-50%)';
+                    label.textContent = width.toFixed(1);
+                    overlay.appendChild(label);
+                }
+
+                // 行高标注
+                for (let i = 0; i < hLines.length - 1; i++) {
+                    const height = hLines[i + 1] - hLines[i];
+                    const label = document.createElement('div');
+                    label.className = 'row-height-label';
+                    label.style.top = ((hLines[i] + height / 2) * imageScale) + 'px';
+                    label.style.transform = 'translateY(-50%)';
+                    label.textContent = height.toFixed(1);
+                    overlay.appendChild(label);
+                }
+            }
+        }
+
+        function startDrag(e) {
+            e.preventDefault();
+            const target = e.target.closest('.v-line, .h-line');
+            if (!target) return;
+
+            dragging = {
+                element: target,
+                type: target.dataset.type,
+                index: parseInt(target.dataset.index)
+            };
+
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('mouseup', stopDrag);
+        }
+
+        function startDragAnchor(e) {
+            e.preventDefault();
+            dragging = {
+                element: e.target,
+                type: 'anchor',
+                row: parseInt(e.target.dataset.row),
+                col: parseInt(e.target.dataset.col)
+            };
+
+            document.addEventListener('mousemove', onDragAnchor);
+            document.addEventListener('mouseup', stopDrag);
+        }
+
+        function onDrag(e) {
+            if (!dragging) return;
+
+            const container = document.getElementById('imageContainer');
+            const rect = container.getBoundingClientRect();
+
+            if (dragging.type === 'v') {
+                const x = (e.clientX - rect.left) / imageScale;
+                vLines[dragging.index] = Math.max(0, Math.min(sourceImage.width, x));
+            } else if (dragging.type === 'h') {
+                const y = (e.clientY - rect.top) / imageScale;
+                hLines[dragging.index] = Math.max(0, Math.min(sourceImage.height, y));
+            }
+
+            renderGridLines();
+            updateCoordDisplay(e);
+        }
+
+        function onDragAnchor(e) {
+            if (!dragging || dragging.type !== 'anchor') return;
+
+            const container = document.getElementById('imageContainer');
+            const rect = container.getBoundingClientRect();
+
+            const x = (e.clientX - rect.left) / imageScale;
+            const y = (e.clientY - rect.top) / imageScale;
+
+            // 更新该锚点对应的垂直线和水平线
+            vLines[dragging.col] = Math.max(0, Math.min(sourceImage.width, x));
+            hLines[dragging.row] = Math.max(0, Math.min(sourceImage.height, y));
+
+            renderGridLines();
+            updateCoordDisplay(e);
+        }
+
+        function stopDrag() {
+            dragging = null;
+            document.removeEventListener('mousemove', onDrag);
+            document.removeEventListener('mousemove', onDragAnchor);
+            document.removeEventListener('mouseup', stopDrag);
+
+            // 更新参数显示
+            updateParamsFromLines();
+        }
+
+        function updateParamsFromLines() {
+            // 计算平均牌宽和牌高
+            let totalWidth = 0;
+            let totalHeight = 0;
+
+            for (let i = 0; i < vLines.length - 1; i++) {
+                totalWidth += vLines[i + 1] - vLines[i];
+            }
+
+            for (let i = 0; i < hLines.length - 1; i++) {
+                totalHeight += hLines[i + 1] - hLines[i];
+            }
+
+            const avgWidth = totalWidth / (vLines.length - 1);
+            const avgHeight = totalHeight / (hLines.length - 1);
+
+            document.getElementById('tileWidth').value = avgWidth.toFixed(2);
+            document.getElementById('tileHeight').value = avgHeight.toFixed(2);
+            document.getElementById('offsetX').value = vLines[0].toFixed(2);
+            document.getElementById('offsetY').value = hLines[0].toFixed(2);
+        }
+
+        function updateCoordDisplay(e) {
+            const display = document.getElementById('coordDisplay');
+            const container = document.getElementById('imageContainer');
+            const rect = container.getBoundingClientRect();
+
+            const x = (e.clientX - rect.left) / imageScale;
+            const y = (e.clientY - rect.top) / imageScale;
+
+            display.style.left = (e.clientX + 15) + 'px';
+            display.style.top = (e.clientY + 15) + 'px';
+            display.style.display = 'block';
+            display.textContent = `X: ${x.toFixed(1)}, Y: ${y.toFixed(1)}`;
+        }
+
+        document.addEventListener('mousemove', function(e) {
+            const container = document.getElementById('imageContainer');
+            if (container.style.display !== 'none') {
+                const rect = container.getBoundingClientRect();
+                if (e.clientX >= rect.left && e.clientX <= rect.right &&
+                    e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                    updateCoordDisplay(e);
+                } else {
+                    document.getElementById('coordDisplay').style.display = 'none';
+                }
+            }
+        });
+
+        function updateGrid() {
+            const tileWidth = parseFloat(document.getElementById('tileWidth').value);
+            const tileHeight = parseFloat(document.getElementById('tileHeight').value);
+            const offsetX = parseFloat(document.getElementById('offsetX').value);
+            const offsetY = parseFloat(document.getElementById('offsetY').value);
+            const cols = 10;
+            const rows = 4;
+
+            vLines = [];
+            for (let i = 0; i <= cols; i++) {
+                vLines.push(offsetX + i * tileWidth);
+            }
+
+            hLines = [];
+            for (let i = 0; i <= rows; i++) {
+                hLines.push(offsetY + i * tileHeight);
+            }
+
+            renderGridLines();
+            updateStatus('<span class="success">网格已更新</span>');
+        }
+
+        function splitImage() {
+            if (!sourceImage) {
+                alert('请先加载图片！');
+                return;
+            }
+
+            splitCanvases = [];
+            const grid = document.getElementById('tilesGrid');
+            grid.innerHTML = '';
+
+            const rows = hLines.length - 1;
+            const cols = vLines.length - 1;
+
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const tileName = TILE_NAMES[row]?.[col];
+
+                    if (!tileName || tileName === 'back') continue;
+
+                    const x = vLines[col];
+                    const y = hLines[row];
+                    const width = vLines[col + 1] - x;
+                    const height = hLines[row + 1] - y;
+
+                    // 创建canvas
+                    const canvas = document.createElement('canvas');
+                    canvas.width = Math.round(width);
+                    canvas.height = Math.round(height);
+                    const ctx = canvas.getContext('2d');
+
+                    // 绘制裁剪的图片
+                    ctx.drawImage(
+                        sourceImage,
+                        x, y, width, height,
+                        0, 0, width, height
+                    );
+
+                    splitCanvases.push({ name: tileName, canvas: canvas, row, col, x, y, width, height });
+
+                    // 显示预览
+                    const item = document.createElement('div');
+                    item.className = 'tile-item';
+                    item.innerHTML = `
+                        <img src="${canvas.toDataURL('image/png')}">
+                        <div class="name">${tileName}</div>
+                    `;
+                    grid.appendChild(item);
+                }
+            }
+
+            updateStatus(`<span class="success">分割完成！共 ${splitCanvases.length} 张牌</span>`);
+        }
+
+        function downloadAll() {
+            if (splitCanvases.length === 0) {
+                alert('请先分割图片！');
+                return;
+            }
+
+            splitCanvases.forEach((item, index) => {
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.download = `${item.name}.png`;
+                    link.href = item.canvas.toDataURL('image/png');
+                    link.click();
+                }, index * 100);
+            });
+
+            updateStatus(`<span class="success">正在下载 ${splitCanvases.length} 张图片...</span>`);
+        }
+
+        function resetParams() {
+            document.getElementById('tileWidth').value = 61.7;
+            document.getElementById('tileHeight').value = 93.25;
+            document.getElementById('offsetX').value = 0;
+            document.getElementById('offsetY').value = 0;
+            updateGrid();
+        }
+
+        function updateStatus(msg) {
+            document.getElementById('statusText').innerHTML = msg;
+        }
+
+        // 监听复选框变化
+        document.getElementById('showGrid').addEventListener('change', renderGridLines);
+        document.getElementById('showAnchors').addEventListener('change', renderGridLines);
+        document.getElementById('showLabels').addEventListener('change', renderGridLines);
+
+        // 页面加载时自动加载默认图片
+        window.onload = function() {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = function() {
+                sourceImage = img;
+                displayImage();
+            };
+            img.onerror = function() {
+                updateStatus('请手动选择麻将大图文件');
+            };
+            img.src = '麻将大图.jpg';
+        };
+    </script>
+</body>
+</html>

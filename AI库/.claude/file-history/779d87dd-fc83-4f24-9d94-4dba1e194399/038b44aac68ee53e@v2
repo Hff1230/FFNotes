@@ -1,0 +1,279 @@
+using FairyGUI;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Game.UI.Hero
+{
+    /// <summary>
+    /// 英雄列表界面控制器 - 处理界面逻辑和数据交互
+    /// </summary>
+    public class HeroListController : MonoBehaviour
+    {
+        #region Constants
+        private const string PACKAGE_NAME = "601_NewHero";
+        private const string COMPONENT_NAME = "HeroList";
+        private const string DEFAULT_TITLE = "英雄列表";
+        #endregion
+
+        #region Serialized Fields
+        [Header("UI Settings")]
+        [SerializeField] private string _packageName = PACKAGE_NAME;
+        [SerializeField] private string _componentName = COMPONENT_NAME;
+        [SerializeField] private bool _showLegionButton = false;
+        #endregion
+
+        #region Private Fields
+        private GComponent _mainView;
+        private HeroListBinder _binder;
+        private readonly List<HeroListData> _heroDataCache = new List<HeroListData>();
+        private bool _isInitialized = false;
+        #endregion
+
+        #region Properties
+        public HeroListBinder Binder => _binder;
+        public bool IsVisible => _mainView != null && _mainView.onStage;
+        #endregion
+
+        #region Events
+        public event System.Action<HeroListData> OnHeroSelected;
+        public event System.Action OnRecruitClicked;
+        public event System.Action OnLegionClicked;
+        public event System.Action OnClosed;
+        #endregion
+
+        #region Unity Lifecycle
+        private void Awake()
+        {
+            InitializeComponents();
+        }
+
+        private void OnDestroy()
+        {
+            Cleanup();
+        }
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// 显示界面
+        /// </summary>
+        public void Show()
+        {
+            if (!_isInitialized)
+            {
+                InitializeComponents();
+            }
+
+            if (_mainView == null) return;
+
+            _mainView.visible = true;
+            _mainView.MakeFullScreen();
+            GRoot.inst.AddChild(_mainView);
+
+            PlayEnterAnimation();
+        }
+
+        /// <summary>
+        /// 隐藏界面
+        /// </summary>
+        public void Hide()
+        {
+            if (_mainView == null) return;
+
+            _mainView.RemoveFromParent();
+            _mainView.visible = false;
+        }
+
+        /// <summary>
+        /// 关闭界面
+        /// </summary>
+        public void Close()
+        {
+            Hide();
+            OnClosed?.Invoke();
+        }
+
+        /// <summary>
+        /// 刷新英雄列表
+        /// </summary>
+        public void RefreshHeroList(List<HeroListData> heroList)
+        {
+            if (_binder == null) return;
+
+            _heroDataCache.Clear();
+            if (heroList != null)
+            {
+                _heroDataCache.AddRange(heroList);
+            }
+
+            _binder.RefreshHeroList(_heroDataCache);
+        }
+
+        /// <summary>
+        /// 设置标题
+        /// </summary>
+        public void SetTitle(string title)
+        {
+            _binder?.SetTitle(title);
+        }
+
+        /// <summary>
+        /// 选中指定英雄
+        /// </summary>
+        public void SelectHero(long heroId)
+        {
+            _binder?.SelectHero(heroId);
+        }
+
+        /// <summary>
+        /// 更新单个英雄数据
+        /// </summary>
+        public void UpdateHero(HeroListData heroData)
+        {
+            _binder?.UpdateHero(heroData);
+        }
+
+        /// <summary>
+        /// 设置招募按钮可见性
+        /// </summary>
+        public void SetRecruitButtonVisible(bool visible)
+        {
+            _binder?.SetRecruitButtonVisible(visible);
+        }
+
+        /// <summary>
+        /// 设置军团按钮可见性
+        /// </summary>
+        public void SetLegionButtonVisible(bool visible)
+        {
+            _binder?.SetLegionButtonVisible(visible);
+        }
+        #endregion
+
+        #region Private Methods
+        private void InitializeComponents()
+        {
+            if (_isInitialized) return;
+
+            // 加载包
+            UIPackage.AddPackage(_packageName);
+
+            // 创建主视图
+            _mainView = UIPackage.CreateObject(_packageName, _componentName) as GComponent;
+            if (_mainView == null)
+            {
+                Debug.LogError($"[HeroListController] Failed to create component: {_componentName}");
+                return;
+            }
+
+            _mainView.MakeFullScreen();
+
+            // 获取绑定器
+            _binder = _mainView as HeroListBinder;
+            if (_binder == null)
+            {
+                Debug.LogWarning("[HeroListController] HeroListBinder not found, using generic GComponent");
+            }
+
+            // 绑定事件
+            BindEvents();
+
+            // 初始化按钮状态
+            InitializeButtonStates();
+
+            _isInitialized = true;
+        }
+
+        private void BindEvents()
+        {
+            if (_binder == null) return;
+
+            _binder.OnHeroItemSelected += HandleHeroSelected;
+            _binder.OnRecruitButtonClick += HandleRecruitClick;
+            _binder.OnLegionButtonClick += HandleLegionClick;
+            _binder.OnBackButtonClick += HandleBackClick;
+        }
+
+        private void UnbindEvents()
+        {
+            if (_binder == null) return;
+
+            _binder.OnHeroItemSelected -= HandleHeroSelected;
+            _binder.OnRecruitButtonClick -= HandleRecruitClick;
+            _binder.OnLegionButtonClick -= HandleLegionClick;
+            _binder.OnBackButtonClick -= HandleBackClick;
+        }
+
+        private void InitializeButtonStates()
+        {
+            if (_binder != null)
+            {
+                _binder.SetLegionButtonVisible(_showLegionButton);
+            }
+        }
+
+        private void PlayEnterAnimation()
+        {
+            _binder?.PlayEnterAnimation();
+        }
+
+        private void Cleanup()
+        {
+            UnbindEvents();
+
+            if (_mainView != null)
+            {
+                _mainView.Dispose();
+                _mainView = null;
+            }
+
+            _binder = null;
+            _isInitialized = false;
+        }
+        #endregion
+
+        #region Event Handlers
+        private void HandleHeroSelected(HeroListData heroData)
+        {
+            if (heroData == null) return;
+
+            Debug.Log($"[HeroListController] Hero selected: {heroData.Name} (ID: {heroData.HeroId})");
+            OnHeroSelected?.Invoke(heroData);
+        }
+
+        private void HandleRecruitClick()
+        {
+            Debug.Log("[HeroListController] Recruit button clicked");
+            OnRecruitClicked?.Invoke();
+        }
+
+        private void HandleLegionClick()
+        {
+            Debug.Log("[HeroListController] Legion button clicked");
+            OnLegionClicked?.Invoke();
+        }
+
+        private void HandleBackClick()
+        {
+            Close();
+        }
+        #endregion
+
+        #region Static Factory Methods
+        /// <summary>
+        /// 创建英雄列表界面实例
+        /// </summary>
+        public static HeroListController Create(Transform parent = null)
+        {
+            var go = new GameObject("HeroListController");
+            if (parent != null)
+            {
+                go.transform.SetParent(parent, false);
+            }
+
+            var controller = go.AddComponent<HeroListController>();
+            return controller;
+        }
+        #endregion
+    }
+}

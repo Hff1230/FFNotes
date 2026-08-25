@@ -1,0 +1,2528 @@
+using System;
+using System.Collections.Generic;
+using DayZ.ArenaActivity;
+using FairyGUI;
+using UnityEngine;
+using FairyGUI.Utils;
+using DayZ.BattleReport.FightReport;
+using DragonBones;
+namespace DayZ
+{
+    public class SuperFormationInfo : FormationBaseInfo
+    {
+        /// <summary>
+        /// 队伍类型
+        /// </summary>
+        public SuperFormType formType = SuperFormType.Default;
+        /// <summary>
+        /// 队伍序号  从1 开始，和服务器保持一致
+        /// </summary>
+        private int m_index = 1;
+        public int Index
+        {
+            get
+            {
+                return m_index;
+            }
+            set
+            {
+                m_index = value;
+            }
+        }
+        private string m_name = "";
+        public string Name
+        {
+            get
+            {
+                return m_name;
+            }
+            set
+            {
+                m_name = value;
+            }
+        }
+        private string m_uuid;
+        private int m_state = 0;
+        private int m_maxNum = 0;
+        /// <summary>
+        /// 英雄
+        /// 补兵、骑兵、弓兵
+        /// 0\1\2
+        /// </summary>
+        public SuperFormationHeroMarch[] m_heros = new SuperFormationHeroMarch[3];
+        /// <summary>
+        /// 士兵
+        /// key：补兵、骑兵、弓兵Arms.json 》arms_type 1\2\3
+        /// value：T1-T10
+        /// </summary>
+        public Dictionary<int, List<SuperFormationSoldierMarch>> m_soldiers = new Dictionary<int, List<SuperFormationSoldierMarch>>();
+        public CCDictionary uavDict;
+        private string m_uavUid = "";
+        public string uavUid
+        {
+            get { return m_uavUid; }
+            set { m_uavUid = value; }
+        }
+
+        public string miningUid { get; set; }
+        public string uav_uuid
+        {
+            get
+            {
+                return uavUid;
+            }
+        }
+
+        public int maxSoldiers = -1;
+
+        /// <summary>
+        /// 设置无人机UID
+        /// </summary>
+        /// <param name="uavUid">无人机UID</param>
+        public void setUavUid(string uavUid)
+        {
+            if (m_uavUid == uavUid)
+                return;
+
+            m_uavUid = uavUid;
+        }
+
+        /// <summary>
+        /// 清除无人机数据
+        /// </summary>
+        public void clearUav()
+        {
+            if (!string.IsNullOrEmpty(m_uavUid))
+            {
+                m_uavUid = "";
+            }
+        }
+        protected int m_resType;
+        public int getResType() { return m_resType; }
+        public void setResType(int var) { m_resType = var; }
+        public PFrotressInfo pFortress = new PFrotressInfo();
+        public List<SuperFormationAttrInfo> formationAttrInfo = new List<SuperFormationAttrInfo>() { new SuperFormationAttrInfo(), new SuperFormationAttrInfo(), new SuperFormationAttrInfo() };
+
+        public static SuperFormationInfo create()
+        {
+            return new SuperFormationInfo();
+        }
+        private SuperFormationInfo()
+        {
+            this.m_index = 1;
+            this.m_resType = 0;
+            for (int i = 0; i < m_heros.Length; i++)
+            {
+                if (m_heros[i] == null)
+                {
+                    m_heros[i] = new SuperFormationHeroMarch();
+                }
+            }
+        }
+        public SuperFormationInfo(CCDictionary dict)
+        {
+            initFromDict(dict);
+        }
+
+        public void assignTo(SuperFormationInfo infoDest)
+        {
+            infoDest.formType = formType;
+            infoDest.m_index = m_index;
+            infoDest.m_state = m_state;
+            infoDest.Name = m_name;
+            infoDest.m_maxNum = m_maxNum;
+            for (int i = 0; i < Global._countof(m_heros); ++i)
+            {
+                infoDest.m_heros[i] = new SuperFormationHeroMarch();
+                infoDest.m_heros[i].heroId = m_heros[i].heroId;
+                infoDest.m_heros[i].maxMarch = m_heros[i].maxMarch;
+                infoDest.m_heros[i].heroLv = m_heros[i].heroLv;
+                infoDest.m_heros[i].heroDict = m_heros[i].heroDict;
+            }
+            infoDest.m_soldiers.Clear();
+            foreach (var soldier in m_soldiers)
+            {
+
+                //SuperFormationSoldierMarch []soldierList = new SuperFormationSoldierMarch[soldier.Value.Count];//SuperFormationSoldierMarch>();
+                // soldier.Value.CopyTo(soldierList);
+                var marchList = new List<SuperFormationSoldierMarch>();
+                foreach (var march in soldier.Value)
+                {
+                    marchList.Add(new SuperFormationSoldierMarch(march.armyId, march.count, march.info_dict));
+                }
+                infoDest.m_soldiers.Add(soldier.Key, marchList);
+            }
+            infoDest.setUavUid(m_uavUid);
+        }
+        public SuperFormationInfo CopyTo()
+        {
+            SuperFormationInfo info = new SuperFormationInfo();
+            info.formType = formType;
+            info.m_index = m_index;
+            info.m_state = m_state;
+            info.Name = m_name;
+            info.m_maxNum = m_maxNum;
+            for (int i = 0; i < Global._countof(m_heros); ++i)
+            {
+                info.m_heros[i] = new SuperFormationHeroMarch();
+                info.m_heros[i].heroId = m_heros[i].heroId;
+                info.m_heros[i].maxMarch = m_heros[i].maxMarch;
+                info.m_heros[i].heroLv = m_heros[i].heroLv;
+                info.m_heros[i].heroDict = m_heros[i].heroDict;
+            }
+            info.m_soldiers.Clear();
+            foreach (var soldier in m_soldiers)
+            {
+                var marchList = new List<SuperFormationSoldierMarch>();
+                foreach (var march in soldier.Value)
+                {
+                    marchList.Add(new SuperFormationSoldierMarch(march.armyId, march.count, march.info_dict));
+                }
+                info.m_soldiers.Add(soldier.Key, marchList);
+            }
+            info.setUavUid(m_uavUid);
+            return info;
+        }
+
+
+        public bool initFromDict(CCDictionary dict)
+        {
+            if (dict == null)
+            {
+                return false;
+            }
+            parseHeroSoldierAndUav(dict);
+            if (dict.ContainsKey("maxNum"))
+            {
+                m_maxNum = (int)dict.valueForKey("maxNum").longValue();
+                LogCommon.LogError($"SuperFormationInfo initFromDict maxNum: {m_maxNum}");
+            }
+
+            CCDictionary dic = (CCDictionary)(dict.objectForKey("march"));
+            if (dic != null)
+            {
+                if (dic.objectForKey("uuid") != null)
+                {
+                    CollectInfo resInfo = CollectInfo.create();
+
+                    string key = dic.valueForKey("uuid");
+                    resInfo.troopMax = dic.valueForKey("q").intValue();
+                    resInfo.digSpeed = dic.valueForKey("spd").floatValue();
+                    resInfo.digStartTime = dic.valueForKey("sdt").doubleValue();
+                    resInfo.digStartNum = dic.valueForKey("collected").intValue();
+                    resInfo.changeCollectSpdTime = dic.valueForKey("changeCollectSpdTime").doubleValue();
+                    resInfo.resType = dic.valueForKey("t").intValue();
+                    m_ResCollect[key] = resInfo;
+                }
+            }
+
+            CCDictionary pfortressDic = (CCDictionary)(dict.objectForKey("world_building"));
+            if (pfortressDic != null)
+            {
+                pFortress.pointId = pfortressDic.valueForKey("pointId").intValue();
+                pFortress.index = pfortressDic.valueForKey("index").intValue();
+            }
+            refreshFromData();
+
+            return true;
+        }
+
+        void refreshFromData()
+        {
+            for (int slot = 0; slot < 3; slot++)
+            {
+                formationAttrInfo[slot].refreshData(this, slot);
+            }
+        }
+        double getFormPower()
+        {
+            double power = 0;
+            for (int slot = 0; slot < 3; slot++)
+            {
+                if (formationAttrInfo[slot] != null)
+                {
+                    //power += formationAttrInfo[slot].GetPowerWithSoldier();
+                    var fi = formationAttrInfo[slot];
+                    // fi.soliderNum = Math.Max(fi.soliderMaxNum, fi.soliderNum);
+                    power += PackMgr.GetFormSlotPower(fi);
+                    //LogCommon.LogError($"getFormPower:{fi._armyId} - {fi.soliderNum}");
+                }
+            }
+            return power;
+        }
+        /// <summary>
+        /// 当前阵容的最大战力，不考虑实际兵够不够
+        /// </summary>
+        /// <returns></returns>
+        double getFormMaxPower()
+        {
+            double power = 0;
+            for (int slot = 0; slot < 3; slot++)
+            {
+                if (formationAttrInfo[slot] != null)
+                {
+                    var fi = formationAttrInfo[slot];
+                    power += PackMgr.GetFormSlotPower(fi);
+                    // LogCommon.LogError($"队伍{fi._armyId}--{fi.soliderMaxNum}--");
+                }
+            }
+            return power;
+        }
+        public int GetTroopAddRateByArmyCount(int current, int max)
+        {
+            return getTroopAddRateByArmyCount(current, max);
+        }
+        private int getTroopAddRateByArmyCount(int current, int max)
+        {
+            var rate = 100.0f * current / max;
+            var dict = DataAtlasManager.Instance.GetDataWithType<New_hero_upgrade>();
+            using (var itor = dict.GetEnumerator())
+            {
+                while (itor.MoveNext())
+                {
+                    var child = itor.Current.Value as New_hero_upgrade;
+                    if (rate >= child.min && rate < child.max)
+                    {
+#if UNITY_EDITOR
+                        //                LogCommon.LogError("英雄兵力系数>> current:{0} ; max:{1} ; Rate :{2}", current, max, child.proportion);
+#endif
+                        return child.proportion;
+                    }
+                }
+            }
+#if UNITY_EDITOR
+            //  LogCommon.LogError("英雄兵力系数>> current:{0} ; max:{1} ; Rate :{2}", current, max, 100);
+#endif
+            return 100;
+        }
+
+
+
+        public string getUuid()
+        {
+            return this.m_uuid;
+        }
+
+        public void setUuid(string uuid)
+        {
+            m_uuid = uuid;
+        }
+
+        public string getName()
+        {
+            string s = getIndex().ToString();
+            switch (getIndex())
+            {
+                case 1:
+                    s = "I";
+                    break;
+
+                case 2:
+                    s = "II";
+                    break;
+
+                case 3:
+                    s = "III";
+                    break;
+
+                case 4:
+                    s = "IV";
+                    break;
+
+                case 5:
+                    s = "V";
+                    break;
+            }
+            return Global._lang_1("83300164", s);
+        }
+
+        public void setName(string name)
+        {
+            m_name = name;
+        }
+
+        public int getIndex()
+        {
+            return m_index;
+        }
+        public SuperFormType GetFormType()
+        {
+            return formType;
+        }
+        public void setIndex(int index)
+        {
+            m_index = index;
+        }
+        /// <summary>
+        /// 阵容预设状态 0空闲在家
+        /// </summary>
+        /// <returns></returns>
+        public int getState()
+        {
+            return m_state;
+        }
+
+        public void setState(int state)
+        {
+            m_state = state;
+        }
+        public int getStamina()
+        {
+            return GlobalData.shared().playerInfo.staminaInfo.curStamina;
+            //return m_stamina;
+        }
+        public int getMaxStamina()
+        {
+            return GlobalData.shared().playerInfo.staminaInfo.maxStamina;
+            //return m_stamina;
+        }
+
+        public void setStamina(int sta)
+        {
+            //m_stamina = sta;
+        }
+
+        public int getLastStaminaTime()
+        {
+            return 0;// m_lastStaminaTime;
+        }
+
+        public void setLastStaminaTime(int time)
+        {
+            // m_lastStaminaTime = time;
+        }
+
+        public double getFullStaminaTime()
+        {
+            return GlobalData.shared().playerInfo.staminaInfo.fullTime;
+            //return m_lastStaminaTime;
+        }
+        public double getNextStaminaTime()
+        {
+            return GlobalData.shared().playerInfo.staminaInfo.nextTime;
+            //return m_lastStaminaTime;
+        }
+
+        public int getMaxNum()
+        {
+            return m_maxNum;
+        }
+
+        public void setMaxNum(int max)
+        {
+            m_maxNum = max;
+        }
+
+        public int getSortIndex()
+        {
+            return m_index;
+        }
+
+        public string getHero(int index)
+        {
+            if (index >= 0 && index < m_heros.Length)
+            {
+                return m_heros[index].heroId;
+            }
+
+            return "";
+        }
+
+        public void setHero(int index, string heroId)
+        {
+            if (index >= 0 && index < m_heros.Length)
+            {
+                if (m_heros[index].heroId == heroId)
+                {
+                    return;
+                }
+                m_heros[index].heroId = heroId;
+                m_heros[index].heroLv = 0;
+            }
+        }
+
+        public bool hasHero(int index)
+        {
+            if (index >= 0 && index < m_heros.Length)
+            {
+                if (!m_heros[index].heroId.empty())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        public void clearHeros()
+        {
+            for (int i = 0; i < 3; ++i)
+            {
+                if (m_heros[i] == null)
+                {
+                    m_heros[i] = new SuperFormationHeroMarch();
+                }
+                if (m_herosTemp[i] == null)
+                {
+                    m_herosTemp[i] = new SuperFormationHeroMarch();
+                }
+
+                m_heros[i].heroId = string.Empty;
+                m_heros[i].heroLv = 0;
+
+                m_herosTemp[i].heroId = string.Empty;
+                m_herosTemp[i].heroLv = 0;
+            }
+        }
+
+        public void clearSoldiers()
+        {
+            foreach (var soldierList in m_soldiers.Values)
+            {
+                soldierList.clear();
+            }
+            foreach (var m_soldiersTemp in m_soldiersTemp.Values)
+            {
+                m_soldiersTemp.clear();
+            }
+        }
+
+        public bool isContainHero(string heroId)
+        {
+            for (int i = 0; i < m_heros.Length; ++i)
+            {
+                if (m_heros[i].heroId == heroId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public int getHeroCount()
+        {
+            int c = 0;
+            for (int i = 0; i < m_heros.Length; ++i)
+            {
+                if (!m_heros[i].heroId.empty())
+                {
+                    ++c;
+                }
+            }
+
+            return c;
+        }
+
+        public bool hasAnyAmry()
+        {
+            return false;
+        }
+
+        public void resetTroopsFromString(string str)
+        {
+        }
+
+        public int findSlotByArmyId(string armyId)
+        {
+            return -1;
+        }
+
+        public string getTroopsString()
+        {
+            string formStr = string.Empty;
+            foreach (var soldierList in m_soldiers.Values)
+            {
+                foreach (var soldier in soldierList)
+                {
+                    formStr += soldier.armyId;
+                    formStr += ",";
+                    formStr += Global.CC_ITOA(soldier.count);
+                    formStr += "|";
+                }
+            }
+            if (formStr.EndsWith("|"))
+                formStr = formStr.Substring(0, formStr.Length - 1);
+
+            return formStr;
+        }
+
+        public void clearArmysForSlot(int slot)
+        {
+            if (m_soldiers.ContainsKey(slot))
+            {
+                m_soldiers[slot].Clear();
+            }
+        }
+
+        public void clearTroops()
+        {
+            foreach (var soldierList in m_soldiers.Values)
+            {
+                soldierList.clear();
+            }
+        }
+
+        public bool hasArmyId(string armyId)
+        {
+            foreach (var its in m_soldiers.Values)
+            {
+                foreach (var soldier in its)
+                {
+                    if (soldier.armyId == armyId)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public int setTroops(string armyId, int count, int index) { throw new NotImplementedException(); }
+
+        public bool isReachMax()
+        {
+            calcSoldierTotal();
+            return false;
+        }
+
+        public int CalcSoldierByFormtype(SuperFormType formType)
+        {
+            int cnt = 0;
+            for (int i = 0; i < 3; ++i)
+            {
+                int basic = 0;
+                int skillEff = 0;
+                if (string.IsNullOrEmpty(m_heros[i].heroId) == false)
+                {
+                    m_heros[i].maxMarch = ArenaActivityController.GetMaxMarch(m_heros[i].heroId, uavUid);//0;
+                }
+            }
+
+            return cnt;
+        }
+
+        public int CalcSoldierTotalNew()
+        {
+            int calcTotal = 0;
+            for (int i = 0; i < 3; ++i)
+            {
+                int basic = 0;
+                int skillEff = 0;
+                if (string.IsNullOrEmpty(m_heros[i].heroId))
+                {
+                    m_heros[i].maxMarch = 0;
+                    continue;
+                }
+
+                int addSoldiers = (int)(EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormation(56, getIndex()));
+                //10011步10012騎兵10013弓兵
+                int tbly_addSoldiers = (int)EffectController.getInstance().getEffectValueByNumApplicableToGlobal(10011 + i);
+                LogCommon.Log($"tbly_addSoldiers = {tbly_addSoldiers} ; buffId = {10011 + i}");
+                addSoldiers += tbly_addSoldiers;
+
+                var data = DataAtlasManager.Instance.GetDataWithTypeById<NewHeroes>(m_heros[i].heroId);
+                UavInfoData uavInfo = UavsController.getInstance().getUavInfoData(m_uavUid);
+                if (data != null)
+                {
+                    LogCommon.Log($"m_heros[i].heroId = {m_heros[i].heroId} ; heroName : {Global._lang(data.full_name)}");
+                    var myHero = FreeBuildHeroController.getInstance().getMyHeroInfoByHeroId(m_heros[i].heroId);
+                    // 计算basic
+                    string id = data.extra_skill[0];
+                    if (!string.IsNullOrEmpty(id))
+                    {
+                        var d = DataAtlasManager.Instance.GetDataWithTypeById<More_hero_skills>(id);
+                        basic = d.skill_para[myHero.getLevel() - 1];
+                    }
+                    // 计算eff
+                    float eff_978 = 1;
+                    for (int j = 0; j < myHero.getGrooveCnt(); j++)
+                    {
+                        FBHeroSkillGroove groove = myHero.getGrooveInfoByIndex(j + 1);
+                        if (groove != null)
+                        {
+                            string xmlId = groove.getNativeHoldSkillXMLId();
+                            var xmlInfo = FBHeroSkillXMLInfo.create(xmlId);
+                            if (groove.getCurHoldSkillInfo() != null)
+                            {
+                                FBHeroSkillInfo skillInfo = groove.getCurHoldSkillInfo();
+                                eff_978 += skillInfo.getEffectValueByNumLevelHeroLevelForShow(978, skillInfo.getLevel(), myHero.getLevel()) / 100.0f;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                    }
+                    for (int j = 0; j < myHero.getGrooveCnt(); j++)
+                    {
+                        FBHeroSkillGroove groove = myHero.getGrooveInfoByIndex(j + 1);
+                        if (groove != null)
+                        {
+                            string xmlId = groove.getNativeHoldSkillXMLId();
+                            var xmlInfo = FBHeroSkillXMLInfo.create(xmlId);
+                            if (xmlInfo.getFirstNum() == 56 && groove.getCurHoldSkillInfo() != null)///56是增加带兵容量
+                            {
+                                skillEff += (int)(xmlInfo.getEffectValueByNumLevelHeroLevelForShow(56, groove.getCurHoldSkillInfo().getLevel(), myHero.getLevel()) * eff_978);
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                    }
+                    skillEff += FreeBuildHeroController.getInstance().getStarSkillAddProp(m_heros[i].heroId)[0];
+                    // 计算红警
+                    m_heros[i].maxMarch = basic + addSoldiers + skillEff + CalcHeroSoldierCount(m_heros[i].heroId, myHero.getLevel() - 1);
+
+                    if (UavsController.getInstance().BuildingExistByXml)
+                    {
+                        if (uavInfo != null)
+                        {
+                            m_heros[i].maxMarch += (int)uavInfo.getAttrAll(UavUavAttrType.force_cap);
+                            //LogCommon.LogError($"小队带兵：{m_heros[i].maxMarch}");
+                            //LogCommon.LogError($"无人机带兵：{ (int)uavInfo.getAttrAll(UavUavAttrType.force_cap)}");
+
+                        }
+                    }
+
+                    // m_heros[i].count = Math.Min(m_heros[i].count, m_heros[i].maxMarch);
+                    calcTotal += m_heros[i].maxMarch;
+                    //LogCommon.LogError("HeroMaxMarch index : {0} - {1}", i, m_heros[i].maxMarch);
+                }
+                else
+                {
+                    m_heros[i].maxMarch = basic + addSoldiers;
+                    calcTotal += m_heros[i].maxMarch;
+                }
+            }
+            //LogCommon.LogError("CalcSoldierTotalNew index : {0} - {1}",m_sortIndex,  calcTotal);
+            return calcTotal;
+        }
+
+        private int CalcHeroSoldierCount(string heroId, int heroLv)
+        {
+            var d = DataAtlasManager.Instance.GetDataWithTypeById<NewHeroesAttributes>(heroId);
+            return d.soldiersnum[heroLv];
+        }
+
+        public int calcSoldierTotal()
+        {
+            // 这里得使用和服务器相同的计算准则，这样才能进行预测。
+            int asPlayerMaxSoldiers = getMaxNum();
+            //if (m_index == 6)
+            //{
+            //    asPlayerMaxSoldiers = FreeBuildTroopsController.getInstance().getDefenseQueueMax();
+            //}
+            //else
+            //{
+            //    //
+            //    asPlayerMaxSoldiers += (int)(EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormation(56, getIndex()));
+            //    //
+            //    int singleMax = (int)Math.Ceiling(((double)asPlayerMaxSoldiers) / 3);
+            //    asPlayerMaxSoldiers = singleMax * 3;
+            //}
+
+            //int average = asPlayerMaxSoldiers / 3;
+            int calcTotal = asPlayerMaxSoldiers;
+            //for (int i = 0; i < 3; ++i)
+            //{
+            //    int pos = (int)(EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormationLine(56, getIndex(), i));
+            //    calcTotal += pos;
+
+            //    int moreSkillNum = 0;
+            //    int newAddArmyNum = 0;
+            //    var data = DataAtlasManager.Instance.GetDataWithTypeById<NewHeroes>(m_heros[i].heroId);
+            //    if (data != null)
+            //    {
+            //        string id = data.extra_skill[0];
+            //        var myHero = FreeBuildHeroController.getInstance().getMyHeroInfoByHeroId(m_heros[i].heroId);
+            //        if (!string.IsNullOrEmpty(id))
+            //        {
+            //            var d = DataAtlasManager.Instance.GetDataWithTypeById<More_hero_skills>(id);
+            //            moreSkillNum += d.skill_para[myHero.getLevel() - 1];
+            //        }
+            //        newAddArmyNum = CalcHeroSoldierCount(m_heros[i].heroId, myHero.getLevel() - 1);
+            //    }
+            //    moreSkillNum += FreeBuildHeroController.getInstance().getStarSkillAddProp(m_heros[i].heroId)[0];
+            //    calcTotal += moreSkillNum;
+            //    calcTotal += newAddArmyNum;
+
+            //    m_heros[i].maxMarch = pos + average + moreSkillNum + newAddArmyNum;
+            //}
+
+            return calcTotal;
+        }
+
+        public int calcEliteCurrentSoldier(int index)
+        {
+            // if (m_heros[index].armyId.empty())
+            // {
+            //     return 0;
+            // }
+            // 这里得使用和服务器相同的计算准则，这样才能进行预测。
+            int asPlayerMaxSoldiers = getMaxNum();
+            //
+            asPlayerMaxSoldiers += (int)(EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormation(56, getIndex()));
+            //
+            int singleMax = (int)(Math.Ceiling(((double)asPlayerMaxSoldiers) / 3));
+            asPlayerMaxSoldiers = singleMax * 3;
+
+            int average = asPlayerMaxSoldiers / 3;
+            int pos = (int)(EffectController.getInstance().getEffectValueByNumOnlyApplicableToEliteFormationLine(56, getIndex(), index));
+            m_heros[index].maxMarch = pos + average;
+            return m_heros[index].maxMarch;
+        }
+
+        public int calcEliteSoldierTotal()
+        {
+            // 这里得使用和服务器相同的计算准则，这样才能进行预测。
+            int asPlayerMaxSoldiers = getMaxNum();
+            //
+            asPlayerMaxSoldiers += (int)(EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormation(56, getIndex()));
+
+            //
+            int singleMax = (int)Math.Ceiling(((double)asPlayerMaxSoldiers) / 3);
+            asPlayerMaxSoldiers = singleMax * 3;
+
+            int average = asPlayerMaxSoldiers / 3;
+            int calcTotal = asPlayerMaxSoldiers;
+            for (int i = 0; i < 3; ++i)
+            {
+                int pos = (int)(EffectController.getInstance().getEffectValueByNumOnlyApplicableToEliteFormationLine(56, getIndex(), i));
+                m_heros[i].maxMarch = pos + average;
+
+                calcTotal += pos;
+            }
+
+            return calcTotal;
+        }
+
+        public string getSlotArmyId(int slot)
+        {
+            // if (slot >= 0 && slot < Global._countof(m_heros))
+            // {
+            //     return m_heros[slot].armyId;
+            // }
+
+            return "";
+        }
+        public List<SuperFormationSoldierMarch> getSlotArmyList(int slot)
+        {
+            if (m_soldiers.ContainsKey(slot + 1))
+            {
+                return m_soldiers[slot + 1];
+            }
+            return new();
+        }
+
+        public string getSlotHeroId(int slot)
+        {
+            if (slot >= 0 && slot < Global._countof(m_heros))
+            {
+                return m_heros[slot].heroId;
+            }
+
+            return "";
+        }
+        public int getSlotHeroIconType(int slot)
+        {
+            string heroId = "";
+            if (slot >= 0 && slot < Global._countof(m_heros))
+            {
+                heroId = m_heros[slot].heroId;
+            }
+            if (string.IsNullOrEmpty(heroId))
+                return -1;
+            else
+                return FreeBuildHeroController.getInstance().getMyHeroInfoByHeroId(heroId).GetIconType();
+        }
+
+        public int getSlotHeroLv(int slot)
+        {
+            if (slot >= 0 && slot < Global._countof(m_heros))
+            {
+                return m_heros[slot].heroLv;
+            }
+
+            return 0;
+        }
+
+        public int getSlotArmyCount(int slot)
+        {
+            int count = 0;
+            if (m_soldiers.ContainsKey(slot + 1))
+                foreach (var it in m_soldiers[slot + 1])
+                {
+                    count += it.count;
+                }
+            return count;
+        }
+
+        public int getArmyCountById(string armyId)
+        {
+            foreach (var item in m_soldiers)
+            {
+                foreach (var it in item.Value)
+                {
+                    if (it.armyId.Equals(armyId))
+                    {
+                        return it.count;
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+        public int getSlotArmyMaxCount(int slot)
+        {
+            if (slot >= 0 && slot < Global._countof(m_heros))
+            {
+                return m_heros[slot].maxMarch;
+            }
+
+            return 0;
+        }
+
+        public int getSlotMaxCountByArmyId(string armyId)
+        {
+            // for (int i = 0; i < Global._countof(m_heros); ++i)
+            // {
+            //     if (m_heros[i].armyId == armyId)
+            //     {
+            //         return m_heros[i].maxMarch;
+            //     }
+            // }
+            return 0;
+        }
+
+        public int getSlotMaxCountByArmyIdignore(string armyId, int index)
+        {
+            int count = 0;
+            // for (int i = 0; i < Global._countof(m_heros); ++i)
+            // {
+            //     if (i == index)
+            //         continue;
+
+            //     if (m_heros[i].armyId == armyId)
+            //     {
+            //         count += m_heros[i].count;
+            //     }
+            // }
+            return count;
+        }
+
+        public int setSlotTroops(int slot, string armyId, int count)
+        {
+            //assert(count >= 0);
+            if (count < 0)
+            {
+                count = 0;
+            }
+
+            if (slot >= 0 && slot < Global._countof(m_heros))
+            {
+                if (count > m_heros[slot].maxMarch)
+                {
+                    count = m_heros[slot].maxMarch;
+                }
+
+                // m_heros[slot].armyId = armyId;
+                // m_heros[slot].count = count;
+                // if (count == 0)
+                // {
+                //     m_heros[slot].armyId = "";
+                // }
+            }
+
+            return count;
+        }
+
+        public int setSlotTroopsForNewView(int slot, string armyId, int count)
+        {
+            //assert(count >= 0);
+            if (count < 0)
+            {
+                count = 0;
+            }
+
+            //if (slot >= 0 && slot < Global._countof(m_heros))
+            //{
+            //    if (count > m_heros[slot].maxMarch)
+            //    {
+            //        count = m_heros[slot].maxMarch;
+            //    }
+
+            //    // m_heros[slot].armyId = armyId;
+            //    // m_heros[slot].count = count;
+            //}
+            if (!m_soldiers.ContainsKey(slot))
+            {
+                m_soldiers.Add(slot, new List<SuperFormationSoldierMarch>());
+            }
+
+            if (string.IsNullOrEmpty(armyId) && count == 0)
+            {
+                m_soldiers[slot].Clear();
+
+                return count;
+            }
+
+            var soldierInfo = m_soldiers[slot].Find(it => it.armyId.Equals(armyId));
+            if (soldierInfo != null)
+            {
+                soldierInfo.count = count;
+            }
+            else
+            {
+
+                m_soldiers[slot].Add(new SuperFormationSoldierMarch(armyId, count));
+            }
+
+            return count;
+        }
+
+        public bool getSlotTroops(int slot, ref string armyId, ref int count)
+        {
+            if (slot >= 0 && slot < Global._countof(m_heros))
+            {
+                // armyId = m_heros[slot].armyId;
+                // count = m_heros[slot].count;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public int getSlotByHeroId(string heroId)
+        {
+            return -1;
+        }
+
+        public long getSoldierNumByArmyId(string armyId)
+        {
+            int count = 0;
+            return count;
+        }
+
+        /// <summary>
+        /// 外部调用
+        /// </summary>
+        /// <returns></returns>
+        public long getATK()
+        {
+            this.refreshFromData();
+            long total = 0;
+            total = Convert.ToInt64(getFormPower());
+            //LogCommon.LogError("getATK {0}  ", total);
+            //LogCommon.LogError("getATK  88888888.88888 {0}  ", Convert.ToInt64(88888888.88888));
+            //LogCommon.LogError("getATK  88888888.33333 {0}  ", Convert.ToInt64(88888888.33333));
+            //LogCommon.LogError("getATK  0.88888 {0}  ", Convert.ToInt64(0.88888));
+            //LogCommon.LogError("getATK  0.33333 {0}  ", Convert.ToInt64(0.33333));
+            return total;
+        }
+        /// <summary>
+        /// 当前阵容的最大战力，不考虑实际兵够不够
+        /// </summary>
+        /// <returns></returns>
+        public long getMaxATK()
+        {
+            this.refreshFromData();
+            long total = 0;
+            total = Convert.ToInt64(getFormMaxPower());
+            return total;
+        }
+
+        public long getAtkWithoutSoldiers()
+        {
+            long total = 0;
+            total = Convert.ToInt64(getFormHeroPower());
+            return total;
+        }
+        double getFormHeroPower()
+        {
+            double power = 0;
+            for (int slot = 0; slot < 3; slot++)
+            {
+                if (string.IsNullOrEmpty(m_heros[slot].heroId) == false)
+                    power += PackMgr.GetHeroPower(m_heros[slot].heroId, uavUid);
+            }
+            return power;
+        }
+
+        public int getLoad(FBLoadType loadType, string para = "")
+        {
+            float curLoadNum = 0.0f;
+
+            int buildType = 0;
+            var info = FunBuildController.getInstance().getFunBuildInfoByUuid(getUuid());
+            if (info != null)
+            {
+                buildType = info.type;
+            }
+
+            if (FunBuildController.getInstance().isSpecialCollectFormationBuild(buildType))
+            {
+                curLoadNum += (float)info.getVecValueByVecIndex(1);
+            }
+            else
+            {
+                foreach (var soldierList in m_soldiers.Values)
+                {
+                    foreach (var soldier in soldierList)
+                    {
+                        curLoadNum += getLoadByArmyId(soldier.armyId, soldier.count, loadType, para);
+                    }
+                }
+            }
+            // 职业加成放在最外面
+            float rate = 1f;
+            if (loadType == FBLoadType.FBLoadType_CollectResource)
+            {
+                rate += (float)(EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.ARMY_LOAD_COLLECT_EFFECT) / 100.0);//只针对采集
+                rate += (float)(EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormation(Global.ARMY_LOAD_COLLECT_EFFECT, m_index) / 100.0);
+            }
+
+            curLoadNum *= rate;
+
+
+            if (loadType == FBLoadType.FBLoadType_CollectResource)
+            {
+                if (Global.atoi(para) == (int)WorldResourceType.Oil)
+                    curLoadNum = (int)(curLoadNum / ResourceController.getInstance().getOilWeight());
+                else if (Global.atoi(para) == (int)WorldResourceType.Iron)
+                    curLoadNum = (int)(curLoadNum / ResourceController.getInstance().getIronWeight());
+                else if (Global.atoi(para) == (int)WorldResourceType.Wood)
+                    curLoadNum = (int)(curLoadNum / ResourceController.getInstance().getWoodWeight());
+                else if (Global.atoi(para) == (int)WorldResourceType.Food)
+                    curLoadNum = (int)(curLoadNum / ResourceController.getInstance().getFoodWeight());
+                else if (Global.atoi(para) == (int)WorldResourceType.Silver)
+                    curLoadNum = (int)(curLoadNum / ResourceController.getInstance().getSilverWeight());
+                else if (Global.atoi(para) == (int)WorldResourceType.Gold)
+                    curLoadNum = (int)(curLoadNum / ResourceController.getInstance().getGoldWeight());
+                else if (Global.atoi(para) == (int)WorldResourceType.BloodShard)
+                    curLoadNum = (int)(curLoadNum / ResourceController.getInstance().getBloodShardWeight());
+            }
+
+            if (loadType == FBLoadType.FBLoadType_CollectResource && Global.atoi(para) != (int)WorldResourceType.Gold && Global.atoi(para) != (int)WorldResourceType.BloodShard)
+            {
+                //curLoadNum += 200;
+            }
+
+            return (int)curLoadNum;
+        }
+
+        public float getMinSpeed()
+        {
+            float minSpeed = float.MaxValue;
+            foreach (var soldierList in m_soldiers.Values)
+            {
+                foreach (var soldier in soldierList)
+                {
+                    string sType = soldier.armyId;
+                    ArmyInfo it1;
+                    if (ArmyController.getInstance().armyList.TryGetValue(sType, out it1))
+                    {
+                        float speed = it1.speed;
+                        if (speed < minSpeed)
+                        {
+                            minSpeed = speed;
+                        }
+                    }
+                }
+            }
+            return minSpeed;
+        }
+
+        public float getCollectMinSpeed()
+        {
+            float minSpeed = float.MaxValue;
+
+            ArmyInfo it1;
+            if (ArmyController.getInstance().armyList.TryGetValue("107100", out it1))
+            {
+                minSpeed = it1.speed;
+            }
+            return minSpeed;
+        }
+        public double getMarchTime(double dis, WorldCityType type, MarchMethodType marchType, float slowDown)
+        {
+            float spd = getMinSpeed();
+
+            int buildType = 0;
+            var info = FunBuildController.getInstance().getFunBuildInfoByUuid(getUuid());
+            if (info != null)
+            {
+                buildType = info.type;
+            }
+            else
+            {
+                return 0;
+            }
+
+            if (FunBuildController.getInstance().isSpecialCollectFormationBuild(info.type))
+            {
+                spd = getCollectMinSpeed();
+            }
+
+            //    double k1 = GlobalData.shared().worldConfig.distance[0];
+            //    double k2 = GlobalData.shared().worldConfig.distance[1];
+            //    double k4 = GlobalData.shared().worldConfig.distance[3];
+            double k1 = DataConfig2.dataConfig2.world_marchtime["k1"].asDouble();
+            double k2 = DataConfig2.dataConfig2.world_marchtime["k2"].asDouble();
+            double k4 = DataConfig2.dataConfig2.world_marchtime["k4"].asDouble();
+
+            float effect = (float)Math.Max(1.0 + EffectController.getInstance().getEffectValueByNumApplicableToGlobal(60) / 100.0, 0.001);
+            if (type == WorldCityType.FieldMonster)
+            {//野怪
+                effect = (float)Math.Max(1.0 + (EffectController.getInstance().getEffectValueByNumApplicableToGlobal(60) + EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.MONSTER_SPEED_EFFECT) + EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.WORLD_FIELD_MONSTER_TIME)) / 100.0, 0.001);
+            }
+            else if (WorldCityType.CityTile == type)
+            {//城市
+                effect = (float)Math.Max(1.0 + (EffectController.getInstance().getEffectValueByNumApplicableToGlobal(60) + FreeBuildTroopsController.getInstance().getTargetEffect398() + EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.CITY_SPEED_EFFECT)) / 100.0, 0.001);
+            }
+            else if (WorldCityType.CampTile == type)
+            {//营地
+                effect = (float)Math.Max(1.0 + (EffectController.getInstance().getEffectValueByNumApplicableToGlobal(60) + EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.CAMP_SPEED_EFFECT)) / 100.0, 0.001);
+            }
+            else if (WorldCityType.ResourceTile == type)
+            {//采集
+                effect = (float)Math.Max(1.0 + (EffectController.getInstance().getEffectValueByNumApplicableToGlobal(60) + EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.PRODUCT_SPEED_EFFECT)) / 100.0, 0.001);
+            }
+
+            if (MarchMethodType.MethodScout == marchType || MarchMethodType.MethodMoTianLunMarch == marchType || MarchMethodType.Method_AIRes == marchType)
+            {
+                effect += (float)(EffectController.getInstance().getEffectValueByNumApplicableToGlobal(94) / 100.0);//提高侦查的移动速度
+            }
+            else if (marchType == MarchMethodType.MethodUnion)
+            {
+                effect += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.WORLD_UNIN_EFFECT) / 100.0f;//参与集结时行军速度
+                effect += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.TAKE_PART_IN_RALLY_MARCH_SPEED) / 100.0f;//参与集结时行军速度
+            }
+            else if (marchType == MarchMethodType.MethodYuanSolider)
+            {
+                effect += (float)EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.WORLD_YUAN_EFFECT) / 100.0f;
+                effect += (float)EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.HELP_ALLIANCE_MARCH_SPEED) / 100.0f;//援助盟友时行军速度
+            }
+            else if (MarchMethodType.Method_bounty == marchType || MarchMethodType.Method_Solder == marchType)
+            {
+                effect += (float)EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.WORLD_YUAN_EFFECT) / 100.0f;
+            }
+            else if (MarchMethodType.Method_USER_WORLD_BUILDING_MARCH == marchType || MarchMethodType.Method_TERRITORY_ASSEMBLE_MARCH == marchType)
+            {//攻打城市建筑
+                effect += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.WORLD_BUILD_MARCH_SPEED_755) / 100.0f;
+            }
+            else if (MarchMethodType.Method_DOMAIN_FIGHT_MARCH == marchType)
+            {
+                effect += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.WORLD_DOMAIN_MARCH_SPEED_753) / 100.0f;
+                //目标是地块
+            }
+            effect += EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormation(847, getIndex()) / 100.0f;
+            double time = (Math.Pow(dis, k1) * k2 / (spd * effect));
+            if (marchType == MarchMethodType.MethodDeal)
+            {
+                time = Math.Pow(dis, k1) * k4;
+                float totalEffectValue = 0f;
+
+                totalEffectValue += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.ALLIANCE_TRADE_SPEED_TIME_EFFECT);
+                totalEffectValue += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.HELP_ALLIANCE_MARCH_SPEED);//援助盟友时行军速度
+                time = time * 1.0 / (1.0 + totalEffectValue / 100.0);
+            }
+            time = time * 1000 * slowDown;
+            if (MarchMethodType.MethodScout != marchType && MarchMethodType.MethodYuanSolider != marchType && MarchMethodType.Method_missileAttack != marchType)
+            {
+                effect = EffectController.getInstance().getEffectValueByNumApplicableToGlobal(23);
+                time = time * (1.0 - Math.Min(effect, 99.0) / 100.0);
+            }
+            if (slowDown != 1)
+            {//现阶段 只有两处调用这个代码的地方slowDown表示的是黑土地的减速效果 当不为1时可以认为在黑土地上
+                time -= time * (EffectController.getInstance().getEffectValueByNumApplicableToGlobal(565) / 100);
+            }
+
+            return (int)(time);
+        }
+
+        public bool isEnabled()
+        {
+            // 队列的uuid和建筑的uuid是相同的。
+            FunBuildInfo fbi = FunBuildController.getInstance().getFunBuildInfoByUuid(m_uuid);
+            if (fbi == null)
+            {
+                return false;
+            }
+
+            // 战斗大厅队列只有是掠夺者才有效。
+            /* if (fbi.type == FUN_BUILD_BATTLE_HALL)
+            {
+                if (FunBuildController.getInstance().isEffectValidForBuildType(fbi.type) == false)
+                {
+                    return false;
+                }
+            } */
+
+            return true;
+        }
+
+        public bool isInBattle()
+        {
+            if (getState() == 1)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public void setHero2(int index, string heroId)
+        {
+            if (index >= 0 && index < Global._countof(m_heros))
+            {
+                if (m_heros[index].heroId == heroId)
+                {
+                    return;
+                }
+                m_heros[index].heroId = heroId;
+            }
+        }
+
+        public string getFormationShareParam(int type = 0)
+        {
+            string param = string.Empty;
+            string name = getName();
+            string fight = Global.CC_CMDITOA(getStamina());
+            string load = Global.CC_CMDITOA(getLoad(FBLoadType.FBLoadType_Normal));
+
+            param = param.append("83445009");
+            param = param.append("|");
+
+            param = param.append(name);
+            param = param.append("|");
+
+            param = param.append(fight);
+            param = param.append("|");
+
+            param = param.append(load);
+            param = param.append("|");
+
+            for (int i = 0; i < 3; i++)
+            {
+                string soldierStr = string.Empty;
+
+                string armyId = getSlotArmyId(i);//info.armyId;
+                if (armyId == "")
+                {
+                    soldierStr = "0;0;0;0";
+                }
+                else
+                {
+                    int cur = getSlotArmyCount(i);
+
+                    string numStr = Global.CC_CMDITOA(cur) + "/" + Global.CC_CMDITOA(getSlotArmyMaxCount(i));
+                    soldierStr = soldierStr.append(armyId);
+                    soldierStr = soldierStr.append(";");
+                    soldierStr = soldierStr.append(numStr);
+                    soldierStr = soldierStr.append(";");
+                    string heroId = getHero(i);
+                    if (heroId.empty())
+                    {
+                        soldierStr = soldierStr.append("0");
+                        soldierStr = soldierStr.append(";");
+                        soldierStr = soldierStr.append("0");
+                    }
+                    else
+                    {
+                        int heroLv = getSlotHeroLv(i);
+                        soldierStr = soldierStr.append(heroId);
+                        soldierStr = soldierStr.append(";");
+                        soldierStr = soldierStr.append(Global.CC_ITOA(heroLv));
+                    }
+                }
+
+                param = param.append(soldierStr);
+                if (i < 2)
+                {
+                    param = param.append("|");
+                }
+            }
+
+            return param;
+        }
+
+        public CollectInfo getCollectInfoByMarchUuid(string uuid)
+        {
+            CollectInfo value = null;
+            this.m_ResCollect.TryGetValue(uuid, out value);
+            return value;
+        }
+
+        public Dictionary<string, CollectInfo> m_ResCollect = new Dictionary<string, CollectInfo>();
+
+        public double getArmySpeedEffectByType(string armyId)
+        {
+            //行军速度作用号//这个烂东西后台已经算了，前台不用算了
+            int type = ArmyController.getInstance().getArmyTypeById(armyId);
+            string temp = string.Format("131{0}", type);
+            return EffectController.getInstance().getEffectValueByNumApplicableToGlobal(temp.intValue()) / 100.0f;
+        }
+
+        public bool isAttackCity()
+        {
+            if (getMethodType() != (int)MarchMethodType.MethodBattle && getMethodType() != (int)MarchMethodType.Method_Attack_City)
+            {
+                return false;
+            }
+
+            if (getTargetType() == (int)WorldCityType.CityTile)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public double getDemolition()
+        {
+            return getEffectValueAttact() + EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormationAboutHeroGroup(926, getIndex()) + EffectController.getInstance().getEffectValueByNumApplicableToGlobal(757);
+        }
+
+        public double calculateDemoSingleline(ref string armyId, int count)
+        {
+            double k1 = DataConfig2.dataConfig2.cheng_fang_zhi["k1"].asDouble();
+            double k2 = DataConfig2.dataConfig2.cheng_fang_zhi["k2"].asDouble();
+            double k3 = DataConfig2.dataConfig2.cheng_fang_zhi["k3"].asDouble();
+            double k4 = DataConfig2.dataConfig2.cheng_fang_zhi["k4"].asDouble();
+
+            /*
+                勇士攻城值=部队战力^k1+k2
+                车辆攻城值=（部队战力^k1+k2） k3
+                射手攻城值=（部队战力^k1+k2） k4
+
+                每个小组单独计算后，3组相加 小数点后向下取整。
+
+             WARRIOR = 1, // 勇士
+             BATTLECAR, // 战车
+             SHOOTER, //  射手
+               */
+            var armyinfo = ArmyController.getInstance().getArmyInfo(armyId);
+            if (armyinfo == null || count == 0)
+            {
+                return 0;
+            }
+            double demolition = 0;
+            float rate = 1f;
+            if (armyinfo.m_armType == (int)SoldierType.WARRIOR)
+            {
+                demolition = Math.Pow(armyinfo.power * count, k1) + k2;
+                rate += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(964) / 100f;
+            }
+            else if (armyinfo.m_armType == (int)SoldierType.BATTLECAR)
+            {
+                demolition = (Math.Pow(armyinfo.power * count, k1) + k2) * k3;
+                rate += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(965) / 100f;
+            }
+            else if (armyinfo.m_armType == (int)SoldierType.SHOOTER)
+            {
+                demolition = (Math.Pow(armyinfo.power * count, k1) + k2) * k4;
+                rate += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(966) / 100f;
+            }
+            return demolition * (rate);
+        }
+
+        public float getEffectValueAttact()
+        {
+            double demolition = 0;
+            foreach (var soldierList in m_soldiers.Values)
+            {
+                foreach (var soldier in soldierList)
+                {
+                    demolition += calculateDemoSingleline(ref soldier.armyId, soldier.count);
+                }
+            }
+            return (float)demolition;
+        }
+
+        public bool isDefenceForm()
+        {
+            var info = FunBuildController.getInstance().getFunbuildByType(Global.FUN_BUILD_DEFENDCENTER);
+            if (info != null && info.uuid == getUuid())
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private int getLoadByArmyId(string armyId, int num, FBLoadType loadType, string para = "")
+        {
+            // 没兵说什么负重？？？？
+            if (num <= 0)
+            {
+                return 0;
+            }
+
+            var info = ArmyController.getInstance().getArmyInfo(armyId);
+            if (info == null)
+            {
+                return 0;
+            }
+
+            float rate = 1.0f;
+            rate += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(Global.ARMY_LOAD_EFFECT) / 100f;
+            rate += EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormation(Global.ARMY_LOAD_EFFECT, m_index) / 100f;
+            rate += FreeBuildTroopsController.getInstance().getTargetEffect399() / 100f;
+
+            //只有采集时生效
+            if (loadType == FBLoadType.FBLoadType_CollectResource)
+            {
+                int resType = Global.atoi(para);
+                if (para.empty() == false)
+                {
+                    if (resType == (int)WorldResourceType.Food)
+                    {
+                        rate += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(895) / 100f;
+                        rate += EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormation(895, m_index) / 100f;
+                    }
+                    else if (resType == (int)WorldResourceType.Oil)
+                    {
+                        rate += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(896) / 100.0f;
+                        rate += EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormation(896, m_index) / 100.0f;
+                    }
+                    else if (resType == (int)WorldResourceType.Wood)
+                    {
+                        rate += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(897) / 100.0f;
+                        rate += EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormation(897, m_index) / 100.0f;
+                    }
+                    else if (resType == (int)WorldResourceType.Iron)
+                    {
+                        rate += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(898) / 100.0f;
+                        rate += EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormation(898, m_index) / 100.0f;
+                    }
+                }
+            }
+            else if (loadType == FBLoadType.FBLoadType_AttackCity)
+            {
+                rate += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(87) / 100;
+                rate += EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormation(87, m_index) / 100.0f;
+            }
+
+            //负重
+            rate += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(1300) / 100.0f;
+            rate += EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormation(1300, m_index) / 100f;
+
+            //负重
+            int type = ArmyController.getInstance().getArmyTypeById(info.armyId);
+            string temp = string.Format("130{0}", type);
+            rate += EffectController.getInstance().getEffectValueByNumApplicableToGlobal(temp.intValue()) / 100.0f;
+
+            // 运兵车负重
+            rate += EffectController.getInstance().getEffectValueByNumOnlyApplicableToFormation(844, m_index) / 100f + EffectController.getInstance().getEffectValueByNumApplicableToGlobal(844) / 100f;
+
+            // 最低的系数保底！
+            if (rate < 0.05)
+            {
+                rate = 0.05f;
+            }
+            float ret = num * info.load * rate;
+
+
+            // Global.CCLOG("FreeBuildFormationInfo.getLoadByArmyId id({0}) armynum({1}) === armyLoad({2}) ==== rate({3})", armyId, num, info.load, rate);
+            return ret > 0 ? (int)ret : 0;
+        }
+
+
+        public int getTargetType()
+        {
+            var marchIt = WorldController.getInstance().getMarchInfoByFormationUuid(getUuid());
+
+            if (marchIt == null)
+            {
+                return -1;
+            }
+            return (int)marchIt.TargetType;
+        }
+
+        public bool isInPFortress()
+        {
+            if (pFortress != null)
+            {
+                return pFortress.pointId != 0;
+            }
+            return false;
+        }
+
+        private int getMethodType()
+        {
+            var marchIt = WorldController.getInstance().getMarchInfoByFormationUuid(getUuid());
+
+            if (marchIt == null)
+            {
+                return -1;
+            }
+            return (int)marchIt.MarchType;
+        }
+
+        private int getStateType()
+        {
+            var marchIt = WorldController.getInstance().getMarchInfoByFormationUuid(getUuid());
+
+            if (marchIt == null)
+            {
+                return -1;
+            }
+            return (int)marchIt.StateType;
+        }
+
+        public MarchActionType GetMarchType()
+        {
+            MarchActionType type = MarchActionType.None;
+
+            if (getState() == 0)///没有任何行动
+            {
+                type = MarchActionType.Home;
+            }
+            else
+            {
+                var marchIt = WorldController.getInstance().getMarchInfoByFormationUuid(getUuid());
+                if (marchIt == null)///没有行军线信息，可能处于集结中
+                {
+                    //集结
+                    //var cityData = WorldCityController.getInstance().GetWorldCityData(this.);
+                    type = MarchActionType.Fight;
+                }
+                else
+                {
+                    var queueIt = QueueController.getInstance().getQueueInfoByUuid(marchIt.Uuid);
+
+                    if (marchIt.StateType == MarchStateType.StateMarch)///行军中
+                    {
+                        if (marchIt.MarchType == MarchMethodType.MethodRally)
+                        {
+                            type = MarchActionType.InitiateRallyMarch;
+                        }
+                        else if (marchIt.MarchType == MarchMethodType.MethodUnion)
+                        {
+                            type = MarchActionType.JoinRally2Home;
+                        }
+                        else
+                        {
+                            type = MarchActionType.March;
+                        }
+                    }
+                    else if (marchIt.StateType == MarchStateType.StateReturn)///返回中
+                    {
+                        type = MarchActionType.Return;
+                    }
+                    else if (marchIt.StateType == MarchStateType.StateOccupy)
+                    {
+                        if (marchIt.MarchType == MarchMethodType.MethodRally)
+                        {
+                            if (marchIt.StartStamp != 0 && marchIt.EndStamp != 0
+                                && marchIt.AllianceTeamCreateTime > 0 && marchIt.EndAction == MarchEndAction.MarchActionNone
+                                && marchIt.SpeedX == 0 && marchIt.SpeedY == 0)
+                            {
+                                type = MarchActionType.InitiateRally;
+                            }
+                            else if (marchIt.TargetType == WorldCityType.tile_one_level_city ||
+                                marchIt.TargetType == WorldCityType.tile_one_level_city_range ||
+                                marchIt.TargetType == WorldCityType.tile_two_level_city ||
+                                marchIt.TargetType == WorldCityType.tile_two_level_city_range ||
+                                marchIt.TargetType == WorldCityType.Throne ||
+                                marchIt.TargetType == WorldCityType.ThroneRange ||
+                                marchIt.TargetType == WorldCityType.Trebuchet ||
+                                marchIt.TargetType == WorldCityType.TERRITORY_BANNER ||
+                                marchIt.TargetType == WorldCityType.VILLAGE)
+                            {
+                                /*string json = Newtonsoft.Json.JsonConvert.SerializeObject(marchIt, newtonsoft.Json.JsonSerializerSettings()
+                                {
+                                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                });
+                                UnityEngine.Debug.LogWarning(">>> \n" + json);*/
+
+                                type = MarchActionType.Defense;
+                            }
+                            else if (
+                                marchIt.TargetType == WorldCityType.Blood_Area_Big ||
+                                marchIt.TargetType == WorldCityType.Blood_Area_Small)
+                            {
+                                type = MarchActionType.Collect;
+                            }
+
+                            else
+                            {
+                                type = MarchActionType.InitiateRally;
+                            }
+                        }
+                        else if (marchIt.MarchType == MarchMethodType.MethodUnion)
+                        {
+                            if (!string.IsNullOrEmpty(marchIt.TeamUid))
+                            {
+                                var initMarchIt = WorldController.getInstance().getMarchInfo(marchIt.TeamUid);
+                                if (initMarchIt != null
+                                    && initMarchIt.MarchType == MarchMethodType.MethodRally
+                                    && initMarchIt.StartStamp != 0 && initMarchIt.EndStamp != 0
+                                    && initMarchIt.AllianceTeamCreateTime > 0 && initMarchIt.EndAction == MarchEndAction.MarchActionNone
+                                    && initMarchIt.SpeedX == 0 && initMarchIt.SpeedY == 0)
+                                {
+                                    type = MarchActionType.InitiateRally;
+                                }
+                                else
+                                {
+                                    var it = initMarchIt ?? marchIt;
+                                    if (it.TargetType == WorldCityType.tile_one_level_city ||
+                                        it.TargetType == WorldCityType.tile_one_level_city_range ||
+                                        it.TargetType == WorldCityType.tile_two_level_city ||
+                                        it.TargetType == WorldCityType.tile_two_level_city_range ||
+                                        it.TargetType == WorldCityType.Throne ||
+                                        it.TargetType == WorldCityType.ThroneRange ||
+                                        it.TargetType == WorldCityType.Trebuchet ||
+                                        it.TargetType == WorldCityType.TERRITORY_BANNER ||
+                                        it.TargetType == WorldCityType.VILLAGE
+    )
+                                    {
+                                        type = MarchActionType.Defense;
+                                    }
+                                    else if (
+                                        it.TargetType == WorldCityType.Blood_Area_Big ||
+                                        it.TargetType == WorldCityType.Blood_Area_Small)
+                                    {
+                                        type = MarchActionType.Collect;
+                                    }
+                                    else if (it.StateType == MarchStateType.StateMarch)
+                                    {
+                                        type = MarchActionType.JoinRallyMarch;
+                                    }
+                                    else
+                                    {
+                                        type = MarchActionType.JoinRallyWait;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                type = MarchActionType.JoinRallyWait;
+                            }
+                        }
+                        else if (marchIt.TargetType == WorldCityType.CampTile)///占领地块
+                        {
+                            type = MarchActionType.Occupy;
+                        }
+                        else if (marchIt.TargetType == WorldCityType.ResourceTile ||
+                                marchIt.TargetType == WorldCityType.MINE_NEAR_RIVER ||
+                                marchIt.TargetType == WorldCityType.MINE_OWN_PLAYER)///采集普通资源、富矿
+                        {
+                            type = MarchActionType.Collect;
+                        }
+                        else if (marchIt.TargetType == WorldCityType.Blood_Area_Big ||
+                                 marchIt.TargetType == WorldCityType.Blood_Area_Small)///采集血岩矿
+                        {
+                            type = MarchActionType.Collect;
+                        }
+                        else if (marchIt.TargetType == WorldCityType.tile_one_level_city ||
+                                 marchIt.TargetType == WorldCityType.tile_one_level_city_range ||
+                                 marchIt.TargetType == WorldCityType.tile_two_level_city ||
+                                 marchIt.TargetType == WorldCityType.tile_two_level_city_range ||
+                                 marchIt.TargetType == WorldCityType.Throne ||
+                                 marchIt.TargetType == WorldCityType.ThroneRange ||
+                                 marchIt.TargetType == WorldCityType.VILLAGE ||
+                                 marchIt.TargetType == WorldCityType.TERRITORY_BANNER)
+                        {
+                            //var cityData = WorldCityController.getInstance().GetWorldCityData(marchIt.EndPointIndex);
+                            //if (cityData != null && (cityData.status == CityStatus.OPEND || cityData.status == CityStatus.PROTECTED))
+                            //{
+                            type = MarchActionType.Defense;
+                            //}
+                            //else
+                            //{
+                            //    type = MarchActionType.Occupy;
+                            //}
+                        }
+                        else if (marchIt.TargetType == WorldCityType.CityTile ||
+                                 marchIt.TargetType == WorldCityType.CityRange)
+                        {
+                            type = MarchActionType.Defense;
+                        }
+                        else if (marchIt.TargetType == WorldCityType.tile_allianceAreaBuild)
+                        {
+                            type = MarchActionType.Collect;
+                        }
+
+                        else
+                        {
+                            type = MarchActionType.Defense;
+                        }
+                        if (marchIt.TargetType == WorldCityType.Tile_allianceArea
+                            || marchIt.TargetType == WorldCityType.TERRITORY_EXPANSION_BANNER)
+                        {
+                            if (queueIt.type == (int)QueueType.TYPE_BUILDING_TERRITORY)
+                            {
+                                type = MarchActionType.TerritoryBuilding;
+                            }
+                            else if (queueIt.type == (int)QueueType.TYPE_STATION_TERRITORY)
+                            {
+                                type = MarchActionType.TerritoryDefense;
+                            }
+                            else if (queueIt.type == (int)QueueType.TYPE_REPAIR_TERRITORY)
+                            {
+                                type = MarchActionType.TerritoryRepair;
+                            }
+                            else if (queueIt.type == (int)QueueType.TYPE_DESTROY_TERRITORY)
+                            {
+                                type = MarchActionType.TerritoryDestory;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return type;
+        }
+
+        public string GetMarchStateStrInfo(MarchActionType marchType = MarchActionType.None)
+        {
+            string state = "";
+
+            var marchIt = WorldController.getInstance().getMarchInfoByFormationUuid(getUuid());
+
+            if (marchType == MarchActionType.None)
+                marchType = GetMarchType();
+
+            /*if (CheckFortOccupyState(marchIt, out var pstate))
+            {
+                return pstate;
+            }*/
+
+            switch (marchType)
+            {
+                case MarchActionType.None:
+                    state = "";
+                    break;
+                case MarchActionType.Home:
+                    state = "";
+                    break;
+                case MarchActionType.March:
+                case MarchActionType.InitiateRallyMarch:
+                case MarchActionType.JoinRally2Home:
+                case MarchActionType.JoinRallyMarch:
+                    state = Global._lang("115351");
+                    break;
+                case MarchActionType.Return:
+                    state = Global._lang("2000000903");
+                    break;
+                case MarchActionType.Occupy:
+                    state = Global._lang("83403027");
+                    break;
+                case MarchActionType.Collect:
+                    state = Global._lang("108735");
+                    break;
+                case MarchActionType.Defense:
+                    state = Global._lang("110078");
+                    if (marchIt != null && marchIt.MarchType == MarchMethodType.Method_Attack_MJ_Normal)
+                    {
+                        state = Global._lang("3000030029");
+                    }
+                    break;
+                case MarchActionType.InitiateRally:
+                case MarchActionType.WaitRally:
+                case MarchActionType.JoinRallyWait:
+                    state = Global._lang("115136");
+                    break;
+                case MarchActionType.Fight:
+                    state = Global._lang("79030335");
+                    break;
+                case MarchActionType.TerritoryBuilding:
+                    state = Global._lang("115305");
+                    break;
+                case MarchActionType.TerritoryDefense:
+                    state = Global._lang("115346");
+                    break;
+                case MarchActionType.TerritoryRepair:
+                    state = Global._lang("115310");
+                    break;
+                case MarchActionType.TerritoryDestory:
+                    state = Global._lang("400004766");
+                    break;
+            }
+            return state;
+        }
+
+        private bool CheckFortOccupyState(MarchInfo marchIt, out string state)
+        {
+            state = "";
+            if (!GlobalData.shared().playerInfo.isInAlliance())
+                return false;
+
+            if (marchIt == null)
+                return false;
+
+            if (marchIt.StateType == MarchStateType.StateOccupy && marchIt.EndPointIndex > 0)
+            {
+                var info = AZTerritoryController.getInstance().getTerritoryInfoByPointIndex(marchIt.EndPointIndex);
+                if (info != null)
+                {
+                    switch (info.TerritoryState)
+                    {
+                        case (int)AAreaState.Astate_Building:
+                            state = Global._lang("115305");
+                            break;
+                        case (int)AAreaState.Astate_Garrison:
+                            state = Global._lang("115346");
+                            break;
+                        case (int)AAreaState.Astate_FixIng:
+                            state = Global._lang("115310");
+                            break;
+                        case (int)AAreaState.Astate_Destroy:
+                            state = Global._lang("400004766");
+                            break;
+                        default:
+                            break;
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public string GetMarchTimeStrInfo()
+        {
+            double t1 = 0;
+            double t2 = 0;
+            return GetMarchTimeStrInfo(ref t1, ref t2);
+        }
+
+        public string GetMarchTimeStrInfo(ref double totalTime, ref double leftTime, MarchActionType marchType = MarchActionType.None)
+        {
+            string timeStr = "";
+
+            MarchInfo marchIt = WorldController.getInstance().getMarchInfoByFormationUuid(getUuid());
+            QueueInfo queueIt = null;
+            if (marchIt != null)
+                queueIt = QueueController.getInstance().getQueueInfoByUuid(marchIt.Uuid);
+
+            double now = Global.gGameTime.getWorldMsTime();
+            totalTime = 0;
+            leftTime = 0;
+
+            bool recTimeStr = true;
+
+            if (marchType == MarchActionType.None)
+                marchType = GetMarchType();
+
+            switch (marchType)
+            {
+                case MarchActionType.March:
+                case MarchActionType.Return:
+                case MarchActionType.InitiateRallyMarch:
+                case MarchActionType.JoinRally2Home:
+                case MarchActionType.JoinRallyMarch:
+                    if (queueIt != null)
+                    {
+                        totalTime = queueIt.finishTime - queueIt.startTime;
+                        leftTime = queueIt.finishTime - now;
+                    }
+                    else
+                    {
+                        recTimeStr = false;
+                    }
+                    break;
+                case MarchActionType.Collect:
+                    if (marchIt != null)
+                    {
+                        if (marchIt.TargetType == WorldCityType.ResourceTile ||
+                            marchIt.TargetType == WorldCityType.tile_allianceAreaBuild)//普通资源
+                        {
+                            totalTime = marchIt.TroopMax / marchIt.DigSpeed * 1000;
+                            leftTime = totalTime + marchIt.DigStartTime - now;
+                        }
+                        else if (marchIt.TargetType == WorldCityType.MINE_NEAR_RIVER ||
+                            marchIt.TargetType == WorldCityType.MINE_OWN_PLAYER)//富矿
+                        {
+                            totalTime = marchIt.TroopMax / marchIt.DigSpeed * 1000;
+                            leftTime = Global.MIN(marchIt.MineFlushTime, totalTime + marchIt.DigStartTime) - now;
+                        }
+                        else if (marchIt.TargetType == WorldCityType.Blood_Area_Big ||
+                                 marchIt.TargetType == WorldCityType.Blood_Area_Small)///采集血岩矿
+                        {
+                            totalTime = marchIt.BloodEndTime - marchIt.BloodStartTime;
+                            leftTime = totalTime + marchIt.BloodStartTime - now;
+                            totalTime = Global.MAX(1, totalTime);
+                            leftTime = Global.MAX(0, leftTime);
+                            leftTime = Global.MIN(totalTime, leftTime);
+
+                            timeStr = Global.CC_SECTOA((leftTime < 0 ? 0 : leftTime) / 1000);
+                            var t = timeStr.Split(':');
+                            if (t[2] != "00")
+                            {
+                                int intT = int.Parse(t[1]) + 1;
+                                if (intT != 60)
+                                    t[1] = intT.ToString("D2");
+                                else
+                                {
+                                    t[1] = "00";
+                                    intT = int.Parse(t[0]) + 1;
+                                    t[0] = intT.ToString("D2");
+                                }
+                            }
+                            t[2] = "00";
+                            timeStr = Global._lang_1("2000001001", string.Join(":", t));
+                            recTimeStr = false;
+                        }
+                    }
+                    else
+                    {
+                        recTimeStr = false;
+                    }
+                    break;
+                case MarchActionType.Defense:
+                    if (marchIt != null)
+                    {
+                        if (marchIt.TargetType == WorldCityType.tile_one_level_city ||
+                            marchIt.TargetType == WorldCityType.tile_one_level_city_range ||
+                            marchIt.TargetType == WorldCityType.tile_two_level_city ||
+                            marchIt.TargetType == WorldCityType.tile_two_level_city_range ||
+                            marchIt.TargetType == WorldCityType.Throne ||
+                            marchIt.TargetType == WorldCityType.ThroneRange)
+                        {
+                            var cityData = WorldCityController.getInstance().GetWorldCityData(marchIt.EndPointIndex);
+                            if (cityData != null && cityData.status == CityStatus.OPEND)
+                            {
+                                if (cityData.endTime > 0)
+                                {
+                                    //todo：总共多少秒？
+                                    //totalTime = 600000;
+                                    //leftTime = cityData.endTime - now;
+                                    totalTime = 100;
+                                    leftTime = 0;
+                                    timeStr = Global.CC_SECTOA(Mathf.Max((int)((cityData.endTime - now) / 1000), 0));
+                                    recTimeStr = false;
+                                }
+                            }
+                            else
+                            {
+                                totalTime = 100;
+                                leftTime = 0;
+                                ///timeStr = "00:00:00";
+                                timeStr = "";
+                                recTimeStr = false;
+                            }
+                        }
+                        else
+                        {//TERRITORY_BANNER
+                            totalTime = marchIt.EndStamp - marchIt.StartStamp;
+                            leftTime = totalTime - (now - marchIt.StartStamp);
+                            if (leftTime < 0)
+                            {
+                                timeStr = "";
+                                recTimeStr = false;
+                            }
+                        }
+                    }
+                    break;
+                case MarchActionType.InitiateRally:
+                case MarchActionType.JoinRallyWait:
+                    if (queueIt != null && queueIt.type == (int)QueueType.TYPE_ARMY_MASS)
+                    {
+                        double otherFinishTime = double.MinValue;
+                        /*var team = GetJoinMarchs(marchIt.teamUid);
+                        foreach (var m in team)
+                        {
+                            var mqueue = QueueController.getInstance().getQueueInfoByUuid(m.uuid);
+                            if (mqueue.finishTime> otherFinishTime)
+                                otherFinishTime = mqueue.finishTime;
+                        }*/
+
+                        double finishTime = queueIt.finishTime > otherFinishTime ? queueIt.finishTime : otherFinishTime;
+
+                        totalTime = finishTime - queueIt.startTime;
+                        leftTime = finishTime - now;
+                        if (marchIt.TeamMarchType == 1)
+                        {
+                            if (AZCommonUtils.checkAdvancedMassInUnionStage(leftTime))
+                            {
+                                leftTime -= GlobalData.shared().teamMarchStartTime * 1000;
+                                totalTime -= GlobalData.shared().teamMarchStartTime * 1000;
+                            }
+                            else
+                            {
+                                totalTime = GlobalData.shared().teamMarchStartTime * 1000;
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    recTimeStr = false;
+                    break;
+            }
+
+            if (recTimeStr)
+            {
+                totalTime = Global.MAX(1, totalTime);
+                leftTime = Global.MAX(0, leftTime);
+                leftTime = Global.MIN(totalTime, leftTime);
+                timeStr = Global.CC_SECTOA((leftTime < 0 ? 0 : leftTime) / 1000);
+            }
+            return timeStr;
+        }
+
+        public Vector2 GetMarchPosInfo(MarchActionType marchType = MarchActionType.None)
+        {
+            Vector2 pos = Vector2.zero;
+
+            MarchInfo marchIt = WorldController.getInstance().getMarchInfoByFormationUuid(getUuid());
+
+            if (marchType == MarchActionType.None)
+                marchType = GetMarchType();
+
+            switch (marchType)
+            {
+                case MarchActionType.March:
+                case MarchActionType.Return:
+                    pos = marchIt.GetCurrentPos();
+                    break;
+                case MarchActionType.Occupy:
+                case MarchActionType.Collect:
+                case MarchActionType.Defense:
+                case MarchActionType.TerritoryDefense:
+                case MarchActionType.TerritoryBuilding:
+                case MarchActionType.TerritoryRepair:
+                case MarchActionType.TerritoryDestory:
+                    {
+                        if (marchIt.TargetType == WorldCityType.tile_one_level_city ||
+                            marchIt.TargetType == WorldCityType.tile_one_level_city_range ||
+                            marchIt.TargetType == WorldCityType.tile_two_level_city ||
+                            marchIt.TargetType == WorldCityType.tile_two_level_city_range ||
+                            marchIt.TargetType == WorldCityType.Throne ||
+                            marchIt.TargetType == WorldCityType.ThroneRange)
+                        {
+                            var cityData = WorldCityController.getInstance().GetWorldCityData(marchIt.EndPointIndex);
+                            if (cityData != null)
+                            {
+                                pos = WorldController.getPointByIndex(cityData.cityPoint);
+                            }
+                            else
+                            {
+                                pos = WorldController.getPointByIndex(marchIt.EndPointIndex);
+                            }
+                        }
+                        else
+                        {//TERRITORY_BANNER
+                            pos = WorldController.getPointByIndex(marchIt.EndPointIndex);
+                        }
+                    }
+                    break;
+            }
+
+            return pos;
+        }
+
+        public int GetCollentResType(MarchActionType marchType = MarchActionType.None)
+        {
+            if (marchType == MarchActionType.None)
+                marchType = GetMarchType();
+
+            if (marchType == MarchActionType.Collect)
+            {
+                MarchInfo marchIt = WorldController.getInstance().getMarchInfoByFormationUuid(getUuid());
+                if (marchIt != null)
+                {
+                    return marchIt.ResType;
+                    /*
+                    var wci = WorldController.getInstance().getWorldCityInfo((uint)marchIt.endPointIndex);
+                    if (wci.getCityType() == WorldCityType.ResourceTile)
+                        return wci.getResourceType();
+                    else if (wci.getCityType() == WorldCityType.Blood_Area_Big || wci.getCityType() == WorldCityType.Blood_Area_Small)
+                        return (int)WorldResourceType.BloodShard;
+                        */
+                }
+            }
+            return -1;
+        }
+
+        public bool HasFettersHero()
+        {
+            for (int i = 0; m_heros != null && i < m_heros.Length; ++i)
+            {
+                var id = m_heros[i].heroId;
+                if (string.IsNullOrEmpty(id))
+                    continue;
+
+                var fetter = CCCommonUtils.GetHeroFettersByHeroId(id);
+                if (null != fetter)
+                    return true;
+            }
+            return false;
+        }
+
+
+        public bool isValid()
+        {
+            if (m_index > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public int getSoldierTotalNum()
+        {
+            int count = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                count += getSlotArmyCount(i);
+            }
+            return count;
+        }
+        public List<string> getHerolist()
+        {
+            var list = new List<string>();
+            for (int i = 0; i < 3; i++)
+            {
+                string heroId = getHero(i);
+                if (!string.IsNullOrEmpty(heroId))
+                {
+                    list.Add(heroId);
+                }
+            }
+            return list;
+        }
+        public bool hasHerosOrSolders()
+        {
+            return getSoldierTotalNum() > 0 || getHerolist().Count > 0;
+        }
+        public void assignTo(FormationBaseInfo currFormationInfo)
+        {
+            assignTo((SuperFormationInfo)currFormationInfo);
+        }
+
+        long FormationBaseInfo.getSoldierTotalNum()
+        {
+            return getSoldierTotalNum();
+        }
+
+        public void setLimitForSoldiers(int maxNum)
+        {
+            maxSoldiers = maxNum;
+        }
+
+        public int getSlotArmyMaxCountWithLimit(int solt)
+        {
+            if (maxSoldiers == -1)
+                return getSlotArmyMaxCount(solt);
+
+            int tempNum = maxSoldiers;
+            for (int i = 0; i < 3; i++)
+            {
+                if (i != solt)
+                {
+                    tempNum -= getSlotArmyCount(i);
+                }
+            }
+            return Global.MIN(getSlotArmyMaxCount(solt), Global.max(0, tempNum));
+        }
+
+        public string getUavUid()
+        {
+            return m_uavUid;
+        }
+        /// <summary>
+        /// 获取上阵的3个英雄heroid
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+
+        public string[] getHeros()
+        {
+            return new string[] { m_heros[0].heroId, m_heros[1].heroId, m_heros[2].heroId };
+        }
+        public List<SuperFormationHeroMarch> getHerosList()
+        {
+            var m_marchHeros = new List<SuperFormationHeroMarch>();
+            for (int i = 0; i < m_heros.Length; i++)
+            {
+                if (m_heros[i] == null || string.IsNullOrEmpty(m_heros[i].heroId))
+                {
+                    continue;
+                }
+                m_marchHeros.Add(m_heros[i]);
+            }
+            return m_marchHeros;
+        }
+        public List<SuperFormationSoldierMarch> getSoldierList()
+        {
+            var m_marchSoldier = new List<SuperFormationSoldierMarch>();
+            foreach (var item in m_soldiers.Values)
+            {
+                foreach (var it in item)
+                {
+                    if (it.count > 0)
+                    {
+                        m_marchSoldier.Add(it);
+                    }
+                }
+            }
+            return m_marchSoldier;
+        }
+
+        public PFrotressInfo get_pFortress()
+        {
+            return pFortress;
+        }
+
+        public void set_pFortress(PFrotressInfo pFrotressInfo)
+        {
+            pFortress = pFrotressInfo;
+        }
+
+        public object getCmdData()
+        {
+            CCDictionary formDict = new CCDictionary();
+            CCArray array_hero = CCArray.create();
+            for (int i = 0; i < m_heros.Length; i++)
+            {
+                if (m_heros[i] == null || string.IsNullOrEmpty(m_heros[i].heroId))
+                {
+                    continue;
+                }
+                CCDictionary heroDict = new CCDictionary();
+                heroDict.setObject(m_heros[i].heroId, "heroId");
+                array_hero.Add(heroDict);
+            }
+
+            CCArray array_soldier = CCArray.create();
+            foreach (var item in m_soldiers.Values)
+            {
+                foreach (var it in item)
+                {
+                    if (it.count > 0)
+                    {
+                        CCDictionary sodierDict = new CCDictionary();
+                        sodierDict.setObject(it.armyId, "armyId");
+                        sodierDict.setObject(it.count, "count");
+                        array_soldier.Add(sodierDict);
+                    }
+                }
+            }
+            CCDictionary drone = new CCDictionary();
+            drone.setObject(m_uavUid, "droneUuid");
+
+            formDict.setObject((int)formType, "type");
+            formDict.setObject(m_index, "index");
+            formDict.setObject(array_hero, "hero");
+            formDict.setObject(array_soldier, "soldiers");
+            formDict.setObject(drone, "drone");
+            formDict.setObject(m_name, "name");
+            if (!string.IsNullOrEmpty(miningUid))
+            {
+                formDict.setObject(miningUid, "miningUid");
+            }
+
+            return formDict;
+        }
+        public void parseHeroSoldierAndUav(CCDictionary dict)
+        {
+            //Debug.LogError("formation"+dict.ToJson());
+            clearHeros();
+            clearSoldiers();
+            if (dict.ContainsKey("name"))
+                m_name = dict.valueForKey("name");
+            if (dict.ContainsKey("type"))
+                formType = (SuperFormType)dict.valueForKey("type").intValue();
+            if (dict.ContainsKey("index"))
+                m_index = dict.valueForKey("index").intValue();
+            if (dict.ContainsKey("uuid"))
+                m_uuid = dict.valueForKey("uuid").getCString();
+            CCArray heros = (CCArray)(dict.objectForKey("hero"));
+            CCArray.CCARRAY_FOREACH(heros, obj =>
+            {
+                CCDictionary h = (CCDictionary)(obj);
+                if (h != null)
+                {
+                    string heroId = h.valueForKey("heroId");
+                    if (string.IsNullOrEmpty(heroId))
+                        return;
+                    int starLv = h.valueForKey("starLv").intValue();
+                    int heroLv = h.valueForKey("level").intValue();
+                    var xmlInfo = FBHeroXMLInfoData.Get(heroId);
+                    int index = xmlInfo.icon_type - 1;
+                    m_heros[index].heroId = heroId;
+                    m_heros[index].heroLv = heroLv;
+                    m_heros[index].starLv = starLv;
+                    m_heros[index].heroDict = h;
+                }
+            });
+            CCArray soldiers = (CCArray)(dict.objectForKey("soldiers"));
+            CCArray.CCARRAY_FOREACH(soldiers, obj =>
+            {
+                CCDictionary h = (CCDictionary)(obj);
+                if (h != null)
+                {
+                    string armyId = h.valueForKey("armyId");
+                    int count = h.valueForKey("count").intValue();
+                    int armyType = CCCommonUtils.getArmysInfo(armyId).icon_type;
+                    if (!m_soldiers.ContainsKey(armyType) || m_soldiers[armyType] == null)
+                        m_soldiers[armyType] = new List<SuperFormationSoldierMarch>();
+                    m_soldiers[armyType].Add(new SuperFormationSoldierMarch(armyId, count, h));
+                }
+            });
+            m_uavUid = "";
+            if (dict.ContainsKey("drone"))
+            {
+                uavDict = dict.ObjectForKey("drone") as CCDictionary;
+                m_uavUid = uavDict.StringValueForKey("droneUuid");
+            }
+        }
+
+
+        public CCArray ToArray()
+        {
+            var result = new CCArray();
+            return result;
+        }
+
+        private SuperFormationHeroMarch[] m_herosTemp = new SuperFormationHeroMarch[3];
+        private Dictionary<int, List<SuperFormationSoldierMarch>> m_soldiersTemp = new Dictionary<int, List<SuperFormationSoldierMarch>>();
+        private string uavUidTemp = "";
+        public bool CheckEqual(SuperFormationInfo other)
+        {
+            m_herosTemp = other.m_heros;
+            m_soldiersTemp = other.m_soldiers;
+            uavUidTemp = other.m_uavUid;
+
+            return !hasDirtyHerosOrSoldersOrUavs();
+            // return true;
+        }
+        /// <summary>
+        /// 检查英雄数据是否发生变更
+        /// </summary>
+        /// <returns>如果英雄数据发生变更返回true，否则返回false</returns>
+        public bool hasDirtyHeros()
+        {
+            // 检查数组长度是否一致
+            if (m_heros.Length != m_herosTemp.Length)
+            {
+                return true;
+            }
+            // 逐个比较英雄数据
+            for (int i = 0; i < m_heros.Length; i++)
+            {
+                // 比较英雄ID、军队ID、数量和等级
+                if (m_heros[i].heroId != m_herosTemp[i].heroId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 检查士兵数据是否发生变更
+        /// </summary>
+        /// <returns>如果士兵数据发生变更返回true，否则返回false</returns>
+        public bool hasDirtySolders()
+        {
+            // 检查字典键数量是否一致
+            if (m_soldiers.Count != m_soldiersTemp.Count)
+            {
+                return true;
+            }
+
+            // 检查每个键对应的士兵列表
+            foreach (var kvp in m_soldiers)
+            {
+                if (!m_soldiersTemp.TryGetValue(kvp.Key, out var tempList))
+                {
+                    return true;
+                }
+
+                var currentList = kvp.Value;
+                if (currentList.Count != tempList.Count)
+                {
+                    return true;
+                }
+
+                // 逐个比较士兵数据
+                for (int i = 0; i < currentList.Count; i++)
+                {
+                    if (currentList[i] == null && tempList[i] == null)
+                    {
+                        continue;
+                    }
+                    // 比较军队ID和数量
+                    if (currentList[i].armyId != tempList[i].armyId ||
+                        currentList[i].count != tempList[i].count)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 检查无人机数据是否发生变更
+        /// </summary>
+        /// <returns>如果无人机数据发生变更返回true，否则返回false</returns>
+        public bool hasDirtyUavs()
+        {
+            // 比较无人机UID
+            return m_uavUid != uavUidTemp;
+        }
+
+        /// <summary>
+        /// 检查英雄、士兵或无人机数据是否发生变更
+        /// </summary>
+        /// <returns>如果任何一种数据发生变更返回true，否则返回false</returns>
+        public bool hasDirtyHerosOrSoldersOrUavs()
+        {
+            return hasDirtyHeros() || hasDirtySolders() || hasDirtyUavs();
+        }
+
+        public bool Empty()
+        {
+            int soldierCount = 0;
+            foreach (var sList in m_soldiers)
+            {
+                foreach (var s in sList.Value)
+                {
+                    soldierCount += s.count;
+                }
+            }
+            return soldierCount == 0;
+        }
+
+        public long GetPower()
+        {
+            double result = getATK();
+
+            return Convert.ToInt64(result);
+        }
+        public string GetFormMsg()
+        {
+            return $"{Global.SuperFormTypeMsg[(int)formType].Item2} index :{m_index}";
+        }
+        public string GetFormMsg_log()
+        {
+            var heros = getHerosList();
+            var soldiers = getSoldierList();
+            var heroIds = string.Join(",", heros.ConvertAll(h => h.heroId));
+            var soldierInfos = string.Join(",", soldiers.ConvertAll(s => $"{s.armyId}x{s.count}"));
+            return $"{GetFormMsg()} heros:[{heroIds}] soldiers:[{soldierInfos}]";
+        }
+
+        internal bool CheckEmpty()
+        {
+            return !hasHerosOrSolders() && string.IsNullOrEmpty(m_uavUid);
+        }
+
+        internal string PrintFormMsg()
+        {
+            var heros = getHerosList();
+            var soldiers = getSoldierList();
+            var heroIds = string.Join(",", heros.ConvertAll(h => h.heroId));
+            var soldierInfos = string.Join(",", soldiers.ConvertAll(s => $"{s.armyId}x{s.count}"));
+            return $"[{(int)formType}-{m_index}] heros:[{heroIds}] soldiers:[{soldierInfos}]";
+        }
+    }
+}

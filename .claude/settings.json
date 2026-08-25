@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(taskkill //F //PID 30648)",
+      "Bash(cmd //c \"taskkill /F /IM node.exe\")",
+      "Bash(powershell -Command \"Stop-Process -Name node -Force -ErrorAction SilentlyContinue\")",
+      "Bash(powershell -Command 'Stop-Process -Id 15332 -Force')",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Read(//f/HFF/Obsidian/FFNotes/**)",
+      "Bash(taskkill //F //PID 40592)"
+    ],
+    "additionalDirectories": [
+      "f:\\HFF\\Obsidian\\FFNotes\\.claude\\skills\\requirement-processor"
+    ]
+  }
+}

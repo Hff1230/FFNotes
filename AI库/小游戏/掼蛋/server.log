@@ -10,24 +10,2946 @@
 HTTP请求: /
 新客户端连接
 HTTP请求: /favicon.ico
+收到消息: type=createRoom
+房间创建: 包间1 (正常模式, 允许观战)
+收到消息: type=addAI
+AI玩家加入: AHPIX5 - 🤖 AI小红
+收到消息: type=addAI
+AI玩家加入: AHPIX5 - 🤖 AI小刚
+收到消息: type=addAI
+AI玩家加入: AHPIX5 - 🤖 AI小丽
+收到消息: type=ready
+房间 AHPIX5 游戏开始
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥8]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=testWin
+testWin 收到: roomId=AHPIX5, winType=double, room存在=true
+房间 AHPIX5 testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 AHPIX5 双赢！队伍1升3级
+房间 AHPIX5 测试模式完成: double
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 游戏未开始
+收到消息: type=newRound
+房间 AHPIX5 新一局开始发牌
+收到消息: type=testWin
+testWin 收到: roomId=AHPIX5, winType=double, room存在=true
+房间 AHPIX5 testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 AHPIX5 双赢！队伍1升3级
+房间 AHPIX5 测试模式完成: double
+房间 AHPIX5 双赢进贡：3名和4名进贡，1名拿最大的，2名拿另一张
+房间 AHPIX5 发送还贡阶段消息给玩家 P_gjtn5hwr，等待手工选择
+收到消息: type=returnTribute
+房间 AHPIX5 进贡完成，开始出牌，首出玩家索引: 3
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 玩家已结束
+收到消息: type=testWin
+testWin 收到: roomId=AHPIX5, winType=double, room存在=true
+房间 AHPIX5 testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 AHPIX5 双赢！队伍1升3级
+房间 AHPIX5 测试模式完成: double
+收到消息: type=newRound
+房间 AHPIX5 新一局开始发牌
+房间 AHPIX5 双赢进贡：3名和4名进贡，1名拿最大的，2名拿另一张
+房间 AHPIX5 发送还贡阶段消息给玩家 P_gjtn5hwr，等待手工选择
+收到消息: type=returnTribute
+房间 AHPIX5 进贡完成，开始出牌，首出玩家索引: 1
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥5]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=testWin
+testWin 收到: roomId=AHPIX5, winType=double, room存在=true
+房间 AHPIX5 testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 AHPIX5 双赢！队伍1升3级
+房间 AHPIX5 测试模式完成: double
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 游戏未开始
+收到消息: type=newRound
+房间 AHPIX5 升级到A，继续打A
+房间 AHPIX5 新一局开始发牌
+房间 AHPIX5 双赢进贡：3名和4名进贡，1名拿最大的，2名拿另一张
+房间 AHPIX5 发送还贡阶段消息给玩家 P_gjtn5hwr，等待手工选择
+收到消息: type=returnTribute
+房间 AHPIX5 进贡完成，开始出牌，首出玩家索引: 1
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦5]
+aiPlayCards: playCards 结果 {"success":true}
+HTTP请求: /
+玩家断开: h
+游戏进行中，将 h 替换为AI接管
+房间 AHPIX5 所有玩家都已离线，自动解散
+新客户端连接
+HTTP请求: /favicon.ico
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏小王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♠A, ♠2, ♠4, ♠5, ♥A]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=createRoom
+房间创建: 包间2 (正常模式, 允许观战)
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 27, lastPlay: straightFlush
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♦10, ♦J, ♦Q, ♦A, ♥A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 26, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 26, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 22, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 22, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦4]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 22, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 21, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏大王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 4
+aiPlayCards: 选中的牌 [♠Q, ♥Q, ♦Q, ♣Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 25, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 21, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 20, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 21, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 21, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 20, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 20, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 24, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏大王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 20, lastPlay: single
+aiPlayCards: 选牌结果 4
+aiPlayCards: 选中的牌 [♥K, ♥K, ♦K, ♣K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 19, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 19, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 23, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+收到消息: type=addAI
+AI玩家加入: H54BVA - 🤖 AI小红
+收到消息: type=addAI
+AI玩家加入: H54BVA - 🤖 AI小刚
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 16, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠2]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=addAI
+AI玩家加入: H54BVA - 🤖 AI小丽
+收到消息: type=ready
+房间 H54BVA 游戏开始
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 19, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 19, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 23, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_uzesu1qr
+aiPlayCards: 🤖 AI小红 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 18, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6y82f03w
+aiPlayCards: 🤖 AI小刚 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39fipllp
+aiPlayCards: 🤖 AI小丽 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 18, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 22, lastPlay: single
+aiPlayCards: 选牌结果 4
+aiPlayCards: 选中的牌 [♠J, ♥J, ♣J, ♣J]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=testWin
+testWin 收到: roomId=H54BVA, winType=double, room存在=true
+房间 H54BVA testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 H54BVA 双赢！队伍1升3级
+房间 H54BVA 测试模式完成: double
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 14, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 17, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+收到消息: type=newRound
+房间 H54BVA 新一局开始发牌
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 17, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 18, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 14, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦3]
+aiPlayCards: playCards 结果 {"success":true}
+房间 H54BVA 双下抗贡成功，无需进贡
+房间 H54BVA 抗贡局：头游 h 先出牌
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 17, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠5]
+aiPlayCards: playCards 结果 {"success":true}
+房间 H54BVA 进贡完成，开始出牌，首出玩家索引: 0
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 17, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 17, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 13, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+收到消息: type=play
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 12, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_uzesu1qr
+aiPlayCards: 🤖 AI小红 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏小王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6y82f03w
+aiPlayCards: 🤖 AI小刚 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39fipllp
+aiPlayCards: 🤖 AI小丽 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+收到消息: type=play
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 11, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_uzesu1qr
+aiPlayCards: 🤖 AI小红 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏大王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 14, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6y82f03w
+aiPlayCards: 🤖 AI小刚 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 4
+aiPlayCards: 选中的牌 [♠J, ♦J, ♦J, ♣J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39fipllp
+aiPlayCards: 🤖 AI小丽 手牌数 26, lastPlay: bomb
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♥6, ♥7, ♥9, ♥10, ♥5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 11, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦A]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=pass
+aiPlayCards 被调用, playerId: AI_uzesu1qr
+aiPlayCards: 🤖 AI小红 手牌数 25, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 13, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6y82f03w
+aiPlayCards: 🤖 AI小刚 手牌数 22, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39fipllp
+aiPlayCards: 🤖 AI小丽 手牌数 21, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 10, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 13, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦6]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=play
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_uzesu1qr
+aiPlayCards: 🤖 AI小红 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♠A, ♠3, ♠4, ♠5, ♥5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6y82f03w
+aiPlayCards: 🤖 AI小刚 手牌数 22, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 9, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 12, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39fipllp
+aiPlayCards: 🤖 AI小丽 手牌数 20, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 14, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+收到消息: type=pass
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 14, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_uzesu1qr
+aiPlayCards: 🤖 AI小红 手牌数 20, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 8, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6y82f03w
+aiPlayCards: 🤖 AI小刚 手牌数 22, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 11, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39fipllp
+aiPlayCards: 🤖 AI小丽 手牌数 20, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣4]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 14, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣8]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=play
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 14, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_uzesu1qr
+aiPlayCards: 🤖 AI小红 手牌数 19, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 8, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6y82f03w
+aiPlayCards: 🤖 AI小刚 手牌数 21, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 10, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39fipllp
+aiPlayCards: 🤖 AI小丽 手牌数 19, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏大王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 13, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 13, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 7, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 9, lastPlay: null
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♥2, ♣2, ♣2, ♦7, ♣7]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=testWin
+testWin 收到: roomId=H54BVA, winType=medium, room存在=true
+房间 H54BVA testWinScenario 开始: medium
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: false
+房间 H54BVA 回合结束，队伍1中赢，升级2级
+房间 H54BVA 测试模式完成: medium
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 13, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♣3, ♣3, ♦3, ♥2, ♦2]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=newRound
+房间 H54BVA 新一局开始发牌
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 13, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♠6, ♥6, ♣6, ♠3, ♠3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 7, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 4, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 8, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♠9, ♦9, ♣9, ♠4, ♥4]
+aiPlayCards: playCards 结果 {"success":true}
+房间 H54BVA 单贡：4名->1名
+房间 H54BVA 发送还贡阶段消息给玩家 P_61jjy42i，等待手工选择
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 8, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 7, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+收到消息: type=returnTribute
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 4, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+房间 H54BVA 进贡完成，开始出牌，首出玩家索引: 3
+aiPlayCards 被调用, playerId: AI_39fipllp
+aiPlayCards: 🤖 AI小丽 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 3, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦4]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 8, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 7, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥8]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=play
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 2, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_uzesu1qr
+aiPlayCards: 🤖 AI小红 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♦4, ♦5, ♦7, ♦8, ♥7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 7, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6y82f03w
+aiPlayCards: 🤖 AI小刚 手牌数 27, lastPlay: straightFlush
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♠9, ♠10, ♠J, ♠Q, ♠K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39fipllp
+aiPlayCards: 🤖 AI小丽 手牌数 26, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 3, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 1, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+收到消息: type=pass
+aiPlayCards 被调用, playerId: AI_uzesu1qr
+aiPlayCards: 🤖 AI小红 手牌数 22, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 6, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣4]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6y82f03w
+aiPlayCards: 🤖 AI小刚 手牌数 22, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 3, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39fipllp
+aiPlayCards: 🤖 AI小丽 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣4]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 1, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 5, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 5, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 2, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 1, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 5, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_gjtn5hwr
+aiPlayCards: 🤖 h 手牌数 1, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 1, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 5, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 5, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+HTTP请求: /
+玩家断开: h
+游戏进行中，将 h 替换为AI接管
+房间 H54BVA 所有玩家都已离线，自动解散
+新客户端连接
+HTTP请求: /favicon.ico
+aiPlayCards 被调用, playerId: AI_bo8achm0
+aiPlayCards: 🤖 AI小红 手牌数 1, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 3, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 2, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ln05uitg
+aiPlayCards: 🤖 AI小丽 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_1sxs5le8
+aiPlayCards: 🤖 AI小刚 手牌数 1, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠K]
+房间 AHPIX5 回合结束，队伍1中赢，升级2级
+aiPlayCards: playCards 结果 {"success":true}
 HTTP请求: /
 新客户端连接
 HTTP请求: /favicon.ico
-HTTP请求: /
-新客户端连接
-HTTP请求: /favicon.ico
-HTTP请求: /
-新客户端连接
-HTTP请求: /favicon.ico
-房间创建: 包间666 (正常模式, 允许观战)
-AI玩家加入: J2TUU0 - 🤖 AI小红
-AI玩家加入: J2TUU0 - 🤖 AI小刚
-AI玩家加入: J2TUU0 - 🤖 AI小丽
-房间 J2TUU0 游戏开始
+收到消息: type=createRoom
+房间创建: 包间3 (正常模式, 允许观战)
+收到消息: type=addAI
+AI玩家加入: HT515E - 🤖 AI小红
+收到消息: type=addAI
+AI玩家加入: HT515E - 🤖 AI小刚
+收到消息: type=addAI
+AI玩家加入: HT515E - 🤖 AI小丽
+收到消息: type=ready
+房间 HT515E 游戏开始
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣4]
+aiPlayCards: playCards 结果 {"success":true}
 玩家 h 超时未出牌
+玩家 h 连续超时 1 次
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦8]
+aiPlayCards: playCards 结果 {"success":true}
 玩家 h 超时未出牌
+玩家 h 连续超时 2 次
+玩家 h 因连续超时自动开启托管
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣Q]
+aiPlayCards: playCards 结果 {"success":true}
 玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 24, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 24, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏小王]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 24, lastPlay: single
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♠A, ♠2, ♠3, ♠4, ♠5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 24, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 23, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 23, lastPlay: straightFlush
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♥A, ♥3, ♥4, ♥5, ♥2]
+aiPlayCards: playCards 结果 {"success":false,"message":"牌不够大"}
+[错误检测] AI 🤖 AI小丽 出牌失败: 牌不够大
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 19, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠4]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 24, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 23, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 23, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣10]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 18, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 23, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 22, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 22, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥A]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 17, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 22, lastPlay: single
+aiPlayCards: 选牌结果 4
+aiPlayCards: 选中的牌 [♥9, ♦9, ♣9, ♣9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 21, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 21, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 16, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 18, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 21, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 21, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣10]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 17, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 20, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 20, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣2]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 19, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏大王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 19, lastPlay: single
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♦2, ♦3, ♦4, ♦5, ♥2]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 15, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 16, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 18, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 14, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥5]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 18, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 13, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦J]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 14, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 17, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 12, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏小王]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 13, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 14, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 4
+aiPlayCards: 选中的牌 [♠5, ♥5, ♦5, ♣5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 11, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 13, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 14, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 12, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣4]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 11, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥J]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 13, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 14, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 11, lastPlay: single
+aiPlayCards: 选牌结果 4
+aiPlayCards: 选中的牌 [♠6, ♠6, ♥6, ♦6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 10, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 12, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 13, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 7, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 10, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠J]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: h 手牌数 12, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣K]
+aiPlayCards: playCards 结果 {"success":true}
 HTTP请求: /
+玩家断开: h
+游戏进行中，将 h 替换为AI接管
+房间 HT515E 所有玩家都已离线，自动解散
 新客户端连接
-HTTP请求: /
 HTTP请求: /favicon.ico
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 13, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦A]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=createRoom
+房间创建: 包间4 (正常模式, 允许观战)
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+收到消息: type=addAI
+AI玩家加入: 57W3A4 - 🤖 AI小红
+收到消息: type=ready
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 9, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+收到消息: type=ready
+收到消息: type=addAI
+AI玩家加入: 57W3A4 - 🤖 AI小刚
+收到消息: type=addAI
+AI玩家加入: 57W3A4 - 🤖 AI小丽
+收到消息: type=ready
+房间 57W3A4 游戏开始
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: 🤖 h 手牌数 11, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 12, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 9, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏大王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥4]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: 🤖 h 手牌数 10, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 12, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 8, lastPlay: null
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♥4, ♥4, ♦4, ♠3, ♥3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: 🤖 h 手牌数 10, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♠9, ♠9, ♥9, ♥10, ♦10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 12, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 6, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 3, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: 🤖 h 手牌数 5, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 12, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 3, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: 🤖 h 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 11, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 5, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 2, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: 🤖 h 手牌数 3, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 10, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 5, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 2, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦K]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+玩家 h 连续超时 1 次
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: 🤖 h 手牌数 3, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 9, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 1, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: 🤖 h 手牌数 2, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 9, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_39heschj
+aiPlayCards: 🤖 AI小丽 手牌数 1, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: 🤖 h 手牌数 1, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 8, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 8, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 3, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: P_g1r46wf8
+aiPlayCards: 🤖 h 手牌数 1, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 7, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 3, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 6, lastPlay: null
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♦3, ♣3, ♣3, ♠7, ♦7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_3mzqiguy
+aiPlayCards: 🤖 AI小刚 手牌数 3, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9llyg0iq
+aiPlayCards: 🤖 AI小红 手牌数 1, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠K]
+房间 HT515E 回合结束，队伍2中赢，升级2级
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+玩家 h 连续超时 2 次
+玩家 h 因连续超时自动开启托管
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦K]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 24, lastPlay: single
+aiPlayCards: 选牌结果 4
+aiPlayCards: 选中的牌 [♠2, ♠2, ♦2, ♦2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 24, lastPlay: bomb
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♠4, ♠5, ♠6, ♠8, ♥2]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 24, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 24, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 20, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 19, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠5]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 24, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 24, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 20, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 18, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦Q]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 23, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 23, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 19, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 17, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 22, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 22, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏小王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 18, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 17, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 22, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏大王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 21, lastPlay: single
+aiPlayCards: 选牌结果 4
+aiPlayCards: 选中的牌 [♠9, ♥9, ♦9, ♣9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 18, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 17, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 21, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 17, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦4]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 18, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 17, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥6]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 21, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 17, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥Q]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 20, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦A]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 19, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏小王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 14, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 18, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 14, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠K]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 17, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 14, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 13, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 16, lastPlay: null
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♠J, ♠J, ♦J, ♦3, ♦3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 14, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 15, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 13, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 11, lastPlay: null
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♦4, ♣4]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 14, lastPlay: pair
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♥6, ♣6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 15, lastPlay: pair
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♦7, ♣7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 13, lastPlay: pair
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♦8, ♣8]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 9, lastPlay: pair
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♠9, ♥9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 12, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 13, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 11, lastPlay: pair
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♥10, ♥10]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 7, lastPlay: pair
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♠K, ♥K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 12, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 13, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 9, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 5, lastPlay: null
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♦5, ♣5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 12, lastPlay: pair
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♠7, ♠7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 13, lastPlay: pair
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♥J, ♣J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 9, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 3, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 10, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 11, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 9, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣7]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 3, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 10, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 10, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 8, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 2, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 9, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 9, lastPlay: null
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♠3, ♥3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 8, lastPlay: pair
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♠4, ♥4]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 2, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 9, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 7, lastPlay: pair
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♠6, ♣6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 6, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 2, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 9, lastPlay: pair
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♠8, ♦8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 5, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 6, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 2, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 7, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 5, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠Q]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 2, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 5, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_ulwbauff
+aiPlayCards: h 手牌数 1, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏大王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 4, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 5, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 3, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 2, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_wyx97ojl
+aiPlayCards: 🤖 AI小丽 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_c512e21h
+aiPlayCards: 🤖 AI小红 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_6jvzlk7r
+aiPlayCards: 🤖 AI小刚 手牌数 1, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠A]
+房间 57W3A4 双赢！队伍1升3级
+aiPlayCards: playCards 结果 {"success":true}
+HTTP请求: /
+玩家断开: h
+房间 57W3A4 只剩AI玩家，自动解散
+新客户端连接
+HTTP请求: /favicon.ico
+收到消息: type=createRoom
+房间创建: 包间5 (正常模式, 允许观战)
+收到消息: type=ready
+收到消息: type=ready
+收到消息: type=addAI
+AI玩家加入: KBPGK0 - 🤖 AI小红
+收到消息: type=addAI
+AI玩家加入: KBPGK0 - 🤖 AI小刚
+收到消息: type=addAI
+AI玩家加入: KBPGK0 - 🤖 AI小丽
+收到消息: type=ready
+房间 KBPGK0 游戏开始
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦6]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+玩家 h 连续超时 1 次
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣10]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+玩家 h 连续超时 2 次
+玩家 h 因连续超时自动开启托管
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣A]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏小王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 24, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 24, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 24, lastPlay: single
+aiPlayCards: 选牌结果 4
+aiPlayCards: 选中的牌 [♠4, ♥4, ♦4, ♣4]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 24, lastPlay: bomb
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♣3, ♣4, ♣6, ♣7, ♥2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 24, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 24, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 20, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 19, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠4]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 24, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 24, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠7]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 20, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 18, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 23, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 23, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠K]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 19, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 17, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 22, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 22, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 18, lastPlay: single
+aiPlayCards: 选牌结果 4
+aiPlayCards: 选中的牌 [♠9, ♥9, ♦9, ♣9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 16, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 22, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 22, lastPlay: bomb
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 14, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 16, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 22, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 22, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥8]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 13, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 15, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 21, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 21, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦2]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 12, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 14, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 20, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 20, lastPlay: null
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♠5, ♦5, ♦5, ♥4, ♦4]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 12, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 14, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 20, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♠8, ♥8, ♣8, ♥3, ♥3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 15, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♥10, ♥10, ♦10, ♠6, ♠6]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 12, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 14, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 15, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♠J, ♥J, ♦J, ♦7, ♣7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 10, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 12, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 14, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 10, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 10, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣5]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 12, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 14, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 9, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 9, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣J]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 11, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 13, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 8, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 8, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 10, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 12, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏小王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 7, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 8, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 10, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 11, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 7, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 8, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣J]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 10, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 10, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠K]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 7, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 9, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 9, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏大王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 7, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 8, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 8, lastPlay: null
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♠3, ♦3, ♦3, ♥7, ♦7]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 6, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♥K, ♦K, ♣K, ♥Q, ♦Q]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 7, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 8, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 3, lastPlay: tripleWithPair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5wpyfn8x
+aiPlayCards: 🤖 AI小刚 手牌数 1, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 7, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦Q]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 8, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 3, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏大王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 7, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_khyau6e1
+aiPlayCards: 🤖 AI小红 手牌数 2, lastPlay: null
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♠A, ♠A]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 6, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 6, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥6]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 7, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 5, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣9]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 6, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 4, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠Q]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 5, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 3, lastPlay: single
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 4, lastPlay: null
+aiPlayCards: 选牌结果 2
+aiPlayCards: 选中的牌 [♠5, ♥5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 3, lastPlay: pair
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 2, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠J]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_guhbvc4l
+aiPlayCards: 🤖 AI小丽 手牌数 3, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦A]
+aiPlayCards: playCards 结果 {"success":true}
+玩家 h 超时未出牌
+aiPlayCards 被调用, playerId: P_rh7jgcbd
+aiPlayCards: h 手牌数 1, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠2]
+房间 KBPGK0 回合结束，队伍1中赢，升级2级
+aiPlayCards: playCards 结果 {"success":true}
+HTTP请求: /
+玩家断开: h
+游戏进行中，将 h 替换为AI接管
+房间 KBPGK0 所有玩家都已离线，自动解散
+新客户端连接
+HTTP请求: /favicon.ico
+收到消息: type=createRoom
+房间创建: 包间6 (正常模式, 允许观战)
+收到消息: type=addAI
+AI玩家加入: JKWRAW - 🤖 AI小红
+收到消息: type=addAI
+AI玩家加入: JKWRAW - 🤖 AI小刚
+收到消息: type=addAI
+AI玩家加入: JKWRAW - 🤖 AI小丽
+收到消息: type=ready
+房间 JKWRAW 游戏开始
+aiPlayCards 被调用, playerId: AI_pqaoaxko
+aiPlayCards: 🤖 AI小刚 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥5]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9k7i1asa
+aiPlayCards: 🤖 AI小丽 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣6]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=play
+aiPlayCards 被调用, playerId: AI_ja1l1jcc
+aiPlayCards: 🤖 AI小红 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦9]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_pqaoaxko
+aiPlayCards: 🤖 AI小刚 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦10]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9k7i1asa
+aiPlayCards: 🤖 AI小丽 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣J]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=play
+aiPlayCards 被调用, playerId: AI_ja1l1jcc
+aiPlayCards: 🤖 AI小红 手牌数 26, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏小王]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_pqaoaxko
+aiPlayCards: 🤖 AI小刚 手牌数 25, lastPlay: single
+aiPlayCards: 选牌结果 4
+aiPlayCards: 选中的牌 [♠4, ♠4, ♥4, ♦4]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9k7i1asa
+aiPlayCards: 🤖 AI小丽 手牌数 25, lastPlay: bomb
+aiPlayCards: 选牌结果 4
+aiPlayCards: 选中的牌 [♠5, ♠5, ♦5, ♣5]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=play
+aiPlayCards 被调用, playerId: AI_ja1l1jcc
+aiPlayCards: 🤖 AI小红 手牌数 25, lastPlay: bomb
+aiPlayCards: 选牌结果 5
+aiPlayCards: 选中的牌 [♠8, ♠9, ♠10, ♠J, ♥2]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_pqaoaxko
+aiPlayCards: 🤖 AI小刚 手牌数 21, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9k7i1asa
+aiPlayCards: 🤖 AI小丽 手牌数 21, lastPlay: straightFlush
+aiPlayCards: 选牌结果 null
+aiPlayCards: pass 结果 {"success":true}
+收到消息: type=pass
+aiPlayCards 被调用, playerId: AI_ja1l1jcc
+aiPlayCards: 🤖 AI小红 手牌数 20, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_pqaoaxko
+aiPlayCards: 🤖 AI小刚 手牌数 21, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣4]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_9k7i1asa
+aiPlayCards: 🤖 AI小丽 手牌数 21, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣6]
+aiPlayCards: playCards 结果 {"success":true}
+HTTP请求: /
+玩家断开: h
+游戏进行中，将 h 替换为AI接管
+房间 JKWRAW 所有玩家都已离线，自动解散
+新客户端连接
+HTTP请求: /favicon.ico
+收到消息: type=createRoom
+房间创建: 包间7 (正常模式, 允许观战)
+收到消息: type=addAI
+AI玩家加入: 45Z7IX - 🤖 AI小红
+收到消息: type=addAI
+AI玩家加入: 45Z7IX - 🤖 AI小刚
+收到消息: type=addAI
+AI玩家加入: 45Z7IX - 🤖 AI小丽
+收到消息: type=ready
+房间 45Z7IX 游戏开始
+收到消息: type=testWin
+testWin 收到: roomId=45Z7IX, winType=double, room存在=true
+房间 45Z7IX testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 45Z7IX 双赢！队伍1升3级
+房间 45Z7IX 测试模式完成: double
+收到消息: type=newRound
+房间 45Z7IX 新一局开始发牌
+房间 45Z7IX 双赢进贡：3名和4名进贡，1名拿最大的，2名拿另一张
+房间 45Z7IX 发送还贡阶段消息给玩家 P_oym6qt3q，等待手工选择
+收到消息: type=returnTribute
+房间 45Z7IX 进贡完成，开始出牌，首出玩家索引: 3
+收到消息: type=testWin
+testWin 收到: roomId=45Z7IX, winType=double, room存在=true
+房间 45Z7IX testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 45Z7IX 双赢！队伍1升3级
+房间 45Z7IX 测试模式完成: double
+aiPlayCards 被调用, playerId: AI_g60x5pfd
+aiPlayCards: 游戏未开始
+收到消息: type=newRound
+房间 45Z7IX 新一局开始发牌
+房间 45Z7IX 双下抗贡成功，无需进贡
+房间 45Z7IX 抗贡局：头游 h 先出牌
+房间 45Z7IX 进贡完成，开始出牌，首出玩家索引: 0
+收到消息: type=testWin
+testWin 收到: roomId=45Z7IX, winType=double, room存在=true
+房间 45Z7IX testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 45Z7IX 双赢！队伍1升3级
+房间 45Z7IX 测试模式完成: double
+收到消息: type=newRound
+房间 45Z7IX 新一局开始发牌
+房间 45Z7IX 双赢进贡：3名和4名进贡，1名拿最大的，2名拿另一张
+房间 45Z7IX 发送还贡阶段消息给玩家 P_oym6qt3q，等待手工选择
+收到消息: type=returnTribute
+房间 45Z7IX 进贡完成，开始出牌，首出玩家索引: 3
+aiPlayCards 被调用, playerId: AI_g60x5pfd
+aiPlayCards: 🤖 AI小丽 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♦3]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=testWin
+testWin 收到: roomId=45Z7IX, winType=double, room存在=true
+房间 45Z7IX testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 45Z7IX 双赢！队伍1升3级
+房间 45Z7IX 测试模式完成: double
+收到消息: type=newRound
+房间 45Z7IX 升级到A，继续打A
+房间 45Z7IX 新一局开始发牌
+房间 45Z7IX 双赢进贡：3名和4名进贡，1名拿最大的，2名拿另一张
+房间 45Z7IX 发送还贡阶段消息给玩家 P_oym6qt3q，等待手工选择
+收到消息: type=returnTribute
+房间 45Z7IX 进贡完成，开始出牌，首出玩家索引: 1
+aiPlayCards 被调用, playerId: AI_28nnmkb1
+aiPlayCards: 🤖 AI小红 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_ioarriz5
+aiPlayCards: 🤖 AI小刚 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠A]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=testWin
+testWin 收到: roomId=45Z7IX, winType=double, room存在=true
+房间 45Z7IX testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 45Z7IX 双赢！队伍1升3级
+房间 45Z7IX 测试模式完成: double
+aiPlayCards 被调用, playerId: AI_g60x5pfd
+aiPlayCards: 游戏未开始
+收到消息: type=newRound
+收到消息: type=newRound
+收到消息: type=newRound
+收到消息: type=newRound
+收到消息: type=newRound
+收到消息: type=newRound
+收到消息: type=newRound
+收到消息: type=newRound
+收到消息: type=newRound
+收到消息: type=newRound
+HTTP请求: /
+玩家断开: h
+房间 45Z7IX 只剩AI玩家，自动解散
+新客户端连接
+HTTP请求: /favicon.ico
+收到消息: type=createRoom
+房间创建: 包间8 (正常模式, 允许观战)
+收到消息: type=ready
+收到消息: type=addAI
+AI玩家加入: BZKRCQ - 🤖 AI小红
+收到消息: type=addAI
+AI玩家加入: BZKRCQ - 🤖 AI小刚
+收到消息: type=addAI
+房间 BZKRCQ 游戏开始
+AI玩家加入: BZKRCQ - 🤖 AI小丽
+aiPlayCards 被调用, playerId: AI_6erxahgt
+aiPlayCards: 🤖 AI小丽 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠4]
+aiPlayCards: playCards 结果 {"success":true}
+HTTP请求: /
+玩家断开: h
+游戏进行中，将 h 替换为AI接管
+房间 BZKRCQ 所有玩家都已离线，自动解散
+新客户端连接
+HTTP请求: /favicon.ico
+收到消息: type=createRoom
+房间创建: 包间9 (正常模式, 允许观战)
+收到消息: type=addAI
+AI玩家加入: Y2Q65G - 🤖 AI小红
+收到消息: type=addAI
+AI玩家加入: Y2Q65G - 🤖 AI小刚
+收到消息: type=addAI
+AI玩家加入: Y2Q65G - 🤖 AI小丽
+收到消息: type=ready
+房间 Y2Q65G 游戏开始
+收到消息: type=testWin
+testWin 收到: roomId=Y2Q65G, winType=double, room存在=true
+房间 Y2Q65G testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 Y2Q65G 双赢！队伍1升3级
+房间 Y2Q65G 测试模式完成: double
+收到消息: type=newRound
+房间 Y2Q65G 新一局开始发牌
+房间 Y2Q65G 双赢进贡：3名和4名进贡，1名拿最大的，2名拿另一张
+房间 Y2Q65G 发送还贡阶段消息给玩家 P_etde53gs，等待手工选择
+收到消息: type=returnTribute
+房间 Y2Q65G 进贡完成，开始出牌，首出玩家索引: 1
+aiPlayCards 被调用, playerId: AI_vkwr5ecc
+aiPlayCards: 🤖 AI小红 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♥6]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=testWin
+testWin 收到: roomId=Y2Q65G, winType=double, room存在=true
+房间 Y2Q65G testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 Y2Q65G 双赢！队伍1升3级
+房间 Y2Q65G 测试模式完成: double
+收到消息: type=newRound
+房间 Y2Q65G 新一局开始发牌
+aiPlayCards 被调用, playerId: AI_5cfz1cxw
+aiPlayCards: 游戏未开始
+房间 Y2Q65G 双赢进贡：3名和4名进贡，1名拿最大的，2名拿另一张
+房间 Y2Q65G 发送还贡阶段消息给玩家 P_etde53gs，等待手工选择
+收到消息: type=returnTribute
+房间 Y2Q65G 进贡完成，开始出牌，首出玩家索引: 1
+aiPlayCards 被调用, playerId: AI_vkwr5ecc
+aiPlayCards: 🤖 AI小红 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠6]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_5cfz1cxw
+aiPlayCards: 🤖 AI小刚 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠8]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_0jf65593
+aiPlayCards: 🤖 AI小丽 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 4
+aiPlayCards: 选中的牌 [♠6, ♥6, ♦6, ♣6]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=testWin
+testWin 收到: roomId=Y2Q65G, winType=double, room存在=true
+房间 Y2Q65G testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 Y2Q65G 双赢！队伍1升3级
+房间 Y2Q65G 测试模式完成: double
+收到消息: type=newRound
+房间 Y2Q65G 新一局开始发牌
+房间 Y2Q65G 双赢进贡：3名和4名进贡，1名拿最大的，2名拿另一张
+房间 Y2Q65G 发送还贡阶段消息给玩家 P_etde53gs，等待手工选择
+收到消息: type=returnTribute
+房间 Y2Q65G 进贡完成，开始出牌，首出玩家索引: 3
+aiPlayCards 被调用, playerId: AI_0jf65593
+aiPlayCards: 🤖 AI小丽 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠4]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=testWin
+testWin 收到: roomId=Y2Q65G, winType=double, room存在=true
+房间 Y2Q65G testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 Y2Q65G 双赢！队伍1升3级
+房间 Y2Q65G 测试模式完成: double
+收到消息: type=newRound
+房间 Y2Q65G 升级到A，继续打A
+房间 Y2Q65G 新一局开始发牌
+房间 Y2Q65G 双赢进贡：3名和4名进贡，1名拿最大的，2名拿另一张
+房间 Y2Q65G 发送还贡阶段消息给玩家 P_etde53gs，等待手工选择
+收到消息: type=returnTribute
+房间 Y2Q65G 进贡完成，开始出牌，首出玩家索引: 3
+收到消息: type=testWin
+testWin 收到: roomId=Y2Q65G, winType=medium, room存在=true
+房间 Y2Q65G testWinScenario 开始: medium
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: false
+房间 Y2Q65G 回合结束，队伍1中赢，升级2级
+房间 Y2Q65G 测试模式完成: medium
+aiPlayCards 被调用, playerId: AI_0jf65593
+aiPlayCards: 玩家已结束
+收到消息: type=newRound
+房间 Y2Q65G 升级到A，继续打A
+房间 Y2Q65G 新一局开始发牌
+房间 Y2Q65G 单贡：4名->1名
+房间 Y2Q65G 发送还贡阶段消息给玩家 P_etde53gs，等待手工选择
+收到消息: type=returnTribute
+房间 Y2Q65G 进贡完成，开始出牌，首出玩家索引: 3
+aiPlayCards 被调用, playerId: AI_0jf65593
+aiPlayCards: 🤖 AI小丽 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣2]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=testWin
+testWin 收到: roomId=Y2Q65G, winType=small, room存在=true
+房间 Y2Q65G testWinScenario 开始: small
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: false
+房间 Y2Q65G 回合结束，队伍1小赢，升级1级
+房间 Y2Q65G 测试模式完成: small
+收到消息: type=newRound
+房间 Y2Q65G 升级到A，继续打A
+房间 Y2Q65G 新一局开始发牌
+房间 Y2Q65G 单贡：4名->1名
+房间 Y2Q65G 发送还贡阶段消息给玩家 P_etde53gs，等待手工选择
+收到消息: type=returnTribute
+房间 Y2Q65G 进贡完成，开始出牌，首出玩家索引: 2
+aiPlayCards 被调用, playerId: AI_5cfz1cxw
+aiPlayCards: 🤖 AI小刚 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♠3]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=testWin
+testWin 收到: roomId=Y2Q65G, winType=fail, room存在=true
+房间 Y2Q65G testWinScenario 开始: fail
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 Y2Q65G 双赢！队伍2升3级
+房间 Y2Q65G 测试模式完成: fail
+aiPlayCards 被调用, playerId: AI_0jf65593
+aiPlayCards: 游戏未开始
+收到消息: type=newRound
+房间 Y2Q65G 新一局开始发牌
+房间 Y2Q65G 双赢进贡：3名和4名进贡，1名拿最大的，2名拿另一张
+房间 Y2Q65G 进贡完成，开始出牌，首出玩家索引: 2
+aiPlayCards 被调用, playerId: AI_5cfz1cxw
+aiPlayCards: 🤖 AI小刚 手牌数 27, lastPlay: null
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [♣3]
+aiPlayCards: playCards 结果 {"success":true}
+aiPlayCards 被调用, playerId: AI_0jf65593
+aiPlayCards: 🤖 AI小丽 手牌数 27, lastPlay: single
+aiPlayCards: 选牌结果 1
+aiPlayCards: 选中的牌 [🃏小王]
+aiPlayCards: playCards 结果 {"success":true}
+收到消息: type=testWin
+testWin 收到: roomId=Y2Q65G, winType=double, room存在=true
+房间 Y2Q65G testWinScenario 开始: double
+team1: h, 🤖 AI小刚
+team2: 🤖 AI小红, 🤖 AI小丽
+名次分配完成，准备结束回合
+checkDoubleWin 结果: true
+房间 Y2Q65G 双赢！队伍1升3级
+房间 Y2Q65G 测试模式完成: double
+收到消息: type=newRound
+玩家 h 超时未出牌
+玩家 h 连续超时 1 次
+aiPlayCards 被调用, playerId: P_etde53gs
+aiPlayCards: 游戏未开始

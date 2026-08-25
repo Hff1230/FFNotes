@@ -1,0 +1,118 @@
+{"display":"帮我写一个H5的五子棋游戏。保存到小游戏文件夹。","pastedContents":{},"timestamp":1768374209784,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"1a07f19a-27fe-4c49-b6fe-98fd2e572ecf"}
+{"display":"根据元旦以来北汽蓝谷的股票走势、成交量、支撑位及突破位数据，分析下春节前的可能走势，以md文件格式输出到此目录。","pastedContents":{},"timestamp":1768378404919,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"1a07f19a-27fe-4c49-b6fe-98fd2e572ecf"}
+{"display":"根据元旦以来北汽蓝谷的股票走势、成交量、支撑位及突破位数据，分析下春节前的可能走势，以md文件格式输出到此目录。","pastedContents":{},"timestamp":1768378744759,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"1a07f19a-27fe-4c49-b6fe-98fd2e572ecf"}
+{"display":"请优化小游戏文件夹下的五子棋","pastedContents":{},"timestamp":1768442681972,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"ca21f44d-1407-4a7b-a4da-0b7e79916b4c"}
+{"display":"五子棋应该放在交叉点上，重开游戏后立即清理棋盘。","pastedContents":{},"timestamp":1768443144658,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"ca21f44d-1407-4a7b-a4da-0b7e79916b4c"}
+{"display":"和电脑下时，先手问题需要优化，如果电脑优先请主动下棋。","pastedContents":{},"timestamp":1768443771198,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"ca21f44d-1407-4a7b-a4da-0b7e79916b4c"}
+{"display":"在小游戏文件夹下制作一个飞行器游戏，可以设置玩家数量及玩家骰子顺序。","pastedContents":{},"timestamp":1768444261533,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"ca21f44d-1407-4a7b-a4da-0b7e79916b4c"}
+{"display":"以H5格式输出","pastedContents":{},"timestamp":1768444275901,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"ca21f44d-1407-4a7b-a4da-0b7e79916b4c"}
+{"display":"棋谱不好，请修改成更接近游戏的棋谱","pastedContents":{},"timestamp":1768455481614,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"ca21f44d-1407-4a7b-a4da-0b7e79916b4c"}
+{"display":"切换到目录 F:\\HFF\\Obsidian\\FFNotes\\AI库","pastedContents":{},"timestamp":1769397538233,"project":"C:\\Users\\hufeifei.JOY","sessionId":"3d227e26-15d8-4f8e-8668-736ef0ad6698"}
+{"display":"在小游戏文件夹生成一个md格式文档，名字叫开心农场策划案","pastedContents":{},"timestamp":1769507428017,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"3b7cd4df-be26-462c-8307-6aefaf72e685"}
+{"display":"存放到F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏","pastedContents":{},"timestamp":1769507642897,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"3b7cd4df-be26-462c-8307-6aefaf72e685"}
+{"display":"修改策划案，改成本地H5小游戏，从小麦开始中，随着时间增长经验，提升等级，解锁更多植物。","pastedContents":{},"timestamp":1769507797790,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"3b7cd4df-be26-462c-8307-6aefaf72e685"}
+{"display":"然后等级解锁科技。科技加成各种效果","pastedContents":{},"timestamp":1769507833921,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"3b7cd4df-be26-462c-8307-6aefaf72e685"}
+{"display":"不同植物产生不同的收益。","pastedContents":{},"timestamp":1769507896480,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"3b7cd4df-be26-462c-8307-6aefaf72e685"}
+{"display":"根据策划案帮我制作出对于的H5小游戏。","pastedContents":{},"timestamp":1769508115774,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"3b7cd4df-be26-462c-8307-6aefaf72e685"}
+{"display":"修改策划案，自动种植、收集最高级植物","pastedContents":{},"timestamp":1769508524783,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"3b7cd4df-be26-462c-8307-6aefaf72e685"}
+{"display":"修改策划案，改成2级开启自动模式","pastedContents":{},"timestamp":1769508824476,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"3b7cd4df-be26-462c-8307-6aefaf72e685"}
+{"display":"我已经3级了，但是还没开启自动模式","pastedContents":{},"timestamp":1769508993308,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"3b7cd4df-be26-462c-8307-6aefaf72e685"}
+{"display":"检查小游戏文件夹下，开心农场策划案，现在自动收集后无法顺利自动种植","pastedContents":{},"timestamp":1769562251994,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"36788542-9405-4ba3-9b05-4407bd3c9181"}
+{"display":"增加菜地地块，随着等级提升金币解锁。并且在对应地块展示种植的植物","pastedContents":{},"timestamp":1769562438708,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"36788542-9405-4ba3-9b05-4407bd3c9181"}
+{"display":"把收获成功界面改成右侧行为记录窗口。","pastedContents":{},"timestamp":1769562562706,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"36788542-9405-4ba3-9b05-4407bd3c9181"}
+{"display":"种植和收获奖励并没有显示在行为记录面板","pastedContents":{},"timestamp":1769562916628,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"36788542-9405-4ba3-9b05-4407bd3c9181"}
+{"display":"鼠标放在地块和植物上，格子会一直闪。增加自动种菜品种设置勾选按钮。","pastedContents":{},"timestamp":1769563052770,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"36788542-9405-4ba3-9b05-4407bd3c9181"}
+{"display":"让玩家自己设置自动种植的植物，玩家不设置的话，自动种植最高等级植物。","pastedContents":{},"timestamp":1769563361395,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"36788542-9405-4ba3-9b05-4407bd3c9181"}
+{"display":"解锁不了地块 ","pastedContents":{},"timestamp":1769563400561,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库","sessionId":"36788542-9405-4ba3-9b05-4407bd3c9181"}
+{"display":"新建个文件夹命名坦克1999","pastedContents":{},"timestamp":1769583439369,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏","sessionId":"761ecaad-2f05-49b5-8cbd-a3982f442951"}
+{"display":"生成游戏坦克1999策划案.md","pastedContents":{},"timestamp":1769583492551,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏","sessionId":"761ecaad-2f05-49b5-8cbd-a3982f442951"}
+{"display":"存放到坦克1999文件夹","pastedContents":{},"timestamp":1769583516967,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏","sessionId":"761ecaad-2f05-49b5-8cbd-a3982f442951"}
+{"display":"制作H5小游戏坦克大战1999策划案，并生成游戏。","pastedContents":{},"timestamp":1769583625798,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\坦克1999","sessionId":"74520428-5fda-4e62-941d-f8d48cf0151c"}
+{"display":"修改为局域网游戏","pastedContents":{},"timestamp":1769583804421,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\坦克1999","sessionId":"74520428-5fda-4e62-941d-f8d48cf0151c"}
+{"display":"node server.js","pastedContents":{},"timestamp":1769591349258,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\坦克1999","sessionId":"74520428-5fda-4e62-941d-f8d48cf0151c"}
+{"display":"这是什么问题 ","pastedContents":{},"timestamp":1769757727885,"project":"E:\\Program Files\\nodejs\\node_global","sessionId":"dad2566a-d5a6-4f83-ba39-f276d93ec633"}
+{"display":"Error: Failed to spawn Claude Code process: spawn E:\\Program Files\\nodejs\\node_global\\claude ENOENT","pastedContents":{},"timestamp":1769757731292,"project":"E:\\Program Files\\nodejs\\node_global","sessionId":"dad2566a-d5a6-4f83-ba39-f276d93ec633"}
+{"display":" Error: The \"eventTargets\" argument must be an instance of EventEmitter or EventTarget. Received an instance of AbortSignal\n\n","pastedContents":{},"timestamp":1769758069214,"project":"E:\\Program Files\\nodejs\\node_global","sessionId":"dad2566a-d5a6-4f83-ba39-f276d93ec633"}
+{"display":"The \"eventTargets\" argument must be an instance of EventEmitter or EventTarget. Received an instance of AbortSignal","pastedContents":{},"timestamp":1769758258908,"project":"E:\\Program Files\\nodejs\\node_global","sessionId":"dad2566a-d5a6-4f83-ba39-f276d93ec633"}
+{"display":"OK","pastedContents":{},"timestamp":1769759028508,"project":"E:\\Program Files\\nodejs\\node_global","sessionId":"dad2566a-d5a6-4f83-ba39-f276d93ec633"}
+{"display":"cd E:","pastedContents":{},"timestamp":1772503852209,"project":"C:\\Users\\hufeifei.JOY","sessionId":"b44a8997-9b76-41e8-9e37-c0582e3ec86f"}
+{"display":"切换中文","pastedContents":{},"timestamp":1772503873871,"project":"C:\\Users\\hufeifei.JOY","sessionId":"b44a8997-9b76-41e8-9e37-c0582e3ec86f"}
+{"display":"使用中文","pastedContents":{},"timestamp":1772503914320,"project":"E:\\WorkSpace\\RedAlert_SuperFormation","sessionId":"8b695772-87bb-493d-9d63-747c62ea7a87"}
+{"display":"npx ","pastedContents":{},"timestamp":1772503938655,"project":"E:\\WorkSpace\\RedAlert_SuperFormation","sessionId":"8b695772-87bb-493d-9d63-747c62ea7a87"}
+{"display":"npx playbooks add skill openclaw/skills --skill self-improving-agent","pastedContents":{},"timestamp":1772504014976,"project":"E:\\WorkSpace\\RedAlert_SuperFormation","sessionId":"8b695772-87bb-493d-9d63-747c62ea7a87"}
+{"display":"1","pastedContents":{},"timestamp":1772504198878,"project":"E:\\WorkSpace\\RedAlert_SuperFormation","sessionId":"8b695772-87bb-493d-9d63-747c62ea7a87"}
+{"display":"1","pastedContents":{},"timestamp":1772504224845,"project":"E:\\WorkSpace\\RedAlert_SuperFormation","sessionId":"8b695772-87bb-493d-9d63-747c62ea7a87"}
+{"display":"熟悉工程结构","pastedContents":{},"timestamp":1772508517259,"project":"E:\\WorkSpace\\RedAlert_SuperFormation","sessionId":"d1fd9ae4-9bbb-412d-bed1-46d1cf305e62"}
+{"display":"fix line error","pastedContents":{},"timestamp":1773316321368,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\八十分","sessionId":"1feafe11-0aa1-4247-8bd8-1b2188fd6a88"}
+{"display":"/help ","pastedContents":{},"timestamp":1773316426231,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\八十分","sessionId":"1feafe11-0aa1-4247-8bd8-1b2188fd6a88"}
+{"display":"/clear ","pastedContents":{},"timestamp":1773316442869,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\八十分","sessionId":"1feafe11-0aa1-4247-8bd8-1b2188fd6a88"}
+{"display":"帮我生成一个八十分游戏的需求文档md","pastedContents":{},"timestamp":1773316484022,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\八十分","sessionId":"a1e1fa1c-ade4-4e92-bb53-1ce92a452647"}
+{"display":"/help","pastedContents":{},"timestamp":1773316723462,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\八十分","sessionId":"a1e1fa1c-ade4-4e92-bb53-1ce92a452647"}
+{"display":"帮我创建一个技能。","pastedContents":{},"timestamp":1773316757092,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\八十分","sessionId":"a1e1fa1c-ade4-4e92-bb53-1ce92a452647"}
+{"display":"/help ","pastedContents":{},"timestamp":1773318086016,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\八十分","sessionId":"8bfeef21-157c-4452-85e4-648fae18fe8a"}
+{"display":"////","pastedContents":{},"timestamp":1773318107104,"project":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\八十分","sessionId":"8bfeef21-157c-4452-85e4-648fae18fe8a"}
+{"display":"你好","pastedContents":{},"timestamp":1773373066075,"project":"C:\\Users\\hufeifei.JOY","sessionId":"6f88290c-5d26-48af-bf7d-713f7cf2aa10"}
+{"display":"你好","pastedContents":{},"timestamp":1773373205722,"project":"C:\\Users\\hufeifei.JOY","sessionId":"cc407a16-ab41-44dc-b295-a9a7dba779fc"}
+{"display":"你现在能直接操作unity吗？","pastedContents":{},"timestamp":1773910185299,"project":"C:\\Users\\hufeifei.JOY","sessionId":"dadf69d7-d6e9-4ce6-89b2-b5118bb6b952"}
+{"display":"创建一个demo脚本，在Test场景运行时，绘制一个正方形绕随即方向旋转。","pastedContents":{},"timestamp":1773910305363,"project":"C:\\Users\\hufeifei.JOY","sessionId":"dadf69d7-d6e9-4ce6-89b2-b5118bb6b952"}
+{"display":"unity 是启动的。","pastedContents":{},"timestamp":1773910963646,"project":"C:\\Users\\hufeifei.JOY","sessionId":"dadf69d7-d6e9-4ce6-89b2-b5118bb6b952"}
+{"display":"E:\\WorkSpace\\unity-mcp-beta\\TestProjects\\UnityMCPTests\\Assets\\Scripts 你先把脚本移动过去","pastedContents":{},"timestamp":1773911021568,"project":"C:\\Users\\hufeifei.JOY","sessionId":"dadf69d7-d6e9-4ce6-89b2-b5118bb6b952"}
+{"display":"项目路径 E:\\WorkSpace\\unity-mcp-beta\\TestProjects\\UnityMCPTests","pastedContents":{},"timestamp":1773911057822,"project":"C:\\Users\\hufeifei.JOY","sessionId":"dadf69d7-d6e9-4ce6-89b2-b5118bb6b952"}
+{"display":"E:\\WorkSpace\\unity-mcp-beta\\TestProjects\\UnityMCPTests","pastedContents":{},"timestamp":1773911097229,"project":"C:\\Users\\hufeifei.JOY","sessionId":"dadf69d7-d6e9-4ce6-89b2-b5118bb6b952"}
+{"display":"创建一个pathon 工具用于审查unity json文件合规性。","pastedContents":{},"timestamp":1774842629254,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"工具生成在什么地方","pastedContents":{},"timestamp":1774843137445,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"C:\\Users\\hufeifei.JOY\\工具集\\Json审查","pastedContents":{},"timestamp":1774843206309,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"修改工具，让玩家选择指定路径文件夹下json","pastedContents":{},"timestamp":1774848828382,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"打包成exe应用","pastedContents":{},"timestamp":1774849083821,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"{\n          \"line\": 57902,\n          \"column\": 2,\n          \"severity\": \"INFO\",\n          \"rule_id\": \"FORMAT006\",\n          \"message\": \"文件末尾缺少换行符\",\n          \"suggestion\": \"在文件末尾添加换行符\"\n        },\n        {\n          \"line\": 1,\n          \"column\": 1,\n          \"severity\": \"WARNING\",\n          \"rule_id\": \"UNITY004\",\n          \"message\": \"无效的 Unity 版本格式:  (路径: [0].version)\",\n          \"suggestion\": \"版本格式应为 YYYY.N.P (如 2022.3.1f1)\"\n        },  忽略此问题。","pastedContents":{"1":{"id":1,"type":"text","contentHash":"137271e6b311c713"}},"timestamp":1774849465694,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"{\n          \"line\": 57902,\n          \"column\": 2,\n          \"severity\": \"INFO\",\n          \"rule_id\": \"FORMAT006\",\n          \"message\": \"文件末尾缺少换行符\",\n          \"suggestion\": \"在文件末尾添加换行符\"\n        },\n        {\n          \"line\": 1,\n          \"column\": 1,\n          \"severity\": \"WARNING\",\n          \"rule_id\": \"UNITY004\",\n          \"message\": \"无效的 Unity 版本格式:  (路径: [0].version)\",\n          \"suggestion\": \"版本格式应为 YYYY.N.P (如 2022.3.1f1)\"\n        },  忽略此问题。","pastedContents":{"1":{"id":1,"type":"text","contentHash":"137271e6b311c713"}},"timestamp":1774849620222,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"报告只展示有警告和错误的文件和信息。","pastedContents":{},"timestamp":1774849846395,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"添加记忆功能，记住上次选择的文件夹路径。","pastedContents":{},"timestamp":1774850121496,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"\n\n运行后不要关闭窗口，展示进度，输出统计数据；可再次审核，避免每次都需要重新打开。\n","pastedContents":{},"timestamp":1774850723065,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"\n\n\n    \"id\": \"10009 \", id里面有空格没报错","pastedContents":{},"timestamp":1774851426532,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"同一张表也不能存在相同的id","pastedContents":{},"timestamp":1774851483812,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"不能出现全角符号，中文符号","pastedContents":{},"timestamp":1774851668453,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"继续","pastedContents":{},"timestamp":1774851872132,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"\n    \"id\": \"10026\"同一张表中不能存在相同id的值","pastedContents":{},"timestamp":1774852066996,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"[Pasted text #1 +212 lines]你没有检查出相同的\"id\"值","pastedContents":{"1":{"id":1,"type":"text","contentHash":"eadb016b9bac2c00"}},"timestamp":1774852632867,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"     使用 Tab 缩进，Unity 推荐使用 2 空格缩进\n     建议: 将 Tab 替换为 2 空格","pastedContents":{},"timestamp":1774855141394,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"     数组中发现重复 ID: \"\" 在 root 的索引 [2], [3], [4]\n     建议: 同一数组中的 ID 应该唯一[Pasted text #1 +373 lines]","pastedContents":{"1":{"id":1,"type":"text","contentHash":"d671ee38251ac7b9"}},"timestamp":1774855203073,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"没有看到你提示的问题","pastedContents":{},"timestamp":1774855266804,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"[Pasted text #1 +106 lines]没有发现id重复问题。你却报id重复","pastedContents":{"1":{"id":1,"type":"text","contentHash":"a93eec2dc82f662e"}},"timestamp":1774855423747,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"注意未序列化json文件的处理。","pastedContents":{},"timestamp":1774855490048,"project":"C:\\Users\\hufeifei.JOY","sessionId":"788210b3-6446-4f37-83a9-1183ea2fb5e9"}
+{"display":"我的powershell对话框总是乱码，换行后显示异常，帮我处理","pastedContents":{},"timestamp":1774856058545,"project":"C:\\Users\\hufeifei.JOY","sessionId":"bbaec37e-b311-4af0-b996-ac1b40b6a90d"}
+{"display":"重启电脑","pastedContents":{},"timestamp":1774857026912,"project":"C:\\Users\\hufeifei.JOY","sessionId":"bbaec37e-b311-4af0-b996-ac1b40b6a90d"}
+{"display":"Try the new cross-platform PowerShell https://aka.ms/pscore6这是什么","pastedContents":{},"timestamp":1774857295202,"project":"C:\\Users\\hufeifei.JOY","sessionId":"55050f40-a9fa-4363-9d8e-0bd4c32982e0"}
+{"display":"1","pastedContents":{},"timestamp":1774857337841,"project":"C:\\Users\\hufeifei.JOY","sessionId":"55050f40-a9fa-4363-9d8e-0bd4c32982e0"}
+{"display":"winget install Microsoft.PowerShell","pastedContents":{},"timestamp":1774857423874,"project":"C:\\Users\\hufeifei.JOY","sessionId":"55050f40-a9fa-4363-9d8e-0bd4c32982e0"}
+{"display":"需要","pastedContents":{},"timestamp":1774857441617,"project":"C:\\Users\\hufeifei.JOY","sessionId":"55050f40-a9fa-4363-9d8e-0bd4c32982e0"}
+{"display":"pwsh","pastedContents":{},"timestamp":1774857493296,"project":"C:\\Users\\hufeifei.JOY","sessionId":"55050f40-a9fa-4363-9d8e-0bd4c32982e0"}
+{"display":"winget install Microsoft.PowerShell","pastedContents":{},"timestamp":1774857533235,"project":"C:\\Users\\hufeifei.JOY","sessionId":"55050f40-a9fa-4363-9d8e-0bd4c32982e0"}
+{"display":"C:\\Users\\hufeifei.JOY\\工具集\\Json审查      使用 Tab 缩进，Unity 推荐使用 2 空格缩进\n     建议: 将 Tab 替换为 2 空格忽略此","pastedContents":{},"timestamp":1774857975303,"project":"C:\\Users\\hufeifei.JOY","sessionId":"8c8538ac-893c-45ba-b1b5-ba444e070379"}
+{"display":"UnityJson审查工具.exe 审查这个工具，忽略将 Tab 替换为 2 空格的提示","pastedContents":{},"timestamp":1774858044439,"project":"C:\\Users\\hufeifei.JOY","sessionId":"8c8538ac-893c-45ba-b1b5-ba444e070379"}
+{"display":"电脑上部分应用文字乱码了。榛?[娉曞湥]<鐧?鍦ㄧ澧冪:<榛?302 <鐧?灞傚嚮鏉€BOSS鑾峰緱:<绾?鐑鍦ｈ。脳1\n「信息」鐜╁:<榛?[娉曞湥]<鐧?鍦ㄧ澧冪:<榛?372 <鐧?灞傚嚮鏉€BOSS鑾峰緱:<绾?鐑鎶よ厱脳1\n「信息」鐜╁:<榛?[娉曞湥]<鐧?鍦ㄧ澧冪:<榛?499 <鐧?灞傚嚮鏉€BOSS鑾峰緱:<绾?绁為緳鍓懨?\n「系统」<榛?娆㈣繋杩涘叆杩蜂綘浼犲锛佷弗绂佽亰澶╁唴鍙戞帹骞跨爜鍜屾媺鎺ㄥ箍涓ラ噸鑰呭皝鍙?钃?瀹樻柟QQ缇?8942399杩涚兢鍏憡棰嗗彇婵€娲荤爜<br><榛?鎴戠殑ID锛?3718","pastedContents":{},"timestamp":1774919247854,"project":"C:\\Users\\hufeifei.JOY","sessionId":"72556c1a-ade3-40be-b5c0-ebfd4bfd47f4"}
+{"display":"昨天修改编码后出现了部分应用乱码；「信息」鐜╁:<榛?[鍦熻眴鐗涜倝]<鐧?鍦ㄥ够澧冪:<榛?1001 <鐧?灞傚嚮鏉€BOSS鑾峰緱:<绾?绗︽枃:10#脳1\n「信息」鐜╁:<榛?[鍦熻眴鐗涜倝]<鐧?鍦ㄥ够澧冪:<榛?1501 <鐧?灞傚嚮鏉€BOSS鑾峰緱:<绾?100鍏冨疂脳1\n「信息」鐜╁:<榛?[鍗堝婕]<鐧?鍦ㄥ够澧冪:<榛?1414 <鐧?灞傚嚮鏉€BOSS鑾峰緱:<绾?绗︽枃:10#脳1","pastedContents":{},"timestamp":1774921700078,"project":"C:\\Users\\hufeifei.JOY","sessionId":"290ebb9b-b0b2-4743-aea2-02af0e524af4"}
+{"display":"应用界面上 ，但是游戏内聊天正常","pastedContents":{},"timestamp":1774921755677,"project":"C:\\Users\\hufeifei.JOY","sessionId":"290ebb9b-b0b2-4743-aea2-02af0e524af4"}
+{"display":"F:\\HFF\\Obsidian\\FFNotes\\迷你传奇","pastedContents":{},"timestamp":1774921767517,"project":"C:\\Users\\hufeifei.JOY","sessionId":"290ebb9b-b0b2-4743-aea2-02af0e524af4"}
+{"display":"F:\\HFF\\Obsidian\\FFNotes\\迷你传奇 game.exe 打开界面乱码","pastedContents":{},"timestamp":1774922305233,"project":"C:\\Users\\hufeifei.JOY","sessionId":"290ebb9b-b0b2-4743-aea2-02af0e524af4"}
+{"display":"运行unity","pastedContents":{},"timestamp":1774936241719,"project":"C:\\Windows\\System32","sessionId":"eb84d314-a7db-450b-aa6b-67e2a8984984"}
+{"display":"unity 已经启动，帮我运行工程","pastedContents":{},"timestamp":1774936289223,"project":"C:\\Windows\\System32","sessionId":"eb84d314-a7db-450b-aa6b-67e2a8984984"}
+{"display":"1","pastedContents":{},"timestamp":1774936473799,"project":"C:\\Windows\\System32","sessionId":"eb84d314-a7db-450b-aa6b-67e2a8984984"}
+{"display":"pc游戏更新下来的文件名乱码","pastedContents":{},"timestamp":1774937997794,"project":"C:\\Windows\\System32","sessionId":"6a2541fd-a17e-42bf-a56d-3d71b507fb2d"}
+{"display":"F:\\HFF\\Obsidian\\FFNotes\\迷你传奇\\更新游戏.bat","pastedContents":{},"timestamp":1774938061215,"project":"C:\\Windows\\System32","sessionId":"6a2541fd-a17e-42bf-a56d-3d71b507fb2d"}
+{"display":"这个在详细信息能看到内容，用txt打开看是乱码。","pastedContents":{},"timestamp":1774938147760,"project":"C:\\Windows\\System32","sessionId":"6a2541fd-a17e-42bf-a56d-3d71b507fb2d"}
+{"display":"帮我修复乱码问题。","pastedContents":{},"timestamp":1774938177120,"project":"C:\\Windows\\System32","sessionId":"6a2541fd-a17e-42bf-a56d-3d71b507fb2d"}
+{"display":"F:\\HFF\\Obsidian\\FFNotes\\迷你传奇 文件夹下面很多乱码","pastedContents":{},"timestamp":1774938194735,"project":"C:\\Windows\\System32","sessionId":"6a2541fd-a17e-42bf-a56d-3d71b507fb2d"}
+{"display":"是不是电脑系统默认编码异常导致","pastedContents":{},"timestamp":1774938666158,"project":"C:\\Windows\\System32","sessionId":"6a2541fd-a17e-42bf-a56d-3d71b507fb2d"}
+{"display":"─","pastedContents":{},"timestamp":1774938908449,"project":"C:\\Windows\\System32","sessionId":"6a2541fd-a17e-42bf-a56d-3d71b507fb2d"}
+{"display":"/skills ","pastedContents":{},"timestamp":1775181854941,"project":"C:\\Users\\hufeifei.JOY","sessionId":"b42db094-e467-45b5-bc53-c663f4ee1b80"}
+{"display":"E:\\WorkSpace\\2025DevRedAlert\\RedAlertDll\\RedAlert\\Script\\Game\\UIView\\ViewRankListAdapter.cs 分析","pastedContents":{},"timestamp":1775203952717,"project":"C:\\Users\\hufeifei.JOY","sessionId":"8e64e2e6-6095-4811-b65c-3d59c1b17fad"}
+{"display":"/skill-creator ","pastedContents":{},"timestamp":1775715169067,"project":"C:\\Windows\\System32","sessionId":"6d07febf-5452-402f-924b-653e44d84059"}
+{"display":"/skill","pastedContents":{},"timestamp":1775715177307,"project":"C:\\Windows\\System32","sessionId":"6d07febf-5452-402f-924b-653e44d84059"}
+{"display":"/skill-creator ","pastedContents":{},"timestamp":1775715223899,"project":"C:\\Users\\hufeifei.JOY","sessionId":"ce0704b4-6ad4-4dd8-a5ef-a5cd7379692e"}
+{"display":"你有哪些技能","pastedContents":{},"timestamp":1775715259403,"project":"C:\\Users\\hufeifei.JOY","sessionId":"ce0704b4-6ad4-4dd8-a5ef-a5cd7379692e"}
+{"display":"/multi-agent-orchestrator ","pastedContents":{},"timestamp":1775715439595,"project":"C:\\Users\\hufeifei.JOY","sessionId":"ce0704b4-6ad4-4dd8-a5ef-a5cd7379692e"}
+{"display":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\桐城自摸麻将 ","pastedContents":{},"timestamp":1775715460266,"project":"C:\\Users\\hufeifei.JOY","sessionId":"ce0704b4-6ad4-4dd8-a5ef-a5cd7379692e"}
+{"display":"/multi-agent-orchestrator ","pastedContents":{},"timestamp":1775715649722,"project":"C:\\Users\\hufeifei.JOY","sessionId":"b7013436-91d4-4beb-8939-bfe4f0ebea4c"}
+{"display":"F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\桐城自摸麻将 ","pastedContents":{},"timestamp":1775715667689,"project":"C:\\Users\\hufeifei.JOY","sessionId":"b7013436-91d4-4beb-8939-bfe4f0ebea4c"}
+{"display":"重新安装和配置claude","pastedContents":{},"timestamp":1775716112090,"project":"C:\\Users\\hufeifei.JOY","sessionId":"03313104-46ca-4e32-99b4-d60c38a72921"}

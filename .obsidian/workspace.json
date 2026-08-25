@@ -4,21 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "85c1e196e3c64ad8",
+        "id": "8fdbe5c77b181a2e",
         "type": "tabs",
         "children": [
           {
-            "id": "f10b3552885dd013",
+            "id": "2374f470d02fbe1a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AI库/key.md",
+                "file": "AI库/DeepSeek/Harness安装.md",
                 "mode": "source",
-                "source": false
+                "source": false,
+                "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "key"
+              "title": "Harness安装"
             }
           }
         ]
@@ -41,7 +42,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "byModifiedTime",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -78,7 +81,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "b38a42c2768a463b",
@@ -88,24 +91,6 @@
         "id": "2eeda92704bcd6b3",
         "type": "tabs",
         "children": [
-          {
-            "id": "529f9b6f15ff7a63",
-            "type": "leaf",
-            "state": {
-              "type": "backlink",
-              "state": {
-                "collapseAll": true,
-                "extraContext": false,
-                "sortOrder": "alphabetical",
-                "showSearch": false,
-                "searchQuery": "",
-                "backlinkCollapsed": false,
-                "unlinkedCollapsed": true
-              },
-              "icon": "links-coming-in",
-              "title": "反向链接"
-            }
-          },
           {
             "id": "83d975617de6e366",
             "type": "leaf",
@@ -140,13 +125,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "AI库/小游戏/坦克1999/坦克大战1999策划案.md",
+                "file": "AI库/DeepSeek/Harness安装.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "坦克大战1999策划案 的大纲"
+              "title": "大纲"
             }
           },
           {
@@ -170,14 +155,16 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 570.5
+    "width": 275.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
+      "iconic:打开规则书": false,
       "bases:新建数据库": false,
       "obsidian-git:Open Git source control": false,
       "switcher:打开快速切换": false,
@@ -189,60 +176,61 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "f10b3552885dd013",
+  "active": "2374f470d02fbe1a",
   "lastOpenFiles": [
-    "AI库/小游戏/掼蛋/局域网版使用说明.md",
-    "AI库/小游戏/掼蛋/check_brackets.js",
-    "AI库/小游戏/掼蛋/check_all.js",
-    "AI库/小游戏/掼蛋/find_brace.js",
-    "AI库/小游戏/掼蛋/temp_script2.js",
-    "AI库/小游戏/掼蛋/find_error2.js",
-    "AI库/小游戏/掼蛋/find_error.js",
-    "AI库/小游戏/掼蛋/temp_script.js",
-    "AI库/小游戏/掼蛋/check_syntax.js",
-    "AI库/小游戏/掼蛋/kill_node.bat",
-    "AI库/小游戏/掼蛋/掼蛋.md",
-    "AI库/小游戏/掼蛋/guandan-lan.html.tmp.2120.1772517313713",
+    "AI库/DeepSeek/Harness安装.md",
+    "SKILL.md",
     "AI库/key.md",
-    "AI库/小游戏/掼蛋/node_modules/yocto-queue/readme.md",
-    "AI库/小游戏/掼蛋/node_modules/tmpl/readme.md",
-    "AI库/小游戏/掼蛋/node_modules/update-browserslist-db/README.md",
-    "AI库/小游戏/掼蛋/node_modules/istanbul-reports/README.md",
-    "AI库/小游戏/掼蛋/node_modules/istanbul-reports/CHANGELOG.md",
-    "AI库/小游戏/掼蛋/node_modules/@jest/types/README.md",
-    "AI库/小游戏/掼蛋/node_modules/jest/README.md",
-    "AI库/小游戏/掼蛋/node_modules/jest-util/node_modules/picomatch/README.md",
-    "AI库/小游戏/掼蛋/node_modules/jest-changed-files/README.md",
-    "AI库/小游戏/掼蛋/node_modules/pretty-format/node_modules/ansi-styles/readme.md",
-    "AI库/小游戏/掼蛋/node_modules/import-local/readme.md",
-    "AI库/小游戏/掼蛋/node_modules/@jest/core/README.md",
-    "AI库/小游戏/掼蛋/node_modules/@jest/reporters/assets/jest_logo.png",
-    "AI库/小游戏/掼蛋/node_modules/jest-haste-map/README.md",
-    "AI库/小游戏/掼蛋/node_modules/pretty-format/README.md",
-    "AI库/小游戏/掼蛋/node_modules/istanbul-lib-instrument/CHANGELOG.md",
-    "AI库/小游戏/掼蛋/node_modules/jest-cli/README.md",
-    "AI库/小游戏/掼蛋/node_modules/@types/node/README.md",
-    "AI库/小游戏/掼蛋/node_modules/@jridgewell/remapping/README.md",
-    "AI库/小游戏/掼蛋/node_modules/gensync/README.md",
-    "AI库/小游戏/掼蛋/node_modules/@bcoe/v8-coverage/README.md",
-    "AI库/小游戏/掼蛋/node_modules/@bcoe/v8-coverage/LICENSE.md",
-    "AI库/小游戏/掼蛋/node_modules/jest-validate/README.md",
-    "AI库/小游戏/掼蛋/node_modules/istanbul-reports/lib/html-spa/assets/sort-arrow-sprite.png",
-    "AI库/小游戏/掼蛋/node_modules/istanbul-reports/lib/html/assets/sort-arrow-sprite.png",
-    "AI库/小游戏/掼蛋/node_modules/istanbul-reports/lib/html/assets/favicon.png",
-    "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
-    "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
-    "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
-    "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
-    "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png",
-    "AI库/小游戏/math-practice-android/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+    "JoyMeng Note/日记 2026-08-21.md",
+    "JoyMeng Note/日记 2026-08-14.md",
+    "AI库/DeepSeek",
+    "JoyMeng Note/日记 2026-08-07.md",
+    "JoyMeng Note/日记 2026-07-31.md",
+    "JoyMeng Note/日记 2026-07-24.md",
+    "JoyMeng Note/日记 2026-07-17.md",
+    "JoyMeng Note/日记 2026-07-10.md",
+    "JoyMeng Note/日记 2026-07-03.md",
+    "JoyMeng Note/日记 2026-06-26.md",
+    "JoyMeng Note/日记 2026-06-18.md",
+    "JoyMeng Note/日记 2026-06-12.md",
+    "Unity/A开发笔记/未命名.md",
+    "JoyMeng Note/日记 2026-06-05.md",
+    "Unity/帝国、红警2/RedAlert/异常账号修复.md",
+    "附件仓库/杂项仓库/Pasted image 20260608101228.png",
+    "Unity/A开发笔记/帝国及红警2相关配置说明.md",
+    "JoyMeng Note/日记 2026-05-29.md",
+    "Unity/A开发笔记/未命名 1.md",
+    "Unity/A开发笔记/文档.md",
+    "JoyMeng Note/日记 2026-05-22.md",
+    "AI Cube/小学池塘修路问题教学方案.md",
+    "AI Cube/分数变小数教学方案.md",
+    "AI Cube/分数变小数H5展示.html",
+    "AI Cube/池塘修路问题H5展示.html",
+    "AI Cube/小学栅栏问题H5展示.html",
+    "AI Cube/小学围墙问题教学方案.md",
+    "AI Cube",
+    "JoyMeng Note/日记 2026-05-15.md",
+    "AI库/小游戏/桐城自摸麻将/majiang-lan.html.tmp.22168.1777543159476",
+    "AI库/小游戏/桐城自摸麻将/majiang-lan.html.tmp.22168.1777543154343",
+    "AI库/小游戏/桐城自摸麻将/majiang-lan.html.tmp.22168.1777543018627",
+    "AI库/小游戏/桐城自摸麻将/majiang-server.js.tmp.22168.1777542501167",
+    "AI库/小游戏/桐城自摸麻将/majiang-lan.html.tmp.22168.1777542453071",
+    "Unity/帝国、红警2/RedAlert/0画布.canvas",
     "未命名.canvas",
+    "AI库/小游戏/桐城自摸麻将/麻将大图.jpg",
+    "AI库/小游戏/桐城自摸麻将/Images/tiao8.png",
+    "AI库/工具与环境/Claude工具安装流程by雷神/添加代理商-Qwen3.5.png",
+    "AI库/工具与环境/Claude工具安装流程by雷神/添加代理商-GLM5.0.png",
+    "AI库/工具与环境/Claude工具安装流程by雷神/添加环境变量.png",
+    "AI库/工具与环境/Claude工具安装流程by雷神/git/1.png",
+    "AI库/工具与环境/Claude工具安装流程by雷神/git/3.png",
+    "AI库/工具与环境/Claude工具安装流程by雷神/git/0.png",
+    "AI库/工具与环境/Claude工具安装流程by雷神/git/7.png",
     "未命名 4.canvas",
     "未命名 5.canvas",
     "未命名 3.canvas",
     "未命名 2.canvas",
     "未命名 1.canvas",
-    "Unity/帝国、红警2/RedAlert/0画布.canvas",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/未命名.canvas",
     "附件仓库/Untitled.canvas"

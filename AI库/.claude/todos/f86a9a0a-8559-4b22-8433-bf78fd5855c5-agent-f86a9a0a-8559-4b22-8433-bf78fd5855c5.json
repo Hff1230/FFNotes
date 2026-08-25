@@ -1,0 +1,37 @@
+[
+  {
+    "content": "分析现有游戏代码结构",
+    "status": "completed",
+    "activeForm": "分析游戏代码结构"
+  },
+  {
+    "content": "实现游戏平衡性优化",
+    "status": "in_progress",
+    "activeForm": "实现游戏平衡性优化"
+  },
+  {
+    "content": "新增技术模块（数据管理、成就系统等）",
+    "status": "pending",
+    "activeForm": "新增技术模块"
+  },
+  {
+    "content": "优化技术实现（性能、响应式等）",
+    "status": "pending",
+    "activeForm": "优化技术实现"
+  },
+  {
+    "content": "更新UI界面和用户体验",
+    "status": "pending",
+    "activeForm": "更新UI界面"
+  },
+  {
+    "content": "集成社交功能",
+    "status": "pending",
+    "activeForm": "集成社交功能"
+  },
+  {
+    "content": "测试和调试",
+    "status": "pending",
+    "activeForm": "测试和调试"
+  }
+]

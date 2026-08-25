@@ -1,0 +1,14 @@
+﻿# === PowerShell 缂栫爜淇 ===
+# 璁剧疆鎺у埗鍙拌緭鍏ヨ緭鍑虹紪鐮佷负 UTF-8
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+[Console]::InputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
+# 璁剧疆鎺у埗鍙颁唬鐮侀〉涓?UTF-8 (65001)
+chcp 65001 > $null
+# 鍚敤 PSReadLine 棰勬祴鏅鸿兘鎻愮ず锛堝鏋滃彲鐢級
+if (Get-Module -ListAvailable PSReadLine) {
+    Import-Module PSReadLine
+    Set-PSReadLineOption -PredictionSource History
+    Set-PSReadLineOption -PredictionViewStyle ListView
+    Set-PSReadLineOption -EditMode Windows
+}

@@ -1,0 +1,7 @@
+# PowerShell encoding fix
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+[Console]::InputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
+
+# Set console code page to UTF-8 (65001)
+chcp 65001 > $null

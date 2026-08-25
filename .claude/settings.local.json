@@ -16,7 +16,27 @@
       "Bash(taskkill /PID 25348 /F)",
       "Bash(taskkill //PID 25348 //F)",
       "Bash(tasklist)",
-      "Bash(taskkill /PID 13496 /F)"
+      "Bash(taskkill /PID 13496 /F)",
+      "Bash(sed -i '1640d' guandan-server.js)",
+      "Bash(sed -i 's/if \\(this.gameState.teamLevels\\\\[winner\\\\] > 14\\) {}/if \\(this.gameState.teamLevels[winner] > 14\\) { this.gameState.teamLevels[winner] = 14; }/' guandan-server.js)",
+      "Bash(node -c guandan-server.js)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(taskkill /F /IM node.exe /T)",
+      "Bash(taskkill /F /PID 19948)",
+      "Bash(tasklist /FI \"PID eq 19948\")",
+      "Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Where-Object {$_MainWindowTitle -like ''*guandan*'' -or $_CommandLine -like ''*guandan*''} | Stop-Process -Force\")",
+      "Bash(powershell -Command \"Stop-Process -Id 32864 -Force\")",
+      "Bash(powershell -Command \"Get-WinEvent -LogName ''Microsoft-Windows-Storage-ClassPnP/Operational'' -MaxEvents 50 2>$null | Format-Table TimeCreated, Id, Message -AutoSize\")",
+      "Bash(powershell -Command \"Get-WinEvent -LogName System -MaxEvents 100 | Where-Object {$_Message -match ''disk|delete|format|volume''} | Format-Table TimeCreated, Id, Message -Wrap\")",
+      "Bash(powershell -Command 'Get-WinEvent -LogName System -MaxEvents 100 | Where-Object {$_.Message -match \"\"disk|delete|format|volume\"\"} | Select-Object TimeCreated, Id, Message | Format-Table -Wrap')",
+      "Bash(powershell -Command 'Get-WinEvent -LogName \"\"Microsoft-Windows-Storage-Driver/Operational\"\" -MaxEvents 50 -ErrorAction SilentlyContinue | Select-Object TimeCreated, Id, Message | Format-Table -Wrap')",
+      "Bash(powershell -Command 'wevtutil qe System /c:20 /rd:true /f:text 2>$null | Select-String -Pattern \"\"disk|volume|format|delete\"\" -Context 2,2')",
+      "Bash(powershell -Command 'Get-EventLog -LogName System -Newest 50 -ErrorAction SilentlyContinue | Where-Object {$_.Source -match \"\"disk|Ntfs|stor\"\"} | Format-Table TimeGenerated, Source, Message -Wrap')",
+      "Bash(powershell -Command 'fsutil usn readjournal C: 2>$null | Select-Object -First 50')",
+      "Bash(powershell -Command 'Get-WinEvent -LogName Security -MaxEvents 200 -ErrorAction SilentlyContinue | Where-Object {$_.Id -in 4660,4663,4656,4658} | Select-Object TimeCreated, Id, Message | Format-Table -Wrap')",
+      "Bash(taskkill //F //PID 11704)",
+      "Bash(taskkill /PID 4772 /F)",
+      "Bash(cmd //c \"taskkill /PID 4772 /F\")"
     ]
   }
 }

@@ -1,0 +1,290 @@
+# 出牌规则模块
+
+## 模块信息
+
+| 项目 | 内容 |
+|------|------|
+| 模块ID | M-003 |
+| 模块名称 | 出牌规则 |
+| 优先级 | P0（核心） |
+| 所属阶段 | 第二阶段 |
+
+---
+
+## 1. 模块概述
+
+出牌规则模块负责判断玩家出牌的合法性、牌型识别和大小比较，是游戏公平性的核心保障。
+
+---
+
+## 2. 牌型定义
+
+### 2.1 基础牌型
+
+| 牌型 | 描述 | 示例 | 点数要求 |
+|------|------|------|----------|
+| 单张 | 任意一张牌 | ♠5 | 无 |
+| 对子 | 两张相同点数 | ♠5♠5 | 2张相同 |
+| 三张 | 三张相同点数 | ♠5♠5♠5 | 3张相同 |
+| 炸弹 | 四张相同点数 | ♠5♠5♠5♠5 | 4张相同 |
+
+### 2.2 组合牌型
+
+| 牌型 | 描述 | 示例 | 条件 |
+|------|------|------|------|
+| 连对 | 连续的对子 | 334455 | 至少3对连续 |
+| 连三 | 连续的三张 | 333444 | 至少2组连续 |
+| 拖拉机 | 三带对/对带单 | 333+44 | 主牌+副牌组合 |
+
+### 2.3 特殊牌型
+
+| 牌型 | 描述 | 大小规则 |
+|------|------|----------|
+| 大王 | 红色Joker | 最大单牌 |
+| 小王 | 黑色Joker | 次大单牌 |
+| 级牌 | 当前级别的牌 | 主牌级牌 > 副牌级牌 |
+
+---
+
+## 3. 牌型大小规则
+
+### 3.1 主牌体系
+
+```
+大小王（常主）
+    ↓
+主花色级牌（如打2时，♠2）
+    ↓
+其他花色级牌（如打2时，♥2/♦2/♣2）
+    ↓
+主花色其他牌（A > K > Q > J > 10 > ... > 3）
+```
+
+### 3.2 比较规则
+
+| 场景 | 规则 |
+|------|------|
+| 同花色比较 | 按点数大小比较 |
+| 主牌 vs 副牌 | 主牌大 |
+| 不同副花色 | 先出者大（无法比较） |
+| 同牌型比较 | 比较最大那张牌 |
+| 炸弹比较 | 点数大的炸弹大 |
+
+---
+
+## 4. 功能清单
+
+### F-012: 合法出牌判断
+
+| 项目 | 内容 |
+|------|------|
+| 功能ID | F-012 |
+| 优先级 | P0 |
+| 描述 | 判断玩家出的牌是否符合规则 |
+
+**判断逻辑：**
+
+```javascript
+function isValidPlay(handCards, playedCards, leadCards, trumpSuit) {
+  // 1. 检查是否拥有这些牌
+  if (!ownsCards(handCards, playedCards)) return false;
+
+  // 2. 如果是首出，任何牌型都可以
+  if (!leadCards) return isValidCardType(playedCards);
+
+  // 3. 检查是否必须跟花色
+  const leadSuit = getLeadSuit(leadCards);
+  const sameSuitCards = filterBySuit(handCards, leadSuit);
+
+  if (sameSuitCards.length >= playedCards.length) {
+    // 有足够同花色牌，必须跟
+    return isSameSuit(playedCards, leadSuit);
+  }
+
+  // 4. 无足够同花色，可以出其他牌
+  return true;
+}
+```
+
+**验收标准：**
+- [ ] 有同花色必须跟
+- [ ] 无同花色可出任意
+- [ ] 牌型必须合法
+- [ ] 手牌必须包含所出的牌
+
+**依赖：** F-010
+
+**风险：** 边界情况处理
+
+---
+
+### F-013: 牌型识别
+
+| 项目 | 内容 |
+|------|------|
+| 功能ID | F-013 |
+| 优先级 | P0 |
+| 描述 | 识别玩家出的牌属于什么牌型 |
+
+**识别算法：**
+
+```javascript
+function identifyCardType(cards) {
+  const counts = countByRank(cards);
+
+  // 检查炸弹
+  if (Object.values(counts).includes(4)) {
+    return { type: 'bomb', rank: findRank(counts, 4) };
+  }
+
+  // 检查三张
+  if (Object.values(counts).includes(3)) {
+    return { type: 'triple', rank: findRank(counts, 3) };
+  }
+
+  // 检查对子
+  if (Object.values(counts).includes(2)) {
+    // 检查是否连对
+    if (isConsecutivePairs(cards)) {
+      return { type: 'consecutivePairs', ranks: getPairRanks(cards) };
+    }
+    return { type: 'pair', rank: findRank(counts, 2) };
+  }
+
+  // 单张
+  return { type: 'single', rank: cards[0].rank };
+}
+```
+
+**验收标准：**
+- [ ] 所有牌型正确识别
+- [ ] 连续牌型正确判断
+- [ ] 复杂牌型正确分解
+
+**依赖：** 无
+
+**风险：** 无
+
+---
+
+### F-014: 牌型大小比较
+
+| 项目 | 内容 |
+|------|------|
+| 功能ID | F-014 |
+| 优先级 | P0 |
+| 描述 | 比较两组牌的大小，判断胜负 |
+
+**比较算法：**
+
+```javascript
+function compareCards(play1, play2, trumpSuit, leadSuit) {
+  // 1. 牌型不同，先出者胜（除炸弹）
+  if (play1.type !== play2.type) {
+    if (play1.type === 'bomb') return 1;
+    if (play2.type === 'bomb') return -1;
+    return 0; // 不同牌型无法比较
+  }
+
+  // 2. 检查主牌
+  const trump1 = hasTrump(play1, trumpSuit);
+  const trump2 = hasTrump(play2, trumpSuit);
+
+  if (trump1 && !trump2) return 1;
+  if (!trump1 && trump2) return -1;
+
+  // 3. 同为主牌或同为副牌，比较点数
+  return compareRanks(play1.rank, play2.rank, trumpSuit);
+}
+```
+
+**验收标准：**
+- [ ] 主牌正确判断
+- [ ] 大小比较正确
+- [ ] 炸弹规则正确
+
+**依赖：** F-013
+
+**风险：** 复杂场景判断
+
+---
+
+### F-015: 自动提示可出牌
+
+| 项目 | 内容 |
+|------|------|
+| 功能ID | F-015 |
+| 优先级 | P1 |
+| 描述 | 为玩家提示当前可以出的牌 |
+
+**功能详情：**
+- 高亮显示可出的牌组合
+- 按推荐程度排序
+- 用户开启提示功能时生效
+
+**验收标准：**
+- [ ] 提示的牌确实合法
+- [ ] 不遗漏可出牌型
+- [ ] 提示响应及时
+
+**依赖：** F-012
+
+**风险：** 无
+
+---
+
+## 5. 数据结构
+
+### 牌型信息 (CardType)
+```javascript
+{
+  type: 'single' | 'pair' | 'triple' | 'bomb' |
+        'consecutivePairs' | 'consecutiveTriples' | 'combination',
+  rank: string,           // 主点数
+  subRanks: string[],     // 副点数（组合牌型）
+  suit: string,           // 花色
+  isTrump: boolean,       // 是否包含主牌
+  cards: Card[]           // 原始卡牌
+}
+```
+
+### 出牌结果 (PlayResult)
+```javascript
+{
+  valid: boolean,
+  cardType: CardType,
+  message: string,        // 错误信息
+  suggestedCards: Card[][] // 建议可出的牌
+}
+```
+
+---
+
+## 6. 测试用例
+
+### 6.1 合法出牌测试
+
+| 用例ID | 场景 | 手牌 | 首出牌 | 出牌 | 预期结果 |
+|--------|------|------|--------|------|----------|
+| TC-001 | 有同花色必须跟 | ♠3♠5♥6 | ♠A | ♠3 | 合法 |
+| TC-002 | 有同花色不跟 | ♠3♠5♥6 | ♠A | ♥6 | 非法 |
+| TC-003 | 无同花色可出其他 | ♥6♥7 | ♠A | ♥6 | 合法 |
+| TC-004 | 出对子 | ♠3♠3♥5 | ♠4♠4 | ♠3♠3 | 合法 |
+| TC-005 | 对子不成对 | ♠3♠5♥5 | ♠4♠4 | ♠3♠5 | 非法 |
+
+### 6.2 牌型识别测试
+
+| 用例ID | 牌 | 预期牌型 |
+|--------|-----|----------|
+| TC-010 | ♠3 | 单张 |
+| TC-011 | ♠3♠3 | 对子 |
+| TC-012 | ♠3♠3♠4♠4♠5♠5 | 连对 |
+| TC-013 | ♠3♠3♠3♠3 | 炸弹 |
+
+---
+
+## 7. 变更记录
+
+| 日期 | 版本 | 变更内容 |
+|------|------|----------|
+| 2026-03-12 | v1.0 | 初始版本 |

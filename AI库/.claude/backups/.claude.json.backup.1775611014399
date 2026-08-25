@@ -1,0 +1,427 @@
+{
+  "numStartups": 33,
+  "installMethod": "unknown",
+  "autoUpdates": true,
+  "hasSeenTasksHint": true,
+  "tipsHistory": {
+    "agent-flag": 24,
+    "continue": 25,
+    "custom-agents": 21,
+    "default-permission-mode-config": 24,
+    "desktop-app": 19,
+    "double-esc-code-restore": 25,
+    "drag-and-drop-images": 25,
+    "enter-to-steer-in-relatime": 22,
+    "frontend-design-plugin": 7,
+    "image-paste": 24,
+    "install-github-app": 25,
+    "install-slack-app": 25,
+    "memory-command": 33,
+    "mobile-app": 19,
+    "new-user-warmup": 7,
+    "plan-mode-for-complex-tasks": 29,
+    "prompt-queue": 2,
+    "shift-tab": 25,
+    "status-line": 29,
+    "stickers-command": 2,
+    "terminal-setup": 24,
+    "theme-command": 22,
+    "todo-list": 22,
+    "ultrathink-keyword": 4,
+    "web-app": 19,
+    "permissions": 25,
+    "rename-conversation": 29,
+    "custom-commands": 29
+  },
+  "promptQueueUseCount": 22,
+  "showExpandedTodos": true,
+  "cachedStatsigGates": {
+    "tengu_disable_bypass_permissions_mode": false,
+    "tengu_prompt_suggestion": false
+  },
+  "cachedChromeExtensionInstalled": false,
+  "changelogLastFetched": 1760002977581,
+  "clientDataCache": {
+    "data": null,
+    "timestamp": 1772164705763
+  },
+  "firstStartTime": "2025-10-09T09:42:55.315Z",
+  "githubRepoPaths": {
+    "hff1230/ffnotes": [
+      "F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\八十分",
+      "F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\坦克1999",
+      "F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏",
+      "F:\\HFF\\Obsidian\\FFNotes\\AI库"
+    ]
+  },
+  "hasCompletedOnboarding": true,
+  "lastPlanModeUse": 1773316579419,
+  "lastReleaseNotesSeen": "2.1.25",
+  "mcpServers": {
+    "chrome-devtools": {
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--no-usage-statistics"
+      ],
+      "command": "cmd"
+    },
+    "firecrawl-mcp": {
+      "headers": {
+        "Authorization": "Bearer LT123456@"
+      },
+      "type": "http",
+      "url": "http://3.38.179.98:25152/mcp"
+    },
+    "unity-mcp": {
+      "type": "http",
+      "url": "http://localhost:9998/mcp"
+    },
+    "web-search-mcp": {
+      "headers": {
+        "Authorization": "Bearer LT123456@"
+      },
+      "type": "http",
+      "url": "http://8.213.135.91:25152/mcp"
+    },
+    "zai-mcp-server": {
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@z_ai/mcp-server"
+      ],
+      "command": "cmd",
+      "env": {
+        "Z_AI_API_KEY": "b5b43e4de5c244b6b5266592e0b2a222.gUk6xtynRG25aui2",
+        "Z_AI_MODE": "ZHIPU"
+      },
+      "type": "stdio"
+    }
+  },
+  "metricsStatusCache": {
+    "enabled": false,
+    "timestamp": 1775524001576
+  },
+  "officialMarketplaceAutoInstallAttempted": true,
+  "officialMarketplaceAutoInstalled": true,
+  "opus45MigrationComplete": true,
+  "opusProMigrationComplete": true,
+  "projects": {
+    "C:/Users/hufeifei.JOY": {
+      "allowedTools": [],
+      "disabledMcpjsonServers": [],
+      "enabledMcpjsonServers": [],
+      "exampleFiles": [],
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "hasTrustDialogAccepted": false,
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "projectOnboardingSeenCount": 1,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "lastCost": 0.7449911999999999,
+      "lastAPIDuration": 600513,
+      "lastAPIDurationWithoutRetries": 600448,
+      "lastToolDuration": 269786,
+      "lastDuration": 1364309,
+      "lastLinesAdded": 143,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 66247,
+      "lastTotalOutputTokens": 5881,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 1526784,
+      "lastTotalWebSearchRequests": 0,
+      "lastFpsAverage": 8.64,
+      "lastFpsLow1Pct": 365.54,
+      "lastModelUsage": {
+        "glm-4.7": {
+          "inputTokens": 12080,
+          "outputTokens": 353,
+          "cacheReadInputTokens": 6912,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.043608600000000004
+        },
+        "glm-5": {
+          "inputTokens": 54167,
+          "outputTokens": 5528,
+          "cacheReadInputTokens": 1519872,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.7013826
+        }
+      },
+      "lastSessionId": "dadf69d7-d6e9-4ce6-89b2-b5118bb6b952"
+    },
+    "E:/Program Files/nodejs/node_global": {
+      "allowedTools": [],
+      "disabledMcpjsonServers": [],
+      "enabledMcpjsonServers": [],
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "hasTrustDialogAccepted": true,
+      "lastAPIDuration": 753761,
+      "lastAPIDurationWithoutRetries": 753751,
+      "lastCost": 0.442089,
+      "lastDuration": 1424347,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastModelUsage": {
+        "glm-4.5-air": {
+          "cacheCreationInputTokens": 0,
+          "cacheReadInputTokens": 28596,
+          "costUSD": 0.0318378,
+          "inputTokens": 3948,
+          "outputTokens": 761,
+          "webSearchRequests": 0
+        },
+        "glm-4.7": {
+          "cacheCreationInputTokens": 0,
+          "cacheReadInputTokens": 373504,
+          "costUSD": 0.4102511999999998,
+          "inputTokens": 90315,
+          "outputTokens": 1817,
+          "webSearchRequests": 0
+        }
+      },
+      "lastSessionId": "dad2566a-d5a6-4f83-ba39-f276d93ec633",
+      "lastToolDuration": 294910,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 402100,
+      "lastTotalInputTokens": 94263,
+      "lastTotalOutputTokens": 2578,
+      "lastTotalWebSearchRequests": 0,
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "projectOnboardingSeenCount": 0,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageManager": null,
+        "packageName": null,
+        "version": null
+      }
+    },
+    "E:/WorkSpace/RedAlert_SuperFormation": {
+      "allowedTools": [],
+      "disabledMcpjsonServers": [],
+      "enabledMcpjsonServers": [],
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "hasTrustDialogAccepted": true,
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "projectOnboardingSeenCount": 0,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageManager": null,
+        "packageName": null,
+        "version": null
+      }
+    },
+    "F:/HFF/Obsidian/FFNotes": {
+      "allowedTools": [],
+      "disabledMcpjsonServers": [],
+      "enabledMcpjsonServers": [],
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "hasTrustDialogAccepted": true,
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "projectOnboardingSeenCount": 1,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      }
+    },
+    "E:/WorkSpace/unity-mcp-beta/TestProjects/UnityMCPTests": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {
+        "UnityMCP": {
+          "type": "http",
+          "url": "http://127.0.0.1:8080/mcp"
+        }
+      },
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false
+    },
+    "C:/Windows/System32": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": true,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "lastCost": 0.24344399999999997,
+      "lastAPIDuration": 120634,
+      "lastAPIDurationWithoutRetries": 120614,
+      "lastToolDuration": 48206,
+      "lastDuration": 1719907,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 34197,
+      "lastTotalOutputTokens": 1435,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 397760,
+      "lastTotalWebSearchRequests": 0,
+      "lastFpsAverage": 3.56,
+      "lastFpsLow1Pct": 333.97,
+      "lastModelUsage": {
+        "glm-4.7": {
+          "inputTokens": 479,
+          "outputTokens": 185,
+          "cacheReadInputTokens": 1280,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.004596
+        },
+        "glm-5.1": {
+          "inputTokens": 33718,
+          "outputTokens": 1250,
+          "cacheReadInputTokens": 396480,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.23884799999999998
+        }
+      },
+      "lastSessionId": "eb84d314-a7db-450b-aa6b-67e2a8984984"
+    }
+  },
+  "skillUsage": {
+    "game-dev": {
+      "usageCount": 5,
+      "lastUsedAt": 1774596312664
+    },
+    "requirement-processor": {
+      "usageCount": 1,
+      "lastUsedAt": 1773317530144
+    },
+    "unity-mcp-skill": {
+      "usageCount": 2,
+      "lastUsedAt": 1774936330957
+    },
+    "simplify": {
+      "usageCount": 1,
+      "lastUsedAt": 1774419421207
+    }
+  },
+  "sonnet1m45MigrationComplete": true,
+  "sonnet45MigrationComplete": true,
+  "thinkingMigrationComplete": true,
+  "toolUsage": {
+    "AskUserQuestion": {
+      "lastUsedAt": 1772242623689,
+      "usageCount": 3
+    },
+    "Bash": {
+      "lastUsedAt": 1772683215698,
+      "usageCount": 215
+    },
+    "Edit": {
+      "lastUsedAt": 1772683135985,
+      "usageCount": 338
+    },
+    "ExitPlanMode": {
+      "lastUsedAt": 1772242699203,
+      "usageCount": 1
+    },
+    "Glob": {
+      "lastUsedAt": 1772610351321,
+      "usageCount": 26
+    },
+    "Grep": {
+      "lastUsedAt": 1772682974967,
+      "usageCount": 443
+    },
+    "Read": {
+      "lastUsedAt": 1772683104042,
+      "usageCount": 583
+    },
+    "Task": {
+      "lastUsedAt": 1772242154047,
+      "usageCount": 1
+    },
+    "TaskStop": {
+      "lastUsedAt": 1772589883366,
+      "usageCount": 5
+    },
+    "TodoWrite": {
+      "lastUsedAt": 1772682229314,
+      "usageCount": 26
+    },
+    "ToolSearch": {
+      "lastUsedAt": 1772164705752,
+      "usageCount": 1
+    },
+    "WebSearch": {
+      "lastUsedAt": 1772504755547,
+      "usageCount": 1
+    },
+    "Write": {
+      "lastUsedAt": 1772247136043,
+      "usageCount": 8
+    },
+    "mcp__chrome-devtools__click": {
+      "lastUsedAt": 1772586925963,
+      "usageCount": 7
+    },
+    "mcp__chrome-devtools__evaluate_script": {
+      "lastUsedAt": 1772589685958,
+      "usageCount": 32
+    },
+    "mcp__chrome-devtools__fill": {
+      "lastUsedAt": 1772586138787,
+      "usageCount": 2
+    },
+    "mcp__chrome-devtools__list_console_messages": {
+      "lastUsedAt": 1772588308730,
+      "usageCount": 2
+    },
+    "mcp__chrome-devtools__navigate_page": {
+      "lastUsedAt": 1772589673975,
+      "usageCount": 16
+    },
+    "mcp__chrome-devtools__new_page": {
+      "lastUsedAt": 1772585814152,
+      "usageCount": 1
+    },
+    "mcp__chrome-devtools__take_screenshot": {
+      "lastUsedAt": 1772588793145,
+      "usageCount": 9
+    },
+    "mcp__chrome-devtools__take_snapshot": {
+      "lastUsedAt": 1772587316973,
+      "usageCount": 12
+    }
+  },
+  "userID": "dc8de5acd4897050657a8708a2b3930483cf9a3558bc70b5d32b1f3057f293e3",
+  "migrationVersion": 11
+}

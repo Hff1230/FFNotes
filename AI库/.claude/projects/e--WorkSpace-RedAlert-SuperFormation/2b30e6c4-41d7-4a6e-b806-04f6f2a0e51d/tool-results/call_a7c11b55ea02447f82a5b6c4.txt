@@ -1,0 +1,183 @@
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-62-            DayZ.NPEnterGameEventController.SendEvent(DayZ.EnterGameEvent.GatewayCheck);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-63-            
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-64-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-65-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-66-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs:67:        private void GatewayHeartStart()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-68-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs:69:            new Thread(HeartThreadFunc)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-70-                    .Start();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-71-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs:72:        void HeartThreadFunc(object param)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-73-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-74-            while(true)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-75-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-76-                Thread.Sleep(60000);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-77-                try
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-78-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs:79:                    Loom.QueueOnMainThread(() => CoroutineManager.Instance.StartCoroutine(GatewaySystemManager.Instance.SendHeartInfoCoroutine(null)));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-80-                }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-81-                catch(Exception ex)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-82-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs:83:                    LogCommon.LogException(ex, "HeartThreadFunc");
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-84-                }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-85-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-86-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-87-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-88-        private void GatewayCheck()
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-141-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-142-        private void DoNormalInit()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-143-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-144-            var bgcamera = GameObject.FindObjectOfType<BGCamera>();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-145-            bgcamera?.SetLoadingEnable(false);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs:146:            StartGatewayHeart();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-147-            this.InitPlugins();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-148-            DayZ.NPEnterGameEventController.SendEvent(DayZ.EnterGameEvent.SDKInitOK);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-149-            root.StartGame(false);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-150-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-151-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-152-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-153-        private void DoUpdateInit(Action callBack)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-154-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs:155:            StartGatewayHeart();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-156-            this.InitPlugins(true);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-157-            DayZ.NPEnterGameEventController.SendEvent(DayZ.EnterGameEvent.SDKInitOK);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-158-            root.StartGame(true, callBack);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-159-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-160-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs:161:        private void StartGatewayHeart()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-162-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs:163:            this.GatewayHeartStart();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs:164:            DayZ.NPEnterGameEventController.SendEvent(DayZ.EnterGameEvent.GatewayHeart);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-165-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-166-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-167-        private void EnableETCOn()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-168-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-169-            if (Application.platform == RuntimePlatform.WindowsEditor
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-13-        OnlineSDKStart = -3,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-14-        OnlineSDKStartOver = -2,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-15-        AdjustReadyInit = -1,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-16-        AdjustInitOK = 0,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-17-        LTSDKInitOK,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs:18:        GatewayHeart,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-19-        GatewayCheck,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-20-        HelpShiftInitOK,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-21-        FirebaseInitOK ,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-22-        FacebookInitOK ,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-23-        SDKInitOK,
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-44-        private static readonly string LOG_STEP_URL = @"http://netunion2.warfarestrike.com/index.php?m=Api&c=Index&a=index";
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-45-        private static Dictionary<EnterGameEvent, AdjustEventType> AdjustEventMap = new Dictionary<EnterGameEvent, AdjustEventType>()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-46-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-47-            { EnterGameEvent.AdjustInitOK, AdjustEventType.TraceEvent_AdjustInitOK },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-48-            { EnterGameEvent.LTSDKInitOK, AdjustEventType.TraceEvent_LTSDKInitOK },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs:49:            { EnterGameEvent.GatewayHeart, AdjustEventType.TraceEvent_GatewayHeart },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-50-            { EnterGameEvent.GatewayCheck, AdjustEventType.TraceEvent_GatewayCheck },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-51-            { EnterGameEvent.HelpShiftInitOK, AdjustEventType.TraceEvent_HelpShiftInitOK },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-52-            { EnterGameEvent.FirebaseInitOK, AdjustEventType.TraceEvent_FirebaseInitOK },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-53-            { EnterGameEvent.FacebookInitOK, AdjustEventType.TraceEvent_FacebookInitOK },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\NPEnterGameEventController.cs-54-            { EnterGameEvent.SDKInitOK, AdjustEventType.TraceEvent_SDKInitOK },
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-36-        TraceEvent_EnterGame,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-37-        TraceEvent_InitSingleton,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-38-        TraceEvent_InitLog,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-39-        TraceEvent_InitLang,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-40-        TraceEvent_LTSDKInitOK,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs:41:        TraceEvent_GatewayHeart,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-42-        TraceEvent_GatewayCheck,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-43-        TraceEvent_HelpShiftInitOK,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-44-        TraceEvent_FirebaseInitOK,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-45-        TraceEvent_FacebookInitOK,
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-46-        TraceEvent_SDKInitOK,
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-137-            { AdjustEventType.TraceEvent_LoadedMainSceneOver, "2vxag7" },//
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-138-            { AdjustEventType.TraceEvent_InitSingleton, "sl21fs" },//
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-139-            { AdjustEventType.TraceEvent_InitLog, "i3em5v" },//
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-140-            { AdjustEventType.TraceEvent_InitLang, "v4pyop" },//
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-141-            { AdjustEventType.TraceEvent_LTSDKInitOK, "gzsbyy" },//
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs:142:            { AdjustEventType.TraceEvent_GatewayHeart, "s0efee" },//
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-143-            { AdjustEventType.TraceEvent_GatewayCheck, "rwrwmn" },//
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-144-            { AdjustEventType.TraceEvent_HelpShiftInitOK, "lk7fhy" },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-145-            { AdjustEventType.TraceEvent_FirebaseInitOK, "7ilzr6" },//
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-146-            { AdjustEventType.TraceEvent_FacebookInitOK, "jtm07k" },//
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-147-            { AdjustEventType.TraceEvent_SDKInitOK, "pqxk4x" },//
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-180-            { AdjustEventType.TraceEvent_LoadedMainSceneOver, "2kfldm" },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-181-            { AdjustEventType.TraceEvent_InitSingleton, "24rv9x" },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-182-            { AdjustEventType.TraceEvent_InitLog, "f8e7d3" },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-183-            { AdjustEventType.TraceEvent_InitLang, "o12eim" },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-184-            { AdjustEventType.TraceEvent_LTSDKInitOK, "6e1e1a" },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs:185:            { AdjustEventType.TraceEvent_GatewayHeart, "tullzj" },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-186-            { AdjustEventType.TraceEvent_GatewayCheck, "ejqtjv" },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-187-            { AdjustEventType.TraceEvent_HelpShiftInitOK, "a0xdj9" },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-188-            { AdjustEventType.TraceEvent_FirebaseInitOK, "wf0hhr" },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-189-            { AdjustEventType.TraceEvent_FacebookInitOK, "acud5o" },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-190-            { AdjustEventType.TraceEvent_SDKInitOK, "vdg3xx" },
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-11-{
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-12-    public class GatewaySystemManager : Singleton<GatewaySystemManager>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-13-    {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-14-        private static readonly string BASE_REQUEST_URL = "{0}gateway/user/{1}";
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-15-        private static readonly string HEARTINFO = "heartbeat";
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs:16:        public GatewayHeartInfo heartInfo { get; set; }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-17-        protected string appId;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-18-        protected string channleId;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-19-        // 添加字段用于存储上一次请求耗时时间
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-20-        private float _lastEtime = -1f;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-21-
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-32-        public void VersionCheckRequest(Action<bool> callback)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-33-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-34-            this.heartInfo = null;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-35-            if (callback == null)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-36-                throw new NullReferenceException("[callback] can not be null!");
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs:37:            CoroutineManager.Instance.StartCoroutine(SendHeartInfoCoroutine(callback));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-38-#if EMPIRE || KING_SHOOT
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-39-            var joy = CCCommonUtils.getStringWithEncBySharedUser(Global.JOY_ACCOUNT_ID);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-40-            if (string.IsNullOrEmpty(joy))
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-41-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-42-                CoroutineManager.Instance.StartCoroutine(RequestIntegrityManger.Instance.RequestStandardIntegrityTokenCo());
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-43-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-44-#endif
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-45-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-46-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-47-        #region 网关心跳协议
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs:48:        public IEnumerator SendHeartInfoCoroutine(Action<bool> callback,int timeOut = 10)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-49-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-50-            string url = GetActionUrl(HEARTINFO);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-51-            // 收集所有字段到字典中
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-52-            var parameters = new Dictionary<string, string>();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-53-            string joyId = CCCommonUtils.getStringWithEncBySharedUser(Global.JOY_ACCOUNT_ID);
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-121-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-122-                if (www.result == UnityWebRequest.Result.ConnectionError
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-123-                    || www.result == UnityWebRequest.Result.ProtocolError
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-124-                    || www.result == UnityWebRequest.Result.DataProcessingError)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-125-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs:126:                    Debug.LogError($"SendHeartInfoRequest failed: {www.error} URL={url}");
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-127-                    callback?.Invoke(false);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-128-                }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-129-                else
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-130-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-131-                    string result = www.downloadHandler.text;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs:132:                    Debug.Log($"SendHeartInfoRequest Response: {result}");
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-133-                    // 处理响应结果
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs:134:                    heartInfo = JsonConvert.DeserializeObject<GatewayHeartInfo>(result);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-135-                    callback?.Invoke(true);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-136-                }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-137-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-138-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewaySystemManager.cs-139-#endregion
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewayHeartInfo.cs-1-using System;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewayHeartInfo.cs-2-using UnityEngine;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewayHeartInfo.cs-3-namespace DayZ
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewayHeartInfo.cs-4-{
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewayHeartInfo.cs:5:    public class GatewayHeartInfo
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewayHeartInfo.cs-6-    {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewayHeartInfo.cs-7-        public const int APK_VERSION_LOW = 1400;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewayHeartInfo.cs-8-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewayHeartInfo.cs-9-        public const int APK_SUM_ERROR   = 1402;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GatewaySystemManager\GatewayHeartInfo.cs-10-

@@ -1,0 +1,222 @@
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-270-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-271-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-272-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs:273:        public void quit() { this.SDKBehavior.quit(); }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-274-        public void setCommon(GameInfo gameInfo) { this.SDKBehavior.setCommon(gameInfo); }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-275-        public void showToolbar() { this.SDKBehavior.showToolbar(); }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-276-        public void switchAccount() { this.SDKBehavior.switchAccount(); }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\ISDKBehavior.cs-14-        void login();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\ISDKBehavior.cs-15-        void logout();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\ISDKBehavior.cs-16-        void pay(GameInfo gameInfo);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\ISDKBehavior.cs:17:        void quit();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\ISDKBehavior.cs-18-        void setCommon(GameInfo gameInfo);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\ISDKBehavior.cs-19-        void showToolbar();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\ISDKBehavior.cs-20-        void switchAccount();
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\iOSSDKBehavior.cs-87-            return iOSGetLanguage();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\iOSSDKBehavior.cs-88-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\iOSSDKBehavior.cs-89-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\iOSSDKBehavior.cs:90:        public override void quit()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\iOSSDKBehavior.cs-91-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\iOSSDKBehavior.cs-92-            iOSExit();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\iOSSDKBehavior.cs-93-        }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\AbstractSDKBehavior.cs-61-#endif
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\AbstractSDKBehavior.cs-62-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\AbstractSDKBehavior.cs-63-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\AbstractSDKBehavior.cs:64:        public virtual void quit()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\AbstractSDKBehavior.cs-65-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\AbstractSDKBehavior.cs-66-#if !UNITY_EDITOR && UNITY_ANDROID
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKBehavior\AbstractSDKBehavior.cs-67-            using(AndroidJavaClass javaClass = new AndroidJavaClass("com/revengeofempire/plugins/Kits"))
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\OnlineSDK\OnlineSDK.cs-91-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\OnlineSDK\OnlineSDK.cs-92-    }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\OnlineSDK\OnlineSDK.cs-93-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\OnlineSDK\OnlineSDK.cs:94:    public void quit()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\OnlineSDK\OnlineSDK.cs-95-    {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\OnlineSDK\OnlineSDK.cs-96-        if (Application.platform == RuntimePlatform.Android)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\OnlineSDK\OnlineSDK.cs-97-        {
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GloablNetGen.cs-429-        public static readonly string QUEUE_FINISH_COMMAND = "queue.finish";
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GloablNetGen.cs-430-        public static readonly string QUEUE_CANCEL_COMMAND = "queue.cancel";
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GloablNetGen.cs-431-        public static readonly string QUEUE_RENT_COMMAND = "queue.rent";
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GloablNetGen.cs:432:        public static readonly string CHAT_ROOM_ARRAY_QUIT = "chat.room.member.quitmult";
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GloablNetGen.cs:433:        public static readonly string CHAT_ROOM_QUIT = "chat.room.member.quit";
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GloablNetGen.cs-434-        public static readonly string REBUILD_COMMAND = "world.user.rcr";
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GloablNetGen.cs-435-        public static readonly string REPORT_PICVER = "report.picVer";
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GloablNetGen.cs-436-        public static readonly string REPORT_PALYER_CHAT = "chat.report";
+--
+e:\WorkSpace\RedAlert_SuperFormation\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\TestRunner\RemoteHelpers\PlayerConnectionMessageIds.cs-8-        public static Guid runFinishedMessageId { get { return new Guid("ffb622fc-34ad-4901-8d7b-47fb04b0bdd4"); } }
+e:\WorkSpace\RedAlert_SuperFormation\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\TestRunner\RemoteHelpers\PlayerConnectionMessageIds.cs-9-        public static Guid testStartedMessageId { get { return new Guid("b54d241e-d88d-4dba-8c8f-ee415d11c030"); } }
+e:\WorkSpace\RedAlert_SuperFormation\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\TestRunner\RemoteHelpers\PlayerConnectionMessageIds.cs-10-        public static Guid testFinishedMessageId { get { return new Guid("72f7b7f4-6829-4cd1-afde-78872b9d5adc"); } }
+e:\WorkSpace\RedAlert_SuperFormation\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\TestRunner\RemoteHelpers\PlayerConnectionMessageIds.cs:11:        public static Guid quitPlayerMessageId { get { return new Guid("ab44bfe0-bb50-4ee6-9977-69d2ea6bb3a0"); } }
+e:\WorkSpace\RedAlert_SuperFormation\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\TestRunner\RemoteHelpers\PlayerConnectionMessageIds.cs-12-        public static Guid playerAliveHeartbeat { get { return new Guid("8c0c307b-f7fd-4216-8623-35b4b3f55fb6"); } }
+e:\WorkSpace\RedAlert_SuperFormation\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\TestRunner\RemoteHelpers\PlayerConnectionMessageIds.cs-13-    }
+e:\WorkSpace\RedAlert_SuperFormation\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\TestRunner\RemoteHelpers\PlayerConnectionMessageIds.cs-14-}
+--
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-327-    private static void SetUserInfo(string userInfo){
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-328-    }
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-329-    
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs:330:    private static void ReportException (int type,string name, string message, string stackTrace, bool quitProgram)
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-331-    {
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-332-    }
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-333-    
+--
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-440-        }
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-441-    }
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-442-    
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs:443:    private static void ReportException (int type, string name, string reason, string stackTrace, bool quitProgram)
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-444-    {
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-445-        ConfigCrashReporterPackage();
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-446-
+--
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-556-        }
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-557-    }
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-558-    
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs:559:    private static void ReportException (int type, string name, string reason, string stackTrace, bool quitProgram)
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-560-    {
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-561-        ConfigCrashReporterType();
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-562-        
+--
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-653-    private static extern void _BuglySetKeyValue(string key, string value);
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-654-    
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-655-    [DllImport("__Internal")]
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs:656:    private static extern void _BuglyReportException(int type, string name, string reason, string stackTrace, string extras, bool quit);
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-657-    
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-658-    [DllImport("__Internal")]
+e:\WorkSpace\RedAlert_SuperFormation\DynamicRes\Bugly\Plugins\BuglyPlugins\BuglyAgent.cs-659-    private static extern void _BuglyDefaultConfig(string channel, string version, string user, string deviceId);
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-118-                    break;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-119-                case 1:
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-120-                    {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs:121:                        //            var quitGame = [](){
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs:122:                        //                GameController.getInstance().quitGame();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-123-                        //            };
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs:124:                        //            YesNoDialog.show(Global._lang("E100069") , quitGame);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs:125:                        YesNoDialog.showVariableTitle(Global._lang("E100069"), ()=>GameController.quitGame(GameController.getInstance()), Global._lang("confirm"), true);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-126-                    }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-127-                    break;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-128-                case 2:
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-129-                    {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-130-                        if (subTyp == 0)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-131-                        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs:132:                            var view = YesNoDialog.showVariableTitle(Global._lang("79001004"), ()=> GameController.quitGame(GameController.getInstance()), Global._lang("79001063"));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-133-                        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-134-                        else if (subTyp == 1)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-135-                        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs:136:                            var view = YesNoDialog.showVariableTitle(Global._lang("79001060"),  ()=>GameController.quitGame(GameController.getInstance()), Global._lang("79001063"));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-137-                        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-138-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\UserDataUpdatePush.cs-139-                    }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\NetErrorDialog.cs-72-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\NetErrorDialog.cs-73-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\NetErrorDialog.cs-74-            if (GlobalData.shared().pushOffWithQuitGame)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\NetErrorDialog.cs:75:                GameController.quitGame(null);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\NetErrorDialog.cs-76-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\NetErrorDialog.cs-77-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\NetErrorDialog.cs-78-        private void onBtnFeedbackClick()
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\PushInit\PushUserGmOff.cs-12-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\PushInit\PushUserGmOff.cs-13-            // 服务器维护中
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\PushInit\PushUserGmOff.cs-14-            var _dialog = YesNoDialog.showVariableTitle(Global._lang("E100087") + "[2]",
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\PushInit\PushUserGmOff.cs:15:                                                          () => GameController.quitGame(GameController.getInstance()),
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\PushInit\PushUserGmOff.cs-16-                                                          Global._lang("confirm"), true);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\PushInit\PushUserGmOff.cs-17-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\PushInit\PushUserGmOff.cs-18-
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\PushInit\PushMergeOff.cs-11-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\PushInit\PushMergeOff.cs-12-            if (!string.IsNullOrEmpty(pStr))
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\PushInit\PushMergeOff.cs-13-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\PushInit\PushMergeOff.cs:14:                YesNoDialog.showVariableTitle(Global._lang(pStr), () => GameController.quitGame(GameController.getInstance()), Global._lang("confirm"), true);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\PushInit\PushMergeOff.cs-15-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\PushInit\PushMergeOff.cs-16-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\push\PushInit\PushMergeOff.cs-17-    }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\CCCommonUtils.cs-2087-                                                          {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\CCCommonUtils.cs-2088-                                                              LogCommon.LogError("退出游戏");
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\CCCommonUtils.cs-2089-                                                              LocalizeManager.Instance.SetLanguage((LocalSystemLanguage)Enum.Parse(typeof(LocalSystemLanguage), language));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\CCCommonUtils.cs:2090:                                                              GameController.quitGame(GameController.getInstance());
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\CCCommonUtils.cs-2091-                                                          },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\CCCommonUtils.cs-2092-                                                          Global._lang("confirm"), true);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\CCCommonUtils.cs-2093-            }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\command\LoginCommand.cs-619-            if (vparams != null && vparams.objectForKey("errorMessage") != null)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\command\LoginCommand.cs-620-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\command\LoginCommand.cs-621-                string errorCode = vparams.valueForKey("errorMessage");
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\command\LoginCommand.cs:622:                YesNoDialog.showYesDialog(Global._lang(errorCode), false, () => { GameController.quitGame(GameController.getInstance()); }, false);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\command\LoginCommand.cs-623-                return true;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\command\LoginCommand.cs-624-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\command\LoginCommand.cs-625-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\command\LoginCommand.cs-626-            int state = vparams.valueForKey("state").intValue();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\command\LoginCommand.cs-627-            if (state == (int)EU_STATE.EU_STATE_REJECT || state == (int)EU_STATE.EU_STATE_NO18)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\command\LoginCommand.cs-628-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\command\LoginCommand.cs:629:                GameController.quitGame(null);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\command\LoginCommand.cs-630-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\command\LoginCommand.cs-631-            return true;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Net\command\LoginCommand.cs-632-        }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-50-            if (errorCode == 4)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-51-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-52-                NewNetErrorDialog.create(string.Format("{0}|{1}", Global._lang("79010663"), Global._lang("E100200")),
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs:53:                        () => GameController.quitGame(null));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-54-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-55-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-56-
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-163-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-164-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-165-            Global.CCLOG("LoginErrorController.serverIsUnderMaintenance.");
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs:166:            var dialog = NewNetErrorDialog.create(errorMsg, () => GameController.quitGame());
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-167-            if (dialog != null)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-168-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-169-                PopupViewController.getInstance().addPopupView(dialog);
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-330-            string str = Global._lang("E100048");
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-331-            str += "[2]";
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-332-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs:333:            YesNoDialog.showVariableTitle(str, ()=> { GameController.quitGame(null); }, Global._lang("105248"), true);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-334-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-335-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\LoginErrorController.cs-336-        //其他错误
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\GameController.cs-534-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\GameController.cs-535-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\GameController.cs-536-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\GameController.cs:537:        public static void quitGame(object p = null)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\GameController.cs-538-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\GameController.cs-539-            CoroutineManager.Instance.StartCoroutine(QuitSync());
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\GameController.cs-540-        }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\alliance\FBAllianceInfoView.cs-175-            m_allianceEventNode.onEnter();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\alliance\FBAllianceInfoView.cs-176-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\alliance\FBAllianceInfoView.cs-177-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\alliance\FBAllianceInfoView.cs:178:        public void quitScroll()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\alliance\FBAllianceInfoView.cs-179-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\alliance\FBAllianceInfoView.cs-180-            m_allianceEventNode.onExit();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\alliance\FBAllianceInfoView.cs-181-        }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\alliance\FBAllianceFunView.cs-113-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\alliance\FBAllianceFunView.cs-114-    public class FBAllianceFunBtnCell : GButton
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\alliance\FBAllianceFunView.cs-115-    {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\alliance\FBAllianceFunView.cs:116:        public static string[] icons = { "changeAllianceName.png", "alliance_changeFlag.png", "alliance_search.png", "alliance_view2.png", "alliance_paihang.png", "icon_comment.png", "icon_remove_comment.png", "IC_lianmengguishu.png", "icon_allianceMerger.png", "icon_alliance_quit.png", "alliance_color.png", "AZ_account_icon.png" };
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\alliance\FBAllianceFunView.cs-117-        public static string[] langs = { "115250", "115256", "115211", "115210", "115823", "115929", "115924", "90820130", "77000152", "115039", "2000000209", "88000028" };
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\alliance\FBAllianceFunView.cs-118-       
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\popup\alliance\FBAllianceFunView.cs-119-        GLoader m_btnNode1;
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\Migrate\MigrateWaitingView.cs-43-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\Migrate\MigrateWaitingView.cs-44-        private void OnExitGame(EventContext context)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\Migrate\MigrateWaitingView.cs-45-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\Migrate\MigrateWaitingView.cs:46:            GameController.quitGame();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\Migrate\MigrateWaitingView.cs-47-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\Migrate\MigrateWaitingView.cs-48-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\Migrate\MigrateWaitingView.cs-49-    }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\Migrate\MigrateResetGameView.cs-37-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\Migrate\MigrateResetGameView.cs-38-        private void ResetGame()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\Migrate\MigrateResetGameView.cs-39-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\Migrate\MigrateResetGameView.cs:40:            GameController.quitGame();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\Migrate\MigrateResetGameView.cs-41-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\Migrate\MigrateResetGameView.cs-42-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\view\Migrate\MigrateResetGameView.cs-43-        public override void Init(params object[] data)

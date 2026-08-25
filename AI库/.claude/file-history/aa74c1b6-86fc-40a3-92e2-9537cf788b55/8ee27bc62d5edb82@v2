@@ -1,0 +1,12 @@
+{
+  "name": "baoshifen-game",
+  "version": "1.0.0",
+  "description": "八十分扑克牌游戏 - 局域网版",
+  "main": "80-server.js",
+  "scripts": {
+    "start": "node 80-server.js"
+  },
+  "dependencies": {
+    "ws": "^8.14.0"
+  }
+}

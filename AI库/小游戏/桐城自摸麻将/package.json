@@ -1,0 +1,19 @@
+{
+  "name": "tongcheng-majiang",
+  "version": "1.0.0",
+  "description": "桐城自摸麻将 - 局域网版",
+  "main": "majiang-server.js",
+  "scripts": {
+    "start": "node majiang-server.js",
+    "dev": "nodemon majiang-server.js"
+  },
+  "dependencies": {
+    "ws": "^8.14.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": ["majiang", "game", "lan"],
+  "author": "AI Assistant",
+  "license": "MIT"
+}

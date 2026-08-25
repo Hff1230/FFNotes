@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "sessionId": "1feafe11-0aa1-4247-8bd8-1b2188fd6a88",
+      "fullPath": "C:\\Users\\hufeifei.JOY\\.claude\\projects\\F--HFF-Obsidian-FFNotes-AI---------\\1feafe11-0aa1-4247-8bd8-1b2188fd6a88.jsonl",
+      "fileMtime": 1773318086702,
+      "firstPrompt": "fix line error",
+      "summary": "修复掼蛋服务器文件行错误",
+      "messageCount": 5,
+      "created": "2026-03-12T11:52:01.874Z",
+      "modified": "2026-03-12T11:53:57.871Z",
+      "gitBranch": "main",
+      "projectPath": "F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\八十分",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "a1e1fa1c-ade4-4e92-bb53-1ce92a452647",
+      "fullPath": "C:\\Users\\hufeifei.JOY\\.claude\\projects\\F--HFF-Obsidian-FFNotes-AI---------\\a1e1fa1c-ade4-4e92-bb53-1ce92a452647.jsonl",
+      "fileMtime": 1773318087142,
+      "firstPrompt": "帮我生成一个八十分游戏的需求文档md",
+      "summary": "八十分游戏需求文档与技能创建",
+      "messageCount": 7,
+      "created": "2026-03-12T11:54:02.874Z",
+      "modified": "2026-03-12T11:59:27.673Z",
+      "gitBranch": "main",
+      "projectPath": "F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\八十分",
+      "isSidechain": false
+    }
+  ],
+  "originalPath": "F:\\HFF\\Obsidian\\FFNotes\\AI库\\小游戏\\八十分"
+}

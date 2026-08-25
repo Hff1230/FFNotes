@@ -1,0 +1,901 @@
+// 桐城自摸麻将 - 局域网服务器
+// 运行方式: node majiang-server.js
+
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+const WebSocket = require('ws');
+
+const PORT = 8082;
+
+// ==================== HTTP服务器 ====================
+const server = http.createServer((req, res) => {
+    console.log(`HTTP请求: ${req.url}`);
+
+    if (req.url === '/' || req.url === '/index.html') {
+        const htmlPath = path.join(__dirname, 'majiang-lan.html');
+        fs.readFile(htmlPath, (err, data) => {
+            if (err) {
+                res.writeHead(404);
+                res.end('游戏文件未找到');
+                return;
+            }
+            res.writeHead(200, {
+                'Content-Type': 'text/html; charset=utf-8'
+            });
+            res.end(data);
+        });
+    } else if (req.url === '/favicon.ico') {
+        res.writeHead(204);
+        res.end();
+    } else {
+        res.writeHead(404);
+        res.end('Not Found');
+    }
+});
+
+// ==================== WebSocket服务器 ====================
+const wss = new WebSocket.Server({ server });
+
+// 游戏房间管理
+const tables = new Map();
+const playerToTable = new Map();
+let tableCounter = 0;
+
+// 所有已登录的客户端（用于广播牌桌列表）
+const loggedInClients = new Set();
+
+// ==================== 牌面常量 ====================
+const SUITS = ['筒', '条', '万'];
+const RANKS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const WINDS = ['东', '南', '西', '北'];
+const ARROWS = ['中', '发', '白'];
+
+// 创建一副麻将牌
+function createDeck() {
+    const deck = [];
+
+    // 筒条万 (每种4张)
+    for (const suit of SUITS) {
+        for (const rank of RANKS) {
+            for (let i = 0; i < 4; i++) {
+                deck.push({
+                    suit,
+                    rank,
+                    type: 'number',
+                    id: `${suit}${rank}_${i}`
+                });
+            }
+        }
+    }
+
+    // 风牌 (每种4张)
+    for (const wind of WINDS) {
+        for (let i = 0; i < 4; i++) {
+            deck.push({
+                suit: '风',
+                rank: wind,
+                type: 'wind',
+                id: `风${wind}_${i}`
+            });
+        }
+    }
+
+    // 箭牌 (每种4张)
+    for (const arrow of ARROWS) {
+        for (let i = 0; i < 4; i++) {
+            deck.push({
+                suit: '箭',
+                rank: arrow,
+                type: 'arrow',
+                id: `箭${arrow}_${i}`
+            });
+        }
+    }
+
+    return deck; // 136张
+}
+
+// 洗牌
+function shuffle(deck) {
+    const shuffled = [...deck];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+// 牌的显示名称
+function cardName(card) {
+    if (card.type === 'number') {
+        return `${card.rank}${card.suit}`;
+    } else {
+        return card.rank;
+    }
+}
+
+// ==================== 牌桌类 ====================
+class GameTable {
+    constructor(id, tableNumber) {
+        this.id = id;
+        this.tableNumber = tableNumber;
+        this.players = new Map(); // playerId -> player info
+        this.spectators = new Map();
+        this.maxPlayers = 4;
+        this.gameTimer = null; // 游戏计时器
+        this.lastSeatShuffleTime = Date.now(); // 上次换座位时间
+        this.sessionStartTime = Date.now(); // 会话开始时间
+
+        this.gameState = {
+            started: false,
+            currentPlayer: 0, // 0-3, 当前出牌玩家索引
+            dealer: 0, // 庄家索引
+            deck: [], // 牌堆
+            hands: {}, // playerId -> cards[]
+            wildCard: null, // 万能牌
+            discardedPile: [], // 打出的牌
+            showedCards: {}, // playerId -> { fa: [], gang: [] }
+            faUsed: {}, // playerId -> 玩家是否已换过发
+            lastDrawn: null, // 最后摸的牌
+            gameStartTime: null, // 游戏开始时间
+            totalGameTime: 0 // 游戏总时长（秒）
+        };
+    }
+
+    // 获取按座位排序的玩家ID数组
+    getSortedPlayerIds() {
+        return Array.from(this.players.entries())
+            .sort((a, b) => a[1].seatNum - b[1].seatNum)
+            .map(([id]) => id);
+    }
+
+    // 添加玩家
+    addPlayer(ws, playerId, playerName, seatNum = null) {
+        if (this.players.size >= this.maxPlayers) return false;
+        if (this.gameState.started) return false;
+
+        let actualSeat;
+        if (seatNum !== null && seatNum >= 1 && seatNum <= 4) {
+            const occupied = Array.from(this.players.values()).some(p => p.seatNum === seatNum);
+            if (occupied) return false;
+            actualSeat = seatNum;
+        } else {
+            const occupiedSeats = new Set(Array.from(this.players.values()).map(p => p.seatNum));
+            for (let i = 1; i <= 4; i++) {
+                if (!occupiedSeats.has(i)) {
+                    actualSeat = i;
+                    break;
+                }
+            }
+        }
+
+        this.players.set(playerId, {
+            ws,
+            id: playerId,
+            name: playerName,
+            seatNum: actualSeat,
+            ready: false,
+            isAI: false
+        });
+
+        return true;
+    }
+
+    // 移除玩家
+    removePlayer(playerId) {
+        this.players.delete(playerId);
+        return this.players.size === 0;
+    }
+
+    // 设置准备状态
+    setPlayerReady(playerId, ready) {
+        const player = this.players.get(playerId);
+        if (player) {
+            player.ready = ready;
+            this.broadcastPlayerList();
+            this.checkStartGame();
+        }
+    }
+
+    // 检查是否可以开始游戏
+    checkStartGame() {
+        const allReady = Array.from(this.players.values()).every(p => p.ready);
+        if (allReady && this.players.size === 4 && !this.gameState.started) {
+            // 检查是否需要随机换座位（每隔1小时）
+            const timeSinceLastShuffle = Date.now() - this.lastSeatShuffleTime;
+            if (timeSinceLastShuffle >= 3600000) { // 1小时 = 3600000毫秒
+                this.randomizeSeats();
+                this.lastSeatShuffleTime = Date.now();
+                this.broadcastMessage('⏰ 游戏已进行1小时，座位已随机更换！');
+            }
+            this.startGame();
+        }
+    }
+
+    // 随机换座位
+    randomizeSeats() {
+        const playerList = Array.from(this.players.values());
+        const seats = [1, 2, 3, 4];
+
+        // 洗牌座位
+        for (let i = seats.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [seats[i], seats[j]] = [seats[j], seats[i]];
+        }
+
+        // 分配新座位
+        playerList.forEach((player, index) => {
+            player.seatNum = seats[index];
+        });
+
+        console.log(`牌桌${this.tableNumber} 座位已随机更换`);
+        this.broadcastPlayerList();
+    }
+
+    // 开始游戏
+    startGame() {
+        this.gameState.started = true;
+        this.gameState.gameStartTime = Date.now();
+        this.gameState.totalGameTime = 0;
+
+        // 启动游戏计时器（每秒更新）
+        this.gameTimer = setInterval(() => {
+            if (this.gameState.started) {
+                this.gameState.totalGameTime = Math.floor((Date.now() - this.gameState.gameStartTime) / 1000);
+            }
+        }, 1000);
+
+        // 洗牌
+        this.gameState.deck = shuffle(createDeck());
+
+        // 确定万能牌（随机翻一张）
+        const wildIndex = Math.floor(Math.random() * this.gameState.deck.length);
+        this.gameState.wildCard = this.gameState.deck[wildIndex];
+
+        // 初始化手牌和展示区
+        const playerIds = this.getSortedPlayerIds();
+        for (const pid of playerIds) {
+            this.gameState.hands[pid] = [];
+            this.gameState.showedCards[pid] = { fa: [], gang: [] };
+            this.gameState.faUsed[pid] = false;
+        }
+
+        // 发牌：每人4张×3轮，然后每人1张，庄家多1张
+        // 庄家是1号位(seatNum=1)，对应索引0
+        const dealerIndex = playerIds.findIndex(pid => this.players.get(pid).seatNum === 1);
+        this.gameState.dealer = dealerIndex >= 0 ? dealerIndex : 0;
+
+        // 每人4张×3轮
+        for (let round = 0; round < 3; round++) {
+            for (const pid of playerIds) {
+                for (let i = 0; i < 4; i++) {
+                    const card = this.gameState.deck.pop();
+                    if (card) this.gameState.hands[pid].push(card);
+                }
+            }
+        }
+
+        // 每人1张
+        for (const pid of playerIds) {
+            const card = this.gameState.deck.pop();
+            if (card) this.gameState.hands[pid].push(card);
+        }
+
+        // 庄家多拿1张
+        const dealerPid = playerIds[this.gameState.dealer];
+        const extraCard = this.gameState.deck.pop();
+        if (extraCard) this.gameState.hands[dealerPid].push(extraCard);
+
+        // 庄家先出牌
+        this.gameState.currentPlayer = this.gameState.dealer;
+
+        // 排序手牌
+        for (const pid of playerIds) {
+            this.sortHand(pid);
+        }
+
+        console.log(`牌桌${this.tableNumber} 游戏开始，万能牌: ${cardName(this.gameState.wildCard)}`);
+
+        // 先发送发牌动画消息
+        this.broadcastDealStart();
+
+        // 等待发牌动画完成（约5秒）后发送游戏状态
+        setTimeout(() => {
+            this.broadcastGameState();
+        }, 5000);
+    }
+
+    // 广播发牌开始消息
+    broadcastDealStart() {
+        const message = JSON.stringify({ type: 'dealStart' });
+        for (const player of this.players.values()) {
+            if (player.ws && player.ws.readyState === WebSocket.OPEN) {
+                player.ws.send(message);
+            }
+        }
+    }
+
+    // 排序手牌
+    sortHand(playerId) {
+        const hand = this.gameState.hands[playerId];
+        if (!hand) return;
+
+        const suitOrder = { '筒': 0, '条': 1, '万': 2, '风': 3, '箭': 4 };
+        const windOrder = { '东': 0, '南': 1, '西': 2, '北': 3 };
+        const arrowOrder = { '中': 0, '发': 1, '白': 2 };
+
+        hand.sort((a, b) => {
+            // 万能牌放最后
+            if (this.isWildCard(a) && !this.isWildCard(b)) return 1;
+            if (!this.isWildCard(a) && this.isWildCard(b)) return -1;
+
+            const suitA = suitOrder[a.suit] ?? 5;
+            const suitB = suitOrder[b.suit] ?? 5;
+            if (suitA !== suitB) return suitA - suitB;
+
+            if (a.type === 'number' && b.type === 'number') {
+                return a.rank - b.rank;
+            } else if (a.type === 'wind' && b.type === 'wind') {
+                return (windOrder[a.rank] ?? 0) - (windOrder[b.rank] ?? 0);
+            } else if (a.type === 'arrow' && b.type === 'arrow') {
+                return (arrowOrder[a.rank] ?? 0) - (arrowOrder[b.rank] ?? 0);
+            }
+            return 0;
+        });
+    }
+
+    // 判断是否是万能牌（相同牌或红中）
+    isWildCard(card) {
+        const wild = this.gameState.wildCard;
+        if (!wild) return false;
+
+        // 相同牌是万能牌
+        if (card.suit === wild.suit && card.rank === wild.rank) return true;
+        // 红中也是万能牌
+        if (card.type === 'arrow' && card.rank === '中') return true;
+
+        return false;
+    }
+
+    // 摸牌
+    drawCard(playerId) {
+        if (this.gameState.deck.length === 0) {
+            return null; // 流局
+        }
+
+        const card = this.gameState.deck.pop();
+        if (card) {
+            this.gameState.hands[playerId].push(card);
+            this.gameState.lastDrawn = card;
+            this.sortHand(playerId);
+        }
+        return card;
+    }
+
+    // 出牌
+    playCard(playerId, cardId) {
+        const hand = this.gameState.hands[playerId];
+        if (!hand) return false;
+
+        const cardIndex = hand.findIndex(c => c.id === cardId);
+        if (cardIndex === -1) return false;
+
+        const card = hand.splice(cardIndex, 1)[0];
+
+        // 打出的牌背面朝上，加入弃牌堆
+        this.gameState.discardedPile.push({
+            playerId,
+            card,
+            hidden: true // 背面朝上
+        });
+
+        // 下一位玩家
+        this.nextPlayer();
+
+        return true;
+    }
+
+    // 换牌（发或红中）
+    changeFa(playerId) {
+        // 检查是否已换过
+        if (this.gameState.faUsed[playerId]) return false;
+
+        const hand = this.gameState.hands[playerId];
+        if (!hand) return false;
+
+        const wild = this.gameState.wildCard;
+        const isWildFa = wild && wild.type === 'arrow' && wild.rank === '发';
+
+        // 如果万能牌是"发"，找红中；否则找"发"
+        let targetRank = isWildFa ? '中' : '发';
+        const faIndex = hand.findIndex(c => c.type === 'arrow' && c.rank === targetRank);
+        if (faIndex === -1) return false;
+
+        // 移出牌到展示区
+        const faCard = hand.splice(faIndex, 1)[0];
+        this.gameState.showedCards[playerId].fa.push(faCard);
+        this.gameState.faUsed[playerId] = true;
+
+        // 摸一张新牌
+        const newCard = this.drawCard(playerId);
+
+        return { faCard, newCard };
+    }
+
+    // 暗杠
+    doGang(playerId, cardId) {
+        const hand = this.gameState.hands[playerId];
+        if (!hand) return false;
+
+        // 找到这张牌
+        const targetCard = hand.find(c => c.id === cardId);
+        if (!targetCard) return false;
+
+        // 找所有相同的牌（不包括万能牌替代）
+        const sameCards = hand.filter(c =>
+            c.suit === targetCard.suit && c.rank === targetCard.rank
+        );
+
+        if (sameCards.length !== 4) return false;
+
+        // 移除这4张牌
+        this.gameState.hands[playerId] = hand.filter(c =>
+            !(c.suit === targetCard.suit && c.rank === targetCard.rank)
+        );
+
+        // 加入展示区
+        this.gameState.showedCards[playerId].gang.push(sameCards);
+
+        return sameCards;
+    }
+
+    // 检查是否可以暗杠
+    canGang(playerId) {
+        const hand = this.gameState.hands[playerId];
+        if (!hand) return [];
+
+        const counts = {};
+        for (const card of hand) {
+            const key = `${card.suit}_${card.rank}`;
+            counts[key] = (counts[key] || 0) + 1;
+        }
+
+        const gangable = [];
+        for (const [key, count] of Object.entries(counts)) {
+            if (count === 4) {
+                const [suit, rank] = key.split('_');
+                gangable.push({ suit, rank });
+            }
+        }
+
+        return gangable;
+    }
+
+    // 检查是否有牌可以换（发或红中）
+    hasFa(playerId) {
+        const hand = this.gameState.hands[playerId];
+        if (!hand) return false;
+
+        // 如果已经换过，不能换
+        if (this.gameState.faUsed[playerId]) return false;
+
+        const wild = this.gameState.wildCard;
+        const isWildFa = wild && wild.type === 'arrow' && wild.rank === '发';
+
+        // 如果万能牌是"发"，用红中换牌；否则用"发"换牌
+        if (isWildFa) {
+            return hand.some(c => c.type === 'arrow' && c.rank === '中');
+        } else {
+            return hand.some(c => c.type === 'arrow' && c.rank === '发');
+        }
+    }
+
+    // 获取当前用于换牌的牌名（发或中）
+    getExchangeCardName() {
+        const wild = this.gameState.wildCard;
+        const isWildFa = wild && wild.type === 'arrow' && wild.rank === '发';
+        return isWildFa ? '中' : '发';
+    }
+
+    // 下一位玩家
+    nextPlayer() {
+        this.gameState.currentPlayer = (this.gameState.currentPlayer + 1) % 4;
+    }
+
+    // 获取当前玩家ID
+    getCurrentPlayerId() {
+        const playerIds = this.getSortedPlayerIds();
+        return playerIds[this.gameState.currentPlayer];
+    }
+
+    // 广播玩家列表
+    broadcastPlayerList() {
+        const players = Array.from(this.players.values()).map(p => ({
+            id: p.id,
+            name: p.name,
+            seatNum: p.seatNum,
+            ready: p.ready,
+            isAI: p.isAI
+        }));
+
+        const message = JSON.stringify({
+            type: 'playerList',
+            players,
+            tableNumber: this.tableNumber,
+            started: this.gameState.started
+        });
+
+        for (const player of this.players.values()) {
+            if (player.ws && player.ws.readyState === WebSocket.OPEN) {
+                player.ws.send(message);
+            }
+        }
+
+        for (const spectator of this.spectators.values()) {
+            if (spectator.ws && spectator.ws.readyState === WebSocket.OPEN) {
+                spectator.ws.send(message);
+            }
+        }
+    }
+
+    // 广播游戏状态
+    broadcastGameState() {
+        const playerIds = this.getSortedPlayerIds();
+
+        // 调试：打印万能牌信息
+        console.log(`广播游戏状态，万能牌: ${JSON.stringify(this.gameState.wildCard)}`);
+
+        for (const [playerId, player] of this.players) {
+            if (!player.ws || player.ws.readyState !== WebSocket.OPEN) continue;
+
+            const state = this.getPlayerGameState(playerId);
+            console.log(`发送游戏状态给 ${player.name}: 手牌数量=${state.myHand.length}, 万能牌: ${JSON.stringify(state.wildCard)}`);
+            player.ws.send(JSON.stringify({
+                type: 'gameState',
+                data: state
+            }));
+        }
+    }
+
+    // 获取单个玩家视角的游戏状态
+    getPlayerGameState(playerId) {
+        const playerIds = this.getSortedPlayerIds();
+        const myIndex = playerIds.indexOf(playerId);
+
+        // 构建各玩家信息
+        const playerInfo = {};
+        for (let i = 0; i < playerIds.length; i++) {
+            const pid = playerIds[i];
+            const p = this.players.get(pid);
+            playerInfo[pid] = {
+                name: p?.name || '',
+                seatNum: p?.seatNum || (i + 1),
+                handCount: this.gameState.hands[pid]?.length || 0,
+                showedCards: this.gameState.showedCards[pid] || { fa: [], gang: [] }
+            };
+        }
+
+        // 只返回自己的手牌
+        const myHand = this.gameState.hands[playerId] || [];
+
+        // 获取当前玩家的座位号
+        const currentPid = playerIds[this.gameState.currentPlayer];
+        const currentPlayerSeat = this.players.get(currentPid)?.seatNum || 1;
+
+        // 获取庄家的座位号
+        const dealerPid = playerIds[this.gameState.dealer];
+        const dealerSeat = this.players.get(dealerPid)?.seatNum || 1;
+
+        return {
+            started: this.gameState.started,
+            currentPlayer: this.gameState.currentPlayer,
+            currentPlayerSeat,
+            dealer: this.gameState.dealer,
+            dealerSeat,
+            myIndex,
+            myHand,
+            wildCard: this.gameState.wildCard,
+            deckCount: this.gameState.deck.length,
+            totalGameTime: this.gameState.totalGameTime,
+            playerInfo,
+            discardedCount: this.gameState.discardedPile.length,
+            canChangeFa: this.hasFa(playerId) && this.getCurrentPlayerId() === playerId,
+            canGang: this.canGang(playerId).length > 0 && this.getCurrentPlayerId() === playerId
+        };
+    }
+
+    // 广播消息
+    broadcastMessage(text) {
+        const message = JSON.stringify({ type: 'message', text });
+        for (const player of this.players.values()) {
+            if (player.ws && player.ws.readyState === WebSocket.OPEN) {
+                player.ws.send(message);
+            }
+        }
+    }
+
+    // 获取牌桌信息（用于大厅显示）
+    getTableInfo() {
+        return {
+            id: this.id,
+            tableNumber: this.tableNumber,
+            playerCount: this.players.size,
+            maxPlayers: this.maxPlayers,
+            started: this.gameState.started,
+            deckCount: this.gameState.deck ? this.gameState.deck.length : 0,
+            players: Array.from(this.players.values()).map(p => ({
+                name: p.name,
+                seatNum: p.seatNum,
+                ready: p.ready
+            }))
+        };
+    }
+}
+
+// ==================== WebSocket连接处理 ====================
+wss.on('connection', (ws) => {
+    let playerId = null;
+    let playerName = null;
+    let currentTableId = null;
+
+    console.log('新客户端连接');
+
+    ws.on('message', (data) => {
+        try {
+            const msg = JSON.parse(data);
+
+            switch (msg.type) {
+                case 'login':
+                    playerId = `player_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+                    playerName = msg.name || '玩家';
+
+                    // 添加到已登录客户端集合
+                    loggedInClients.add(ws);
+
+                    ws.send(JSON.stringify({
+                        type: 'loginSuccess',
+                        playerId,
+                        playerName
+                    }));
+
+                    // 发送牌桌列表
+                    sendTableList(ws);
+                    break;
+
+                case 'getTableList':
+                    sendTableList(ws);
+                    break;
+
+                case 'createTable':
+                    const newTable = createTable();
+                    // 加入牌桌
+                    if (joinTable(ws, playerId, playerName, newTable.id, msg.seatNum)) {
+                        currentTableId = newTable.id;
+                    }
+                    // 广播牌桌列表更新给所有人
+                    broadcastTableList();
+                    break;
+
+                case 'joinTable':
+                    if (joinTable(ws, playerId, playerName, msg.tableId, msg.seatNum)) {
+                        currentTableId = msg.tableId;
+                        // 广播牌桌列表更新给所有人
+                        broadcastTableList();
+                    }
+                    break;
+
+                case 'ready':
+                    if (currentTableId) {
+                        const table = tables.get(currentTableId);
+                        if (table) {
+                            table.setPlayerReady(playerId, msg.ready);
+                        }
+                    }
+                    break;
+
+                case 'play':
+                    if (currentTableId) {
+                        const table = tables.get(currentTableId);
+                        if (table && table.getCurrentPlayerId() === playerId) {
+                            if (table.playCard(playerId, msg.cardId)) {
+                                table.broadcastGameState();
+                            }
+                        }
+                    }
+                    break;
+
+                case 'changeFa':
+                    if (currentTableId) {
+                        const table = tables.get(currentTableId);
+                        if (table && table.getCurrentPlayerId() === playerId) {
+                            const result = table.changeFa(playerId);
+                            if (result) {
+                                table.broadcastMessage(`${playerName} 换了一张"發"`);
+                                table.broadcastGameState();
+                            }
+                        }
+                    }
+                    break;
+
+                case 'gang':
+                    if (currentTableId) {
+                        const table = tables.get(currentTableId);
+                        if (table && table.getCurrentPlayerId() === playerId) {
+                            const result = table.doGang(playerId, msg.cardId);
+                            if (result) {
+                                table.broadcastMessage(`${playerName} 暗杠！`);
+                                table.broadcastGameState();
+                            }
+                        }
+                    }
+                    break;
+
+                case 'draw':
+                    if (currentTableId) {
+                        const table = tables.get(currentTableId);
+                        if (table && table.getCurrentPlayerId() === playerId) {
+                            const card = table.drawCard(playerId);
+                            if (card) {
+                                table.broadcastGameState();
+                            } else {
+                                table.broadcastMessage('牌堆已空，流局！');
+                            }
+                        }
+                    }
+                    break;
+
+                case 'chat':
+                    if (currentTableId) {
+                        const table = tables.get(currentTableId);
+                        if (table) {
+                            table.broadcastMessage(`${playerName}: ${msg.text}`);
+                        }
+                    }
+                    break;
+            }
+        } catch (e) {
+            console.error('消息处理错误:', e);
+        }
+    });
+
+    ws.on('close', () => {
+        console.log('客户端断开:', playerName);
+
+        // 从已登录客户端集合中移除
+        loggedInClients.delete(ws);
+
+        if (currentTableId && playerId) {
+            const table = tables.get(currentTableId);
+            if (table) {
+                // 游戏进行中不删除玩家，只标记断开
+                const player = table.players.get(playerId);
+                if (player) {
+                    player.ws = null;
+                    player.ready = false;
+                }
+
+                // 如果游戏未开始且房间为空，删除房间
+                if (!table.gameState.started && table.removePlayer(playerId)) {
+                    tables.delete(currentTableId);
+                    console.log(`牌桌 ${currentTableId} 已删除`);
+                }
+
+                table.broadcastPlayerList();
+            }
+            playerToTable.delete(playerId);
+
+            // 广播牌桌列表更新（因为有人离开）
+            broadcastTableList();
+        }
+    });
+});
+
+// 发送牌桌列表
+function sendTableList(ws) {
+    const tableList = Array.from(tables.values()).map(t => t.getTableInfo());
+    ws.send(JSON.stringify({
+        type: 'tableList',
+        tables: tableList
+    }));
+}
+
+// 广播牌桌列表给所有已登录客户端
+function broadcastTableList() {
+    const tableList = Array.from(tables.values()).map(t => t.getTableInfo());
+    const message = JSON.stringify({
+        type: 'tableList',
+        tables: tableList
+    });
+
+    // 广播给所有连接的客户端
+    let count = 0;
+    wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(message);
+            count++;
+        }
+    });
+    console.log(`广播牌桌列表给 ${count} 个客户端，当前牌桌数: ${tableList.length}`);
+}
+
+// 创建牌桌
+function createTable() {
+    tableCounter++;
+    const tableId = `table_${tableCounter}`;
+    const table = new GameTable(tableId, tableCounter);
+    tables.set(tableId, table);
+    console.log(`创建新牌桌: ${tableId}`);
+    return table;
+}
+
+// 加入牌桌
+function joinTable(ws, playerId, playerName, tableId, seatNum) {
+    const table = tables.get(tableId);
+    if (!table) {
+        ws.send(JSON.stringify({ type: 'error', message: '牌桌不存在' }));
+        return false;
+    }
+
+    if (table.addPlayer(ws, playerId, playerName, seatNum)) {
+        playerToTable.set(playerId, tableId);
+        table.broadcastPlayerList();
+        console.log(`${playerName} 加入牌桌 ${tableId}`);
+        return true;
+    } else {
+        ws.send(JSON.stringify({ type: 'error', message: '无法加入牌桌（已满或游戏已开始）' }));
+        return false;
+    }
+}
+
+// 获取本机IP
+function getLocalIP() {
+    const os = require('os');
+    const interfaces = os.networkInterfaces();
+
+    for (const name of Object.keys(interfaces)) {
+        for (const iface of interfaces[name]) {
+            if (iface.family === 'IPv4' && !iface.internal) {
+                return iface.address;
+            }
+        }
+    }
+    return 'localhost';
+}
+
+// 启动服务器
+server.listen(PORT, () => {
+    const localIP = getLocalIP();
+    console.log('');
+    console.log('Majiang Server Started!');
+    console.log(`Game URL: http://localhost:${PORT}`);
+    console.log(`LAN URL: http://${localIP}:${PORT}`);
+    console.log('');
+});
+
+// 定时清理空桌子（每5分钟检查一次）
+setInterval(() => {
+    for (const [tableId, table] of tables) {
+        // 如果桌子没有玩家，或者所有玩家都已断开连接
+        if (table.players.size === 0) {
+            tables.delete(tableId);
+            console.log(`Cleaned up empty table: ${tableId}`);
+        } else {
+            // 检查是否所有玩家都已断开
+            let allDisconnected = true;
+            for (const player of table.players.values()) {
+                if (player.ws && player.ws.readyState === WebSocket.OPEN) {
+                    allDisconnected = false;
+                    break;
+                }
+            }
+            if (allDisconnected && !table.gameState.started) {
+                tables.delete(tableId);
+                console.log(`Cleaned up disconnected table: ${tableId}`);
+            }
+        }
+    }
+}, 300000); // 5分钟
+
+// 导出
+module.exports = { GameTable, createDeck, shuffle };

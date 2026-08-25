@@ -1,0 +1,255 @@
+# E2E-001 完整游戏流程测试
+
+## 测试模块
+
+| 项目 | 内容 |
+|------|------|
+| 测试ID | E2E-001 |
+| 模块 | 完整游戏流程 |
+| 优先级 | P1 |
+| 可并行 | ❌ 否（必须串行） |
+| 依赖 | 所有UT + 所有IT |
+
+---
+
+## 1. 测试目标
+
+模拟4名玩家从创建房间到游戏结束的完整流程，验证端到端功能。
+
+---
+
+## 2. 测试场景
+
+### 2.1 完整一局游戏
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        完整游戏流程                              │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Step 1: 创建房间                                               │
+│    P1 创建房间，获得房间号                                        │
+│           ↓                                                     │
+│  Step 2: 玩家加入                                               │
+│    P2, P3, P4 通过房间号加入                                     │
+│           ↓                                                     │
+│  Step 3: 玩家准备                                               │
+│    所有玩家点击准备                                              │
+│           ↓                                                     │
+│  Step 4: 发牌                                                   │
+│    系统发牌，每人25张，8张底牌                                    │
+│           ↓                                                     │
+│  Step 5: 叫主                                                   │
+│    玩家轮流叫主，确定庄家和主花色                                 │
+│           ↓                                                     │
+│  Step 6: 庄家扣底                                               │
+│    庄家选择8张牌扣回                                             │
+│           ↓                                                     │
+│  Step 7: 出牌阶段                                               │
+│    25轮出牌，直到牌出完                                          │
+│           ↓                                                     │
+│  Step 8: 结算                                                   │
+│    计算得分，判定胜负，升级                                       │
+│           ↓                                                     │
+│  Step 9: 继续/结束                                              │
+│    玩家选择继续或退出                                            │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### 2.2 测试用例
+
+| 用例ID | 场景 | 验证点 | 预期结果 |
+|--------|------|--------|----------|
+| E2E-001-001 | 创建房间 | 房间号生成 | 6位数字房间号 |
+| E2E-001-002 | 加入房间 | 4人加入 | 房间满员 |
+| E2E-001-003 | 准备开始 | 全部准备 | 自动开始游戏 |
+| E2E-001-004 | 发牌验证 | 牌数正确 | 每人25张，底牌8张 |
+| E2E-001-005 | 叫主流程 | 叫主完成 | 确定庄家和主花色 |
+| E2E-001-006 | 扣底验证 | 庄家手牌 | 仍为25张 |
+| E2E-001-007 | 出牌流程 | 25轮出牌 | 所有牌出完 |
+| E2E-001-008 | 得分统计 | 分数计算 | 正确累加 |
+| E2E-001-009 | 升级判定 | 级别变化 | 正确升级 |
+| E2E-001-010 | 游戏结束 | 结束判定 | 先到A者胜 |
+
+---
+
+## 3. 测试代码
+
+```javascript
+const { createGameClient, simulateGame } = require('./e2e-utils');
+
+describe('E2E-001 完整游戏流程', () => {
+
+  // 测试超时设为2分钟
+  jest.setTimeout(120000);
+
+  let players = [];
+
+  beforeAll(async () => {
+    // 创建4个模拟玩家
+    players = await Promise.all([
+      createGameClient('P1'),
+      createGameClient('P2'),
+      createGameClient('P3'),
+      createGameClient('P4'),
+    ]);
+  });
+
+  afterAll(async () => {
+    await Promise.all(players.map(p => p.disconnect()));
+  });
+
+  it('E2E-001 完整一局游戏', async () => {
+    // Step 1: 创建房间
+    const roomId = await players[0].createRoom();
+    expect(roomId).toMatch(/^\d{6}$/);
+    console.log(`房间创建成功: ${roomId}`);
+
+    // Step 2: 其他玩家加入
+    await Promise.all(players.slice(1).map(p => p.joinRoom(roomId)));
+    console.log('所有玩家已加入');
+
+    // Step 3: 全部准备
+    await Promise.all(players.map(p => p.ready()));
+    console.log('所有玩家已准备');
+
+    // Step 4: 等待发牌
+    const hands = await Promise.all(
+      players.map(p => p.waitForDeal())
+    );
+    hands.forEach((hand, i) => {
+      expect(hand.length).toBe(25);
+      console.log(`P${i+1} 获得 ${hand.length} 张牌`);
+    });
+
+    // Step 5: 叫主阶段
+    const bidResult = await simulateBidding(players);
+    console.log(`叫主完成: 庄家=${bidResult.dealer}, 主花色=${bidResult.trumpSuit}`);
+
+    // Step 6: 庄家扣底
+    const bottomCards = await players[bidResult.dealerIndex].deductBottom();
+    expect(players[bidResult.dealerIndex].hand.length).toBe(25);
+    console.log('庄家扣底完成');
+
+    // Step 7-8: 出牌阶段（25轮）
+    const playResult = await simulatePlay(players, bidResult.trumpSuit);
+    console.log(`出牌完成: 攻方得分=${playResult.attackerScore}`);
+
+    // Step 9: 结算验证
+    const gameResult = await players[0].getGameResult();
+    expect(gameResult).toBeDefined();
+    expect(gameResult.winner).toBeDefined();
+    expect(gameResult.scoreUpgraded).toBeGreaterThan(0);
+    console.log(`游戏结束: ${gameResult.winner}方胜利，升级${gameResult.scoreUpgraded}级`);
+
+    // 验证得分总和
+    expect(gameResult.finalScore.team1 + gameResult.finalScore.team2).toBe(100);
+  });
+
+  it('E2E-002 多局游戏（升级到A）', async () => {
+    const gameState = {
+      team1Level: '2',
+      team2Level: '2',
+    };
+
+    // 模拟多局直到一方到A
+    let roundCount = 0;
+    while (gameState.team1Level !== 'A' && gameState.team2Level !== 'A') {
+      roundCount++;
+
+      // 完成一局
+      const result = await simulateFullRound(players);
+
+      // 更新级别
+      if (result.winner === 'team1') {
+        gameState.team1Level = getNextLevel(gameState.team1Level, result.upgrade);
+      } else {
+        gameState.team2Level = getNextLevel(gameState.team2Level, result.upgrade);
+      }
+
+      console.log(`第${roundCount}局: ${result.winner}胜，级别 ${gameState.team1Level} vs ${gameState.team2Level}`);
+
+      // 防止无限循环
+      if (roundCount > 20) {
+        throw new Error('游戏局数过多，可能存在bug');
+      }
+    }
+
+    // 验证游戏结束
+    const winner = gameState.team1Level === 'A' ? 'team1' : 'team2';
+    console.log(`游戏结束: ${winner} 先打到A，共${roundCount}局`);
+  });
+});
+
+// 辅助函数
+async function simulateBidding(players) {
+  // 简化叫主逻辑：第一个有级牌对的玩家叫主
+  for (let i = 0; i < players.length; i++) {
+    const hand = players[i].hand;
+    const levelCards = hand.filter(c => c.rank === '2'); // 假设打2
+    if (levelCards.length >= 2) {
+      await players[i].bid(levelCards.slice(0, 2));
+      return {
+        dealer: `P${i+1}`,
+        dealerIndex: i,
+        trumpSuit: levelCards[0].suit,
+      };
+    }
+  }
+  // 默认P1叫主
+  await players[0].bid([players[0].hand[0]]);
+  return { dealer: 'P1', dealerIndex: 0, trumpSuit: 'spade' };
+}
+
+async function simulatePlay(players, trumpSuit) {
+  let attackerScore = 0;
+  let round = 0;
+
+  while (players.some(p => p.hand.length > 0)) {
+    round++;
+    const roundWinner = await simulateRound(players, trumpSuit);
+    // 简化：假设攻方得分
+    attackerScore += 5;
+  }
+
+  return { attackerScore, rounds: round };
+}
+
+async function simulateRound(players, trumpSuit) {
+  const plays = [];
+  for (const player of players) {
+    if (player.hand.length > 0) {
+      const card = player.hand.shift();
+      plays.push({ player, card });
+    }
+  }
+  return plays[0].player; // 简化：第一个出牌者赢
+}
+
+const levelOrder = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+function getNextLevel(current, upgrade) {
+  const index = levelOrder.indexOf(current);
+  return levelOrder[Math.min(index + upgrade, levelOrder.length - 1)];
+}
+```
+
+---
+
+## 4. 执行命令
+
+```bash
+# E2E测试必须串行执行
+npm run test:e2e
+
+# 或手动指定串行
+npm test -- --testPathPattern=E2E --maxWorkers=1 --testTimeout=120000
+```
+
+---
+
+## 5. 变更记录
+
+| 日期 | 版本 | 变更内容 |
+|------|------|----------|
+| 2026-03-13 | v1.0 | 初始版本 |

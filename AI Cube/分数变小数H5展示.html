@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>分数变小数 - 小学数学互动教学</title>
+<style>
+  :root {
+    --primary: #00b894;
+    --primary-light: #55efc4;
+    --primary-dark: #006266;
+    --accent: #fdcb6e;
+    --bg: #f0fff4;
+    --bg-card: #ffffff;
+    --ink: #2d3436;
+    --ink-light: #636e72;
+    --blue: #0984e3;
+    --orange: #e17055;
+    --radius: 16px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+  }
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    overflow: hidden;
+    height: 100vh;
+    user-select: none;
+  }
+  
+  .deck {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 60px;
+    opacity: 0;
+    transform: translateX(80px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+  
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+  
+  .slide.exit-left {
+    opacity: 0;
+    transform: translateX(-80px);
+  }
+  
+  .nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 24px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 100;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  
+  .nav-btn {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 2px 10px rgba(0,184,148,0.3);
+  }
+  
+  .nav-btn:hover { transform: scale(1.1); background: var(--primary-light); }
+  .nav-btn:active { transform: scale(0.95); }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; transform: none; }
+  
+  .slide-dots { display: flex; gap: 8px; }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ddd;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  
+  .dot.active {
+    background: var(--primary);
+    transform: scale(1.3);
+    box-shadow: 0 0 8px rgba(0,184,148,0.4);
+  }
+  
+  .slide-counter {
+    font-size: 14px;
+    color: var(--ink-light);
+    min-width: 50px;
+    text-align: center;
+  }
+  
+  /* Slide 1: Title */
+  .slide-1 {
+    background: linear-gradient(135deg, #55efc4 0%, #00b894 50%, #006266 100%);
+    color: white;
+    text-align: center;
+  }
+  
+  .title-main {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 900;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    margin-bottom: 16px;
+    animation: bounceIn 0.8s ease;
+  }
+  
+  .title-sub {
+    font-size: clamp(18px, 3vw, 28px);
+    opacity: 0.9;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+  
+  .title-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(8px);
+    padding: 10px 28px;
+    border-radius: 50px;
+    font-size: 18px;
+    animation: fadeUp 0.8s ease 0.6s both;
+  }
+  
+  .water-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: bounceIn 0.8s ease;
+  }
+  
+  @keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  @keyframes fadeUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  /* Common Card Styles */
+  .card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px;
+    width: 100%;
+    max-width: 750px;
+    transition: box-shadow 0.3s;
+  }
+  
+  .card:hover { box-shadow: var(--shadow-lg); }
+  
+  .card-title {
+    font-size: clamp(22px, 3.5vw, 32px);
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: var(--primary);
+  }
+  
+  .card-title .emoji {
+    font-size: 1.1em;
+    margin-right: 8px;
+  }
+  
+  .question-box {
+    background: linear-gradient(135deg, #e0fbf0, #e3f5f2);
+    border-left: 5px solid var(--primary);
+    border-radius: 0 12px 12px 0;
+    padding: 20px 24px;
+    margin: 16px 0;
+    font-size: clamp(16px, 2.2vw, 20px);
+    line-height: 1.8;
+  }
+  
+  .answer-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px dashed #eee;
+  }
+  
+  .answer-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 3px 12px rgba(0,184,148,0.3);
+  }
+  
+  .answer-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0,184,148,0.4); }
+  .answer-btn:active { transform: translateY(0); }
+  
+  .answer-content {
+    display: none;
+    margin-top: 16px;
+    animation: fadeUp 0.5s ease;
+  }
+  
+  .answer-content.show { display: block; }
+  
+  .step {
+    display: flex;
+    gap: 12px;
+    margin: 10px 0;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    align-items: flex-start;
+  }
+  
+  .step-num {
+    background: var(--primary);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  
+  .step-text {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  
+  .formula {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--ink);
+    padding: 8px 20px;
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 10px 0;
+    box-shadow: 0 2px 8px rgba(253,203,110,0.4);
+  }
+  
+  .highlight {
+    color: var(--primary);
+    font-weight: 700;
+  }
+  
+  .green { color: var(--primary); }
+  
+  /* Diagram Area */
+  .diagram-area {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  canvas {
+    border-radius: 12px;
+    display: block;
+    max-width: 100%;
+  }
+  
+  /* Interactive Builder */
+  .input-row {
+    display: flex;
+    gap: 16px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .input-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-light);
+  }
+  
+  .input-group input[type="number"] {
+    width: 100px;
+    padding: 8px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 18px;
+    text-align: center;
+    color: var(--primary);
+    font-weight: bold;
+  }
+  
+  .fraction-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0;
+  }
+  
+  .unit-selector {
+    display: flex;
+    gap: 10px;
+    margin: 12px 0;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .unit-btn {
+    padding: 10px 20px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  
+  .unit-btn:hover { border-color: var(--primary); }
+  .unit-btn.active {
+    border-color: var(--primary);
+    background: #e0fbf0;
+    color: var(--primary);
+  }
+  
+  .result-box {
+    background: linear-gradient(135deg, #e0fbf0, #e3f5f2);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  
+  .result-box .result-val {
+    font-size: 36px;
+    color: var(--primary);
+    display: block;
+    margin-top: 4px;
+  }
+  
+  /* Summary Table */
+  .summary-table {
+    width: 100%;
+    max-width: 650px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin: 16px 0;
+  }
+  
+  .summary-table th {
+    background: var(--primary);
+    color: white;
+    padding: 14px 18px;
+    font-size: 16px;
+    text-align: left;
+  }
+  
+  .summary-table td {
+    padding: 12px 18px;
+    font-size: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    background: white;
+  }
+  
+  .summary-table tr:last-child td { border-bottom: none; }
+  .summary-table tr:hover td { background: #f0fff4; }
+  
+  /* Quiz */
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  
+  .quiz-opt {
+    padding: 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  
+  .quiz-opt:hover { border-color: var(--primary); background: #e0fbf0; }
+  .quiz-opt.correct {
+    border-color: var(--primary);
+    background: #e0fbf0;
+    color: var(--primary);
+  }
+  .quiz-opt.wrong {
+    border-color: var(--orange);
+    background: #fff3e0;
+    color: var(--orange);
+  }
+  
+  .quiz-feedback {
+    margin-top: 12px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    display: none;
+  }
+  
+  .quiz-feedback.show { display: block; animation: fadeUp 0.4s ease; }
+  .quiz-feedback.correct { background: #e0fbf0; color: var(--primary); }
+  .quiz-feedback.wrong { background: #fff3e0; color: var(--orange); }
+  
+  /* Celebration */
+  .celebration {
+    text-align: center;
+  }
+  
+  .celebration .big-emoji {
+    font-size: 80px;
+    animation: bounceIn 0.6s ease;
+  }
+  
+  .congrats-text {
+    font-size: clamp(24px, 4vw, 40px);
+    font-weight: 900;
+    color: var(--primary);
+    margin: 16px 0;
+  }
+  
+  .tip-box {
+    background: linear-gradient(135deg, #e0fbf0, #e3f5f2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    font-size: 18px;
+    line-height: 1.8;
+  }
+  
+  .tip-box .tip-icon { font-size: 24px; }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .slide { padding: 24px 20px; padding-bottom: 100px; }
+    .card { padding: 20px; }
+    .quiz-options { grid-template-columns: 1fr; }
+    .input-row { gap: 10px; }
+  }
+  
+  /* Confetti Canvas */
+  #confetti-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="deck">
+
+  <!-- Slide 1: Title -->
+  <div class="slide slide-1 active" data-slide="1">
+    <div class="water-icon">📏</div>
+    <div class="title-main">分数变小数</div>
+    <div class="title-sub">单位换算的奥秘</div>
+    <div class="title-badge">🎯 小学数学 · 四年级</div>
+  </div>
+
+  <!-- Slide 2: Concept -->
+  <div class="slide" data-slide="2">
+    <div class="card">
+      <div class="card-title"><span class="emoji">🔗</span>分数和小数的关系</div>
+      <div class="question-box">
+        我们知道：1 米 = 10 分米 = 100 厘米<br><br>
+        那么：<br>
+        <strong>1 分米 = 1/10 米 = 0.1 米</strong><br>
+        <strong>1 厘米 = 1/100 米 = 0.01 米</strong><br><br>
+        <span class="highlight">核心规律：</span>分母是 10、100、1000 的分数都可以写成小数！
+      </div>
+      <div class="answer-section">
+        <button class="answer-btn" onclick="toggleAnswer(this)">💡 关键知识</button>
+        <div class="answer-content">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+            <div style="text-align:center; padding:16px; background:#e0fbf0; border-radius:12px;">
+              <div style="font-size:40px;">📏</div>
+              <div class="formula" style="font-size:16px;">一位小数 = 十分之几</div>
+              <div style="font-size:13px; color:var(--ink-light); margin-top:8px;">0.1, 0.5, 0.9</div>
+            </div>
+            <div style="text-align:center; padding:16px; background:#f0f8ff; border-radius:12px;">
+              <div style="font-size:40px;">🥣</div>
+              <div class="formula" style="font-size:16px;">两位小数 = 百分之几</div>
+              <div style="font-size:13px; color:var(--ink-light); margin-top:8px;">0.01, 0.25, 0.50</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Example 1 -->
+  <div class="slide" data-slide="3">
+    <div class="card">
+      <div class="card-title"><span class="emoji">📐</span>例题 1：长度单位</div>
+      <div class="question-box">
+        1 分米是 1 米的几分之几？写成小数是多少？<br>
+        3 厘米是多少米？写成小数呢？
+      </div>
+      <div class="diagram-area">
+        <canvas id="canvas1" width="500" height="250"></canvas>
+      </div>
+      <div class="answer-section">
+        <button class="answer-btn" onclick="toggleAnswer(this)">📝 查看答案</button>
+        <div class="answer-content">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">1 分米 = <span class="formula">1/10</span> 米 = <span class="highlight">0.1 米</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text">3 厘米 = <span class="formula">3/100</span> 米 = <span class="highlight">0.03 米</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text">结论：<strong>分母是 100，就是两位小数</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Example 2 - Weight -->
+  <div class="slide" data-slide="4">
+    <div class="card">
+      <div class="card-title"><span class="emoji">⚖️</span>例题 2：重量单位</div>
+      <div class="question-box">
+        1 克是 1 千克的几分之几？<br>
+        <strong>250 克</strong>是多少千克？
+      </div>
+      <div class="diagram-area">
+        <canvas id="canvas2" width="500" height="250"></canvas>
+      </div>
+      <div class="answer-section">
+        <button class="answer-btn" onclick="toggleAnswer(this)">📝 查看答案</button>
+        <div class="answer-content">
+          <div class="step">
+            <div class="step-num">💡</div>
+            <div class="step-text">1 千克 = 1000 克，所以 1 克 = <span class="formula">1/1000</span> 千克</div>
+          </div>
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">250 克 = <span class="formula">250/1000</span> 千克</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text"><span class="formula">0.250 千克 = 0.25 千克</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">🎉</div>
+            <div class="green"><strong>三位小数 = 千分之几！</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Compare -->
+  <div class="slide" data-slide="5">
+    <div class="card">
+      <div class="card-title"><span class="emoji">💰</span>不同场景的换算</div>
+      <p style="font-size:16px; color:var(--ink-light); margin-bottom:16px;">看看生活中其他地方：</p>
+      <div class="compare-grid" style="grid-template-columns: 1fr;">
+        <div class="compare-card" style="text-align:left; padding: 16px 24px;" onclick="highlightCard(this)">
+          <div class="label">💰 货币（元）</div>
+          <div class="value">5 角 = 5/10 元 = 0.5 元</div>
+          <div class="desc">一位小数</div>
+        </div>
+        <div class="compare-card" style="text-align:left; padding: 16px 24px; margin-top:10px;" onclick="highlightCard(this)">
+          <div class="label">🌡️ 温度（摄氏度）</div>
+          <div class="value">25°C = 25 度（整数不用变）</div>
+          <div class="desc">注意：整数温度不是分数</div>
+        </div>
+        <div class="compare-card" style="text-align:left; padding: 16px 24px; margin-top:10px;" onclick="highlightCard(this)">
+          <div class="label">🍚 重量（千克）</div>
+          <div class="value">50 克 = 50/1000 千克 = 0.050 千克</div>
+          <div class="desc">三位小数</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Interactive -->
+  <div class="slide" data-slide="6">
+    <div class="card">
+      <div class="card-title"><span class="emoji">🎮</span>互动：换算小能手</div>
+      <div style="width:100%; max-width:750px;">
+        <div class="unit-selector">
+          <button class="unit-btn active" data-mode="cm-m" onclick="setUnit('cm-m')">厘米 → 米</button>
+          <button class="unit-btn" data-mode="g-kg" onclick="setUnit('g-kg')">克 → 千克</button>
+          <button class="unit-btn" data-mode="jiao-yuan" onclick="setUnit('jiao-yuan')">角 → 元</button>
+        </div>
+        
+        <div class="fraction-input">
+          <span style="font-size:18px; font-weight:600;">输入数值：</span>
+          <input type="number" id="numerator" value="3" min="0" max="999" oninput="updateBuilder()">
+          <span style="font-size:18px;">(单位) = </span>
+          <span style="font-size:18px;" id="denom-text">1/100</span>
+          <span style="font-size:18px;"> (大单位)</span>
+        </div>
+
+        <div class="result-box" id="resultBox">
+          <span id="input-text">3 厘米</span> = <span class="result-val" id="resultVal">0.03</span> <span id="unit-text">米</span>
+          <div style="font-size:14px; color:var(--ink-light); margin-top:8px;" id="resultFormula">3 ÷ 100 = 0.03</div>
+        </div>
+        
+        <div class="diagram-area">
+          <canvas id="canvas3" width="500" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: Quiz -->
+  <div class="slide" data-slide="7">
+    <div class="card">
+      <div class="card-title"><span class="emoji">🧠</span>小测验</div>
+      <div class="question-box">
+        <strong>7 厘米 5 毫米</strong> 是多少米？（混合单位换算）
+      </div>
+      <div class="quiz-options" id="quizOptions">
+        <div class="quiz-opt" onclick="checkQuiz(this, false)">7.5 米</div>
+        <div class="quiz-opt" onclick="checkQuiz(this, true)">0.075 米</div>
+        <div class="quiz-opt" onclick="checkQuiz(this, false)">0.75 米</div>
+        <div class="quiz-opt" onclick="checkQuiz(this, false)">7.05 米</div>
+      </div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+      <div style="text-align:center; margin-top:16px;">
+        <button class="answer-btn" id="nextQuizBtn" style="display:none;" onclick="nextQuiz()">下一题 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 8: Summary -->
+  <div class="slide" data-slide="8">
+    <div class="card">
+      <div class="card-title"><span class="emoji">📋</span>知识总结</div>
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>换算类型</th>
+            <th>进率</th>
+            <th>小数位数</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>分米 → 米</td>
+            <td>÷ 10</td>
+            <td><strong>一位</strong> (0.1m)</td>
+          </tr>
+          <tr>
+            <td>厘米 → 米</td>
+            <td>÷ 100</td>
+            <td><strong>两位</strong> (0.03m)</td>
+          </tr>
+          <tr>
+            <td>克 → 千克</td>
+            <td>÷ 1000</td>
+            <td><strong>三位</strong> (0.25kg)</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tip-box">
+        <span class="tip-icon">🎯</span> <strong>解题口诀：</strong><br>
+        小变大，除以进率。<br>
+        分母是十百千，小数点向左移！
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 9: End -->
+  <div class="slide" data-slide="9">
+    <div class="celebration">
+      <div class="big-emoji">🎉</div>
+      <div class="congrats-text">太棒了！学习完成！</div>
+      <div style="font-size:20px; color:var(--ink-light); max-width:500px; line-height:1.8; margin:20px 0;">
+        今天我们一起学习了：
+      </div>
+      <div style="text-align:left; max-width:450px; margin:0 auto;">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">分数和小数的对应关系（十分之几、百分之几）</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">长度单位换算（米↔分米↔厘米）</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">重量单位换算（千克↔克）</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text">小数位数 = 进率的 0 的个数</div>
+        </div>
+      </div>
+      <button class="answer-btn" style="margin-top:24px; font-size:20px; padding:14px 40px;" onclick="goToSlide(1)">🔄 重新学习</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation Bar -->
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="prevSlide()" disabled>◀</button>
+  <div class="slide-dots" id="slideDots"></div>
+  <div class="slide-counter" id="slideCounter">1 / 9</div>
+  <button class="nav-btn" id="nextBtn" onclick="nextSlide()">▶</button>
+</div>
+
+<script>
+// Slide Management
+const totalSlides = 9;
+let currentSlide = 1;
+let currentQuiz = 0;
+let currentUnit = 'cm-m';
+
+const quizData = [
+  {
+    q: '7 厘米 5 毫米 是多少米？（混合单位换算）',
+    opts: ['7.5 米', '0.075 米', '0.75 米', '7.05 米'],
+    correct: 1,
+    explain: '5mm = 0.5cm, 总共7.5cm。7.5cm = 7.5/100m = 0.075m ✓'
+  },
+  {
+    q: '下面哪个小数表示 3/100？',
+    opts: ['0.3', '0.03', '0.003', '3.0'],
+    correct: 1,
+    explain: '3/100 = 0.03（两位小数）✓'
+  },
+  {
+    q: '500 克 = （ ）千克',
+    opts: ['0.5', '5', '0.05', '0.005'],
+    correct: 0,
+    explain: '500/1000 = 0.5 ✓'
+  }
+];
+
+function initDots() {
+  const container = document.getElementById('slideDots');
+  for (let i = 1; i <= totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 1 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    container.appendChild(dot);
+  }
+}
+
+function goToSlide(n) {
+  if (n < 1 || n > totalSlides || n === currentSlide) return;
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+
+  slides[currentSlide - 1].classList.remove('active');
+  slides[currentSlide - 1].classList.add(n > currentSlide ? 'exit-left' : '');
+  setTimeout(() => {
+    slides[currentSlide - 1].classList.remove('exit-left');
+  }, 500);
+
+  currentSlide = n;
+
+  slides[currentSlide - 1].classList.add('active');
+  dots[currentSlide - 1].classList.add('active');
+  dots.forEach((d, i) => {
+    if (i + 1 !== currentSlide) d.classList.remove('active');
+  });
+
+  document.getElementById('slideCounter').textContent = `${currentSlide} / ${totalSlides}`;
+  document.getElementById('prevBtn').disabled = currentSlide === 1;
+  document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+
+  if (currentSlide === 3) drawCanvas1();
+  if (currentSlide === 4) drawCanvas2();
+  if (currentSlide === 6) updateBuilder();
+  if (currentSlide === 9) launchConfetti();
+}
+
+function nextSlide() { goToSlide(currentSlide + 1); }
+function prevSlide() { goToSlide(currentSlide - 1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+});
+
+function toggleAnswer(btn) {
+  const content = btn.nextElementSibling;
+  content.classList.toggle('show');
+  btn.textContent = content.classList.contains('show') ? '🙈 隐藏答案' : '💡 查看答案';
+}
+
+// Canvas Drawing - Ruler
+function drawRuler(canvasId, totalLength, unitName, highlightPart) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width;
+  const H = canvas.height;
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#f0fff4';
+  ctx.fillRect(0, 0, W, H);
+
+  const startX = 50;
+  const endX = W - 50;
+  const totalLengthPx = endX - startX;
+  const y = H / 2;
+
+  // Main line
+  ctx.beginPath();
+  ctx.moveTo(startX, y);
+  ctx.lineTo(endX, y);
+  ctx.strokeStyle = '#333';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Draw ticks
+  const tickCount = 100; // representing cm
+  for (let i = 0; i <= tickCount; i++) {
+    const x = startX + (totalLengthPx / tickCount) * i;
+    const h = (i % 10 === 0) ? 20 : (i % 5 === 0) ? 15 : 10;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x, y + h);
+    ctx.stroke();
+    
+    if (i % 10 === 0) {
+      ctx.fillStyle = '#333';
+      ctx.font = '12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(i, x, y + h + 15);
+    }
+  }
+
+  // Highlight specific part if needed
+  if (highlightPart) {
+    const hx = startX + (totalLengthPx / tickCount) * highlightPart;
+    ctx.fillStyle = 'rgba(0, 184, 148, 0.3)';
+    ctx.fillRect(startX, y, hx - startX, 40);
+    ctx.fillStyle = '#00b894';
+    ctx.font = 'bold 16px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(highlightPart + ' cm', startX + (hx - startX)/2, y - 5);
+  }
+}
+
+function drawCanvas1() {
+  drawRuler('canvas1', 100, 'cm', 3);
+}
+
+function drawCanvas2() {
+  drawRuler('canvas2', 1000, 'g', 250);
+}
+
+// Interactive Builder
+function setUnit(unit) {
+  currentUnit = unit;
+  document.querySelectorAll('.unit-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[data-mode="${unit}"]`).classList.add('active');
+  updateBuilder();
+}
+
+function updateBuilder() {
+  const num = parseInt(document.getElementById('numerator').value) || 0;
+  let denom, unitFrom, unitTo, scale;
+  let labelFrom, labelTo;
+
+  switch(currentUnit) {
+    case 'cm-m':
+      denom = '100';
+      unitFrom = '厘米'; unitTo = '米'; scale = 100;
+      labelFrom = '厘米'; labelTo = '米';
+      break;
+    case 'g-kg':
+      denom = '1000';
+      unitFrom = '克'; unitTo = '千克'; scale = 1000;
+      labelFrom = '克'; labelTo = '千克';
+      break;
+    case 'jiao-yuan':
+      denom = '10';
+      unitFrom = '角'; unitTo = '元'; scale = 10;
+      labelFrom = '角'; labelTo = '元';
+      break;
+  }
+
+  document.getElementById('denom-text').textContent = `1/${denom}`;
+  document.getElementById('input-text').textContent = `${num} ${unitFrom}`;
+  document.getElementById('unit-text').textContent = unitTo;
+
+  // Decimal calculation
+  const dec = (num / scale).toFixed(denom === '10' ? 1 : denom === '100' ? 2 : 3);
+  // Remove trailing zeros after decimal point for cleanliness, but keep at least one if it was e.g. 0.50 -> 0.5
+  const finalDec = parseFloat(dec).toString();
+
+  document.getElementById('resultVal').textContent = finalDec;
+  document.getElementById('resultFormula').textContent = `${num} ÷ ${scale} = ${finalDec}`;
+  
+  // Draw canvas
+  const canvas = document.getElementById('canvas3');
+  if(canvas) {
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Simplified visual representation
+    const w = canvas.width - 100;
+    const h = canvas.height - 60;
+    
+    // Draw box for 1 unit
+    ctx.fillStyle = '#e0fbf0';
+    ctx.fillRect(50, 50, w, h);
+    ctx.strokeStyle = '#00b894';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(50, 50, w, h);
+    
+    // Draw fraction bar
+    ctx.fillStyle = '#00b894';
+    ctx.font = 'bold 20px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`num: ${num}`, 50 + w/2, 40);
+    ctx.fillText(`denom: ${denom}`, 50 + w/2, 50 + h + 25);
+    
+    // Draw arrow
+    ctx.beginPath();
+    ctx.moveTo(50 + w/2, 50 + h);
+    ctx.lineTo(50 + w/2, 50 + h + 15);
+    ctx.stroke();
+    ctx.fillText(`= ${finalDec}`, 50 + w/2, 50 + h + 40);
+  }
+}
+
+function highlightCard(card) {
+  document.querySelectorAll('.compare-card').forEach(c => {
+    c.style.transform = '';
+    c.style.boxShadow = '';
+  });
+  card.style.transform = 'translateY(-8px) scale(1.03)';
+  card.style.boxShadow = '0 8px 30px rgba(0,0,0,0.15)';
+}
+
+function checkQuiz(el, isCorrect) {
+  const opts = document.querySelectorAll('.quiz-opt');
+  const feedback = document.getElementById('quizFeedback');
+  const data = quizData[currentQuiz];
+
+  opts.forEach(o => {
+    o.style.pointerEvents = 'none';
+    if (o === opts[data.correct]) o.classList.add('correct');
+  });
+
+  if (isCorrect) {
+    el.classList.add('correct');
+    feedback.className = 'quiz-feedback show correct';
+    feedback.textContent = '🎉 回答正确！' + data.explain;
+  } else {
+    el.classList.add('wrong');
+    feedback.className = 'quiz-feedback show wrong';
+    feedback.textContent = '😅 不对哦～正确答案是 ' + data.opts[data.correct] + '。' + data.explain;
+  }
+
+  document.getElementById('nextQuizBtn').style.display = 'inline-block';
+}
+
+function nextQuiz() {
+  currentQuiz++;
+  if (currentQuiz >= quizData.length) {
+    currentQuiz = 0;
+    goToSlide(9);
+    return;
+  }
+
+  const data = quizData[currentQuiz];
+  const container = document.getElementById('quizOptions');
+  const feedback = document.getElementById('quizFeedback');
+  const nextBtn = document.getElementById('nextQuizBtn');
+
+  feedback.className = 'quiz-feedback';
+  feedback.textContent = '';
+  nextBtn.style.display = 'none';
+
+  const indices = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
+  container.innerHTML = '';
+  indices.forEach((origIdx, i) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-opt';
+    div.textContent = data.opts[origIdx];
+    div.onclick = function() {
+      checkQuiz(this, origIdx === data.correct);
+    };
+    container.appendChild(div);
+  });
+}
+
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particles = [];
+  const colors = ['#00b894', '#55efc4', '#fdcb6e', '#006266', '#74b9ff', '#0984e3'];
+
+  for (let i = 0; i < 120; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: Math.random() * 10 + 5,
+      h: Math.random() * 6 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 3,
+      vy: Math.random() * 3 + 2,
+      rot: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5)  * 10,
+      opacity: 1
+    });
+  }
+
+  let frame = 0;
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    particles.forEach(p => {
+      if (p.opacity <= 0) return;
+      alive = true;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.05;
+      p.rot += p.rotSpeed;
+      if (frame > 60) p.opacity -= 0.01;
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (alive && frame < 300) requestAnimationFrame(animate);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  animate();
+}
+
+window.addEventListener('load', () => {
+  initDots();
+  updateBuilder();
+});
+
+window.addEventListener('resize', () => {
+  const c = document.getElementById('confetti-canvas');
+  if (c) { c.width = window.innerWidth; c.height = window.innerHeight; }
+});
+</script>
+</body>
+</html>

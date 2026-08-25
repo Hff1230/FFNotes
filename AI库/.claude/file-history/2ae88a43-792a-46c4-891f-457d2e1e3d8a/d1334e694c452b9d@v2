@@ -1,0 +1,20 @@
+@echo off
+chcp 65001 > nul
+echo.
+echo 🀄 桐城自摸麻将服务器
+echo ========================
+echo.
+
+cd /d "%~dp0"
+
+REM 检查node_modules是否存在
+if not exist "node_modules" (
+    echo 首次运行，正在安装依赖...
+    call npm install
+    echo.
+)
+
+echo 启动服务器...
+node majiang-server.js
+
+pause

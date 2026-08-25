@@ -1,0 +1,142 @@
+using UnityEngine;
+
+/// <summary>
+/// 演示脚本：在运行时绘制一个正方形并绕随机方向持续旋转
+/// 将此脚本挂载到场景中的任意GameObject上即可运行
+/// </summary>
+public class RotateSquareDemo : MonoBehaviour
+{
+    // 正方形的大小
+    public float squareSize = 2f;
+
+    // 旋转速度（度/秒）
+    public float rotationSpeed = 45f;
+
+    // 线条颜色
+    public Color lineColor = Color.green;
+
+    // 随机旋转轴
+    private Vector3 rotationAxis;
+
+    // 当前旋转角度
+    private float currentAngle;
+
+    // 材质用于GL绘制
+    private Material lineMaterial;
+
+    void Start()
+    {
+        // 生成随机旋转轴（归一化）
+        rotationAxis = new Vector3(
+            Random.Range(-1f, 1f),
+            Random.Range(-1f, 1f),
+            Random.Range(-1f, 1f)
+        ).normalized;
+
+        // 确保旋转轴不为零向量
+        if (rotationAxis == Vector3.zero)
+        {
+            rotationAxis = Vector3.up;
+        }
+
+        Debug.Log($"[RotateSquareDemo] 随机旋转轴: {rotationAxis}");
+
+        // 创建简单的线条材质
+        CreateLineMaterial();
+    }
+
+    void CreateLineMaterial()
+    {
+        // 创建一个简单的隐藏shader材质
+        Shader shader = Shader.Find("Hidden/Internal-Colored");
+        lineMaterial = new Material(shader);
+        lineMaterial.hideFlags = HideFlags.HideAndDontSave;
+        lineMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        lineMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        lineMaterial.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
+        lineMaterial.SetInt("_ZWrite", 0);
+    }
+
+    void Update()
+    {
+        // 更新旋转角度
+        currentAngle += rotationSpeed * Time.deltaTime;
+
+        // 保持角度在0-360度范围内
+        if (currentAngle >= 360f)
+        {
+            currentAngle -= 360f;
+        }
+    }
+
+    void OnRenderObject()
+    {
+        if (lineMaterial == null) return;
+
+        // 设置材质和颜色
+        lineMaterial.SetPass(0);
+
+        // 保存当前矩阵
+        GL.PushMatrix();
+
+        // 应用旋转（绕随机轴旋转）
+        GL.MultMatrix(Matrix4x4.TRS(
+            transform.position,
+            Quaternion.AngleAxis(currentAngle, rotationAxis),
+            Vector3.one
+        ));
+
+        // 开始绘制线条
+        GL.Begin(GL.LINES);
+        GL.Color(lineColor);
+
+        // 定义正方形的四个顶点（在XZ平面上）
+        float halfSize = squareSize * 0.5f;
+        Vector3 v0 = new Vector3(-halfSize, 0, -halfSize);
+        Vector3 v1 = new Vector3(halfSize, 0, -halfSize);
+        Vector3 v2 = new Vector3(halfSize, 0, halfSize);
+        Vector3 v3 = new Vector3(-halfSize, 0, halfSize);
+
+        // 绘制四条边
+        // 边 0-1
+        GL.Vertex(v0);
+        GL.Vertex(v1);
+
+        // 边 1-2
+        GL.Vertex(v1);
+        GL.Vertex(v2);
+
+        // 边 2-3
+        GL.Vertex(v2);
+        GL.Vertex(v3);
+
+        // 边 3-0
+        GL.Vertex(v3);
+        GL.Vertex(v0);
+
+        GL.End();
+
+        // 恢复矩阵
+        GL.PopMatrix();
+    }
+
+    void OnDestroy()
+    {
+        if (lineMaterial != null)
+        {
+            DestroyImmediate(lineMaterial);
+        }
+    }
+
+    // 在Scene视图中显示旋转轴（仅编辑器可见）
+#if UNITY_EDITOR
+    void OnDrawGizmos()
+    {
+        if (rotationAxis != Vector3.zero)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawRay(transform.position, rotationAxis * 2f);
+        }
+    }
+#endif
+}

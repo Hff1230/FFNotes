@@ -1,0 +1,23 @@
+{
+  "skill_name": "multi-agent-orchestrator",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我完成这个功能：创建一个用户注册表单，包括前端表单验证和后端API，还要写单元测试",
+      "expected_output": "应该拆分为多个子任务（前端、后端、测试），使用子agent执行，最大并发2个",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "分析项目中的所有TypeScript文件，检查代码质量并生成报告",
+      "expected_output": "应该将分析任务拆分为多个并行子任务，最后汇总结果",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "帮我重构这个旧模块，同时更新相关文档和测试用例",
+      "expected_output": "应该识别依赖关系：重构→测试/文档可并行，然后验证",
+      "files": []
+    }
+  ]
+}

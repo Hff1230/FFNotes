@@ -176,5 +176,11 @@
   "AI库/图片处理": "IcAFolder",
   "AI库/小游戏/小猫钓鱼": "IcAFolder",
   "AI库/小游戏/掼蛋": "IcAFolder",
-  "AI库/key.md": "IcAFile"
+  "AI库/key.md": "IcAFile",
+  "AI库/工具与环境": "IcAFolder",
+  "AI库/小游戏/八十分": "IcAFolder",
+  "Claude": "IcAFolder",
+  "Claude/settings.json.md": "IcAFile",
+  "AI库/DeepSeek": "IcAFolder",
+  "AI库/DeepSeek/Harness安装.md": "IcAFile"
 }

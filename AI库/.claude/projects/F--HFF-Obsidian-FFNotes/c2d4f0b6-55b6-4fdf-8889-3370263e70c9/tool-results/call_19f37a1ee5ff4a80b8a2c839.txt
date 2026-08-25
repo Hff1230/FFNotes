@@ -1,0 +1,1868 @@
+     1→<!DOCTYPE html>
+     2→<html lang="zh-CN">
+     3→<head>
+     4→    <meta charset="UTF-8">
+     5→    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6→    <title>桐城自摸麻将 - 局域网版</title>
+     7→    <style>
+     8→        * {
+     9→            margin: 0;
+    10→            padding: 0;
+    11→            box-sizing: border-box;
+    12→        }
+    13→
+    14→        body {
+    15→            font-family: 'Microsoft YaHei', sans-serif;
+    16→            background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%);
+    17→            min-height: 100vh;
+    18→            color: #fff;
+    19→        }
+    20→
+    21→        /* 大厅样式 */
+    22→        .lobby {
+    23→            max-width: 900px;
+    24→            margin: 0 auto;
+    25→            padding: 20px;
+    26→        }
+    27→
+    28→        .lobby-header {
+    29→            text-align: center;
+    30→            padding: 20px;
+    31→            background: rgba(0,0,0,0.3);
+    32→            border-radius: 10px;
+    33→            margin-bottom: 20px;
+    34→        }
+    35→
+    36→        .lobby-header h1 {
+    37→            font-size: 2em;
+    38→            margin-bottom: 10px;
+    39→        }
+    40→
+    41→        .login-form {
+    42→            display: flex;
+    43→            gap: 10px;
+    44→            justify-content: center;
+    45→            align-items: center;
+    46→        }
+    47→
+    48→        .login-form input {
+    49→            padding: 10px 20px;
+    50→            font-size: 16px;
+    51→            border: none;
+    52→            border-radius: 5px;
+    53→            width: 200px;
+    54→        }
+    55→
+    56→        .btn {
+    57→            padding: 10px 20px;
+    58→            font-size: 16px;
+    59→            border: none;
+    60→            border-radius: 5px;
+    61→            cursor: pointer;
+    62→            transition: all 0.3s;
+    63→        }
+    64→
+    65→        .btn-primary {
+    66→            background: #4CAF50;
+    67→            color: white;
+    68→        }
+    69→
+    70→        .btn-primary:hover {
+    71→            background: #45a049;
+    72→        }
+    73→
+    74→        .btn-danger {
+    75→            background: #f44336;
+    76→            color: white;
+    77→        }
+    78→
+    79→        .btn-secondary {
+    80→            background: #607D8B;
+    81→            color: white;
+    82→        }
+    83→
+    84→        .table-list {
+    85→            display: grid;
+    86→            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    87→            gap: 15px;
+    88→            padding: 20px;
+    89→        }
+    90→
+    91→        .table-card {
+    92→            background: rgba(255,255,255,0.1);
+    93→            border-radius: 10px;
+    94→            padding: 15px;
+    95→            text-align: center;
+    96→            cursor: pointer;
+    97→            transition: all 0.3s;
+    98→            border: 2px solid transparent;
+    99→        }
+   100→
+   101→        .table-card:hover {
+   102→            background: rgba(255,255,255,0.2);
+   103→            transform: translateY(-2px);
+   104→        }
+   105→
+   106→        .table-card.empty {
+   107→            border-color: #4CAF50;
+   108→        }
+   109→
+   110→        .table-card.waiting {
+   111→            border-color: #FFC107;
+   112→        }
+   113→
+   114→        .table-card.playing {
+   115→            border-color: #2196F3;
+   116→        }
+   117→
+   118→        .table-card.full {
+   119→            border-color: #f44336;
+   120→            opacity: 0.7;
+   121→        }
+   122→
+   123→        .table-card.new-table {
+   124→            background: rgba(76, 175, 80, 0.3);
+   125→            border: 2px dashed #4CAF50;
+   126→        }
+   127→
+   128→        .table-number {
+   129→            font-size: 1.5em;
+   130→            font-weight: bold;
+   131→            margin-bottom: 10px;
+   132→        }
+   133→
+   134→        .table-status {
+   135→            font-size: 0.9em;
+   136→            color: #ccc;
+   137→        }
+   138→
+   139→        .table-players {
+   140→            margin-top: 10px;
+   141→            font-size: 0.8em;
+   142→        }
+   143→
+   144→        /* 牌桌列表中的小型圆桌布局 */
+   145→        .mini-table-layout {
+   146→            position: relative;
+   147→            width: 120px;
+   148→            height: 120px;
+   149→            margin: 10px auto;
+   150→        }
+   151→
+   152→        .mini-table-center {
+   153→            position: absolute;
+   154→            top: 50%;
+   155→            left: 50%;
+   156→            transform: translate(-50%, -50%);
+   157→            width: 40px;
+   158→            height: 40px;
+   159→            border-radius: 50%;
+   160→            background: linear-gradient(135deg, #2d5a3d 0%, #1a3d2a 100%);
+   161→            border: 2px solid #FFD700;
+   162→            display: flex;
+   163→            align-items: center;
+   164→            justify-content: center;
+   165→            font-size: 16px;
+   166→        }
+   167→
+   168→        .mini-seat {
+   169→            position: absolute;
+   170→            text-align: center;
+   171→            width: 32px;
+   172→        }
+   173→
+   174→        /* 逆时针顺序: 1(底) → 2(右) → 3(顶) → 4(左) */
+   175→        .mini-seat-1 { bottom: 0; left: 50%; transform: translateX(-50%); }
+   176→        .mini-seat-2 { right: 0; top: 50%; transform: translateY(-50%); }
+   177→        .mini-seat-3 { top: 0; left: 50%; transform: translateX(-50%); }
+   178→        .mini-seat-4 { left: 0; top: 50%; transform: translateY(-50%); }
+   179→
+   180→        .mini-seat-avatar {
+   181→            width: 32px;
+   182→            height: 32px;
+   183→            border-radius: 50%;
+   184→            background: rgba(255, 255, 255, 0.2);
+   185→            display: flex;
+   186→            align-items: center;
+   187→            justify-content: center;
+   188→            font-size: 12px;
+   189→            font-weight: bold;
+   190→            border: 2px solid #555;
+   191→            transition: all 0.3s;
+   192→            color: #fff;
+   193→        }
+   194→
+   195→        .mini-seat-avatar.occupied {
+   196→            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+   197→            border-color: #81C784;
+   198→        }
+   199→
+   200→        .mini-seat-avatar:hover:not(.occupied) {
+   201→            background: rgba(255, 215, 0, 0.3);
+   202→            border-color: #FFD700;
+   203→            cursor: pointer;
+   204→        }
+   205→
+   206→        .table-header {
+   207→            display: flex;
+   208→            justify-content: space-between;
+   209→            align-items: center;
+   210→            padding: 0 5px;
+   211→        }
+   212→
+   213→        .table-id {
+   214→            color: #FFD700;
+   215→            font-size: 14px;
+   216→            font-weight: bold;
+   217→        }
+   218→
+   219→        .table-mode-badge {
+   220→            font-size: 11px;
+   221→            padding: 2px 6px;
+   222→            border-radius: 4px;
+   223→            background: rgba(255, 215, 0, 0.2);
+   224→            color: #FFD700;
+   225→        }
+   226→
+   227→        .table-footer {
+   228→            text-align: center;
+   229→            font-size: 12px;
+   230→            color: #ccc;
+   231→            margin-top: 10px;
+   232→        }
+   233→
+   234→        .table-footer.full {
+   235→            color: #ff6b6b;
+   236→        }
+   237→
+   238→        .table-footer.playing {
+   239→            color: #4dabf7;
+   240→        }
+   241→
+   242→        /* 创建新桌卡片样式 */
+   243→        .create-table-card {
+   244→            background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(46, 125, 50, 0.3));
+   245→            border: 2px dashed #4CAF50;
+   246→            display: flex;
+   247→            flex-direction: column;
+   248→            align-items: center;
+   249→            justify-content: center;
+   250→            min-height: 200px;
+   251→        }
+   252→
+   253→        .create-table-card .plus {
+   254→            font-size: 48px;
+   255→            color: #4CAF50;
+   256→            line-height: 1;
+   257→        }
+   258→
+   259→        .create-table-card .text {
+   260→            color: #4CAF50;
+   261→            font-size: 16px;
+   262→            margin-top: 10px;
+   263→        }
+   264→
+   265→        .create-table-card:hover {
+   266→            background: linear-gradient(135deg, rgba(76, 175, 80, 0.5), rgba(46, 125, 50, 0.5));
+   267→        }
+   268→
+   269→        /* 游戏界面样式 */
+   270→        .game-container {
+   271→            display: none;
+   272→            width: 100vw;
+   273→            height: 100vh;
+   274→            position: relative;
+   275→        }
+   276→
+   277→        .game-table {
+   278→            width: 100%;
+   279→            height: 100%;
+   280→            position: relative;
+   281→            background: radial-gradient(ellipse at center, #2d5a3d 0%, #1a472a 100%);
+   282→        }
+   283→
+   284→        /* 玩家区域 */
+   285→        .player-area {
+   286→            position: absolute;
+   287→            display: flex;
+   288→            flex-direction: column;
+   289→            align-items: center;
+   290→        }
+   291→
+   292→        .player-area.bottom {
+   293→            bottom: 10px;
+   294→            left: 50%;
+   295→            transform: translateX(-50%);
+   296→            width: 80%;
+   297→        }
+   298→
+   299→        .player-area.top {
+   300→            top: 10px;
+   301→            left: 50%;
+   302→            transform: translateX(-50%);
+   303→        }
+   304→
+   305→        .player-area.left {
+   306→            left: 10px;
+   307→            top: 50%;
+   308→            transform: translateY(-50%);
+   309→        }
+   310→
+   311→        .player-area.right {
+   312→            right: 10px;
+   313→            top: 50%;
+   314→            transform: translateY(-50%);
+   315→        }
+   316→
+   317→        .player-info {
+   318→            background: rgba(0,0,0,0.5);
+   319→            padding: 8px 15px;
+   320→            border-radius: 5px;
+   321→            margin-bottom: 5px;
+   322→            text-align: center;
+   323→        }
+   324→
+   325→        .player-info.active {
+   326→            border: 2px solid #FFD700;
+   327→            box-shadow: 0 0 10px #FFD700;
+   328→        }
+   329→
+   330→        .player-name {
+   331→            font-weight: bold;
+   332→        }
+   333→
+   334→        .hand-count {
+   335→            font-size: 0.9em;
+   336→            color: #ccc;
+   337→        }
+   338→
+   339→        /* 展示区 */
+   340→        .showed-area {
+   341→            display: flex;
+   342→            gap: 5px;
+   343→            margin: 5px 0;
+   344→            flex-wrap: wrap;
+   345→            justify-content: center;
+   346→        }
+   347→
+   348→        .showed-card {
+   349→            width: 30px;
+   350→            height: 40px;
+   351→            background: #fff;
+   352→            border-radius: 3px;
+   353→            display: flex;
+   354→            align-items: center;
+   355→            justify-content: center;
+   356→            font-size: 12px;
+   357→            color: #333;
+   358→        }
+   359→
+   360→        .showed-card.fa {
+   361→            background: #FFD700;
+   362→        }
+   363→
+   364→        .showed-card.gang {
+   365→            background: #90EE90;
+   366→        }
+   367→
+   368→        /* 手牌区域 */
+   369→        .hand-area {
+   370→            display: flex;
+   371→            flex-wrap: wrap;
+   372→            justify-content: center;
+   373→            gap: 1px;
+   374→            padding: 10px;
+   375→            background: linear-gradient(180deg, #1a472a 0%, #0d2818 100%);
+   376→            border-radius: 10px;
+   377→            max-width: 100%;
+   378→            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+   379→        }
+   380→
+   381→        /* 麻将牌基础样式 - 图片中的真实样式 */
+   382→        .card {
+   383→            width: 34px;
+   384→            height: 48px;
+   385→            background: linear-gradient(180deg, #f5f5f0 0%, #e8e8e0 50%, #ddd8d0 100%);
+   386→            border-radius: 3px;
+   387→            display: flex;
+   388→            flex-direction: column;
+   389→            align-items: center;
+   390→            justify-content: center;
+   391→            cursor: pointer;
+   392→            transition: all 0.1s ease;
+   393→            position: relative;
+   394→            box-shadow:
+   395→                1px 0 0 #c8c0b8,
+   396→                0 2px 0 #d0c8c0,
+   397→                0 3px 0 #c0b8b0,
+   398→                0 4px 0 #b0a8a0,
+   399→                0 5px 3px rgba(0,0,0,0.3);
+   400→            border: 1px solid #d8d0c8;
+   401→        }
+   402→
+   403→        .card:hover {
+   404→            transform: translateY(-5px);
+   405→            box-shadow:
+   406→                1px 0 0 #c8c0b8,
+   407→                0 3px 0 #d0c8c0,
+   408→                0 5px 0 #c0b8b0,
+   409→                0 7px 0 #b0a8a0,
+   410→                0 9px 6px rgba(0,0,0,0.35);
+   411→            z-index: 10;
+   412→        }
+   413→
+   414→        .card.selected {
+   415→            transform: translateY(-12px);
+   416→            box-shadow:
+   417→                1px 0 0 #c8c0b8,
+   418→                0 4px 0 #d0c8c0,
+   419→                0 7px 0 #c0b8b0,
+   420→                0 10px 0 #b0a8a0,
+   421→                0 13px 10px rgba(0,0,0,0.4);
+   422→            z-index: 20;
+   423→        }
+   424→
+   425→        .card.dragging {
+   426→            opacity: 0.6;
+   427→            transform: scale(1.1);
+   428→        }
+   429→
+   430→        .card.drag-over {
+   431→            border-left: 3px solid #FFD700;
+   432→        }
+   433→
+   434→        /* 万能牌样式 - 癞子 */
+   435→        .card.wild {
+   436→            background: linear-gradient(180deg, #fff8e1 0%, #ffecb3 50%, #ffe082 100%);
+   437→            border: 2px solid #ffa000;
+   438→            box-shadow:
+   439→                1px 0 0 #ff8f00,
+   440→                0 2px 0 #f57c00,
+   441→                0 3px 0 #ef6c00,
+   442→                0 4px 0 #e65100,
+   443→                0 5px 3px rgba(255,152,0,0.4),
+   444→                0 0 10px rgba(255,160,0,0.5);
+   445→        }
+   446→
+   447→        /* 癞子标记 */
+   448→        .card.wild::before {
+   449→            content: '癞';
+   450→            position: absolute;
+   451→            top: -2px;
+   452→            right: -2px;
+   453→            width: 13px;
+   454→            height: 13px;
+   455→            background: linear-gradient(135deg, #ff5722 0%, #e64a19 100%);
+   456→            color: white;
+   457→            font-size: 8px;
+   458→            font-weight: bold;
+   459→            display: flex;
+   460→            align-items: center;
+   461→            justify-content: center;
+   462→            border-radius: 0 3px 0 4px;
+   463→            box-shadow: -1px 1px 2px rgba(0,0,0,0.3);
+   464→            z-index: 5;
+   465→            line-height: 1;
+   466→        }
+   467→
+   468→        /* 牌面内容容器 */
+   469→        .card-face {
+   470→            width: 28px;
+   471→            height: 40px;
+   472→            display: flex;
+   473→            flex-direction: column;
+   474→            align-items: center;
+   475→            justify-content: center;
+   476→            background: #fafaf5;
+   477→            border-radius: 2px;
+   478→            box-shadow: inset 0 0 2px rgba(0,0,0,0.05);
+   479→            border: 1px solid #e8e0d8;
+   480→        }
+   481→
+   482→        /* 筒子牌 - 圆点图案 */
+   483→        .card.tong .card-face {
+   484→            position: relative;
+   485→        }
+   486→
+   487→        .card.tong .dot-container {
+   488→            width: 24px;
+   489→            height: 32px;
+   490→            display: grid;
+   491→            place-items: center;
+   492→        }
+   493→
+   494→        .card.tong .dot {
+   495→            width: 6px;
+   496→            height: 6px;
+   497→            background: radial-gradient(circle at 40% 40%, #90caf9, #1976d2 70%, #0d47a1);
+   498→            border-radius: 50%;
+   499→            box-shadow:
+   500→                inset 0 1px 2px rgba(255,255,255,0.5),
+   501→                0 1px 1px rgba(0,0,0,0.15);
+   502→        }
+   503→
+   504→        /* 1筒 - 大圆带花边 */
+   505→        .card.tong.p1 .dot-container {
+   506→            display: flex;
+   507→            align-items: center;
+   508→            justify-content: center;
+   509→        }
+   510→        .card.tong.p1 .dot {
+   511→            width: 12px;
+   512→            height: 12px;
+   513→            background: radial-gradient(circle at 40% 40%, #64b5f6, #1976d2 60%, #0d47a1);
+   514→            box-shadow:
+   515→                inset 0 1px 3px rgba(255,255,255,0.6),
+   516→                inset 0 -1px 2px rgba(0,0,0,0.2),
+   517→                0 1px 2px rgba(0,0,0,0.15);
+   518→        }
+   519→
+   520→        /* 2筒 */
+   521→        .card.tong.p2 .dot-container {
+   522→            display: flex;
+   523→            flex-direction: column;
+   524→            gap: 5px;
+   525→        }
+   526→
+   527→        /* 3筒 */
+   528→        .card.tong.p3 .dot-container {
+   529→            display: grid;
+   530→            grid-template-columns: repeat(2, 1fr);
+   531→            grid-template-rows: repeat(2, 1fr);
+   532→            gap: 1px;
+   533→        }
+   534→        .card.tong.p3 .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+   535→        .card.tong.p3 .dot:nth-child(2) { grid-column: 2; grid-row: 1; }
+   536→        .card.tong.p3 .dot:nth-child(3) { grid-column: 1 / 3; grid-row: 2; justify-self: center; }
+   537→
+   538→        /* 4筒 */
+   539→        .card.tong.p4 .dot-container {
+   540→            display: grid;
+   541→            grid-template-columns: repeat(2, 1fr);
+   542→            grid-template-rows: repeat(2, 1fr);
+   543→            gap: 4px;
+   544→            padding: 2px;
+   545→        }
+   546→
+   547→        /* 5筒 */
+   548→        .card.tong.p5 .dot-container {
+   549→            display: grid;
+   550→            grid-template-columns: repeat(3, 1fr);
+   551→            grid-template-rows: repeat(3, 1fr);
+   552→            gap: 1px;
+   553→        }
+   554→        .card.tong.p5 .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+   555→        .card.tong.p5 .dot:nth-child(2) { grid-column: 3; grid-row: 1; }
+   556→        .card.tong.p5 .dot:nth-child(3) { grid-column: 2; grid-row: 2; width: 8px; height: 8px; }
+   557→        .card.tong.p5 .dot:nth-child(4) { grid-column: 1; grid-row: 3; }
+   558→        .card.tong.p5 .dot:nth-child(5) { grid-column: 3; grid-row: 3; }
+   559→
+   560→        /* 6筒 */
+   561→        .card.tong.p6 .dot-container {
+   562→            display: grid;
+   563→            grid-template-columns: repeat(2, 1fr);
+   564→            grid-template-rows: repeat(3, 1fr);
+   565→            gap: 2px;
+   566→        }
+   567→
+   568→        /* 7筒 */
+   569→        .card.tong.p7 .dot-container {
+   570→            display: grid;
+   571→            grid-template-columns: repeat(3, 1fr);
+   572→            grid-template-rows: repeat(3, 1fr);
+   573→            gap: 1px;
+   574→        }
+   575→        .card.tong.p7 .dot:nth-child(1) { grid-column: 2; grid-row: 1; }
+   576→        .card.tong.p7 .dot:nth-child(2) { grid-column: 1; grid-row: 2; }
+   577→        .card.tong.p7 .dot:nth-child(3) { grid-column: 3; grid-row: 2; }
+   578→        .card.tong.p7 .dot:nth-child(4) { grid-column: 1; grid-row: 3; }
+   579→        .card.tong.p7 .dot:nth-child(5) { grid-column: 2; grid-row: 3; }
+   580→        .card.tong.p7 .dot:nth-child(6) { grid-column: 3; grid-row: 3; }
+   581→        .card.tong.p7 .dot:nth-child(7) { grid-column: 2; grid-row: 2; width: 8px; height: 8px; }
+   582→
+   583→        /* 8筒 */
+   584→        .card.tong.p8 .dot-container {
+   585→            display: grid;
+   586→            grid-template-columns: repeat(3, 1fr);
+   587→            grid-template-rows: repeat(3, 1fr);
+   588→            gap: 1px;
+   589→        }
+   590→        .card.tong.p8 .dot:nth-child(4) { grid-column: 2; grid-row: 2; display: none; }
+   591→        .card.tong.p8 .dot { width: 5px; height: 5px; }
+   592→
+   593→        /* 9筒 */
+   594→        .card.tong.p9 .dot-container {
+   595→            display: grid;
+   596→            grid-template-columns: repeat(3, 1fr);
+   597→            grid-template-rows: repeat(3, 1fr);
+   598→            gap: 2px;
+   599→        }
+   600→        .card.tong.p9 .dot { width: 5px; height: 5px; }
+   601→
+   602→        /* 条子牌 - 竹节图案 */
+   603→        .card.tiao .card-face {
+   604→            padding: 2px;
+   605→        }
+   606→        .card.tiao .bamboo-container {
+   607→            display: flex;
+   608→            flex-direction: column;
+   609→            gap: 1px;
+   610→            align-items: center;
+   611→        }
+   612→        .card.tiao .bamboo-stick {
+   613→            width: 4px;
+   614→            height: 6px;
+   615→            background: linear-gradient(90deg, #2e7d32, #4caf50 40%, #66bb6a 50%, #4caf50 60%, #2e7d32);
+   616→            border-radius: 1px;
+   617→            box-shadow:
+   618→                inset 0 1px 0 rgba(255,255,255,0.3),
+   619→                0 1px 1px rgba(0,0,0,0.1);
+   620→        }
+   621→        .card.tiao .bamboo-row {
+   622→            display: flex;
+   623→            gap: 2px;
+   624→        }
+   625→
+   626→        /* 万子牌 */
+   627→        .card.wan .card-face {
+   628→            display: flex;
+   629→            flex-direction: column;
+   630→            align-items: center;
+   631→            justify-content: center;
+   632→            gap: 0px;
+   633→        }
+   634→        .card.wan .wan-num {
+   635→            font-size: 14px;
+   636→            font-weight: bold;
+   637→            color: #c62828;
+   638→            line-height: 1;
+   639→            font-family: 'KaiTi', 'STKaiti', 'SimSun', serif;
+   640→        }
+   641→        .card.wan .wan-char {
+   642→            font-size: 10px;
+   643→            color: #c62828;
+   644→            font-weight: bold;
+   645→            font-family: 'KaiTi', 'STKaiti', 'SimSun', serif;
+   646→        }
+   647→
+   648→        /* 风牌 */
+   649→        .card.feng .card-face {
+   650→            display: flex;
+   651→            align-items: center;
+   652→            justify-content: center;
+   653→        }
+   654→        .card.feng .feng-char {
+   655→            font-size: 18px;
+   656→            font-weight: bold;
+   657→            color: #1565c0;
+   658→            font-family: 'KaiTi', 'STKaiti', 'SimSun', serif;
+   659→            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+   660→        }
+   661→
+   662→        /* 箭牌 */
+   663→        .card.jian .card-face {
+   664→            display: flex;
+   665→            align-items: center;
+   666→            justify-content: center;
+   667→        }
+   668→        .card.jian .jian-char {
+   669→            font-size: 18px;
+   670→            font-weight: bold;
+   671→            font-family: 'KaiTi', 'STKaiti', 'SimSun', serif;
+   672→        }
+   673→
+   674→        .card.jian.zhong .jian-char {
+   675→            color: #c62828;
+   676→            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+   677→        }
+   678→        .card.jian.fa .jian-char {
+   679→            color: #2e7d32;
+   680→            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+   681→        }
+   682→        .card.jian.bai .jian-char {
+   683→            color: #455a64;
+   684→            text-shadow: 1px 1px 0 #78909c, -1px -1px 0 #fff;
+   685→        }
+   686→
+   687→        /* 兼容旧样式（用于其他区域显示） */
+   688→        .card-rank {
+   689→            font-size: 14px;
+   690→            font-weight: bold;
+   691→        }
+   692→        .card-suit {
+   693→            font-size: 9px;
+   694→            color: #666;
+   695→        }
+   696→
+   697→        /* 中央信息区 */
+   698→        .center-info {
+   699→            position: absolute;
+   700→            top: 50%;
+   701→            left: 50%;
+   702→            transform: translate(-50%, -50%);
+   703→            text-align: center;
+   704→            background: rgba(0,0,0,0.6);
+   705→            padding: 20px;
+   706→            border-radius: 10px;
+   707→        }
+   708→
+   709→        .wild-card-info {
+   710→            margin-bottom: 15px;
+   711→        }
+   712→
+   713→        .wild-card-info .label {
+   714→            font-size: 14px;
+   715→            color: #ccc;
+   716→        }
+   717→
+   718→        .wild-card-info .card-display {
+   719→            font-size: 24px;
+   720→            font-weight: bold;
+   721→            color: #FFD700;
+   722→        }
+   723→
+   724→        .deck-count {
+   725→            font-size: 14px;
+   726→            color: #ccc;
+   727→        }
+   728→
+   729→        .game-time {
+   730→            font-size: 14px;
+   731→            color: #FFD700;
+   732→            margin-top: 5px;
+   733→        }
+   734→
+   735→        /* 操作按钮 */
+   736→        .action-buttons {
+   737→            display: flex;
+   738→            gap: 10px;
+   739→            justify-content: center;
+   740→            margin-top: 10px;
+   741→            flex-wrap: wrap;
+   742→        }
+   743→
+   744→        .action-btn {
+   745→            padding: 8px 20px;
+   746→            font-size: 14px;
+   747→            border: none;
+   748→            border-radius: 5px;
+   749→            cursor: pointer;
+   750→            transition: all 0.3s;
+   751→        }
+   752→
+   753→        .action-btn:disabled {
+   754→            opacity: 0.5;
+   755→            cursor: not-allowed;
+   756→        }
+   757→
+   758→        .action-btn.play {
+   759→            background: #4CAF50;
+   760→            color: white;
+   761→        }
+   762→
+   763→        .action-btn.fa {
+   764→            background: #FFD700;
+   765→            color: #333;
+   766→        }
+   767→
+   768→        .action-btn.gang {
+   769→            background: #9C27B0;
+   770→            color: white;
+   771→        }
+   772→
+   773→        .action-btn.hu {
+   774→            background: #f44336;
+   775→            color: white;
+   776→        }
+   777→
+   778→        /* 聊天区域 */
+   779→        .chat-area {
+   780→            position: absolute;
+   781→            bottom: 200px;
+   782→            right: 10px;
+   783→            width: 200px;
+   784→            background: rgba(0,0,0,0.5);
+   785→            border-radius: 10px;
+   786→            padding: 10px;
+   787→        }
+   788→
+   789→        .chat-messages {
+   790→            height: 150px;
+   791→            overflow-y: auto;
+   792→            font-size: 12px;
+   793→            margin-bottom: 10px;
+   794→        }
+   795→
+   796→        .chat-input {
+   797→            display: flex;
+   798→            gap: 5px;
+   799→        }
+   800→
+   801→        .chat-input input {
+   802→            flex: 1;
+   803→            padding: 5px;
+   804→            border: none;
+   805→            border-radius: 3px;
+   806→        }
+   807→
+   808→        /* 准备界面 */
+   809→        .ready-panel {
+   810→            position: absolute;
+   811→            top: 50%;
+   812→            left: 50%;
+   813→            transform: translate(-50%, -50%);
+   814→            background: rgba(0,0,0,0.8);
+   815→            padding: 30px;
+   816→            border-radius: 10px;
+   817→            text-align: center;
+   818→            z-index: 100;
+   819→        }
+   820→
+   821→        .ready-panel h2 {
+   822→            margin-bottom: 20px;
+   823→        }
+   824→
+   825→        .seat-list {
+   826→            display: grid;
+   827→            grid-template-columns: repeat(2, 1fr);
+   828→            gap: 10px;
+   829→            margin-bottom: 20px;
+   830→        }
+   831→
+   832→        .seat-item {
+   833→            background: rgba(255,255,255,0.1);
+   834→            padding: 10px;
+   835→            border-radius: 5px;
+   836→        }
+   837→
+   838→        .seat-item.occupied {
+   839→            background: rgba(76, 175, 80, 0.3);
+   840→        }
+   841→
+   842→        .seat-item.me {
+   843→            border: 2px solid #FFD700;
+   844→        }
+   845→
+   846→        /* 玩家列表面板 */
+   847→        .players-panel {
+   848→            position: absolute;
+   849→            top: 10px;
+   850→            left: 10px;
+   851→            background: rgba(0,0,0,0.5);
+   852→            padding: 15px;
+   853→            border-radius: 10px;
+   854→        }
+   855→
+   856→        .players-panel h3 {
+   857→            margin-bottom: 10px;
+   858→            font-size: 14px;
+   859→        }
+   860→
+   861→        .player-item {
+   862→            display: flex;
+   863→            align-items: center;
+   864→            gap: 10px;
+   865→            padding: 5px 0;
+   866→            font-size: 13px;
+   867→        }
+   868→
+   869→        .player-item .seat {
+   870→            background: rgba(255,255,255,0.2);
+   871→            padding: 2px 8px;
+   872→            border-radius: 3px;
+   873→            font-size: 12px;
+   874→        }
+   875→
+   876→        .player-item .ready-status {
+   877→            color: #4CAF50;
+   878→            font-size: 12px;
+   879→        }
+   880→
+   881→        .player-item .not-ready {
+   882→            color: #999;
+   883→        }
+   884→
+   885→        /* 隐藏 */
+   886→        .hidden {
+   887→            display: none !important;
+   888→        }
+   889→
+   890→        /* 当前玩家指示 */
+   891→        .current-turn {
+   892→            color: #FFD700 !important;
+   893→            font-weight: bold;
+   894→        }
+   895→
+   896→        .current-turn::before {
+   897→            content: '▶ ';
+   898→            color: #FFD700;
+   899→        }
+   900→
+   901→        /* 发牌动画 */
+   902→        .deal-animation {
+   903→            position: fixed;
+   904→            top: 0;
+   905→            left: 0;
+   906→            width: 100%;
+   907→            height: 100%;
+   908→            background: rgba(0,0,0,0.8);
+   909→            display: flex;
+   910→            flex-direction: column;
+   911→            align-items: center;
+   912→            justify-content: center;
+   913→            z-index: 1000;
+   914→        }
+   915→
+   916→        .deal-piles {
+   917→            display: flex;
+   918→            gap: 20px;
+   919→            margin-bottom: 30px;
+   920→        }
+   921→
+   922→        .deal-pile {
+   923→            display: flex;
+   924→            flex-direction: column;
+   925→            align-items: center;
+   926→        }
+   927→
+   928→        .deal-pile-label {
+   929→            color: #fff;
+   930→            margin-bottom: 10px;
+   931→            font-size: 14px;
+   932→        }
+   933→
+   934→        .deal-pile-cards {
+   935→            display: flex;
+   936→            flex-wrap: wrap;
+   937→            width: 120px;
+   938→            gap: 2px;
+   939→        }
+   940→
+   941→        .deal-card-back {
+   942→            width: 25px;
+   943→            height: 35px;
+   944→            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+   945→            border-radius: 3px;
+   946→            border: 1px solid #3949ab;
+   947→        }
+   948→
+   949→        .deal-info {
+   950→            color: #FFD700;
+   951→            font-size: 24px;
+   952→            margin-bottom: 20px;
+   953→        }
+   954→
+   955→        .deal-progress {
+   956→            color: #fff;
+   957→            font-size: 16px;
+   958→        }
+   959→    </style>
+   960→</head>
+   961→<body>
+   962→    <!-- 大厅界面 -->
+   963→    <div class="lobby" id="lobby">
+   964→        <div class="lobby-header">
+   965→            <h1>🀄 桐城自摸麻将</h1>
+   966→            <p>局域网版 - 只能自摸</p>
+   967→            <div class="login-form" id="loginForm">
+   968→                <input type="text" id="playerName" placeholder="输入你的名字" maxlength="10">
+   969→                <button class="btn btn-primary" onclick="login()">进入大厅</button>
+   970→            </div>
+   971→            <div id="playerInfo" class="hidden">
+   972→                <span>玩家：<strong id="myName"></strong></span>
+   973→                <button class="btn btn-secondary" onclick="logout()" style="margin-left: 20px;">退出</button>
+   974→            </div>
+   975→        </div>
+   976→
+   977→        <div id="tableListContainer" class="hidden">
+   978→            <h2 style="margin-bottom: 15px; padding: 0 20px;">牌桌列表</h2>
+   979→            <div class="table-list" id="tableList">
+   980→                <!-- 牌桌卡片将动态生成 -->
+   981→            </div>
+   982→        </div>
+   983→    </div>
+   984→
+   985→    <!-- 游戏界面 -->
+   986→    <div class="game-container" id="gameContainer">
+   987→        <div class="game-table">
+   988→            <!-- 玩家信息面板 -->
+   989→            <div class="players-panel" id="playersPanel">
+   990→                <h3>桌号: <span id="tableNumDisplay">1</span></h3>
+   991→                <div id="playersList"></div>
+   992→            </div>
+   993→
+   994→            <!-- 中央信息 -->
+   995→            <div class="center-info">
+   996→                <div class="wild-card-info">
+   997→                    <div class="label">万能牌</div>
+   998→                    <div class="card-display" id="wildCardDisplay">-</div>
+   999→                </div>
+  1000→                <div class="deck-count">牌堆剩余: <span id="deckCount">0</span></div>
+  1001→                <div class="game-time">游戏时长: <span id="gameTime">00:00</span></div>
+  1002→            </div>
+  1003→
+  1004→            <!-- 上家 (3号位) -->
+  1005→            <div class="player-area top">
+  1006→                <div class="player-info" id="player3Info">
+  1007→                    <div class="player-name" id="player3Name">等待中...</div>
+  1008→                    <div class="hand-count">手牌: <span id="player3Count">0</span></div>
+  1009→                </div>
+  1010→                <div class="showed-area" id="player3Showed"></div>
+  1011→            </div>
+  1012→
+  1013→            <!-- 左家 (4号位) -->
+  1014→            <div class="player-area left">
+  1015→                <div class="player-info" id="player4Info">
+  1016→                    <div class="player-name" id="player4Name">等待中...</div>
+  1017→                    <div class="hand-count">手牌: <span id="player4Count">0</span></div>
+  1018→                </div>
+  1019→                <div class="showed-area" id="player4Showed"></div>
+  1020→            </div>
+  1021→
+  1022→            <!-- 右家 (2号位) -->
+  1023→            <div class="player-area right">
+  1024→                <div class="player-info" id="player2Info">
+  1025→                    <div class="player-name" id="player2Name">等待中...</div>
+  1026→                    <div class="hand-count">手牌: <span id="player2Count">0</span></div>
+  1027→                </div>
+  1028→                <div class="showed-area" id="player2Showed"></div>
+  1029→            </div>
+  1030→
+  1031→            <!-- 自己 (1号位) -->
+  1032→            <div class="player-area bottom">
+  1033→                <div class="showed-area" id="player1Showed"></div>
+  1034→                <div class="hand-area" id="myHand"></div>
+  1035→                <div class="action-buttons" id="actionButtons">
+  1036→                    <button class="action-btn play" id="playBtn" onclick="playCard()" disabled>出牌</button>
+  1037→                    <button class="action-btn fa" id="faBtn" onclick="changeFa()" disabled>换發</button>
+  1038→                    <button class="action-btn gang" id="gangBtn" onclick="doGang()" disabled>暗杠</button>
+  1039→                    <button class="action-btn hu" id="huBtn" onclick="declareHu()" disabled>胡牌</button>
+  1040→                </div>
+  1041→            </div>
+  1042→
+  1043→            <!-- 聊天区域 -->
+  1044→            <div class="chat-area">
+  1045→                <div class="chat-messages" id="chatMessages"></div>
+  1046→                <div class="chat-input">
+  1047→                    <input type="text" id="chatInput" placeholder="输入消息..." onkeypress="handleChatKey(event)">
+  1048→                    <button class="btn btn-primary" onclick="sendChat()">发送</button>
+  1049→                </div>
+  1050→            </div>
+  1051→
+  1052→            <!-- 准备面板 -->
+  1053→            <div class="ready-panel" id="readyPanel">
+  1054→                <h2>等待玩家...</h2>
+  1055→                <div class="seat-list" id="seatList"></div>
+  1056→                <button class="btn btn-primary" id="readyBtn" onclick="toggleReady()">准备</button>
+  1057→                <button class="btn btn-secondary" onclick="leaveTable()" style="margin-left: 10px;">离开</button>
+  1058→            </div>
+  1059→
+  1060→            <!-- 发牌动画 -->
+  1061→            <div class="deal-animation hidden" id="dealAnimation">
+  1062→                <div class="deal-info" id="dealInfo">洗牌中...</div>
+  1063→                <div class="deal-piles" id="dealPiles">
+  1064→                    <!-- 四堆牌将动态生成 -->
+  1065→                </div>
+  1066→                <div class="deal-progress" id="dealProgress"></div>
+  1067→            </div>
+  1068→        </div>
+  1069→    </div>
+  1070→
+  1071→    <script>
+  1072→        // 全局变量
+  1073→        let ws = null;
+  1074→        let playerId = null;
+  1075→        let playerName = '';
+  1076→        let currentTableId = null;
+  1077→        let selectedCard = null;
+  1078→        let gameState = null;
+  1079→        let myIndex = 0;
+  1080→        let isReady = false;
+  1081→
+  1082→        // 连接WebSocket
+  1083→        function connect() {
+  1084→            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  1085→            ws = new WebSocket(`${protocol}//${window.location.host}`);
+  1086→
+  1087→            ws.onopen = () => {
+  1088→                console.log('WebSocket已连接');
+  1089→            };
+  1090→
+  1091→            ws.onmessage = (event) => {
+  1092→                const data = JSON.parse(event.data);
+  1093→                handleMessage(data);
+  1094→            };
+  1095→
+  1096→            ws.onclose = () => {
+  1097→                console.log('WebSocket已断开');
+  1098→                setTimeout(() => {
+  1099→                    if (playerId) {
+  1100→                        connect();
+  1101→                    }
+  1102→                }, 3000);
+  1103→            };
+  1104→
+  1105→            ws.onerror = (error) => {
+  1106→                console.error('WebSocket错误:', error);
+  1107→            };
+  1108→        }
+  1109→
+  1110→        // 处理消息
+  1111→        function handleMessage(data) {
+  1112→            switch (data.type) {
+  1113→                case 'loginSuccess':
+  1114→                    playerId = data.playerId;
+  1115→                    playerName = data.playerName;
+  1116→                    document.getElementById('loginForm').classList.add('hidden');
+  1117→                    document.getElementById('playerInfo').classList.remove('hidden');
+  1118→                    document.getElementById('myName').textContent = playerName;
+  1119→                    document.getElementById('tableListContainer').classList.remove('hidden');
+  1120→                    break;
+  1121→
+  1122→                case 'tableList':
+  1123→                    renderTableList(data.tables);
+  1124→                    break;
+  1125→
+  1126→                case 'playerList':
+  1127→                    renderPlayerList(data);
+  1128→                    break;
+  1129→
+  1130→                case 'dealStart':
+  1131→                    // 开始发牌动画
+  1132→                    showDealAnimation();
+  1133→                    break;
+  1134→
+  1135→                case 'gameState':
+  1136→                    gameState = data.data;
+  1137→                    myIndex = gameState.myIndex;
+  1138→                    console.log('收到游戏状态:', gameState);
+  1139→                    console.log('我的手牌:', gameState.myHand);
+  1140→                    console.log('手牌数量:', gameState.myHand ? gameState.myHand.length : 0);
+  1141→                    updateGameUI();
+  1142→                    break;
+  1143→
+  1144→                case 'message':
+  1145→                    addChatMessage(data.text);
+  1146→                    break;
+  1147→
+  1148→                case 'error':
+  1149→                    alert(data.message);
+  1150→                    break;
+  1151→            }
+  1152→        }
+  1153→
+  1154→        // 登录
+  1155→        function login() {
+  1156→            const name = document.getElementById('playerName').value.trim();
+  1157→            if (!name) {
+  1158→                alert('请输入名字');
+  1159→                return;
+  1160→            }
+  1161→
+  1162→            playerName = name;
+  1163→            if (!ws || ws.readyState !== WebSocket.OPEN) {
+  1164→                connect();
+  1165→                setTimeout(() => {
+  1166→                    ws.send(JSON.stringify({ type: 'login', name }));
+  1167→                }, 500);
+  1168→            } else {
+  1169→                ws.send(JSON.stringify({ type: 'login', name }));
+  1170→            }
+  1171→        }
+  1172→
+  1173→        // 退出
+  1174→        function logout() {
+  1175→            if (currentTableId) {
+  1176→                leaveTable();
+  1177→            }
+  1178→            playerId = null;
+  1179→            playerName = '';
+  1180→            document.getElementById('loginForm').classList.remove('hidden');
+  1181→            document.getElementById('playerInfo').classList.add('hidden');
+  1182→            document.getElementById('tableListContainer').classList.add('hidden');
+  1183→        }
+  1184→
+  1185→        // 渲染牌桌列表
+  1186→        function renderTableList(tables) {
+  1187→            const container = document.getElementById('tableList');
+  1188→            container.innerHTML = '';
+  1189→
+  1190→            // 创建新桌卡片
+  1191→            const createCard = document.createElement('div');
+  1192→            createCard.className = 'table-card create-table-card';
+  1193→            createCard.innerHTML = `
+  1194→                <div class="plus">+</div>
+  1195→                <div class="text">开房</div>
+  1196→            `;
+  1197→            createCard.onclick = createTable;
+  1198→            container.appendChild(createCard);
+  1199→
+  1200→            // 现有牌桌
+  1201→            tables.forEach((table, index) => {
+  1202→                const card = document.createElement('div');
+  1203→                const isFull = table.playerCount >= 4;
+  1204→                const isPlaying = table.started;
+  1205→
+  1206→                card.className = `table-card ${isFull ? 'full' : ''} ${isPlaying ? 'playing' : ''}`;
+  1207→
+  1208→                // 生成圆桌座位显示
+  1209→                let seatsHtml = '';
+  1210→                for (let i = 0; i < 4; i++) {
+  1211→                    const seatNum = i + 1;
+  1212→                    const player = table.players.find(p => p.seatNum === seatNum);
+  1213→                    const occupied = !!player;
+  1214→                    const occupiedClass = occupied ? 'occupied' : '';
+  1215→                    const clickHandler = (!occupied && !isPlaying) ? `onclick="event.stopPropagation(); joinTableById('${table.id}', ${seatNum})"` : '';
+  1216→                    const title = occupied && player ? player.name : (isPlaying ? '' : '点击加入');
+  1217→                    const displayChar = occupied ? (player ? player.name.charAt(0) : '?') : '+';
+  1218→
+  1219→                    seatsHtml += `
+  1220→                        <div class="mini-seat mini-seat-${seatNum}">
+  1221→                            <div class="mini-seat-avatar ${occupiedClass}" ${clickHandler} title="${title}">
+  1222→                                ${displayChar}
+  1223→                            </div>
+  1224→                        </div>
+  1225→                    `;
+  1226→                }
+  1227→
+  1228→                // 状态文字
+  1229→                let statusText = `${table.playerCount}/4 人`;
+  1230→                let statusClass = '';
+  1231→                if (isPlaying) {
+  1232→                    statusText = '🀄 游戏中';
+  1233→                    statusClass = 'playing';
+  1234→                } else if (isFull) {
+  1235→                    statusText = '已满员';
+  1236→                    statusClass = 'full';
+  1237→                }
+  1238→
+  1239→                card.innerHTML = `
+  1240→                    <div class="table-header">
+  1241→                        <div class="table-id">牌桌：${table.tableNumber}</div>
+  1242→                        <div class="table-mode-badge">${isPlaying ? '游戏中' : '等待中'}</div>
+  1243→                    </div>
+  1244→                    <div class="mini-table-layout">
+  1245→                        <div class="mini-table-center">🀄</div>
+  1246→                        ${seatsHtml}
+  1247→                    </div>
+  1248→                    <div class="table-footer ${statusClass}">${statusText}</div>
+  1249→                `;
+  1250→
+  1251→                // 点击整个卡片也可以加入（如果未满且未开始）
+  1252→                if (!isFull && !isPlaying) {
+  1253→                    card.onclick = () => joinTableById(table.id);
+  1254→                }
+  1255→
+  1256→                container.appendChild(card);
+  1257→            });
+  1258→        }
+  1259→
+  1260→        // 通过ID加入牌桌
+  1261→        function joinTableById(tableId, seatNum = null) {
+  1262→            if (ws && ws.readyState === WebSocket.OPEN) {
+  1263→                ws.send(JSON.stringify({ type: 'joinTable', tableId: tableId, seatNum: seatNum }));
+  1264→                currentTableId = tableId;
+  1265→            }
+  1266→        }
+  1267→
+  1268→        // 创建牌桌（原有函数保留）
+  1269→        function createTable() {
+  1270→            if (ws && ws.readyState === WebSocket.OPEN) {
+  1271→                ws.send(JSON.stringify({ type: 'createTable' }));
+  1272→            }
+  1273→        }
+  1274→
+  1275→        // 加入牌桌（原有函数保留）
+  1276→        function joinTable(tableId, seatNum = null) {
+  1277→            if (ws && ws.readyState === WebSocket.OPEN) {
+  1278→                ws.send(JSON.stringify({ type: 'joinTable', tableId, seatNum }));
+  1279→                currentTableId = tableId;
+  1280→            }
+  1281→        }
+  1282→
+  1283→        // 创建牌桌
+  1284→        function createTable() {
+  1285→            if (ws && ws.readyState === WebSocket.OPEN) {
+  1286→                ws.send(JSON.stringify({ type: 'createTable' }));
+  1287→            }
+  1288→        }
+  1289→
+  1290→        // 加入牌桌
+  1291→        function joinTable(tableId, seatNum = null) {
+  1292→            if (ws && ws.readyState === WebSocket.OPEN) {
+  1293→                ws.send(JSON.stringify({ type: 'joinTable', tableId, seatNum }));
+  1294→                currentTableId = tableId;
+  1295→            }
+  1296→        }
+  1297→
+  1298→        // 离开牌桌
+  1299→        function leaveTable() {
+  1300→            showLobby();
+  1301→            currentTableId = null;
+  1302→            isReady = false;
+  1303→        }
+  1304→
+  1305→        // 显示大厅
+  1306→        function showLobby() {
+  1307→            document.getElementById('lobby').style.display = 'block';
+  1308→            document.getElementById('gameContainer').style.display = 'none';
+  1309→            if (ws && ws.readyState === WebSocket.OPEN) {
+  1310→                ws.send(JSON.stringify({ type: 'getTableList' }));
+  1311→            }
+  1312→        }
+  1313→
+  1314→        // 显示游戏界面
+  1315→        function showGame() {
+  1316→            document.getElementById('lobby').style.display = 'none';
+  1317→            document.getElementById('gameContainer').style.display = 'block';
+  1318→        }
+  1319→
+  1320→        // 渲染玩家列表
+  1321→        function renderPlayerList(data) {
+  1322→            showGame();
+  1323→
+  1324→            document.getElementById('tableNumDisplay').textContent = data.tableNumber;
+  1325→
+  1326→            // 更新准备面板
+  1327→            const seatList = document.getElementById('seatList');
+  1328→            seatList.innerHTML = '';
+  1329→
+  1330→            const players = data.players || [];
+  1331→            for (let i = 1; i <= 4; i++) {
+  1332→                const player = players.find(p => p.seatNum === i);
+  1333→                const div = document.createElement('div');
+  1334→                div.className = 'seat-item';
+  1335→
+  1336→                if (player) {
+  1337→                    div.classList.add('occupied');
+  1338→                    if (player.id === playerId) {
+  1339→                        div.classList.add('me');
+  1340→                    }
+  1341→                    div.innerHTML = `
+  1342→                        <div><strong>${i}号位</strong></div>
+  1343→                        <div>${player.name} ${player.ready ? '✓已准备' : ''}</div>
+  1344→                    `;
+  1345→                } else {
+  1346→                    div.innerHTML = `
+  1347→                        <div><strong>${i}号位</strong></div>
+  1348→                        <div>空位</div>
+  1349→                    `;
+  1350→                }
+  1351→                seatList.appendChild(div);
+  1352→            }
+  1353→
+  1354→            // 游戏已开始，隐藏准备面板
+  1355→            if (data.started) {
+  1356→                document.getElementById('readyPanel').classList.add('hidden');
+  1357→            } else {
+  1358→                document.getElementById('readyPanel').classList.remove('hidden');
+  1359→            }
+  1360→
+  1361→            // 更新准备按钮
+  1362→            const myPlayer = players.find(p => p.id === playerId);
+  1363→            isReady = myPlayer ? myPlayer.ready : false;
+  1364→            document.getElementById('readyBtn').textContent = isReady ? '取消准备' : '准备';
+  1365→        }
+  1366→
+  1367→        // 切换准备状态
+  1368→        function toggleReady() {
+  1369→            isReady = !isReady;
+  1370→            ws.send(JSON.stringify({ type: 'ready', ready: isReady }));
+  1371→        }
+  1372→
+  1373→        // 发牌动画
+  1374→        function showDealAnimation() {
+  1375→            const dealAnimation = document.getElementById('dealAnimation');
+  1376→            const dealPiles = document.getElementById('dealPiles');
+  1377→            const dealInfo = document.getElementById('dealInfo');
+  1378→            const dealProgress = document.getElementById('dealProgress');
+  1379→
+  1380→            dealAnimation.classList.remove('hidden');
+  1381→            dealPiles.innerHTML = '';
+  1382→
+  1383→            // 创建四堆牌（每堆17张，两层）
+  1384→            for (let i = 0; i < 4; i++) {
+  1385→                const pile = document.createElement('div');
+  1386→                pile.className = 'deal-pile';
+  1387→                pile.innerHTML = `
+  1388→                    <div class="deal-pile-label">${i + 1}号位</div>
+  1389→                    <div class="deal-pile-cards" id="pile${i}"></div>
+  1390→                `;
+  1391→                dealPiles.appendChild(pile);
+  1392→            }
+  1393→
+  1394→            // 动画展示牌堆
+  1395→            dealInfo.textContent = '展示牌堆...';
+  1396→            let cardIndex = 0;
+  1397→            const totalCards = 68; // 4人 × 17张
+  1398→
+  1399→            const addCard = setInterval(() => {
+  1400→                if (cardIndex >= totalCards) {
+  1401→                    clearInterval(addCard);
+  1402→                    dealInfo.textContent = '发牌中...';
+  1403→                    // 开始发牌动画
+  1404→                    startDealing();
+  1405→                    return;
+  1406→                }
+  1407→
+  1408→                const pileIndex = cardIndex % 4;
+  1409→                const pile = document.getElementById(`pile${pileIndex}`);
+  1410→                if (pile) {
+  1411→                    const card = document.createElement('div');
+  1412→                    card.className = 'deal-card-back';
+  1413→                    pile.appendChild(card);
+  1414→                }
+  1415→
+  1416→                cardIndex++;
+  1417→                dealProgress.textContent = `${cardIndex} / ${totalCards}`;
+  1418→            }, 30);
+  1419→        }
+  1420→
+  1421→        // 发牌动画
+  1422→        function startDealing() {
+  1423→            const dealInfo = document.getElementById('dealInfo');
+  1424→            const dealProgress = document.getElementById('dealProgress');
+  1425→
+  1426→            let round = 0;
+  1427→            let player = 0;
+  1428→            let cardInRound = 0;
+  1429→            const totalRounds = 4; // 4轮发牌
+  1430→
+  1431→            const dealCard = setInterval(() => {
+  1432→                if (round >= totalRounds) {
+  1433→                    clearInterval(dealCard);
+  1434→                    dealInfo.textContent = '发牌完成！';
+  1435→                    // 隐藏发牌动画，显示游戏界面
+  1436→                    setTimeout(() => {
+  1437→                        document.getElementById('dealAnimation').classList.add('hidden');
+  1438→                    }, 500);
+  1439→                    return;
+  1440→                }
+  1441→
+  1442→                // 从牌堆移除一张牌
+  1443→                const piles = document.querySelectorAll('.deal-pile-cards');
+  1444→                for (let p of piles) {
+  1445→                    if (p.lastChild) {
+  1446→                        p.removeChild(p.lastChild);
+  1447→                        break;
+  1448→                    }
+  1449→                }
+  1450→
+  1451→                cardInRound++;
+  1452→                if (cardInRound >= 4) {
+  1453→                    cardInRound = 0;
+  1454→                    round++;
+  1455→                }
+  1456→
+  1457→                dealProgress.textContent = `第 ${round + 1} 轮`;
+  1458→            }, 100);
+  1459→        }
+  1460→
+  1461→        // 更新游戏UI
+  1462→        function updateGameUI() {
+  1463→            if (!gameState) return;
+  1464→
+  1465→            // 游戏开始后隐藏准备面板和发牌动画
+  1466→            if (gameState.started) {
+  1467→                document.getElementById('readyPanel').classList.add('hidden');
+  1468→                document.getElementById('dealAnimation').classList.add('hidden');
+  1469→            }
+  1470→
+  1471→            // 更新万能牌
+  1472→            if (gameState.wildCard) {
+  1473→                document.getElementById('wildCardDisplay').textContent =
+  1474→                    getCardDisplayName(gameState.wildCard);
+  1475→            }
+  1476→
+  1477→            // 更新牌堆数量
+  1478→            document.getElementById('deckCount').textContent = gameState.deckCount;
+  1479→
+  1480→            // 更新游戏时间
+  1481→            if (gameState.totalGameTime !== undefined) {
+  1482→                const minutes = Math.floor(gameState.totalGameTime / 60);
+  1483→                const seconds = gameState.totalGameTime % 60;
+  1484→                document.getElementById('gameTime').textContent =
+  1485→                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  1486→            }
+  1487→
+  1488→            // 更新各玩家信息
+  1489→            // 先找到自己的座位号
+  1490→            let mySeatNum = 1;
+  1491→            for (const [pid, info] of Object.entries(gameState.playerInfo)) {
+  1492→                if (pid === Object.keys(gameState.playerInfo)[myIndex]) {
+  1493→                    mySeatNum = info.seatNum;
+  1494→                    break;
+  1495→                }
+  1496→            }
+  1497→
+  1498→            console.log('我的座位号:', mySeatNum);
+  1499→
+  1500→            // 根据座位号计算显示位置
+  1501→            // position: 0=bottom(自己), 1=right, 2=top, 3=left
+  1502→            for (let seatNum = 1; seatNum <= 4; seatNum++) {
+  1503→                // 计算相对位置
+  1504→                let relativePos = (seatNum - mySeatNum + 4) % 4;
+  1505→
+  1506→                // 映射到UI位置: 0->1(bottom), 1->2(right), 2->3(top), 3->4(left)
+  1507→                const posNames = ['player1', 'player2', 'player3', 'player4'];
+  1508→                const posName = posNames[relativePos];
+  1509→
+  1510→                console.log(`座位${seatNum} -> 相对位置${relativePos} -> UI元素${posName}`);
+  1511→
+  1512→                // 找到这个座位的玩家
+  1513→                let foundPlayer = null;
+  1514→                for (const [pid, info] of Object.entries(gameState.playerInfo)) {
+  1515→                    if (info.seatNum === seatNum) {
+  1516→                        foundPlayer = info;
+  1517→                        break;
+  1518→                    }
+  1519→                }
+  1520→
+  1521→                const nameEl = document.getElementById(`${posName}Name`);
+  1522→                const countEl = document.getElementById(`${posName}Count`);
+  1523→                const infoEl = document.getElementById(`${posName}Info`);
+  1524→                const showedEl = document.getElementById(`${posName}Showed`);
+  1525→
+  1526→                if (!nameEl || !countEl || !infoEl || !showedEl) {
+  1527→                    console.error('找不到元素:', posName);
+  1528→                    continue;
+  1529→                }
+  1530→
+  1531→                if (foundPlayer) {
+  1532→                    nameEl.textContent = foundPlayer.name;
+  1533→                    countEl.textContent = foundPlayer.handCount;
+  1534→
+  1535→                    // 高亮当前玩家
+  1536→                    if (gameState.currentPlayerSeat === seatNum) {
+  1537→                        infoEl.classList.add('active');
+  1538→                        nameEl.classList.add('current-turn');
+  1539→                    } else {
+  1540→                        infoEl.classList.remove('active');
+  1541→                        nameEl.classList.remove('current-turn');
+  1542→                    }
+  1543→
+  1544→                    // 展示区
+  1545→                    showedEl.innerHTML = '';
+  1546→
+  1547→                    if (foundPlayer.showedCards) {
+  1548→                        foundPlayer.showedCards.fa.forEach(card => {
+  1549→                            const div = document.createElement('div');
+  1550→                            div.className = 'showed-card fa';
+  1551→                            div.textContent = '發';
+  1552→                            showedEl.appendChild(div);
+  1553→                        });
+  1554→
+  1555→                        foundPlayer.showedCards.gang.forEach(gang => {
+  1556→                            gang.forEach(card => {
+  1557→                                const div = document.createElement('div');
+  1558→                                div.className = 'showed-card gang';
+  1559→                                div.textContent = getCardShortName(card);
+  1560→                                showedEl.appendChild(div);
+  1561→                            });
+  1562→                        });
+  1563→                    }
+  1564→                }
+  1565→            }
+  1566→
+  1567→            // 更新自己的手牌
+  1568→            renderMyHand();
+  1569→
+  1570→            // 更新按钮状态
+  1571→            const isMyTurn = gameState.currentPlayer === myIndex;
+  1572→            document.getElementById('playBtn').disabled = !isMyTurn || !selectedCard;
+  1573→            document.getElementById('faBtn').disabled = !gameState.canChangeFa;
+  1574→            document.getElementById('gangBtn').disabled = !gameState.canGang;
+  1575→        }
+  1576→
+  1577→        // 渲染自己的手牌
+  1578→        function renderMyHand() {
+  1579→            const container = document.getElementById('myHand');
+  1580→            container.innerHTML = '';
+  1581→
+  1582→            console.log('renderMyHand 被调用, gameState:', gameState ? '存在' : '不存在');
+  1583→            console.log('myHand:', gameState?.myHand);
+  1584→
+  1585→            if (!gameState || !gameState.myHand) {
+  1586→                console.log('没有手牌数据，返回');
+  1587→                return;
+  1588→            }
+  1589→
+  1590→            console.log('开始渲染手牌，数量:', gameState.myHand.length);
+  1591→
+  1592→            gameState.myHand.forEach(card => {
+  1593→                const div = document.createElement('div');
+  1594→                div.className = 'card';
+  1595→
+  1596→                // 判断是否是万能牌
+  1597→                const isWild = isWildCard(card);
+  1598→                if (isWild) {
+  1599→                    div.classList.add('wild');
+  1600→                }
+  1601→
+  1602→                // 根据牌类型渲染不同样式
+  1603→                if (card.type === 'number') {
+  1604→                    if (card.suit === '筒') {
+  1605→                        div.classList.add('tong', `p${card.rank}`);
+  1606→                        div.innerHTML = `<div class="card-face"><div class="dot-container">${createDots(card.rank)}</div></div>`;
+  1607→                    } else if (card.suit === '条') {
+  1608→                        div.classList.add('tiao');
+  1609→                        div.innerHTML = `<div class="card-face"><div class="bamboo-container">${createBamboo(card.rank)}</div></div>`;
+  1610→                    } else if (card.suit === '万') {
+  1611→                        div.classList.add('wan');
+  1612→                        div.innerHTML = `<div class="card-face"><div class="wan-num">${card.rank}</div><div class="wan-char">万</div></div>`;
+  1613→                    }
+  1614→                } else if (card.type === 'wind') {
+  1615→                    div.classList.add('feng');
+  1616→                    div.innerHTML = `<div class="card-face"><div class="feng-char">${card.rank}</div></div>`;
+  1617→                } else if (card.type === 'arrow') {
+  1618→                    div.classList.add('jian');
+  1619→                    if (card.rank === '中') div.classList.add('zhong');
+  1620→                    if (card.rank === '发') div.classList.add('fa');
+  1621→                    if (card.rank === '白') div.classList.add('bai');
+  1622→                    div.innerHTML = `<div class="card-face"><div class="jian-char">${card.rank}</div></div>`;
+  1623→                }
+  1624→
+  1625→                // 选中状态
+  1626→                if (selectedCard && selectedCard.id === card.id) {
+  1627→                    div.classList.add('selected');
+  1628→                }
+  1629→
+  1630→                div.onclick = () => selectCard(card);
+  1631→                div.dataset.cardId = card.id;
+  1632→
+  1633→                // 拖拽功能
+  1634→                div.draggable = true;
+  1635→                div.addEventListener('dragstart', handleDragStart);
+  1636→                div.addEventListener('dragend', handleDragEnd);
+  1637→                div.addEventListener('dragover', handleDragOver);
+  1638→                div.addEventListener('drop', handleDrop);
+  1639→                div.addEventListener('dragleave', handleDragLeave);
+  1640→
+  1641→                container.appendChild(div);
+  1642→            });
+  1643→        }
+  1644→
+  1645→        // 创建筒子圆点
+  1646→        function createDots(count) {
+  1647→            let dots = '';
+  1648→            for (let i = 0; i < count; i++) {
+  1649→                dots += '<div class="dot"></div>';
+  1650→            }
+  1651→            return dots;
+  1652→        }
+  1653→
+  1654→        // 创建条子竹节
+  1655→        function createBamboo(count) {
+  1656→            let bamboo = '';
+  1657→            if (count === 1) {
+  1658→                bamboo = '<div class="bamboo-stick"></div>';
+  1659→            } else if (count === 2) {
+  1660→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div></div>';
+  1661→            } else if (count === 3) {
+  1662→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+  1663→            } else if (count === 4) {
+  1664→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+  1665→            } else if (count === 5) {
+  1666→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+  1667→            } else if (count === 6) {
+  1668→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+  1669→            } else if (count === 7) {
+  1670→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+  1671→            } else if (count === 8) {
+  1672→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+  1673→            } else if (count === 9) {
+  1674→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+  1675→            }
+  1676→            return bamboo;
+  1677→        }
+  1678→
+  1679→        // 拖拽相关变量
+  1680→        let draggedCardId = null;
+  1681→
+  1682→        function handleDragStart(e) {
+  1683→            draggedCardId = e.target.dataset.cardId;
+  1684→            e.target.classList.add('dragging');
+  1685→            e.dataTransfer.effectAllowed = 'move';
+  1686→        }
+  1687→
+  1688→        function handleDragEnd(e) {
+  1689→            e.target.classList.remove('dragging');
+  1690→            document.querySelectorAll('.card').forEach(card => {
+  1691→                card.classList.remove('drag-over');
+  1692→            });
+  1693→            draggedCardId = null;
+  1694→        }
+  1695→
+  1696→        function handleDragOver(e) {
+  1697→            e.preventDefault();
+  1698→            e.dataTransfer.dropEffect = 'move';
+  1699→            const target = e.target.closest('.card');
+  1700→            if (target && target.dataset.cardId !== draggedCardId) {
+  1701→                target.classList.add('drag-over');
+  1702→            }
+  1703→        }
+  1704→
+  1705→        function handleDragLeave(e) {
+  1706→            const target = e.target.closest('.card');
+  1707→            if (target) {
+  1708→                target.classList.remove('drag-over');
+  1709→            }
+  1710→        }
+  1711→
+  1712→        function handleDrop(e) {
+  1713→            e.preventDefault();
+  1714→            const target = e.target.closest('.card');
+  1715→            if (!target || !draggedCardId) return;
+  1716→
+  1717→            const targetCardId = target.dataset.cardId;
+  1718→            if (targetCardId === draggedCardId) return;
+  1719→
+  1720→            // 重新排序手牌
+  1721→            const fromIndex = gameState.myHand.findIndex(c => c.id === draggedCardId);
+  1722→            const toIndex = gameState.myHand.findIndex(c => c.id === targetCardId);
+  1723→
+  1724→            if (fromIndex !== -1 && toIndex !== -1) {
+  1725→                const [movedCard] = gameState.myHand.splice(fromIndex, 1);
+  1726→                gameState.myHand.splice(toIndex, 0, movedCard);
+  1727→                renderMyHand();
+  1728→            }
+  1729→
+  1730→            target.classList.remove('drag-over');
+  1731→        }
+  1732→
+  1733→        // 判断是否是万能牌
+  1734→        function isWildCard(card) {
+  1735→            if (!gameState || !gameState.wildCard) {
+  1736→                console.log('isWildCard: 没有gameState或wildCard');
+  1737→                return false;
+  1738→            }
+  1739→            const wild = gameState.wildCard;
+  1740→
+  1741→            // 调试：打印比较信息
+  1742→            console.log('比较牌:', JSON.stringify(card), '万能牌:', JSON.stringify(wild));
+  1743→
+  1744→            // 检查是否与翻出的牌相同（精确匹配花色、点数、类型）
+  1745→            const sameCard = (card.suit === wild.suit &&
+  1746→                             String(card.rank) === String(wild.rank) &&
+  1747→                             card.type === wild.type);
+  1748→
+  1749→            if (sameCard) {
+  1750→                console.log('匹配：与翻出的牌相同');
+  1751→                return true;
+  1752→            }
+  1753→
+  1754→            // 红中永远是万能牌
+  1755→            if (card.type === 'arrow' && card.rank === '中') {
+  1756→                console.log('匹配：红中是万能牌');
+  1757→                return true;
+  1758→            }
+  1759→
+  1760→            return false;
+  1761→        }
+  1762→
+  1763→        // 获取牌的短名称
+  1764→        function getCardShortName(card) {
+  1765→            if (card.type === 'number') {
+  1766→                return card.rank;
+  1767→            } else {
+  1768→                return card.rank;
+  1769→            }
+  1770→        }
+  1771→
+  1772→        // 获取牌的显示名称
+  1773→        function getCardDisplayName(card) {
+  1774→            if (card.type === 'number') {
+  1775→                return `${card.rank}${card.suit}`;
+  1776→            } else if (card.type === 'wind') {
+  1777→                return card.rank;
+  1778→            } else {
+  1779→                return card.rank;
+  1780→            }
+  1781→        }
+  1782→
+  1783→        // 选择牌
+  1784→        function selectCard(card) {
+  1785→            if (selectedCard && selectedCard.id === card.id) {
+  1786→                selectedCard = null;
+  1787→            } else {
+  1788→                selectedCard = card;
+  1789→            }
+  1790→
+  1791→            // 如果是自己回合且有选中的牌，启用出牌按钮
+  1792→            const isMyTurn = gameState && gameState.currentPlayer === myIndex;
+  1793→            document.getElementById('playBtn').disabled = !isMyTurn || !selectedCard;
+  1794→
+  1795→            renderMyHand();
+  1796→        }
+  1797→
+  1798→        // 出牌
+  1799→        function playCard() {
+  1800→            if (!selectedCard) return;
+  1801→
+  1802→            ws.send(JSON.stringify({
+  1803→                type: 'play',
+  1804→                cardId: selectedCard.id
+  1805→            }));
+  1806→
+  1807→            selectedCard = null;
+  1808→        }
+  1809→
+  1810→        // 换发
+  1811→        // 换發
+  1812→        function changeFa() {
+  1813→            ws.send(JSON.stringify({ type: 'changeFa' }));
+  1814→        }
+  1815→
+  1816→        // 暗杠
+  1817→        function doGang() {
+  1818→            if (selectedCard) {
+  1819→                ws.send(JSON.stringify({
+  1820→                    type: 'gang',
+  1821→                    cardId: selectedCard.id
+  1822→                }));
+  1823→            }
+  1824→        }
+  1825→
+  1826→        // 胡牌
+  1827→        function declareHu() {
+  1828→            ws.send(JSON.stringify({ type: 'hu' }));
+  1829→        }
+  1830→
+  1831→        // 聊天
+  1832→        function sendChat() {
+  1833→            const input = document.getElementById('chatInput');
+  1834→            const text = input.value.trim();
+  1835→            if (text) {
+  1836→                ws.send(JSON.stringify({ type: 'chat', text }));
+  1837→                input.value = '';
+  1838→            }
+  1839→        }
+  1840→
+  1841→        function handleChatKey(event) {
+  1842→            if (event.key === 'Enter') {
+  1843→                sendChat();
+  1844→            }
+  1845→        }
+  1846→
+  1847→        // 添加聊天消息
+  1848→        function addChatMessage(text) {
+  1849→            const container = document.getElementById('chatMessages');
+  1850→            const div = document.createElement('div');
+  1851→            div.textContent = text;
+  1852→            div.style.marginBottom = '5px';
+  1853→            container.appendChild(div);
+  1854→            container.scrollTop = container.scrollHeight;
+  1855→        }
+  1856→
+  1857→        // 初始化
+  1858→        document.addEventListener('DOMContentLoaded', () => {
+  1859→            connect();
+  1860→        });
+  1861→    </script>
+  1862→</body>
+  1863→</html>
+  1864→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

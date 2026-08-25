@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="#1a472a">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="桐城自摸麻将"
+        android:textSize="32sp"
+        android:textColor="#ffd700"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/btnCreateRoom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="创建房间（作为服务器）"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#2d5a3d" />
+
+    <Button
+        android:id="@+id/btnJoinRoom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="加入房间"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:backgroundTint="#3d6b42" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#90ee90"
+        android:textSize="16sp"
+        android:layout_marginTop="24dp"
+        android:visibility="gone" />
+
+</LinearLayout>

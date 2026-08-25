@@ -1,0 +1,3156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桐城自摸麻将 - 局域网版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        /* 大厅样式 - 登录界面 */
+        #loginScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 40, 24, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        #loginScreen h1 {
+            font-size: 48px;
+            color: #ffd700;
+            text-shadow: 0 0 20px #ffd700;
+            margin-bottom: 10px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700; }
+            to { text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700, 0 0 60px #ff8c00; }
+        }
+
+        #loginScreen .subtitle {
+            color: #90ee90;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .name-bar {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .name-bar label {
+            color: #ffd700;
+            font-size: 14px;
+        }
+
+        .name-bar input {
+            width: 200px;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #ffd700;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .name-bar input:focus {
+            outline: none;
+            box-shadow: 0 0 15px #ffd700;
+        }
+
+        .name-bar input::placeholder {
+            color: #666;
+        }
+
+        /* 牌桌列表容器 */
+        .lobby-container {
+            width: 90%;
+            max-width: 800px;
+            margin-top: 10px;
+        }
+
+        .lobby-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        .lobby-header h2 {
+            color: #ffd700;
+            font-size: 24px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #607D8B;
+            color: white;
+        }
+
+        .table-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .table-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .table-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .table-card.empty {
+            border-color: #4CAF50;
+        }
+
+        .table-card.waiting {
+            border-color: #FFC107;
+        }
+
+        .table-card.playing {
+            border-color: #2196F3;
+        }
+
+        .table-card.full {
+            border-color: #f44336;
+            opacity: 0.7;
+        }
+
+        .table-card.new-table {
+            background: rgba(76, 175, 80, 0.3);
+            border: 2px dashed #4CAF50;
+        }
+
+        .table-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .table-status {
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        .table-players {
+            margin-top: 10px;
+            font-size: 0.8em;
+        }
+
+        /* 牌桌列表中的小型圆桌布局 */
+        .mini-table-layout {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 10px auto;
+        }
+
+        .mini-table-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2d5a3d 0%, #1a3d2a 100%);
+            border: 2px solid #FFD700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .mini-seat {
+            position: absolute;
+            text-align: center;
+            width: 32px;
+        }
+
+        /* 逆时针顺序: 1(底) → 2(右) → 3(顶) → 4(左) */
+        .mini-seat-1 { bottom: 0; left: 50%; transform: translateX(-50%); }
+        .mini-seat-2 { right: 0; top: 50%; transform: translateY(-50%); }
+        .mini-seat-3 { top: 0; left: 50%; transform: translateX(-50%); }
+        .mini-seat-4 { left: 0; top: 50%; transform: translateY(-50%); }
+
+        .mini-seat-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid #555;
+            transition: all 0.3s;
+            color: #fff;
+        }
+
+        .mini-seat-avatar.occupied {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            border-color: #81C784;
+        }
+
+        .mini-seat-avatar:hover:not(.occupied) {
+            background: rgba(255, 215, 0, 0.3);
+            border-color: #FFD700;
+            cursor: pointer;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5px;
+        }
+
+        .table-id {
+            color: #FFD700;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .table-mode-badge {
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+        }
+
+        .table-footer {
+            text-align: center;
+            font-size: 12px;
+            color: #ccc;
+            margin-top: 10px;
+        }
+
+        .table-footer.full {
+            color: #ff6b6b;
+        }
+
+        .table-footer.playing {
+            color: #4dabf7;
+        }
+
+        .deck-info {
+            text-align: center;
+            font-size: 11px;
+            color: #90ee90;
+            margin-top: 5px;
+            padding: 3px 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+
+        /* 创建新桌卡片样式 */
+        .create-table-card {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(46, 125, 50, 0.3));
+            border: 2px dashed #4CAF50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .create-table-card .plus {
+            font-size: 48px;
+            color: #4CAF50;
+            line-height: 1;
+        }
+
+        .create-table-card .text {
+            color: #4CAF50;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .create-table-card:hover {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.5), rgba(46, 125, 50, 0.5));
+        }
+
+        /* 游戏界面样式 */
+        .game-container {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .game-table {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: radial-gradient(ellipse at center, #2d5a3d 0%, #1a472a 100%);
+        }
+
+        /* 玩家区域 */
+        .player-area {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .player-area.bottom {
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+        }
+
+        .player-area.top {
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .player-area.left {
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .player-area.right {
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .player-info {
+            background: rgba(0,0,0,0.5);
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .player-info.active {
+            border: 2px solid #FFD700;
+            box-shadow: 0 0 10px #FFD700;
+        }
+
+        .player-name {
+            font-weight: bold;
+        }
+
+        .hand-count {
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        /* 展示区 */
+        .showed-area {
+            display: flex;
+            gap: 5px;
+            margin: 5px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .showed-card {
+            width: 30px;
+            height: 40px;
+            background: #fff;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #333;
+            overflow: hidden;
+        }
+
+        .showed-card.fa {
+            background: #FFD700;
+        }
+
+        .showed-card.gang {
+            background: #90EE90;
+        }
+
+        /* 手牌区域 */
+        .hand-area {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1px;
+            padding: 10px;
+            background: linear-gradient(180deg, #1a472a 0%, #0d2818 100%);
+            border-radius: 10px;
+            max-width: 100%;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        /* 手牌区域包装器 */
+        .hand-area-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* 手牌提示区 */
+        .hand-hint {
+            position: absolute;
+            top: -90px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(180deg, #2a5a3a 0%, #1a472a 100%);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 2px solid #4a90d9;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+            min-width: 120px;
+            z-index: 100;
+        }
+
+        .hand-hint-card {
+            width: 37px;
+            height: 55px;
+            background: linear-gradient(180deg, #f5f5f0 0%, #e8e8e0 50%, #ddd8d0 100%);
+            border-radius: 4px;
+            border: 2px solid #4a90d9;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+        }
+
+        .hand-hint-text {
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* 麻将牌精灵图样式 */
+        .tile-sprite {
+            /* 精灵图参数：图片617x373，需要精确测量每张牌位置 */
+            /* 每张牌显示尺寸（适当缩小以完整显示边框） */
+            --tile-display-width: 57px;
+            --tile-display-height: 85px;
+            --scale: 0.65;
+            width: calc(var(--tile-display-width) * var(--scale));
+            height: calc(var(--tile-display-height) * var(--scale));
+            background-image: url('麻将大图.jpg');
+            /* 背景图缩放到617x373的0.65倍 */
+            background-size: calc(617px * var(--scale)) calc(373px * var(--scale));
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            position: relative;
+            box-shadow:
+                0 2px 4px rgba(0,0,0,0.3),
+                0 4px 8px rgba(0,0,0,0.2);
+            border: 2px solid #4a90d9;
+            flex-shrink: 0;
+        }
+
+        /* 麻将牌图片样式 - 使用单独图片文件 */
+        .tile-img {
+            width: 50px;
+            height: 70px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            position: relative;
+            box-shadow:
+                0 2px 4px rgba(0,0,0,0.3),
+                0 4px 8px rgba(0,0,0,0.2);
+            border: 2px solid #4a90d9;
+            flex-shrink: 0;
+            background: #f5f5f0;
+            overflow: hidden;
+        }
+
+        .tile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .tile-img:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 4px 8px rgba(0,0,0,0.35),
+                0 6px 12px rgba(0,0,0,0.25),
+                0 0 0 2px #6ab0f3;
+            z-index: 10;
+        }
+
+        .tile-img.selected {
+            transform: translateY(-12px);
+            box-shadow:
+                0 6px 12px rgba(0,0,0,0.4),
+                0 10px 20px rgba(0,0,0,0.3),
+                0 0 0 3px #4a90d9;
+            border-color: #2e7bc4;
+            z-index: 20;
+        }
+
+        .tile-img.wild {
+            border-color: #FFD700;
+            box-shadow:
+                0 2px 4px rgba(0,0,0,0.3),
+                0 4px 8px rgba(0,0,0,0.2),
+                0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .tile-sprite:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 4px 8px rgba(0,0,0,0.35),
+                0 6px 12px rgba(0,0,0,0.25),
+                0 0 0 2px #6ab0f3;
+            z-index: 10;
+        }
+
+        .tile-sprite.selected {
+            transform: translateY(-12px);
+            box-shadow:
+                0 6px 12px rgba(0,0,0,0.4),
+                0 10px 20px rgba(0,0,0,0.3),
+                0 0 0 3px #4a90d9;
+            border-color: #2e7bc4;
+            z-index: 20;
+        }
+
+        /* 万能牌样式 - 癞子 */
+        .tile-sprite.wild {
+            border: 2px solid #ffa000;
+            box-shadow:
+                0 2px 6px rgba(255,152,0,0.5),
+                0 4px 10px rgba(255,152,0,0.3),
+                0 0 12px rgba(255,160,0,0.6);
+        }
+
+        /* 癞子标记 */
+        .tile-sprite.wild::before {
+            content: '癞';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 14px;
+            height: 14px;
+            background: linear-gradient(135deg, #ff5722 0%, #e64a19 100%);
+            color: white;
+            font-size: 9px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0 3px 0 4px;
+            box-shadow: -1px 1px 2px rgba(0,0,0,0.3);
+            z-index: 5;
+            line-height: 1;
+        }
+
+        /* 筒子位置 (第0行: row 0) - 红中在列0，1-9筒在列1-9 */
+        /* 布局: 红中(0), 一筒(1), 二筒(2), ..., 九筒(9) */
+        .tile-sprite.tong1 { background-position: calc((-1 * 61.7px + 2px) * 0.65) calc((-0 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tong2 { background-position: calc((-2 * 61.7px + 2px) * 0.65) calc((-0 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tong3 { background-position: calc((-3 * 61.7px + 2px) * 0.65) calc((-0 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tong4 { background-position: calc((-4 * 61.7px + 2px) * 0.65) calc((-0 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tong5 { background-position: calc((-5 * 61.7px + 2px) * 0.65) calc((-0 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tong6 { background-position: calc((-6 * 61.7px + 2px) * 0.65) calc((-0 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tong7 { background-position: calc((-7 * 61.7px + 2px) * 0.65) calc((-0 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tong8 { background-position: calc((-8 * 61.7px + 2px) * 0.65) calc((-0 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tong9 { background-position: calc((-9 * 61.7px + 2px) * 0.65) calc((-0 * 93.25px + 4px) * 0.65); }
+
+        /* 条子位置 (第1行: row 1) - 1-9条在列0-8 */
+        /* 布局: 一条(0), 二条(1), ..., 九条(8) */
+        .tile-sprite.tiao1 { background-position: calc((-0 * 61.7px + 2px) * 0.65) calc((-1 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tiao2 { background-position: calc((-1 * 61.7px + 2px) * 0.65) calc((-1 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tiao3 { background-position: calc((-2 * 61.7px + 2px) * 0.65) calc((-1 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tiao4 { background-position: calc((-3 * 61.7px + 2px) * 0.65) calc((-1 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tiao5 { background-position: calc((-4 * 61.7px + 2px) * 0.65) calc((-1 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tiao6 { background-position: calc((-5 * 61.7px + 2px) * 0.65) calc((-1 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tiao7 { background-position: calc((-6 * 61.7px + 2px) * 0.65) calc((-1 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tiao8 { background-position: calc((-7 * 61.7px + 2px) * 0.65) calc((-1 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.tiao9 { background-position: calc((-8 * 61.7px + 2px) * 0.65) calc((-1 * 93.25px + 4px) * 0.65); }
+
+        /* 万子位置 (第2行: row 2) - 1-9万在列0-8 */
+        /* 布局: 一万(0), 二万(1), ..., 九万(8) */
+        .tile-sprite.wan1 { background-position: calc((-0 * 61.7px + 2px) * 0.65) calc((-2 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.wan2 { background-position: calc((-1 * 61.7px + 2px) * 0.65) calc((-2 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.wan3 { background-position: calc((-2 * 61.7px + 2px) * 0.65) calc((-2 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.wan4 { background-position: calc((-3 * 61.7px + 2px) * 0.65) calc((-2 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.wan5 { background-position: calc((-4 * 61.7px + 2px) * 0.65) calc((-2 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.wan6 { background-position: calc((-5 * 61.7px + 2px) * 0.65) calc((-2 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.wan7 { background-position: calc((-6 * 61.7px + 2px) * 0.65) calc((-2 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.wan8 { background-position: calc((-7 * 61.7px + 2px) * 0.65) calc((-2 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.wan9 { background-position: calc((-8 * 61.7px + 2px) * 0.65) calc((-2 * 93.25px + 4px) * 0.65); }
+
+        /* 风牌位置 */
+        /* 布局: 東在第2行列9, 南(3,0), 西(3,1), 北(3,2) */
+        .tile-sprite.feng_dong { background-position: calc((-9 * 61.7px + 2px) * 0.65) calc((-2 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.feng_nan { background-position: calc((-0 * 61.7px + 2px) * 0.65) calc((-3 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.feng_xi { background-position: calc((-1 * 61.7px + 2px) * 0.65) calc((-3 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.feng_bei { background-position: calc((-2 * 61.7px + 2px) * 0.65) calc((-3 * 93.25px + 4px) * 0.65); }
+
+        /* 箭牌位置 (第3行: row 3, 续) */
+        /* 布局: 中(3,3), 發(3,4), 白(3,5) */
+        .tile-sprite.jian_zhong { background-position: calc((-3 * 61.7px + 2px) * 0.65) calc((-3 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.jian_fa { background-position: calc((-4 * 61.7px + 2px) * 0.65) calc((-3 * 93.25px + 4px) * 0.65); }
+        .tile-sprite.jian_bai { background-position: calc((-5 * 61.7px + 2px) * 0.65) calc((-3 * 93.25px + 4px) * 0.65); }
+
+        /* 麻将牌基础样式 - 图片中的真实样式 */
+        .card {
+            width: 34px;
+            height: 48px;
+            background: linear-gradient(180deg, #f5f5f0 0%, #e8e8e0 50%, #ddd8d0 100%);
+            border-radius: 3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            position: relative;
+            box-shadow:
+                1px 0 0 #c8c0b8,
+                0 2px 0 #d0c8c0,
+                0 3px 0 #c0b8b0,
+                0 4px 0 #b0a8a0,
+                0 5px 3px rgba(0,0,0,0.3);
+            border: 1px solid #d8d0c8;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                1px 0 0 #c8c0b8,
+                0 3px 0 #d0c8c0,
+                0 5px 0 #c0b8b0,
+                0 7px 0 #b0a8a0,
+                0 9px 6px rgba(0,0,0,0.35);
+            z-index: 10;
+        }
+
+        .card.selected {
+            transform: translateY(-12px);
+            box-shadow:
+                1px 0 0 #c8c0b8,
+                0 4px 0 #d0c8c0,
+                0 7px 0 #c0b8b0,
+                0 10px 0 #b0a8a0,
+                0 13px 10px rgba(0,0,0,0.4);
+            z-index: 20;
+        }
+
+        .card.dragging {
+            opacity: 0.6;
+            transform: scale(1.1);
+        }
+
+        .card.drag-over {
+            border-left: 3px solid #FFD700;
+        }
+
+        /* 万能牌样式 - 癞子 */
+        .card.wild {
+            background: linear-gradient(180deg, #fff8e1 0%, #ffecb3 50%, #ffe082 100%);
+            border: 2px solid #ffa000;
+            box-shadow:
+                1px 0 0 #ff8f00,
+                0 2px 0 #f57c00,
+                0 3px 0 #ef6c00,
+                0 4px 0 #e65100,
+                0 5px 3px rgba(255,152,0,0.4),
+                0 0 10px rgba(255,160,0,0.5);
+        }
+
+        /* 癞子标记 */
+        .card.wild::before {
+            content: '癞';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 13px;
+            height: 13px;
+            background: linear-gradient(135deg, #ff5722 0%, #e64a19 100%);
+            color: white;
+            font-size: 8px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0 3px 0 4px;
+            box-shadow: -1px 1px 2px rgba(0,0,0,0.3);
+            z-index: 5;
+            line-height: 1;
+        }
+
+        /* 牌面内容容器 */
+        .card-face {
+            width: 28px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #fafaf5;
+            border-radius: 2px;
+            box-shadow: inset 0 0 2px rgba(0,0,0,0.05);
+            border: 1px solid #e8e0d8;
+        }
+
+        /* 筒子牌 - 圆点图案 */
+        .card.tong .card-face {
+            position: relative;
+        }
+
+        .card.tong .dot-container {
+            width: 24px;
+            height: 32px;
+            display: grid;
+            place-items: center;
+        }
+
+        .card.tong .dot {
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle at 40% 40%, #90caf9, #1976d2 70%, #0d47a1);
+            border-radius: 50%;
+            box-shadow:
+                inset 0 1px 2px rgba(255,255,255,0.5),
+                0 1px 1px rgba(0,0,0,0.15);
+        }
+
+        /* 1筒 - 大圆带花边 */
+        .card.tong.p1 .dot-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card.tong.p1 .dot {
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle at 40% 40%, #64b5f6, #1976d2 60%, #0d47a1);
+            box-shadow:
+                inset 0 1px 3px rgba(255,255,255,0.6),
+                inset 0 -1px 2px rgba(0,0,0,0.2),
+                0 1px 2px rgba(0,0,0,0.15);
+        }
+
+        /* 2筒 */
+        .card.tong.p2 .dot-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        /* 3筒 */
+        .card.tong.p3 .dot-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 1px;
+        }
+        .card.tong.p3 .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+        .card.tong.p3 .dot:nth-child(2) { grid-column: 2; grid-row: 1; }
+        .card.tong.p3 .dot:nth-child(3) { grid-column: 1 / 3; grid-row: 2; justify-self: center; }
+
+        /* 4筒 */
+        .card.tong.p4 .dot-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 4px;
+            padding: 2px;
+        }
+
+        /* 5筒 */
+        .card.tong.p5 .dot-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 1px;
+        }
+        .card.tong.p5 .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+        .card.tong.p5 .dot:nth-child(2) { grid-column: 3; grid-row: 1; }
+        .card.tong.p5 .dot:nth-child(3) { grid-column: 2; grid-row: 2; width: 8px; height: 8px; }
+        .card.tong.p5 .dot:nth-child(4) { grid-column: 1; grid-row: 3; }
+        .card.tong.p5 .dot:nth-child(5) { grid-column: 3; grid-row: 3; }
+
+        /* 6筒 */
+        .card.tong.p6 .dot-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 2px;
+        }
+
+        /* 7筒 */
+        .card.tong.p7 .dot-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 1px;
+        }
+        .card.tong.p7 .dot:nth-child(1) { grid-column: 2; grid-row: 1; }
+        .card.tong.p7 .dot:nth-child(2) { grid-column: 1; grid-row: 2; }
+        .card.tong.p7 .dot:nth-child(3) { grid-column: 3; grid-row: 2; }
+        .card.tong.p7 .dot:nth-child(4) { grid-column: 1; grid-row: 3; }
+        .card.tong.p7 .dot:nth-child(5) { grid-column: 2; grid-row: 3; }
+        .card.tong.p7 .dot:nth-child(6) { grid-column: 3; grid-row: 3; }
+        .card.tong.p7 .dot:nth-child(7) { grid-column: 2; grid-row: 2; width: 8px; height: 8px; }
+
+        /* 8筒 */
+        .card.tong.p8 .dot-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 1px;
+        }
+        .card.tong.p8 .dot:nth-child(4) { grid-column: 2; grid-row: 2; display: none; }
+        .card.tong.p8 .dot { width: 5px; height: 5px; }
+
+        /* 9筒 */
+        .card.tong.p9 .dot-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 2px;
+        }
+        .card.tong.p9 .dot { width: 5px; height: 5px; }
+
+        /* 条子牌 - 竹节图案 */
+        .card.tiao .card-face {
+            padding: 2px;
+        }
+        .card.tiao .bamboo-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            align-items: center;
+        }
+        .card.tiao .bamboo-stick {
+            width: 4px;
+            height: 6px;
+            background: linear-gradient(90deg, #2e7d32, #4caf50 40%, #66bb6a 50%, #4caf50 60%, #2e7d32);
+            border-radius: 1px;
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.3),
+                0 1px 1px rgba(0,0,0,0.1);
+        }
+        .card.tiao .bamboo-row {
+            display: flex;
+            gap: 2px;
+        }
+
+        /* 万子牌 */
+        .card.wan .card-face {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0px;
+        }
+        .card.wan .wan-num {
+            font-size: 14px;
+            font-weight: bold;
+            color: #c62828;
+            line-height: 1;
+            font-family: 'KaiTi', 'STKaiti', 'SimSun', serif;
+        }
+        .card.wan .wan-char {
+            font-size: 10px;
+            color: #c62828;
+            font-weight: bold;
+            font-family: 'KaiTi', 'STKaiti', 'SimSun', serif;
+        }
+
+        /* 风牌 */
+        .card.feng .card-face {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card.feng .feng-char {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1565c0;
+            font-family: 'KaiTi', 'STKaiti', 'SimSun', serif;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+        }
+
+        /* 箭牌 */
+        .card.jian .card-face {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card.jian .jian-char {
+            font-size: 18px;
+            font-weight: bold;
+            font-family: 'KaiTi', 'STKaiti', 'SimSun', serif;
+        }
+
+        .card.jian.zhong .jian-char {
+            color: #c62828;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+        }
+        .card.jian.fa .jian-char {
+            color: #2e7d32;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+        }
+        .card.jian.bai .jian-char {
+            color: #455a64;
+            text-shadow: 1px 1px 0 #78909c, -1px -1px 0 #fff;
+        }
+
+        /* 兼容旧样式（用于其他区域显示） */
+        .card-rank {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .card-suit {
+            font-size: 9px;
+            color: #666;
+        }
+
+        /* 中央信息区 */
+        .center-info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 方位标记 */
+        .direction-marks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .direction {
+            position: absolute;
+            font-size: 16px;
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .direction.north { top: 5px; left: 50%; transform: translateX(-50%); }
+        .direction.south { bottom: 5px; left: 50%; transform: translateX(-50%); }
+        .direction.east { right: 15px; top: 50%; transform: translateY(-50%); }
+        .direction.west { left: 15px; top: 50%; transform: translateY(-50%); }
+
+        /* 中央内容 */
+        .center-content {
+            z-index: 1;
+        }
+
+        .beijing-time {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 10px #FFD700;
+            margin-bottom: 8px;
+        }
+
+        .dice-area {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .dice {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #fff, #ddd);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .dice.rolling {
+            animation: diceRoll 0.5s ease-in-out;
+        }
+
+        @keyframes diceRoll {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(15deg); }
+            75% { transform: rotate(-15deg); }
+        }
+
+        .roll-dice-btn {
+            padding: 5px 12px;
+            font-size: 12px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: #fff;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: none; /* 默认隐藏，只在轮到玩家掷骰子时显示 */
+        }
+
+        .roll-dice-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+        }
+
+        .roll-dice-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ==================== 牌墙样式 ==================== */
+        .wall-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 600px;
+            pointer-events: none;
+            z-index: 0;
+            display: none; /* 默认隐藏 */
+        }
+
+        .wall-section {
+            position: absolute;
+            display: flex;
+        }
+
+        /* 上方牌墙（北-3号位）- 水平排列，居中 */
+        .wall-top {
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            flex-direction: row;
+            gap: 1px;
+        }
+
+        /* 下方牌墙（南-1号位）- 水平排列，居中 */
+        .wall-bottom {
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            flex-direction: row;
+            gap: 1px;
+        }
+
+        /* 左方牌墙（西-4号位）- 垂直排列，居中 */
+        .wall-left {
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        /* 右方牌墙（东-2号位）- 垂直排列，居中 */
+        .wall-right {
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        /* 牌墩容器 - 每墩两张牌叠放 */
+        .wall-pile {
+            position: relative;
+        }
+
+        /* 上下牌墩尺寸 - 包含侧边厚度 */
+        .wall-top .wall-pile,
+        .wall-bottom .wall-pile {
+            width: 28px;
+            height: 50px;
+        }
+
+        /* 左右牌墩尺寸 - 包含侧边厚度 */
+        .wall-left .wall-pile,
+        .wall-right .wall-pile {
+            width: 50px;
+            height: 28px;
+        }
+
+        /* 牌墩中的单张牌 - 带侧边的3D效果 */
+        .wall-tile {
+            position: absolute;
+            border-radius: 3px 3px 2px 2px;
+        }
+
+        /* ============ 3D牌面效果 ============ */
+        /* 上面的牌（顶层）- 带侧边 */
+        .wall-tile.top-tile {
+            z-index: 2;
+        }
+
+        /* 上面的牌的侧边（使用伪元素） */
+        .wall-tile.top-tile::after {
+            content: '';
+            position: absolute;
+            background: #1B5E20;
+            border-radius: 0 0 2px 2px;
+        }
+
+        /* 下面的牌（底层）- 带侧边 */
+        .wall-tile.bottom-tile {
+            z-index: 1;
+        }
+
+        /* 下面的牌的侧边 */
+        .wall-tile.bottom-tile::after {
+            content: '';
+            position: absolute;
+            background: #0D3D0D;
+            border-radius: 0 0 2px 2px;
+        }
+
+        /* ============ 上下牌墙：上下堆叠，侧边朝下 ============ */
+        .wall-top .wall-tile,
+        .wall-bottom .wall-tile {
+            width: 28px;
+            height: 40px;
+        }
+
+        /* 上面的牌（顶层）- 更亮 */
+        .wall-top .wall-tile.top-tile,
+        .wall-bottom .wall-tile.top-tile {
+            top: 0;
+            left: 0;
+            background: linear-gradient(180deg, #b8f0b8 0%, #81C784 40%, #4CAF50 100%);
+            border: 1px solid #2E7D32;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+        }
+
+        /* 上面的牌的侧边 */
+        .wall-top .wall-tile.top-tile::after,
+        .wall-bottom .wall-tile.top-tile::after {
+            left: 1px;
+            bottom: -6px;
+            width: 26px;
+            height: 6px;
+            background: linear-gradient(180deg, #2E7D32, #1B5E20);
+        }
+
+        /* 下面的牌（底层）- 更暗 */
+        .wall-top .wall-tile.bottom-tile {
+            top: 14px;
+            left: 3px;
+            background: linear-gradient(180deg, #4a9a4a 0%, #2E7D32 50%, #1B5E20 100%);
+            border: 1px solid #0D3D0D;
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .wall-bottom .wall-tile.bottom-tile {
+            top: 14px;
+            left: 3px;
+            background: linear-gradient(180deg, #4a9a4a 0%, #2E7D32 50%, #1B5E20 100%);
+            border: 1px solid #0D3D0D;
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* 下面的牌的侧边 */
+        .wall-top .wall-tile.bottom-tile::after,
+        .wall-bottom .wall-tile.bottom-tile::after {
+            left: 1px;
+            bottom: -5px;
+            width: 24px;
+            height: 5px;
+            background: linear-gradient(180deg, #1B5E20, #0D3D0D);
+        }
+
+        /* ============ 左侧牌墙：左右堆叠，侧边朝右 ============ */
+        .wall-left .wall-tile {
+            width: 40px;
+            height: 28px;
+        }
+
+        /* 上面的牌（顶层）- 更亮 */
+        .wall-left .wall-tile.top-tile {
+            left: 0;
+            top: 0;
+            background: linear-gradient(90deg, #b8f0b8 0%, #81C784 40%, #4CAF50 100%);
+            border: 1px solid #2E7D32;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+        }
+
+        /* 上面的牌的侧边（朝右） */
+        .wall-left .wall-tile.top-tile::after {
+            right: -6px;
+            top: 1px;
+            width: 6px;
+            height: 26px;
+            background: linear-gradient(90deg, #2E7D32, #1B5E20);
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* 下面的牌（底层）- 更暗 */
+        .wall-left .wall-tile.bottom-tile {
+            left: 14px;
+            top: 3px;
+            background: linear-gradient(90deg, #4a9a4a 0%, #2E7D32 50%, #1B5E20 100%);
+            border: 1px solid #0D3D0D;
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* 下面的牌的侧边（朝右） */
+        .wall-left .wall-tile.bottom-tile::after {
+            right: -5px;
+            top: 1px;
+            width: 5px;
+            height: 24px;
+            background: linear-gradient(90deg, #1B5E20, #0D3D0D);
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* ============ 右侧牌墙：左右堆叠，侧边朝左 ============ */
+        .wall-right .wall-tile {
+            width: 40px;
+            height: 28px;
+        }
+
+        /* 上面的牌（顶层）- 更亮 */
+        .wall-right .wall-tile.top-tile {
+            left: 0;
+            top: 0;
+            background: linear-gradient(270deg, #b8f0b8 0%, #81C784 40%, #4CAF50 100%);
+            border: 1px solid #2E7D32;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+        }
+
+        /* 上面的牌的侧边（朝左） */
+        .wall-right .wall-tile.top-tile::after {
+            left: -6px;
+            top: 1px;
+            width: 6px;
+            height: 26px;
+            background: linear-gradient(270deg, #2E7D32, #1B5E20);
+            border-radius: 2px 0 0 2px;
+        }
+
+        /* 下面的牌（底层）- 更暗 */
+        .wall-right .wall-tile.bottom-tile {
+            left: -14px;
+            top: 3px;
+            background: linear-gradient(270deg, #4a9a4a 0%, #2E7D32 50%, #1B5E20 100%);
+            border: 1px solid #0D3D0D;
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* 下面的牌的侧边（朝左） */
+        .wall-right .wall-tile.bottom-tile::after {
+            left: -5px;
+            top: 1px;
+            width: 5px;
+            height: 24px;
+            background: linear-gradient(270deg, #1B5E20, #0D3D0D);
+            border-radius: 2px 0 0 2px;
+        }
+
+        /* 空牌墩（已被抓走） */
+        .wall-tile.empty {
+            background: transparent !important;
+            border: 1px dashed rgba(255,255,255,0.2) !important;
+            box-shadow: none !important;
+        }
+
+        /* 亮牌高亮 */
+        .wall-tile.shown {
+            background: linear-gradient(180deg, #FFD700, #FFA000) !important;
+            border-color: #FF8F00 !important;
+            box-shadow: 0 0 10px rgba(255,215,0,0.8) !important;
+        }
+
+        /* 抓牌起始位置 */
+        .wall-tile.draw-start {
+            border-color: #FF5722 !important;
+            box-shadow: 0 0 8px #FF5722 !important;
+        }
+
+        /* 亮牌显示区 */
+        .shown-card-info {
+            margin-top: 8px;
+            white-space: nowrap;
+        }
+
+        .shown-card-info .card-display.shown {
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        .wild-card-info {
+            margin-top: 8px;
+            white-space: nowrap;
+        }
+
+        .wild-card-info .label {
+            font-size: 12px;
+            color: #ccc;
+            display: inline;
+        }
+
+        .wild-card-info .card-display {
+            font-size: 16px;
+            font-weight: bold;
+            color: #FFD700;
+            display: inline;
+            margin-left: 5px;
+        }
+
+        .deck-count {
+            font-size: 12px;
+            color: #ccc;
+            margin-top: 5px;
+        }
+
+        /* 操作按钮 */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 8px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .action-btn.play {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .action-btn.fa {
+            background: #FFD700;
+            color: #333;
+        }
+
+        .action-btn.gang {
+            background: #9C27B0;
+            color: white;
+        }
+
+        .action-btn.hu {
+            background: #f44336;
+            color: white;
+        }
+
+        .action-btn.ready {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .action-btn.leave {
+            background: #9e9e9e;
+            color: white;
+        }
+
+        /* 聊天区域 */
+        .chat-area {
+            position: absolute;
+            bottom: 200px;
+            right: 10px;
+            width: 200px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .chat-messages {
+            height: 150px;
+            overflow-y: auto;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 5px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 5px;
+            border: none;
+            border-radius: 3px;
+        }
+
+        /* 准备界面 */
+        .ready-panel {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 100;
+        }
+
+        .ready-panel h2 {
+            margin-bottom: 20px;
+        }
+
+        .seat-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .seat-item {
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .seat-item.occupied {
+            background: rgba(76, 175, 80, 0.3);
+        }
+
+        .seat-item.me {
+            border: 2px solid #FFD700;
+        }
+
+        /* 玩家列表面板 */
+        .players-panel {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .players-panel h3 {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .player-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+            font-size: 13px;
+        }
+
+        .player-item .seat {
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .player-item .ready-status {
+            color: #4CAF50;
+            font-size: 12px;
+        }
+
+        .player-item .not-ready {
+            color: #999;
+        }
+
+        /* 隐藏 */
+        .hidden {
+            display: none !important;
+        }
+
+        /* 当前玩家指示 */
+        .current-turn {
+            color: #FFD700 !important;
+            font-weight: bold;
+        }
+
+        .current-turn::before {
+            content: '▶ ';
+            color: #FFD700;
+        }
+
+        /* 回合提示条 */
+        .turn-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -180px);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.95), rgba(255, 180, 0, 0.95));
+            color: #333;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.5);
+            z-index: 100;
+            white-space: nowrap;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .turn-indicator.my-turn {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.95), rgba(46, 125, 50, 0.95));
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.5);
+            animation: pulseGreen 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -180px) scale(1); }
+            50% { transform: translate(-50%, -180px) scale(1.05); }
+        }
+
+        @keyframes pulseGreen {
+            0%, 100% { transform: translate(-50%, -180px) scale(1); box-shadow: 0 4px 20px rgba(76, 175, 80, 0.5); }
+            50% { transform: translate(-50%, -180px) scale(1.1); box-shadow: 0 4px 30px rgba(76, 175, 80, 0.8); }
+        }
+
+        /* 自己回合时的手牌区域高亮 */
+        .hand-area.my-turn {
+            border: 3px solid #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), inset 0 2px 8px rgba(0,0,0,0.5);
+            animation: handGlow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes handGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), inset 0 2px 8px rgba(0,0,0,0.5); }
+            50% { box-shadow: 0 0 35px rgba(255, 215, 0, 0.8), inset 0 2px 8px rgba(0,0,0,0.5); }
+        }
+
+        /* 发牌动画 */
+        .deal-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .deal-piles {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .deal-pile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .deal-pile-label {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .deal-pile-cards {
+            display: flex;
+            flex-wrap: wrap;
+            width: 120px;
+            gap: 2px;
+        }
+
+        .deal-card-back {
+            width: 25px;
+            height: 35px;
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            border-radius: 3px;
+            border: 1px solid #3949ab;
+        }
+
+        .deal-info {
+            color: #FFD700;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .deal-progress {
+            color: #fff;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 登录/大厅界面 -->
+    <div id="loginScreen">
+        <h1>🀄 桐城自摸麻将 🀄</h1>
+        <div class="subtitle">安徽桐城特色麻将 · 局域网版</div>
+
+        <!-- 底部名称栏 -->
+        <div class="name-bar">
+            <label>玩家名称:</label>
+            <input type="text" id="playerName" placeholder="输入你的名称" maxlength="10">
+        </div>
+
+        <!-- 牌桌列表 -->
+        <div class="lobby-container">
+            <div class="lobby-header">
+                <h2>🪑 牌桌列表</h2>
+            </div>
+            <!-- 设置选项 -->
+            <div class="lobby-settings" style="padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 10px;">
+                <label style="cursor: pointer; margin-right: 20px;">
+                    <input type="checkbox" id="testModeCheck" onchange="toggleTestMode()">
+                    测试模式（指定骰子）
+                </label>
+                <div id="testModeInputs" style="display: none; margin-top: 8px;">
+                    骰子: <input type="number" id="testDice1" min="1" max="6" value="1" style="width: 40px; text-align: center;">
+                    <input type="number" id="testDice2" min="1" max="6" value="1" style="width: 40px; text-align: center;">
+                </div>
+                <div style="margin-top: 8px;">
+                    AI玩家: <select id="aiPlayerCount" style="padding: 5px;">
+                        <option value="0">无</option>
+                        <option value="1">1个</option>
+                        <option value="2">2个</option>
+                        <option value="3" selected>3个</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-list" id="tableList">
+                <!-- 创建新桌卡片 -->
+                <div class="table-card create-table-card" onclick="createTable()">
+                    <div class="plus">+</div>
+                    <div class="text">开房</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏界面 -->
+    <div class="game-container" id="gameContainer">
+        <div class="game-table">
+            <!-- 玩家信息面板 -->
+            <div class="players-panel" id="playersPanel">
+                <h3>桌号: <span id="tableNumDisplay">1</span></h3>
+                <div id="playersList"></div>
+            </div>
+
+            <!-- 回合提示 -->
+            <div class="turn-indicator" id="turnIndicator">等待开始...</div>
+
+            <!-- 中央信息 -->
+            <div class="center-info">
+                <!-- 方位标记 -->
+                <div class="direction-marks">
+                    <div class="direction north">北</div>
+                    <div class="direction south">南</div>
+                    <div class="direction east">东</div>
+                    <div class="direction west">西</div>
+                </div>
+                <!-- 中央内容 -->
+                <div class="center-content">
+                    <div class="beijing-time" id="beijingTime">00:00</div>
+                    <div class="dice-area">
+                        <div class="dice" id="dice1">?</div>
+                        <div class="dice" id="dice2">?</div>
+                    </div>
+                    <button class="roll-dice-btn" id="rollDiceBtn" onclick="rollDice()">🎲 掷骰子</button>
+                </div>
+                <!-- 万能牌信息 -->
+                <div class="wild-card-info">
+                    <div class="label">万能牌</div>
+                    <div class="card-display" id="wildCardDisplay">-</div>
+                </div>
+                <!-- 亮牌显示 -->
+                <div class="shown-card-info" id="shownCardInfo" style="display:none;">
+                    <div class="label">亮牌</div>
+                    <div class="card-display shown" id="shownCardDisplay">-</div>
+                </div>
+                <div class="deck-count">牌堆: <span id="deckCount">0</span>张</div>
+            </div>
+
+            <!-- 牌墙区域 -->
+            <div class="wall-container" id="wallContainer">
+                <!-- 上方牌墙 (北/3号位) -->
+                <div class="wall-top wall-section" id="wallNorth"></div>
+                <!-- 下方牌墙 (南/1号位) -->
+                <div class="wall-bottom wall-section" id="wallSouth"></div>
+                <!-- 左方牌墙 (西/4号位) -->
+                <div class="wall-left wall-section" id="wallWest"></div>
+                <!-- 右方牌墙 (东/2号位) -->
+                <div class="wall-right wall-section" id="wallEast"></div>
+            </div>
+
+            <!-- 上家 (3号位) -->
+            <div class="player-area top">
+                <div class="player-info" id="player3Info">
+                    <div class="player-name" id="player3Name">等待中...</div>
+                    <div class="hand-count">手牌: <span id="player3Count">0</span></div>
+                </div>
+                <div class="showed-area" id="player3Showed"></div>
+            </div>
+
+            <!-- 左家 (4号位) -->
+            <div class="player-area left">
+                <div class="player-info" id="player4Info">
+                    <div class="player-name" id="player4Name">等待中...</div>
+                    <div class="hand-count">手牌: <span id="player4Count">0</span></div>
+                </div>
+                <div class="showed-area" id="player4Showed"></div>
+            </div>
+
+            <!-- 右家 (2号位) -->
+            <div class="player-area right">
+                <div class="player-info" id="player2Info">
+                    <div class="player-name" id="player2Name">等待中...</div>
+                    <div class="hand-count">手牌: <span id="player2Count">0</span></div>
+                </div>
+                <div class="showed-area" id="player2Showed"></div>
+            </div>
+
+            <!-- 自己 (1号位) -->
+            <div class="player-area bottom">
+                <div class="showed-area" id="player1Showed"></div>
+                <div class="hand-area-wrapper">
+                    <div class="hand-area" id="myHand"></div>
+                    <div class="hand-hint" id="handHint" style="display:none;">
+                        <div class="hand-hint-card" id="handHintCard"></div>
+                        <div class="hand-hint-text" id="handHintText"></div>
+                    </div>
+                </div>
+                <div class="action-buttons" id="actionButtons">
+                    <button class="action-btn play" id="playBtn" onclick="playCard()" disabled style="display:none;">出牌</button>
+                    <button class="action-btn fa" id="faBtn" onclick="changeFa()" disabled style="display:none;">换發</button>
+                    <button class="action-btn gang" id="gangBtn" onclick="doGang()" disabled style="display:none;">暗杠</button>
+                    <button class="action-btn hu" id="huBtn" onclick="declareHu()" disabled style="display:none;">胡牌</button>
+                    <button class="action-btn ready" id="readyBtn" onclick="toggleReady()">准备</button>
+                    <button class="action-btn leave" id="leaveBtn" onclick="leaveTable()">离开</button>
+                </div>
+            </div>
+
+            <!-- 聊天区域 -->
+            <div class="chat-area">
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-input">
+                    <input type="text" id="chatInput" placeholder="输入消息..." onkeypress="handleChatKey(event)">
+                    <button class="btn btn-primary" onclick="sendChat()">发送</button>
+                </div>
+            </div>
+
+            <!-- 发牌动画 -->
+            <div class="deal-animation hidden" id="dealAnimation">
+                <div class="deal-info" id="dealInfo">洗牌中...</div>
+                <div class="deal-piles" id="dealPiles">
+                    <!-- 四堆牌将动态生成 -->
+                </div>
+                <div class="deal-progress" id="dealProgress"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let ws = null;
+        let playerId = null;
+        let playerName = '';
+        let currentTableId = null;
+        let selectedCard = null;
+        let gameState = null;
+        let myIndex = 0;
+        let isReady = false;
+
+        // 连接WebSocket
+        function connect() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            ws = new WebSocket(`${protocol}//${window.location.host}`);
+
+            ws.onopen = () => {
+                console.log('WebSocket已连接');
+                // 连接后立即获取牌桌列表
+                ws.send(JSON.stringify({ type: 'getTableList' }));
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                handleMessage(data);
+            };
+
+            ws.onclose = () => {
+                console.log('WebSocket已断开');
+                setTimeout(() => {
+                    if (playerId) {
+                        connect();
+                    }
+                }, 3000);
+            };
+
+            ws.onerror = (error) => {
+                console.error('WebSocket错误:', error);
+            };
+        }
+
+        // 处理消息
+        function handleMessage(data) {
+            switch (data.type) {
+                case 'loginSuccess':
+                    playerId = data.playerId;
+                    playerName = data.playerName;
+                    // 保存用户名到 localStorage
+                    localStorage.setItem('majiangPlayerName', playerName);
+                    // 登录成功后获取牌桌列表
+                    if (ws && ws.readyState === WebSocket.OPEN) {
+                        ws.send(JSON.stringify({ type: 'getTableList' }));
+                    }
+                    break;
+
+                case 'tableList':
+                    renderTableList(data.tables);
+                    break;
+
+                case 'playerList':
+                    renderPlayerList(data);
+                    break;
+
+                case 'dealStart':
+                    // 开始发牌动画
+                    showDealAnimation();
+                    break;
+
+                case 'gameState':
+                    gameState = data.data;
+                    myIndex = gameState.myIndex;
+                    console.log('收到游戏状态:', gameState);
+                    console.log('我的手牌:', gameState.myHand);
+                    console.log('手牌数量:', gameState.myHand ? gameState.myHand.length : 0);
+                    showGame();  // 确保显示游戏界面
+                    updateGameUI();
+                    break;
+
+                case 'diceState':
+                    // 骰子状态更新
+                    handleDiceState(data.data);
+                    break;
+
+                case 'roundEnd':
+                    // 一局结束，显示结果并等待准备
+                    handleRoundEnd(data.data);
+                    break;
+
+                case 'message':
+                    addChatMessage(data.text);
+                    break;
+
+                case 'error':
+                    alert(data.message);
+                    break;
+            }
+        }
+
+        // 确保已登录
+        function ensureLogin(callback) {
+            const name = document.getElementById('playerName').value.trim();
+            if (!name) {
+                alert('请先输入名称');
+                return false;
+            }
+
+            if (!playerId || !playerName) {
+                playerName = name;
+                if (!ws || ws.readyState !== WebSocket.OPEN) {
+                    connect();
+                    setTimeout(() => {
+                        ws.send(JSON.stringify({ type: 'login', name }));
+                        if (callback) setTimeout(callback, 300);
+                    }, 500);
+                } else {
+                    ws.send(JSON.stringify({ type: 'login', name }));
+                    if (callback) setTimeout(callback, 300);
+                }
+                return true;
+            }
+            return true;
+        }
+
+        // 登录
+        function login() {
+            const name = document.getElementById('playerName').value.trim();
+            if (!name) {
+                alert('请输入名字');
+                return;
+            }
+
+            playerName = name;
+            if (!ws || ws.readyState !== WebSocket.OPEN) {
+                connect();
+                setTimeout(() => {
+                    ws.send(JSON.stringify({ type: 'login', name }));
+                }, 500);
+            } else {
+                ws.send(JSON.stringify({ type: 'login', name }));
+            }
+        }
+
+        // 退出
+        function logout() {
+            if (currentTableId) {
+                leaveTable();
+            }
+            playerId = null;
+            playerName = '';
+        }
+
+        // 渲染牌桌列表
+        function renderTableList(tables) {
+            const container = document.getElementById('tableList');
+            container.innerHTML = '';
+
+            // 创建新桌卡片
+            const createCard = document.createElement('div');
+            createCard.className = 'table-card create-table-card';
+            createCard.innerHTML = `
+                <div class="plus">+</div>
+                <div class="text">开房</div>
+            `;
+            createCard.onclick = createTable;
+            container.appendChild(createCard);
+
+            // 现有牌桌
+            tables.forEach((table, index) => {
+                const card = document.createElement('div');
+                const isFull = table.playerCount >= 4;
+                const isPlaying = table.started;
+
+                card.className = `table-card ${isFull ? 'full' : ''} ${isPlaying ? 'playing' : ''}`;
+
+                // 生成圆桌座位显示
+                let seatsHtml = '';
+                for (let i = 0; i < 4; i++) {
+                    const seatNum = i + 1;
+                    const player = table.players.find(p => p.seatNum === seatNum);
+                    const occupied = !!player;
+                    const occupiedClass = occupied ? 'occupied' : '';
+                    const clickHandler = (!occupied && !isPlaying) ? `onclick="event.stopPropagation(); joinTableById('${table.id}', ${seatNum})"` : '';
+                    const title = occupied && player ? player.name : (isPlaying ? '' : '点击加入');
+                    const displayChar = occupied ? (player ? player.name.charAt(0) : '?') : '+';
+
+                    seatsHtml += `
+                        <div class="mini-seat mini-seat-${seatNum}">
+                            <div class="mini-seat-avatar ${occupiedClass}" ${clickHandler} title="${title}">
+                                ${displayChar}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // 状态文字
+                let statusText = `${table.playerCount}/4 人`;
+                let statusClass = '';
+                let deckInfo = '';
+                if (isPlaying) {
+                    const deckCount = table.deckCount !== undefined ? table.deckCount : '?';
+                    deckInfo = `<div class="deck-info">剩余: ${deckCount}张</div>`;
+                    statusText = '🀄 游戏中';
+                    statusClass = 'playing';
+                } else if (isFull) {
+                    statusText = '已满员';
+                    statusClass = 'full';
+                }
+
+                card.innerHTML = `
+                    <div class="table-header">
+                        <div class="table-id">牌桌：${table.tableNumber}</div>
+                        <div class="table-mode-badge">${isPlaying ? '游戏中' : '等待中'}</div>
+                    </div>
+                    <div class="mini-table-layout">
+                        <div class="mini-table-center">🀄</div>
+                        ${seatsHtml}
+                    </div>
+                    <div class="table-footer ${statusClass}">${statusText}</div>
+                    ${deckInfo}
+                `;
+
+                // 点击整个卡片也可以加入（如果未满且未开始）
+                if (!isFull && !isPlaying) {
+                    card.onclick = () => joinTableById(table.id);
+                }
+
+                container.appendChild(card);
+            });
+        }
+
+        // 通过ID加入牌桌
+        function joinTableById(tableId, seatNum = null) {
+            joinTable(tableId, seatNum);
+        }
+
+        // 创建牌桌
+        function createTable() {
+            const aiCount = parseInt(document.getElementById('aiPlayerCount').value) || 0;
+            if (!ensureLogin(() => {
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify({ type: 'createTable', aiCount }));
+                }
+            })) {
+                if (playerId && ws && ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify({ type: 'createTable', aiCount }));
+                }
+            }
+        }
+
+        // 加入牌桌
+        function joinTable(tableId, seatNum = null) {
+            if (!ensureLogin(() => {
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify({ type: 'joinTable', tableId, seatNum }));
+                    currentTableId = tableId;
+                }
+            })) {
+                if (playerId && ws && ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify({ type: 'joinTable', tableId, seatNum }));
+                    currentTableId = tableId;
+                }
+            }
+        }
+
+        // 离开牌桌
+        function leaveTable() {
+            showLobby();
+            currentTableId = null;
+            isReady = false;
+        }
+
+        // 显示大厅
+        function showLobby() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('gameContainer').style.display = 'none';
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ type: 'getTableList' }));
+            }
+        }
+
+        // 显示游戏界面
+        function showGame() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('gameContainer').style.display = 'block';
+        }
+
+        // 渲染玩家列表
+        function renderPlayerList(data) {
+            showGame();
+
+            document.getElementById('tableNumDisplay').textContent = data.tableNumber;
+
+            const players = data.players || [];
+
+            // 更新玩家面板中的玩家列表
+            const playersList = document.getElementById('playersList');
+            playersList.innerHTML = '';
+            for (let i = 1; i <= 4; i++) {
+                const player = players.find(p => p.seatNum === i);
+                const div = document.createElement('div');
+                div.className = 'player-item';
+                if (player) {
+                    if (player.id === playerId) div.classList.add('me');
+                    const aiTag = player.isAI ? ' 🤖' : '';
+                    const readyTag = player.ready ? '<span class="ready-status">✓ 已准备</span>' : '<span class="not-ready">等待中...</span>';
+                    div.innerHTML = `${i}号: ${player.name}${aiTag} ${readyTag}`;
+                } else {
+                    div.innerHTML = `${i}号: <span style="color:#888">空位</span>`;
+                }
+                playersList.appendChild(div);
+            }
+
+            // 控制按钮显示
+            const readyBtn = document.getElementById('readyBtn');
+            const leaveBtn = document.getElementById('leaveBtn');
+            const playBtn = document.getElementById('playBtn');
+            const faBtn = document.getElementById('faBtn');
+            const gangBtn = document.getElementById('gangBtn');
+            const huBtn = document.getElementById('huBtn');
+
+            if (data.started) {
+                // 游戏开始，隐藏准备/离开按钮
+                readyBtn.style.display = 'none';
+                leaveBtn.style.display = 'none';
+            } else {
+                // 游戏未开始，显示准备/离开按钮，隐藏游戏操作按钮
+                readyBtn.style.display = 'inline-block';
+                leaveBtn.style.display = 'inline-block';
+                playBtn.style.display = 'none';
+                faBtn.style.display = 'none';
+                gangBtn.style.display = 'none';
+                huBtn.style.display = 'none';
+            }
+
+            // 更新准备按钮文字
+            const myPlayer = players.find(p => p.id === playerId);
+            isReady = myPlayer ? myPlayer.ready : false;
+            readyBtn.textContent = isReady ? '取消准备' : '准备';
+        }
+
+        // 切换准备状态
+        function toggleReady() {
+            isReady = !isReady;
+            ws.send(JSON.stringify({ type: 'ready', ready: isReady }));
+        }
+
+        // 发牌动画
+        function showDealAnimation() {
+            const dealAnimation = document.getElementById('dealAnimation');
+            const dealPiles = document.getElementById('dealPiles');
+            const dealInfo = document.getElementById('dealInfo');
+            const dealProgress = document.getElementById('dealProgress');
+
+            dealAnimation.classList.remove('hidden');
+            dealPiles.innerHTML = '';
+
+            // 创建四堆牌（每堆17张，两层）
+            for (let i = 0; i < 4; i++) {
+                const pile = document.createElement('div');
+                pile.className = 'deal-pile';
+                pile.innerHTML = `
+                    <div class="deal-pile-label">${i + 1}号位</div>
+                    <div class="deal-pile-cards" id="pile${i}"></div>
+                `;
+                dealPiles.appendChild(pile);
+            }
+
+            // 动画展示牌堆
+            dealInfo.textContent = '展示牌堆...';
+            let cardIndex = 0;
+            const totalCards = 68; // 4人 × 17张
+
+            const addCard = setInterval(() => {
+                if (cardIndex >= totalCards) {
+                    clearInterval(addCard);
+                    dealInfo.textContent = '发牌中...';
+                    // 开始发牌动画
+                    startDealing();
+                    return;
+                }
+
+                const pileIndex = cardIndex % 4;
+                const pile = document.getElementById(`pile${pileIndex}`);
+                if (pile) {
+                    const card = document.createElement('div');
+                    card.className = 'deal-card-back';
+                    pile.appendChild(card);
+                }
+
+                cardIndex++;
+                dealProgress.textContent = `${cardIndex} / ${totalCards}`;
+            }, 30);
+        }
+
+        // 发牌动画
+        function startDealing() {
+            const dealInfo = document.getElementById('dealInfo');
+            const dealProgress = document.getElementById('dealProgress');
+
+            let round = 0;
+            let player = 0;
+            let cardInRound = 0;
+            const totalRounds = 4; // 4轮发牌
+
+            const dealCard = setInterval(() => {
+                if (round >= totalRounds) {
+                    clearInterval(dealCard);
+                    dealInfo.textContent = '发牌完成！';
+                    // 隐藏发牌动画，显示游戏界面
+                    setTimeout(() => {
+                        document.getElementById('dealAnimation').classList.add('hidden');
+                    }, 500);
+                    return;
+                }
+
+                // 从牌堆移除一张牌
+                const piles = document.querySelectorAll('.deal-pile-cards');
+                for (let p of piles) {
+                    if (p.lastChild) {
+                        p.removeChild(p.lastChild);
+                        break;
+                    }
+                }
+
+                cardInRound++;
+                if (cardInRound >= 4) {
+                    cardInRound = 0;
+                    round++;
+                }
+
+                dealProgress.textContent = `第 ${round + 1} 轮`;
+            }, 100);
+        }
+
+        // 更新游戏UI
+        function updateGameUI() {
+            if (!gameState) return;
+
+            // 游戏开始后隐藏发牌动画，显示游戏操作按钮
+            if (gameState.started) {
+                document.getElementById('dealAnimation').classList.add('hidden');
+                // 显示游戏操作按钮，隐藏准备/离开按钮
+                document.getElementById('readyBtn').style.display = 'none';
+                document.getElementById('leaveBtn').style.display = 'none';
+                document.getElementById('playBtn').style.display = 'inline-block';
+                document.getElementById('faBtn').style.display = 'inline-block';
+                document.getElementById('gangBtn').style.display = 'inline-block';
+                document.getElementById('huBtn').style.display = 'inline-block';
+            }
+
+            // 更新万能牌
+            if (gameState.wildCard) {
+                document.getElementById('wildCardDisplay').textContent =
+                    getCardDisplayName(gameState.wildCard);
+            }
+
+            // 更新牌堆数量
+            document.getElementById('deckCount').textContent = gameState.deckCount;
+
+            // 更新游戏时间
+            if (gameState.totalGameTime !== undefined) {
+                const minutes = Math.floor(gameState.totalGameTime / 60);
+                const seconds = gameState.totalGameTime % 60;
+                const timeEl = document.getElementById('beijingTime');
+                if (timeEl) {
+                    timeEl.textContent =
+                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
+            }
+
+            // 更新各玩家信息
+            // 先找到自己的座位号
+            let mySeatNum = 1;
+            for (const [pid, info] of Object.entries(gameState.playerInfo)) {
+                if (pid === Object.keys(gameState.playerInfo)[myIndex]) {
+                    mySeatNum = info.seatNum;
+                    break;
+                }
+            }
+
+            console.log('我的座位号:', mySeatNum);
+
+            // 根据座位号计算显示位置
+            // position: 0=bottom(自己), 1=right, 2=top, 3=left
+            for (let seatNum = 1; seatNum <= 4; seatNum++) {
+                // 计算相对位置
+                let relativePos = (seatNum - mySeatNum + 4) % 4;
+
+                // 映射到UI位置: 0->1(bottom), 1->2(right), 2->3(top), 3->4(left)
+                const posNames = ['player1', 'player2', 'player3', 'player4'];
+                const posName = posNames[relativePos];
+
+                console.log(`座位${seatNum} -> 相对位置${relativePos} -> UI元素${posName}`);
+
+                // 找到这个座位的玩家
+                let foundPlayer = null;
+                for (const [pid, info] of Object.entries(gameState.playerInfo)) {
+                    if (info.seatNum === seatNum) {
+                        foundPlayer = info;
+                        break;
+                    }
+                }
+
+                const nameEl = document.getElementById(`${posName}Name`);
+                const countEl = document.getElementById(`${posName}Count`);
+                const infoEl = document.getElementById(`${posName}Info`);
+                const showedEl = document.getElementById(`${posName}Showed`);
+
+                if (!nameEl || !countEl || !infoEl || !showedEl) {
+                    console.error('找不到元素:', posName);
+                    continue;
+                }
+
+                if (foundPlayer) {
+                    nameEl.textContent = foundPlayer.name;
+                    countEl.textContent = foundPlayer.handCount;
+
+                    // 高亮当前玩家
+                    if (gameState.currentPlayerSeat === seatNum) {
+                        infoEl.classList.add('active');
+                        nameEl.classList.add('current-turn');
+                    } else {
+                        infoEl.classList.remove('active');
+                        nameEl.classList.remove('current-turn');
+                    }
+
+                    // 展示区
+                    showedEl.innerHTML = '';
+
+                    if (foundPlayer.showedCards) {
+                        foundPlayer.showedCards.fa.forEach(card => {
+                            const div = document.createElement('div');
+                            div.className = 'showed-card fa';
+                            const imgPath = getTileImagePath(card);
+                            if (imgPath) {
+                                div.innerHTML = `<img src="${imgPath}" alt="發" style="width:100%;height:100%;object-fit:contain;">`;
+                            } else {
+                                div.textContent = '發';
+                            }
+                            showedEl.appendChild(div);
+                        });
+
+                        foundPlayer.showedCards.gang.forEach(gang => {
+                            gang.forEach(card => {
+                                const div = document.createElement('div');
+                                div.className = 'showed-card gang';
+                                const imgPath = getTileImagePath(card);
+                                if (imgPath) {
+                                    div.innerHTML = `<img src="${imgPath}" alt="${getCardShortName(card)}" style="width:100%;height:100%;object-fit:contain;">`;
+                                } else {
+                                    div.textContent = getCardShortName(card);
+                                }
+                                showedEl.appendChild(div);
+                            });
+                        });
+                    }
+                }
+            }
+
+            // 更新牌墙状态
+            if (gameState.wallState) {
+                wallState = gameState.wallState;
+                // 重新渲染牌墙（保留亮牌信息）
+                if (currentShownInfo) {
+                    renderWall(currentShownInfo);
+                } else {
+                    renderWall();
+                }
+            }
+
+            // 更新自己的手牌
+            renderMyHand();
+
+            // 更新按钮状态
+            const isMyTurn = gameState.currentPlayer === myIndex;
+            document.getElementById('playBtn').disabled = !isMyTurn || !selectedCard;
+            document.getElementById('faBtn').disabled = !gameState.canChangeFa;
+            document.getElementById('gangBtn').disabled = !gameState.canGang;
+
+            // 更新回合提示
+            updateTurnIndicator();
+        }
+
+        // 更新回合提示
+        function updateTurnIndicator() {
+            const turnIndicator = document.getElementById('turnIndicator');
+            const handArea = document.getElementById('myHand');
+
+            if (!gameState || !gameState.started) {
+                turnIndicator.textContent = '等待开始...';
+                turnIndicator.classList.remove('my-turn');
+                handArea.classList.remove('my-turn');
+                return;
+            }
+
+            // 找到当前玩家的名字
+            let currentPlayerName = '';
+            for (const [pid, info] of Object.entries(gameState.playerInfo)) {
+                if (info.seatNum === gameState.currentPlayerSeat) {
+                    currentPlayerName = info.name;
+                    break;
+                }
+            }
+
+            const isMyTurn = gameState.currentPlayer === myIndex;
+
+            if (isMyTurn) {
+                turnIndicator.textContent = '🎯 轮到你出牌！';
+                turnIndicator.classList.add('my-turn');
+                handArea.classList.add('my-turn');
+            } else {
+                turnIndicator.textContent = `轮到 ${currentPlayerName} 出牌`;
+                turnIndicator.classList.remove('my-turn');
+                handArea.classList.remove('my-turn');
+            }
+        }
+
+        // 获取牌对应的精灵图CSS类名
+        function getTileSpriteClass(card) {
+            if (card.type === 'number') {
+                if (card.suit === '筒') {
+                    return `tong${card.rank}`;
+                } else if (card.suit === '条') {
+                    return `tiao${card.rank}`;
+                } else if (card.suit === '万') {
+                    return `wan${card.rank}`;
+                }
+            } else if (card.type === 'wind') {
+                const windMap = { '东': 'feng_dong', '南': 'feng_nan', '西': 'feng_xi', '北': 'feng_bei' };
+                return windMap[card.rank] || '';
+            } else if (card.type === 'arrow') {
+                const arrowMap = { '中': 'jian_zhong', '发': 'jian_fa', '白': 'jian_bai' };
+                return arrowMap[card.rank] || '';
+            }
+            return '';
+        }
+
+        // 获取牌对应的图片路径
+        function getTileImagePath(card) {
+            const baseName = getTileSpriteClass(card);
+            if (baseName) {
+                return `Images/${baseName}.png`;
+            }
+            return '';
+        }
+
+        // 获取牌的显示名称
+        function getTileName(card) {
+            if (!card) return '请选择一张牌';
+            if (card.type === 'number') {
+                return `${card.rank}${card.suit}`;
+            } else if (card.type === 'wind') {
+                return `${card.rank}风`;
+            } else if (card.type === 'arrow') {
+                const arrowNames = { '中': '红中', '发': '发财', '白': '白板' };
+                return arrowNames[card.rank] || card.rank;
+            }
+            return '未知牌';
+        }
+
+        // 更新手牌提示区
+        function updateHandHint(card) {
+            const hintCard = document.getElementById('handHintCard');
+            const hintText = document.getElementById('handHintText');
+            const hintArea = document.getElementById('handHint');
+
+            if (!card) {
+                // 没有选中牌时隐藏提示区域
+                hintArea.style.display = 'none';
+                hintCard.innerHTML = '';
+                return;
+            }
+
+            // 有选中牌时显示
+            hintArea.style.display = 'flex';
+            const imgPath = getTileImagePath(card);
+            hintCard.innerHTML = `<img src="${imgPath}" alt="${getTileName(card)}" style="width:100%;height:100%;object-fit:contain;">`;
+            hintCard.className = 'hand-hint-card';
+
+            hintText.textContent = getTileName(card);
+        }
+
+        // 渲染自己的手牌
+        function renderMyHand() {
+            const container = document.getElementById('myHand');
+            container.innerHTML = '';
+
+            console.log('renderMyHand 被调用, gameState:', gameState ? '存在' : '不存在');
+            console.log('myHand:', gameState?.myHand);
+
+            if (!gameState || !gameState.myHand) {
+                console.log('没有手牌数据，返回');
+                return;
+            }
+
+            console.log('开始渲染手牌，数量:', gameState.myHand.length);
+
+            gameState.myHand.forEach(card => {
+                const div = document.createElement('div');
+                div.className = 'tile-img';
+
+                // 获取图片路径
+                const imgPath = getTileImagePath(card);
+                if (imgPath) {
+                    const img = document.createElement('img');
+                    img.src = imgPath;
+                    img.alt = getTileName(card);
+                    img.draggable = false;
+                    div.appendChild(img);
+                }
+
+                // 判断是否是万能牌
+                const isWild = isWildCard(card);
+                if (isWild) {
+                    div.classList.add('wild');
+                }
+
+                // 选中状态
+                if (selectedCard && selectedCard.id === card.id) {
+                    div.classList.add('selected');
+                }
+
+                div.onclick = () => selectCard(card);
+                div.dataset.cardId = card.id;
+
+                // 拖拽功能
+                div.draggable = true;
+                div.addEventListener('dragstart', handleDragStart);
+                div.addEventListener('dragend', handleDragEnd);
+                div.addEventListener('dragover', handleDragOver);
+                div.addEventListener('drop', handleDrop);
+                div.addEventListener('dragleave', handleDragLeave);
+
+                container.appendChild(div);
+            });
+        }
+
+        // 创建筒子圆点
+        function createDots(count) {
+            let dots = '';
+            for (let i = 0; i < count; i++) {
+                dots += '<div class="dot"></div>';
+            }
+            return dots;
+        }
+
+        // 创建条子竹节
+        function createBamboo(count) {
+            let bamboo = '';
+            if (count === 1) {
+                bamboo = '<div class="bamboo-stick"></div>';
+            } else if (count === 2) {
+                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div></div>';
+            } else if (count === 3) {
+                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+            } else if (count === 4) {
+                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+            } else if (count === 5) {
+                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+            } else if (count === 6) {
+                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+            } else if (count === 7) {
+                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+            } else if (count === 8) {
+                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+            } else if (count === 9) {
+                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+            }
+            return bamboo;
+        }
+
+        // 拖拽相关变量
+        let draggedCardId = null;
+
+        function handleDragStart(e) {
+            draggedCardId = e.target.dataset.cardId;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.remove('drag-over');
+            });
+            draggedCardId = null;
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            const target = e.target.closest('.card');
+            if (target && target.dataset.cardId !== draggedCardId) {
+                target.classList.add('drag-over');
+            }
+        }
+
+        function handleDragLeave(e) {
+            const target = e.target.closest('.card');
+            if (target) {
+                target.classList.remove('drag-over');
+            }
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            const target = e.target.closest('.card');
+            if (!target || !draggedCardId) return;
+
+            const targetCardId = target.dataset.cardId;
+            if (targetCardId === draggedCardId) return;
+
+            // 重新排序手牌
+            const fromIndex = gameState.myHand.findIndex(c => c.id === draggedCardId);
+            const toIndex = gameState.myHand.findIndex(c => c.id === targetCardId);
+
+            if (fromIndex !== -1 && toIndex !== -1) {
+                const [movedCard] = gameState.myHand.splice(fromIndex, 1);
+                gameState.myHand.splice(toIndex, 0, movedCard);
+                renderMyHand();
+            }
+
+            target.classList.remove('drag-over');
+        }
+
+        // 判断是否是万能牌
+        function isWildCard(card) {
+            if (!gameState || !gameState.wildCard) {
+                console.log('isWildCard: 没有gameState或wildCard');
+                return false;
+            }
+            const wild = gameState.wildCard;
+
+            // 调试：打印比较信息
+            console.log('比较牌:', JSON.stringify(card), '万能牌:', JSON.stringify(wild));
+
+            // 检查是否与翻出的牌相同（精确匹配花色、点数、类型）
+            const sameCard = (card.suit === wild.suit &&
+                             String(card.rank) === String(wild.rank) &&
+                             card.type === wild.type);
+
+            if (sameCard) {
+                console.log('匹配：与翻出的牌相同');
+                return true;
+            }
+
+            // 红中永远是万能牌
+            if (card.type === 'arrow' && card.rank === '中') {
+                console.log('匹配：红中是万能牌');
+                return true;
+            }
+
+            return false;
+        }
+
+        // 获取牌的短名称
+        function getCardShortName(card) {
+            if (card.type === 'number') {
+                return card.rank;
+            } else {
+                return card.rank;
+            }
+        }
+
+        // 获取牌的显示名称
+        function getCardDisplayName(card) {
+            if (card.type === 'number') {
+                return `${card.rank}${card.suit}`;
+            } else if (card.type === 'wind') {
+                return card.rank;
+            } else {
+                return card.rank;
+            }
+        }
+
+        // 选择牌
+        function selectCard(card) {
+            if (selectedCard && selectedCard.id === card.id) {
+                selectedCard = null;
+            } else {
+                selectedCard = card;
+            }
+
+            // 如果是自己回合且有选中的牌，启用出牌按钮
+            const isMyTurn = gameState && gameState.currentPlayer === myIndex;
+            document.getElementById('playBtn').disabled = !isMyTurn || !selectedCard;
+
+            renderMyHand();
+        }
+
+        // 出牌
+        function playCard() {
+            if (!selectedCard) return;
+
+            ws.send(JSON.stringify({
+                type: 'play',
+                cardId: selectedCard.id
+            }));
+
+            selectedCard = null;
+        }
+
+        // 换发
+        // 换發
+        function changeFa() {
+            ws.send(JSON.stringify({ type: 'changeFa' }));
+        }
+
+        // 暗杠
+        function doGang() {
+            if (selectedCard) {
+                ws.send(JSON.stringify({
+                    type: 'gang',
+                    cardId: selectedCard.id
+                }));
+            }
+        }
+
+        // 胡牌
+        function declareHu() {
+            ws.send(JSON.stringify({ type: 'hu' }));
+        }
+
+        // 聊天
+        function sendChat() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (text) {
+                ws.send(JSON.stringify({ type: 'chat', text }));
+                input.value = '';
+            }
+        }
+
+        function handleChatKey(event) {
+            if (event.key === 'Enter') {
+                sendChat();
+            }
+        }
+
+        // 添加聊天消息
+        function addChatMessage(text) {
+            const container = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.textContent = text;
+            div.style.marginBottom = '5px';
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // 更新北京时间
+        function updateBeijingTime() {
+            const now = new Date();
+            // 获取北京时间 (UTC+8)
+            const beijingTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }));
+            const hours = String(beijingTime.getHours()).padStart(2, '0');
+            const minutes = String(beijingTime.getMinutes()).padStart(2, '0');
+            document.getElementById('beijingTime').textContent = `${hours}:${minutes}`;
+        }
+
+        // 掷骰子
+        let diceValues = [0, 0];
+        let currentDiceState = null; // 当前骰子状态
+        let testModeEnabled = false; // 测试模式
+
+        function toggleTestMode() {
+            testModeEnabled = document.getElementById('testModeCheck').checked;
+            document.getElementById('testModeInputs').style.display = testModeEnabled ? 'block' : 'none';
+        }
+
+        function rollDice() {
+            const dice1 = document.getElementById('dice1');
+            const dice2 = document.getElementById('dice2');
+            const btn = document.getElementById('rollDiceBtn');
+
+            // 检查是否轮到自己掷骰子
+            if (currentDiceState && currentDiceState.currentRoller !== playerId) {
+                alert('现在不是你掷骰子');
+                return;
+            }
+
+            btn.disabled = true;
+
+            // 测试模式：直接使用指定值
+            if (testModeEnabled) {
+                diceValues[0] = parseInt(document.getElementById('testDice1').value) || 1;
+                diceValues[1] = parseInt(document.getElementById('testDice2').value) || 1;
+                // 限制范围1-6
+                diceValues[0] = Math.max(1, Math.min(6, diceValues[0]));
+                diceValues[1] = Math.max(1, Math.min(6, diceValues[1]));
+                dice1.textContent = diceValues[0];
+                dice2.textContent = diceValues[1];
+
+                // 发送骰子结果给服务器
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify({
+                        type: 'diceRoll',
+                        values: diceValues
+                    }));
+                }
+                return;
+            }
+
+            dice1.classList.add('rolling');
+            dice2.classList.add('rolling');
+
+            let count = 0;
+            const interval = setInterval(() => {
+                dice1.textContent = Math.floor(Math.random() * 6) + 1;
+                dice2.textContent = Math.floor(Math.random() * 6) + 1;
+                count++;
+
+                if (count >= 10) {
+                    clearInterval(interval);
+                    dice1.classList.remove('rolling');
+                    dice2.classList.remove('rolling');
+
+                    // 最终结果
+                    diceValues[0] = Math.floor(Math.random() * 6) + 1;
+                    diceValues[1] = Math.floor(Math.random() * 6) + 1;
+                    dice1.textContent = diceValues[0];
+                    dice2.textContent = diceValues[1];
+
+                    // 发送骰子结果给服务器
+                    if (ws && ws.readyState === WebSocket.OPEN) {
+                        ws.send(JSON.stringify({
+                            type: 'diceRoll',
+                            values: diceValues
+                        }));
+                    }
+
+                    // 保持按钮禁用，等待服务器响应
+                }
+            }, 100);
+        }
+
+        // 处理骰子状态更新
+        function handleDiceState(data) {
+            currentDiceState = data;
+
+            const btn = document.getElementById('rollDiceBtn');
+            const turnIndicator = document.getElementById('turnIndicator');
+            const wallContainer = document.getElementById('wallContainer');
+
+            // 进入掷骰子阶段时显示牌墙
+            if (data.rollPhase >= 1 && data.rollPhase <= 3) {
+                wallContainer.style.display = 'block';
+                // 重置并渲染牌墙（每人17墩）
+                resetWall();
+            }
+
+            if (data.rollPhase === 1) {
+                // 等待第一次掷骰子
+                if (data.currentRoller === playerId) {
+                    btn.disabled = false;
+                    btn.style.display = 'inline-block';
+                    turnIndicator.textContent = '🎯 轮到你掷骰子！';
+                } else {
+                    btn.disabled = true;
+                    btn.style.display = 'none';
+                    const roller = getPlayerNameById(data.currentRoller);
+                    turnIndicator.textContent = `等待 ${roller} 掷骰子...`;
+                }
+            } else if (data.rollPhase === 2) {
+                // 等待第二次掷骰子
+                if (data.currentRoller === playerId) {
+                    btn.disabled = false;
+                    btn.style.display = 'inline-block';
+                    turnIndicator.textContent = '🎯 轮到你掷第二次骰子！';
+                } else {
+                    btn.disabled = true;
+                    btn.style.display = 'none';
+                    const roller = getPlayerNameById(data.currentRoller);
+                    turnIndicator.textContent = `等待 ${roller} 掷第二次骰子...`;
+                }
+            } else if (data.rollPhase === 3) {
+                // 骰子完成，显示亮牌和癞子
+                btn.disabled = true;
+                btn.style.display = 'none';
+
+                // 显示亮牌和癞子信息
+                let infoText = '发牌中...';
+                if (data.shownCard && data.wildCard) {
+                    const shownName = getCardDisplayName(data.shownCard);
+                    const wildName = getCardDisplayName(data.wildCard);
+                    infoText = `🎴 亮牌: ${shownName} | 🃏 癞子: ${wildName}`;
+
+                    // 显示亮牌
+                    showShownCard(data.shownCard, data.wildCard, data.drawInfo);
+                }
+                turnIndicator.textContent = infoText;
+
+                // 显示牌墙
+                document.getElementById('wallContainer').style.display = 'block';
+            }
+
+            // 显示骰子结果
+            if (data.firstRoll && data.firstRoll.values) {
+                document.getElementById('dice1').textContent = data.firstRoll.values[0];
+                document.getElementById('dice2').textContent = data.firstRoll.values[1];
+            }
+        }
+
+        // 获取牌的显示名称
+        function getCardDisplayName(card) {
+            if (!card) return '';
+            if (card.type === 'number') {
+                return `${card.rank}${card.suit}`;
+            } else {
+                return card.rank;
+            }
+        }
+
+        // 根据玩家ID获取玩家名称
+        function getPlayerNameById(pid) {
+            if (gameState && gameState.playerInfo) {
+                const info = gameState.playerInfo[pid];
+                if (info) return info.name;
+            }
+            return '玩家';
+        }
+
+        // ==================== 牌墙渲染 ====================
+        // 牌墙状态：每方位17墩，每墩2张
+        let wallState = {
+            1: 17, // 东（1号位）
+            2: 17, // 南（2号位）- 实际是右侧
+            3: 17, // 西（3号位）- 上方
+            4: 17  // 北（4号位）- 左侧
+        };
+
+        // 保存亮牌信息
+        let currentShownCard = null;
+        let currentShownInfo = null;
+
+        // 渲染牌墙
+        function renderWall(shownInfo = null) {
+            const directions = ['North', 'South', 'West', 'East'];
+            const seatMap = { 'North': 3, 'South': 1, 'West': 4, 'East': 2 };
+
+            directions.forEach(dir => {
+                const wallEl = document.getElementById('wall' + dir);
+                if (!wallEl) return;
+
+                const seatNum = seatMap[dir];
+                const pileCount = wallState[seatNum] || 17;
+
+                wallEl.innerHTML = '';
+
+                for (let i = 0; i < 17; i++) {
+                    const pile = document.createElement('div');
+                    pile.className = 'wall-pile';
+
+                    if (i < pileCount) {
+                        // 创建两层的牌 - 上层和下层
+                        const tile1 = document.createElement('div');
+                        tile1.className = 'wall-tile top-tile';
+                        const tile2 = document.createElement('div');
+                        tile2.className = 'wall-tile bottom-tile';
+
+                        // 检查是否是亮牌位置
+                        if (shownInfo && shownInfo.direction === seatNum && shownInfo.pile === (17 - i)) {
+                            tile1.classList.add('shown');
+                            // 在亮牌位置显示麻将牌图片
+                            if (currentShownCard) {
+                                const imgSrc = getCardImageSrc(currentShownCard);
+                                if (imgSrc) {
+                                    // 创建图片元素显示在牌墙上
+                                    const img = document.createElement('img');
+                                    img.src = imgSrc;
+
+                                    // 根据方位调整图片旋转
+                                    // 方位映射: North=3(上), South=1(下), West=4(左), East=2(右)
+                                    let rotation = 0;
+                                    if (dir === 'North') {
+                                        rotation = 0;
+                                    } else if (dir === 'South') {
+                                        rotation = 180;
+                                    } else if (dir === 'West') {
+                                        rotation = -90;
+                                    } else if (dir === 'East') {
+                                        rotation = 90;
+                                    }
+
+                                    // 使用 contain 保持图片完整显示，缩小到 80%
+                                    img.style.cssText = `width:80%;height:80%;object-fit:contain;border-radius:2px;transform:rotate(${rotation}deg);position:absolute;top:10%;left:10%;`;
+                                    tile1.innerHTML = '';
+                                    tile1.appendChild(img);
+                                }
+                            }
+                        }
+
+                        pile.appendChild(tile1);
+                        pile.appendChild(tile2);
+                    } else {
+                        // 已被抓走的牌墩
+                        const emptyTile = document.createElement('div');
+                        emptyTile.className = 'wall-tile empty';
+                        pile.appendChild(emptyTile);
+                    }
+
+                    wallEl.appendChild(pile);
+                }
+            });
+        }
+
+        // 获取麻将牌图片路径
+        function getCardImageSrc(card) {
+            if (!card) return null;
+
+            if (card.type === 'number') {
+                const suitPinyin = { '筒': 'tong', '条': 'tiao', '万': 'wan' };
+                return `Images/${suitPinyin[card.suit]}${card.rank}.png`;
+            } else if (card.type === 'wind') {
+                const windPinyin = { '东': 'dong', '南': 'nan', '西': 'xi', '北': 'bei' };
+                return `Images/feng_${windPinyin[card.rank]}.png`;
+            } else if (card.type === 'arrow') {
+                const arrowPinyin = { '中': 'zhong', '发': 'fa', '白': 'bai' };
+                return `Images/jian_${arrowPinyin[card.rank]}.png`;
+            }
+            return null;
+        }
+
+        // 更新牌墙（抓牌后减少）
+        function updateWall(direction, count) {
+            wallState[direction] = Math.max(0, (wallState[direction] || 17) - count);
+            renderWall();
+        }
+
+        // 重置牌墙
+        function resetWall() {
+            wallState = { 1: 17, 2: 17, 3: 17, 4: 17 };
+            renderWall();
+        }
+
+        // 显示亮牌
+        function showShownCard(shownCard, wildCard, drawInfo) {
+            const shownCardInfo = document.getElementById('shownCardInfo');
+            const shownCardDisplay = document.getElementById('shownCardDisplay');
+            const wildCardDisplay = document.getElementById('wildCardDisplay');
+
+            // 保存亮牌信息用于渲染
+            currentShownCard = shownCard;
+            currentShownInfo = drawInfo;
+
+            if (shownCard) {
+                shownCardInfo.style.display = 'block';
+                // 显示亮牌图片
+                const imgSrc = getCardImageSrc(shownCard);
+                if (imgSrc) {
+                    shownCardDisplay.innerHTML = `<img src="${imgSrc}" style="width:24px;height:32px;vertical-align:middle;" alt="${getCardDisplayName(shownCard)}">`;
+                } else {
+                    shownCardDisplay.textContent = getCardDisplayName(shownCard);
+                }
+            }
+
+            if (wildCard) {
+                wildCardDisplay.textContent = getCardDisplayName(wildCard);
+            }
+
+            // 在牌墙上标记亮牌位置并显示图片
+            if (drawInfo && drawInfo.shownDirection) {
+                renderWall({
+                    direction: drawInfo.shownDirection,
+                    pile: drawInfo.shownPile
+                });
+            }
+        }
+
+        // 处理一局结束
+        function handleRoundEnd(data) {
+            const turnIndicator = document.getElementById('turnIndicator');
+
+            // 显示胡牌信息
+            if (data.winner) {
+                turnIndicator.textContent = `🎉 ${data.winnerName} 胡牌！得分: ${data.score}`;
+            } else {
+                turnIndicator.textContent = '流局！';
+            }
+
+            // 显示准备按钮，隐藏游戏操作按钮
+            document.getElementById('readyBtn').style.display = 'inline-block';
+            document.getElementById('leaveBtn').style.display = 'inline-block';
+            document.getElementById('playBtn').style.display = 'none';
+            document.getElementById('faBtn').style.display = 'none';
+            document.getElementById('gangBtn').style.display = 'none';
+            document.getElementById('huBtn').style.display = 'none';
+
+            // 重置准备按钮文字
+            isReady = false;
+            document.getElementById('readyBtn').textContent = '准备下一局';
+        }
+
+        // 获取玩家名称
+        function getPlayerName(playerId) {
+            // 从 gameState 中查找
+            if (gameState && gameState.playerInfo) {
+                for (const info of Object.values(gameState.playerInfo)) {
+                    // 简化处理，实际需要更复杂的逻辑
+                }
+            }
+            return '玩家';
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 从 localStorage 读取保存的用户名
+            const savedName = localStorage.getItem('majiangPlayerName');
+            if (savedName) {
+                document.getElementById('playerName').value = savedName;
+            }
+
+            connect();
+            // 启动北京时间更新
+            updateBeijingTime();
+            setInterval(updateBeijingTime, 1000);
+        });
+    </script>
+</body>
+</html>

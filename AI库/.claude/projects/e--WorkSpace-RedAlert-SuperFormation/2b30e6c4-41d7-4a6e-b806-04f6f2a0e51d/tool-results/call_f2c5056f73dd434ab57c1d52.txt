@@ -1,0 +1,358 @@
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-4-using System.Collections.Generic;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-5-using System.Threading;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-6-using System.Linq;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-7-namespace DayZ
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-8-{
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs:9:    public class Loom : MonoBehaviour
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-10-    {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-11-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-12-        public static int maxThreads = 8;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-13-        static int numThreads;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-14-
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-50-            public float time;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-51-            public Action action;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-52-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-53-        private List<DelayedQueueItem> _delayed = new List<DelayedQueueItem>();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-54-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs:55:        public static void QueueOnMainThread(Action action)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-56-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs:57:            QueueOnMainThread(action, 0f);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-58-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-59-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs:60:        public static void QueueOnMainThread(Action action, float time)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-61-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-62-            if (Current == null)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-63-                return;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-64-            if (time != 0)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\Tool\Loom.cs-65-            {
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-79-            while (true)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-80-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-81-                Thread.Sleep(60000);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-82-                try
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-83-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs:84:                    Loom.QueueOnMainThread(() => CoroutineManager.Instance.StartCoroutine(GatewaySystemManager.Instance.SendHeartInfoCoroutine(null)));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-85-                }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-86-                catch (Exception ex)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-87-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-88-                    LogCommon.LogException(ex, "HeartThreadFunc");
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\SDKManager.cs-89-                }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-276-        /// <summary>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-277-        /// 事件：当用户开始学习教程时触发(开始引导)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-278-        /// </summary>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-279-        public void LogEventEventTutorialBegin()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-280-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs:281:            Loom.QueueOnMainThread(() => this.LogEvent(FirebaseAnalytics.EventTutorialBegin));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-282-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-283-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-284-        /// <summary>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-285-        /// 事件：当用户完成学习教程时触发(引导结束)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-286-        /// </summary>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-287-        public void LogEventEventTutorialComplete()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-288-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs:289:            Loom.QueueOnMainThread(() => this.LogEvent(FirebaseAnalytics.EventTutorialComplete));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-290-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-291-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-292-        /// <summary>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-293-        /// 事件：当玩家达成成就时触发
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\FirebaseManager.cs-294-        /// </summary>
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-56-            get { return advertisingId; }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-57-            set
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-58-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-59-                if (!string.IsNullOrEmpty(value) && !value.Equals(advertisingId))
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-60-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs:61:                    DayZ.Loom.QueueOnMainThread(() =>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-62-                    {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-63-                        var command = new DayZ.SimpleCommand("adjust.sync.advertising");
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-64-                        command.putParam("advertisingId", value);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-65-                        command.sendAndRelease();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\NativeCode\3rdSDKManager\AdjustManager.cs-66-                    });
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GameNoticeManager.cs-30-                }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GameNoticeManager.cs-31-                else
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GameNoticeManager.cs-32-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GameNoticeManager.cs-33-                    this.NoticeData = LitJson.JsonMapper.ToObject<GameNoticeData>(rep.DataAsText);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GameNoticeManager.cs-34-                }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GameNoticeManager.cs:35:                Loom.QueueOnMainThread(() => callBack(this.NoticeData != null && this.NoticeData.textNews != null
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GameNoticeManager.cs-36-                    && this.NoticeData.textNews.Count > 0));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GameNoticeManager.cs-37-            });
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GameNoticeManager.cs-38-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GameNoticeManager.cs-39-            request.Send();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\GameNoticeManager.cs-40-        }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleManager.cs-1584-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleManager.cs-1585-            if (data != null)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleManager.cs-1586-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleManager.cs-1587-                DownloadBundleCallback(data.language, data.config, true, data.bytes);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleManager.cs-1588-                Task.Run(() => { });
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleManager.cs:1589:                Loom.QueueOnMainThread(() => { AssetBundleMonobehaviour.Instance.HandleCoroutine(LoadAssetBundleFromMemoryAsync(data)); });
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleManager.cs-1590-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleManager.cs-1591-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleManager.cs-1592-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleManager.cs-1593-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleManager.cs-1594-        IEnumerator LoadAssetBundleFromMemoryAsync(bundleDownloadData data)
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-115-        /// HTTPRequest的回调有可能是子线程，将其移动到主线程调用
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-116-        /// </summary>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-117-        /// <param name="callback"></param>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-118-        private void DownloadCallback(Action<bool, string> callback, HTTPRequest req, HTTPResponse rep)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-119-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs:120:            Loom.QueueOnMainThread(() =>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-121-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-122-                if (rep == null || !rep.IsSuccess)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-123-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-124-                    callback.Invoke(false, null);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-125-                    AssetBundleTool.Log(string.Format("{0}资源下载失败\n{1}", req.Uri.ToString(), rep != null ? rep.Message : "HTTPResponse为空"), LogType.Error);
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-135-        /// HTTPRequest的回调有可能是子线程，将其移动到主线程调用
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-136-        /// </summary>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-137-        /// <param name="callback"></param>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-138-        private void DownloadCallback(Action<bool, byte[]> callback, HTTPRequest req, HTTPResponse rep)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-139-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs:140:            Loom.QueueOnMainThread(() =>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-141-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-142-                if (rep == null || !rep.IsSuccess)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-143-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-144-                    callback.Invoke(false, null);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\Library\AssetBundleManager\AssetBundleDownload.cs-145-                    AssetBundleTool.Log(string.Format("{0}资源下载失败\n{1}", req.Uri.ToString(), rep != null ? rep.Message : "HTTPResponse为空"), LogType.Error);
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-98-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-99-            if (callback == null)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-100-                throw new NullReferenceException("[callback] can not be null!");
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-101-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-102-            HTTPRequest request = GetActionRequest(LOGIN_ACTION);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs:103:            request.Callback = (req, rep) => Loom.QueueOnMainThread(() => callback(LoginRequestCallback(req, rep)));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-104-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-105-            request.AddField("joyId", JoyID);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-106-            request.AddField("group", SDKManager.getConfig("serverGroup", "1"));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-107-            request.AddField("channelId", SDKManager.getConfig(SDKManager.CONFIG_KEY_CHANNEL_ID, string.Empty));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-108-            request.AddField("language", LocalTextController.shared().getLanguageFileNameBasedOnUserSystem());
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-176-        //废弃!!!!!!!!!!!!!!!!!
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-177-        public void GetCrossServers(Action<bool> callback)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-178-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-179-            this.ServerAndRoleInfo = null;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-180-            HTTPRequest request = GetActionRequest(GET_CROSS_INFO_ACTION);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs:181:            request.Callback = (req, rep) => Loom.QueueOnMainThread(() => callback(GetCrossServerRequestCallback(req, rep)));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-182-            request.AddField("joyId", this.JoyID);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-183-            request.AddField("group", SDKManager.getConfig("serverGroup", "1"));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-184-            request.AddField("channelId", SDKManager.getConfig(SDKManager.CONFIG_KEY_CHANNEL_ID, string.Empty));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-185-            request.AddField("language", LocalTextController.shared().getLanguageFileNameBasedOnUserSystem());
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-186-            request.AddField("appVersion", Application.version);
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-215-#region 获取服务器和角色信息
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-216-        public void GetServerAndRoleInfo(Action<bool> callback)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-217-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-218-            this.ServerAndRoleInfo = null;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-219-            HTTPRequest request = GetActionRequest(GET_ALL_INFO_ACTION);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs:220:            request.Callback = (req, rep) => Loom.QueueOnMainThread(() => callback(GetAllInfoRequestCallback(req, rep)));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-221-            request.AddField("joyId", this.JoyID);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-222-            request.AddField("group", SDKManager.getConfig("serverGroup", "1"));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-223-            request.AddField("channelId", SDKManager.getConfig(SDKManager.CONFIG_KEY_CHANNEL_ID, string.Empty));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-224-            request.AddField("language", LocalTextController.shared().getLanguageFileNameBasedOnUserSystem());
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-225-            request.AddField("appVersion", Application.version);
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-326-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-327-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-328-        private void ChangeRole(Action<string> callback, int serverId, string gameUid = null)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-329-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-330-            HTTPRequest request = GetActionRequest(CHANGE_ROLE_ACTION);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs:331:            request.Callback = (req, rep) => Loom.QueueOnMainThread(() => callback(ChangeRoleRequestCallback(req, rep)));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-332-            request.AddField("joyId", JoyID);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-333-            request.AddField("group", SDKManager.getConfig("serverGroup", "1"));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-334-            if (!string.IsNullOrEmpty(gameUid))
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-335-                request.AddField("gameUid", gameUid);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\JoyAccountSystem\AccountSystemManager.cs-336-            request.AddField("serverId", serverId.ToString());
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-213-                tempArray.AddRange(this.msgList);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-214-                this.msgList = NativeChatTool.sortingDataForMessageWithMsgModelArray(tempArray, this.channelType);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-215-                this.timeLabelShowStatusFormat();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-216-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-217-                if (this.channelDelegate != null)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs:218:                    Loom.QueueOnMainThread(() => this.channelDelegate.showOldMsg(this));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-219-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-220-            else
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-221-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-222-                if (this.channelDelegate != null)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs:223:                    Loom.QueueOnMainThread(() => this.channelDelegate.showOldMsgHasNo(this));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-224-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-225-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-226-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-227-        public bool gettingOldMsg()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-228-        {
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-360-                this.channelType == NativeChatGlobal.IOS_CHANNEL_TYPE_CHATROOM)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-361-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-362-                //CSMessageModel msgModel = this.gettingCurrentChannelLastMessageModel();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-363-                //if (msgModel != null)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-364-                //{
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs:365:                //    Loom.QueueOnMainThread(() => ChatServiceController.Instance.gameHost.refreshChatInfoWithCSMessage(msgModel));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-366-                //}
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-367-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-368-                this.msgList = NativeChatTool.sortingDataForMessageWithMsgModelArray(this.msgList, this.channelType);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-369-                if (this.msgList.Count > 0)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-370-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-371-                    CSMessageModel lastMsgModel = this.msgList[this.msgList.Count - 1];
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs:372:                    Loom.QueueOnMainThread(() => ChatServiceController.Instance.gameHost.refreshChatInfoWithCSMessage(lastMsgModel));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-373-                }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-374-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-375-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-376-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-377-        public void chatMsgPushWithGetOldMsgArray(List<CSMessage> vArray)
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-385-                msgArray = this.msgRepeatCheckWithMessageModelArray(msgArray);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-386-                msgArray.AddRange(this.msgList);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-387-                this.msgList = NativeChatTool.sortingDataForMessageWithMsgModelArray(msgArray, this.channelType);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-388-                this.updatingLatestTimeWithMsg();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-389-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs:390:                Loom.QueueOnMainThread(() =>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-391-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-392-                    if (this.channelDelegate != null)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-393-                    {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-394-                        this.channelDelegate.showOldMsg(this);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-395-                    }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1217-                        if (this.channelType == NativeChatGlobal.IOS_CHANNEL_TYPE_USER)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1218-                        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1219-                            if (this.unreadCount > 0)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1220-                            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1221-                                string channelIdSTRING = this.channelID;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs:1222:                                Loom.QueueOnMainThread(() =>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1223-                                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1224-                                    CCSafeNotificationCenter.sharedNotificationCenter().postNotification(NativeChatGlobal.kChatChannelUnReadCountChanged, new CCDictionary()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1225-                                    {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1226-                                        { "channelID", this.channelID },
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1227-                                        { "channelType", this.channelType.ToString() }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1245-                    if (this.channelType == NativeChatGlobal.IOS_CHANNEL_TYPE_COUNTRY ||
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1246-                        this.channelType == NativeChatGlobal.IOS_CHANNEL_TYPE_ALLIANCE ||
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1247-                        (this.channelType == NativeChatGlobal.IOS_CHANNEL_TYPE_CHATROOM ||
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1248-                        ChatServiceController.Instance.topChatRoomUid != null))
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1249-                    {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs:1250:                        Loom.QueueOnMainThread(() =>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1251-                        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1252-                            ChatServiceController.Instance.gameHost.refreshChatInfoWithCSMessage(lastMsgModel);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1253-                        });
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1254-                    }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1255-                }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1258-                    if (this.channelType == NativeChatGlobal.IOS_CHANNEL_TYPE_COUNTRY || this.channelType == NativeChatGlobal.IOS_CHANNEL_TYPE_ALLIANCE)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1259-                    {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1260-                        CSMessageModel msgModel = this.gettingCurrentChannelLastMessageModel();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1261-                        if (msgModel != null)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1262-                        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs:1263:                            Loom.QueueOnMainThread(() =>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1264-                            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1265-                                ChatServiceController.Instance.gameHost.refreshChatInfoWithCSMessage(msgModel);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1266-                            });
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1267-                        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\ChatChannel.cs-1268-                    }
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-143-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-144-                    myChatRoomCount.Add(this.getXmlIdByChannelId(roomId), count);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-145-                }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-146-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-147-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs:148:            Loom.QueueOnMainThread(() =>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-149-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-150-                this.initShowLanguageRooms();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-151-            });
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-152-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-153-
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-258-            string xmlId = this.getXmlIdByChannelId(channelId);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-259-            this.removeChatRoomInfoByXmlId(xmlId);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-260-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-261-            //WbSocketControl.sharedSingleControl.chatRoomQuit(channelId);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-262-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs:263:            Loom.QueueOnMainThread(() => this.onUpdateRoomMembersCount());
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-264-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-265-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-266-        protected override void Initialize()
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-267-        {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\NativeChat\LanguageChatRoomController.cs-268-            base.Initialize();
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1285-            if (tp._viewLvl == 3)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1286-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1287-                List<WorldCityInfoSecond> infoList = ParseCityInfoSecond(jsonStr);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1288-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1289-                CCArray marks = (CCArray)(vparams.objectForKey("markPoints"));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs:1290:                Loom.QueueOnMainThread(() =>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1291-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1292-                    List<WorldCityMarkInfoSecond> markInfoList = ParseCityMarkInfo(marks);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1293-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1294-                    if (WorldController.getInstance().GetWorldMapLevel() != WorldMapLevel.level_3)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1295-                    {
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1306-            else if (tp._viewLvl == 2)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1307-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1308-                List<WorldCityInfoSecond> infoList = ParseCityInfoSecond(jsonStr);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1309-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1310-                CCArray marks = (CCArray)(vparams.objectForKey("markPoints"));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs:1311:                Loom.QueueOnMainThread(() =>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1312-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1313-                    List<WorldCityMarkInfoSecond> markInfoList = ParseCityMarkInfo(marks);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1314-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1315-                    if (WorldController.getInstance().GetWorldMapLevel() != WorldMapLevel.level_2)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\WorldUpdateController.cs-1316-                    {
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\QueueController.cs-1275-                        itemId = itemId + it.Key + ";" + it.Value;
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\QueueController.cs-1276-                    }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\QueueController.cs-1277-                }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\QueueController.cs-1278-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\QueueController.cs-1279-                //if (showWait)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\QueueController.cs:1280:                Loom.QueueOnMainThread(() => GameController.getInstance().showWaitInterface());
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\QueueController.cs-1281-                NewQueueCCDCommand cmd = new NewQueueCCDCommand(Global.QUEUE_CCD_M_COMMAND, qUuid, itemId, 0, callfunc);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\QueueController.cs-1282-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\QueueController.cs-1283-                cmd.sendAndRelease();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\QueueController.cs-1284-                if (isFinish)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\QueueController.cs-1285-                {
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-24-            netController = new ClientNetController();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-25-            netController.RemoveAll();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-26-            netController.AddEventListener(NetEvent.CONNECTION, eventParam =>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-27-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-28-                if (eventParam.Arguments["success"].asBool())
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs:29:                    Loom.QueueOnMainThread(() => onConnection());
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-30-                else
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs:31:                    Loom.QueueOnMainThread(() => onConnectionError("onConnection_error"));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-32-            });
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-33-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-34-            netController.AddEventListener(NetEvent.DISCONNECT, eventParam =>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-35-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-36-                if (!eventParam.Arguments.StringValueForKey("reason").Equals("manual"))
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-37-                {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs:38:                    Loom.QueueOnMainThread(() => onDisconnection(), 0);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-39-                }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-40-            });
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-41-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-42-            netController.AddEventListener(NetEvent.ONLOGIN, eventParam =>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-43-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-44-                var dict = this.NetOnLogin(eventParam);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs:45:                Loom.QueueOnMainThread(() => onLogin(dict));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-46-            });
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-47-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-48-            netController.AddEventListener(NetEvent.EXTEND_RECEIVE, eventParam =>
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-49-            {
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-50-                CCDictionary dictionary = CCDictionary.createWithIDictionary(eventParam.Arguments);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs:51:                Loom.QueueOnMainThread(() => onReceive(dictionary));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-52-            });
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-53-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-54-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-55-        private CCDictionary NetOnLogin(EventParam eventParam)
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\controller\Net\NetSocketUnity.cs-56-        {
+--
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\LoginInitParser.cs-1303-                initOperation(i, param);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\LoginInitParser.cs-1304-            }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\LoginInitParser.cs-1305-            loginMessageOver();
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\LoginInitParser.cs-1306-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\LoginInitParser.cs-1307-            if (string.IsNullOrEmpty(GlobalData.shared().parseRegisterId))
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\LoginInitParser.cs:1308:                Loom.QueueOnMainThread(() => Timing.RunCoroutine(CheckFCMToken(), "CheckFCMToken"));
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\LoginInitParser.cs-1309-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\LoginInitParser.cs-1310-            NPEnterGameEventController.SendEvent(EnterGameEvent.DealPushInitDataOK);
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\LoginInitParser.cs-1311-        }
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\LoginInitParser.cs-1312-
+e:\WorkSpace\RedAlert_SuperFormation\Assets\DevCodeFM\IF\DayZClasses\Ext\LoginInitParser.cs-1313-        private static IEnumerator<float> CheckFCMToken()

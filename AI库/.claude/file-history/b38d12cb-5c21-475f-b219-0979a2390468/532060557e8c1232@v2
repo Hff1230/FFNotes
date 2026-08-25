@@ -1,0 +1,382 @@
+using FairyGUI;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Game.UI.Hero
+{
+    /// <summary>
+    /// 英雄列表界面绑定器 - 管理英雄列表展示
+    /// </summary>
+    public class HeroListBinder : GComponent
+    {
+        #region Constants
+        private const string PACKAGE_NAME = "601_NewHero";
+        private const string COMPONENT_NAME = "HeroList";
+        private const string TRANSITION_DYNAMIC_ON = "DynamicON";
+
+        // 列表配置
+        private const int LIST_COLUMN_COUNT = 4;
+        private const int LIST_LINE_GAP = 5;
+        private const int LIST_COL_GAP = 32;
+        #endregion
+
+        #region Serialized Fields (通过FGUI编辑器配置)
+        // 背景元素
+        private GImage _bgImage;
+        private GImage _contentBg;
+
+        // 顶部栏
+        private GComponent _headline;
+
+        // 英雄列表
+        private GList _heroList;
+
+        // 底部按钮组
+        private GGroup _buttonGroup;
+        private GButton _btnLegion;
+        private GButton _btnRecruit;
+
+        // 动效
+        private Transition _transitionDynamicOn;
+        #endregion
+
+        #region Private Fields
+        private readonly List<HeroListData> _heroDataList = new List<HeroListData>();
+        private readonly Dictionary<long, HeroListItemBinder> _heroItemMap = new Dictionary<long, HeroListItemBinder>();
+        private int _currentSelectedIndex = -1;
+        private HeroListData _currentSelectedHero;
+        #endregion
+
+        #region Properties
+        public int HeroCount => _heroDataList.Count;
+        public HeroListData CurrentSelectedHero => _currentSelectedHero;
+        public GList HeroList => _heroList;
+        #endregion
+
+        #region Events
+        public event System.Action<HeroListData> OnHeroItemSelected;
+        public event System.Action OnRecruitButtonClick;
+        public event System.Action OnLegionButtonClick;
+        public event System.Action OnBackButtonClick;
+        #endregion
+
+        #region Lifecycle
+        public override void ConstructFromXML(FairyGUI.Utils.XML xml)
+        {
+            base.ConstructFromXML(xml);
+
+            InitializeComponents();
+            BindEvents();
+        }
+
+        private void InitializeComponents()
+        {
+            // 获取背景元素
+            _bgImage = GetChild("n5") as GImage;
+            _contentBg = GetChild("n6") as GImage;
+
+            // 获取顶部栏
+            _headline = GetChild("headline") as GComponent;
+
+            // 获取英雄列表
+            _heroList = GetChild("n1") as GList;
+            if (_heroList != null)
+            {
+                _heroList.itemRenderer = OnRenderListItem;
+                _heroList.onClickItem.Add(OnListItemClick);
+            }
+
+            // 获取底部按钮组
+            _buttonGroup = GetChild("n4") as GGroup;
+            _btnLegion = GetChild("n2") as GButton;
+            _btnRecruit = GetChild("n3") as GButton;
+
+            // 获取动效
+            _transitionDynamicOn = GetTransition(TRANSITION_DYNAMIC_ON);
+        }
+
+        private void BindEvents()
+        {
+            if (_btnRecruit != null)
+            {
+                _btnRecruit.onClick.Add(OnBtnRecruitClick);
+            }
+
+            if (_btnLegion != null)
+            {
+                _btnLegion.onClick.Add(OnBtnLegionClick);
+            }
+
+            // 绑定顶部栏返回按钮
+            if (_headline != null)
+            {
+                var btnReturn = _headline.GetChild("btn_return") as GButton;
+                if (btnReturn != null)
+                {
+                    btnReturn.onClick.Add(OnBtnBackClick);
+                }
+            }
+        }
+
+        public override void Dispose()
+        {
+            Cleanup();
+            base.Dispose();
+        }
+
+        private void Cleanup()
+        {
+            UnbindEvents();
+            ClearHeroList();
+        }
+
+        private void UnbindEvents()
+        {
+            if (_heroList != null)
+            {
+                _heroList.onClickItem.Remove(OnListItemClick);
+            }
+
+            if (_btnRecruit != null)
+            {
+                _btnRecruit.onClick.Remove(OnBtnRecruitClick);
+            }
+
+            if (_btnLegion != null)
+            {
+                _btnLegion.onClick.Remove(OnBtnLegionClick);
+            }
+        }
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// 设置标题文本
+        /// </summary>
+        public void SetTitle(string title)
+        {
+            if (_headline == null) return;
+
+            var titleText = _headline.GetChild("title") as GTextField;
+            if (titleText != null)
+            {
+                titleText.text = title;
+            }
+        }
+
+        /// <summary>
+        /// 刷新英雄列表数据
+        /// </summary>
+        public void RefreshHeroList(List<HeroListData> heroList)
+        {
+            if (heroList == null || _heroList == null) return;
+
+            _heroDataList.Clear();
+            _heroDataList.AddRange(heroList);
+
+            _heroList.numItems = _heroDataList.Count;
+            _heroList.ResizeToFit(_heroDataList.Count);
+        }
+
+        /// <summary>
+        /// 添加单个英雄到列表
+        /// </summary>
+        public void AddHero(HeroListData heroData)
+        {
+            if (heroData == null) return;
+
+            _heroDataList.Add(heroData);
+            if (_heroList != null)
+            {
+                _heroList.numItems = _heroDataList.Count;
+            }
+        }
+
+        /// <summary>
+        /// 移除指定英雄
+        /// </summary>
+        public void RemoveHero(long heroId)
+        {
+            int index = _heroDataList.FindIndex(h => h.HeroId == heroId);
+            if (index >= 0)
+            {
+                _heroDataList.RemoveAt(index);
+                _heroItemMap.Remove(heroId);
+
+                if (_heroList != null)
+                {
+                    _heroList.numItems = _heroDataList.Count;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 更新指定英雄数据
+        /// </summary>
+        public void UpdateHero(HeroListData heroData)
+        {
+            if (heroData == null) return;
+
+            int index = _heroDataList.FindIndex(h => h.HeroId == heroData.HeroId);
+            if (index >= 0)
+            {
+                _heroDataList[index] = heroData;
+
+                if (_heroItemMap.TryGetValue(heroData.HeroId, out var item))
+                {
+                    item.UpdateData(heroData);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 选中指定英雄
+        /// </summary>
+        public void SelectHero(long heroId)
+        {
+            int index = _heroDataList.FindIndex(h => h.HeroId == heroId);
+            if (index >= 0)
+            {
+                SelectHeroByIndex(index);
+            }
+        }
+
+        /// <summary>
+        /// 选中指定索引的英雄
+        /// </summary>
+        public void SelectHeroByIndex(int index)
+        {
+            if (index < 0 || index >= _heroDataList.Count) return;
+
+            _currentSelectedIndex = index;
+            _currentSelectedHero = _heroDataList[index];
+
+            if (_heroList != null)
+            {
+                _heroList.selectedIndex = index;
+            }
+
+            OnHeroItemSelected?.Invoke(_currentSelectedHero);
+        }
+
+        /// <summary>
+        /// 设置招募按钮可见性
+        /// </summary>
+        public void SetRecruitButtonVisible(bool visible)
+        {
+            if (_btnRecruit != null)
+            {
+                _btnRecruit.visible = visible;
+            }
+        }
+
+        /// <summary>
+        /// 设置军团按钮可见性
+        /// </summary>
+        public void SetLegionButtonVisible(bool visible)
+        {
+            if (_btnLegion != null)
+            {
+                _btnLegion.visible = visible;
+            }
+        }
+
+        /// <summary>
+        /// 播放界面开启动效
+        /// </summary>
+        public void PlayEnterAnimation()
+        {
+            _transitionDynamicOn?.Play();
+        }
+
+        /// <summary>
+        /// 滚动到指定英雄
+        /// </summary>
+        public void ScrollToHero(long heroId, bool anim = true)
+        {
+            int index = _heroDataList.FindIndex(h => h.HeroId == heroId);
+            if (index >= 0 && _heroList != null)
+            {
+                _heroList.ScrollToView(index, anim, false);
+            }
+        }
+
+        /// <summary>
+        /// 清空列表
+        /// </summary>
+        public void ClearHeroList()
+        {
+            _heroDataList.Clear();
+            _heroItemMap.Clear();
+            _currentSelectedIndex = -1;
+            _currentSelectedHero = null;
+
+            if (_heroList != null)
+            {
+                _heroList.numItems = 0;
+            }
+        }
+        #endregion
+
+        #region Private Methods
+        private void OnRenderListItem(int index, GObject obj)
+        {
+            if (index < 0 || index >= _heroDataList.Count) return;
+
+            var item = obj as HeroListItemBinder;
+            if (item == null) return;
+
+            var data = _heroDataList[index];
+            item.UpdateData(data);
+
+            // 更新缓存
+            if (_heroItemMap.ContainsKey(data.HeroId))
+            {
+                _heroItemMap[data.HeroId] = item;
+            }
+            else
+            {
+                _heroItemMap.Add(data.HeroId, item);
+            }
+
+            // 绑定点击事件
+            item.OnItemClick -= OnHeroItemClick;
+            item.OnItemClick += OnHeroItemClick;
+        }
+        #endregion
+
+        #region Event Handlers
+        private void OnListItemClick(EventContext context)
+        {
+            var item = context.data as HeroListItemBinder;
+            if (item == null) return;
+
+            int index = _heroList.GetChildIndex(item);
+            SelectHeroByIndex(index);
+        }
+
+        private void OnHeroItemClick(HeroListItemBinder item)
+        {
+            if (item == null) return;
+
+            int index = _heroList.GetChildIndex(item);
+            SelectHeroByIndex(index);
+        }
+
+        private void OnBtnRecruitClick()
+        {
+            OnRecruitButtonClick?.Invoke();
+        }
+
+        private void OnBtnLegionClick()
+        {
+            OnLegionButtonClick?.Invoke();
+        }
+
+        private void OnBtnBackClick()
+        {
+            OnBackButtonClick?.Invoke();
+        }
+        #endregion
+    }
+}

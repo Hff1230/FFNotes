@@ -1,0 +1,1568 @@
+     1→// 桐城自摸麻将 - 局域网服务器
+     2→// 运行方式: node majiang-server.js
+     3→
+     4→const http = require('http');
+     5→const fs = require('fs');
+     6→const path = require('path');
+     7→const WebSocket = require('ws');
+     8→
+     9→const PORT = 8082;
+    10→
+    11→// ==================== HTTP服务器 ====================
+    12→const server = http.createServer((req, res) => {
+    13→    console.log(`HTTP请求: ${req.url}`);
+    14→
+    15→    // 解码URL（处理中文文件名）
+    16→    const decodedUrl = decodeURIComponent(req.url);
+    17→
+    18→    if (req.url === '/' || req.url === '/index.html') {
+    19→        const htmlPath = path.join(__dirname, 'majiang-lan.html');
+    20→        fs.readFile(htmlPath, (err, data) => {
+    21→            if (err) {
+    22→                res.writeHead(404);
+    23→                res.end('游戏文件未找到');
+    24→                return;
+    25→            }
+    26→            res.writeHead(200, {
+    27→                'Content-Type': 'text/html; charset=utf-8'
+    28→            });
+    29→            res.end(data);
+    30→        });
+    31→    } else if (req.url === '/favicon.ico') {
+    32→        res.writeHead(204);
+    33→        res.end();
+    34→    } else if (decodedUrl.endsWith('.jpg') || decodedUrl.endsWith('.jpeg') || decodedUrl.endsWith('.png') || decodedUrl.endsWith('.gif')) {
+    35→        // 处理图片文件
+    36→        const imagePath = path.join(__dirname, decodedUrl);
+    37→        fs.readFile(imagePath, (err, data) => {
+    38→            if (err) {
+    39→                console.log(`图片未找到: ${imagePath}`);
+    40→                res.writeHead(404);
+    41→                res.end('图片未找到');
+    42→                return;
+    43→            }
+    44→            const ext = path.extname(decodedUrl).toLowerCase();
+    45→            const contentTypes = {
+    46→                '.jpg': 'image/jpeg',
+    47→                '.jpeg': 'image/jpeg',
+    48→                '.png': 'image/png',
+    49→                '.gif': 'image/gif'
+    50→            };
+    51→            res.writeHead(200, {
+    52→                'Content-Type': contentTypes[ext] || 'application/octet-stream'
+    53→            });
+    54→            res.end(data);
+    55→        });
+    56→    } else {
+    57→        res.writeHead(404);
+    58→        res.end('Not Found');
+    59→    }
+    60→});
+    61→
+    62→// ==================== WebSocket服务器 ====================
+    63→const wss = new WebSocket.Server({ server });
+    64→
+    65→// 游戏房间管理
+    66→const tables = new Map();
+    67→const playerToTable = new Map();
+    68→let tableCounter = 0;
+    69→
+    70→// 所有已登录的客户端（用于广播牌桌列表）
+    71→const loggedInClients = new Set();
+    72→
+    73→// ==================== 牌面常量 ====================
+    74→const SUITS = ['筒', '条', '万'];
+    75→const RANKS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    76→const WINDS = ['东', '南', '西', '北'];
+    77→const ARROWS = ['中', '发', '白'];
+    78→
+    79→// 创建一副麻将牌
+    80→function createDeck() {
+    81→    const deck = [];
+    82→
+    83→    // 筒条万 (每种4张)
+    84→    for (const suit of SUITS) {
+    85→        for (const rank of RANKS) {
+    86→            for (let i = 0; i < 4; i++) {
+    87→                deck.push({
+    88→                    suit,
+    89→                    rank,
+    90→                    type: 'number',
+    91→                    id: `${suit}${rank}_${i}`
+    92→                });
+    93→            }
+    94→        }
+    95→    }
+    96→
+    97→    // 风牌 (每种4张)
+    98→    for (const wind of WINDS) {
+    99→        for (let i = 0; i < 4; i++) {
+   100→            deck.push({
+   101→                suit: '风',
+   102→                rank: wind,
+   103→                type: 'wind',
+   104→                id: `风${wind}_${i}`
+   105→            });
+   106→        }
+   107→    }
+   108→
+   109→    // 箭牌 (每种4张)
+   110→    for (const arrow of ARROWS) {
+   111→        for (let i = 0; i < 4; i++) {
+   112→            deck.push({
+   113→                suit: '箭',
+   114→                rank: arrow,
+   115→                type: 'arrow',
+   116→                id: `箭${arrow}_${i}`
+   117→            });
+   118→        }
+   119→    }
+   120→
+   121→    return deck; // 136张
+   122→}
+   123→
+   124→// 洗牌
+   125→function shuffle(deck) {
+   126→    const shuffled = [...deck];
+   127→    for (let i = shuffled.length - 1; i > 0; i--) {
+   128→        const j = Math.floor(Math.random() * (i + 1));
+   129→        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+   130→    }
+   131→    return shuffled;
+   132→}
+   133→
+   134→// 牌的显示名称
+   135→function cardName(card) {
+   136→    if (card.type === 'number') {
+   137→        return `${card.rank}${card.suit}`;
+   138→    } else {
+   139→        return card.rank;
+   140→    }
+   141→}
+   142→
+   143→// ==================== 牌桌类 ====================
+   144→class GameTable {
+   145→    constructor(id, tableNumber) {
+   146→        this.id = id;
+   147→        this.tableNumber = tableNumber;
+   148→        this.players = new Map(); // playerId -> player info
+   149→        this.spectators = new Map();
+   150→        this.maxPlayers = 4;
+   151→        this.gameTimer = null; // 游戏计时器
+   152→
+   153→        // 周期（头）相关属性
+   154→        this.cycleStartTime = null; // 周期开始时间
+   155→        this.cycleDuration = 60 * 60 * 1000; // 1小时（毫秒）
+   156→
+   157→        // 游戏流程相关属性
+   158→        this.currentRound = 0; // 当前局数
+   159→        this.lastWinner = null; // 上一局赢家 playerId
+   160→        this.roundReadyPlayers = new Set(); // 每局结束后已准备的玩家
+   161→
+   162→        // 骰子状态
+   163→        this.diceState = {
+   164→            firstRoll: null, // 第一次骰子结果 { playerId, values: [d1, d2] }
+   165→            secondRoll: null, // 第二次骰子结果 { playerId, values: [d1, d2] }
+   166→            currentRoller: null, // 当前应该掷骰子的人
+   167→            rollPhase: 0 // 0=未开始, 1=等待第一次, 2=等待第二次, 3=完成
+   168→        };
+   169→
+   170→        this.gameState = {
+   171→            started: false,
+   172→            currentPlayer: 0, // 0-3, 当前出牌玩家索引
+   173→            dealer: 0, // 庄家索引
+   174→            dealerSeat: 1, // 庄家座位号（1-4）
+   175→            deck: [], // 牌堆
+   176→            hands: {}, // playerId -> cards[]
+   177→            wildCard: null, // 万能牌
+   178→            discardedPile: [], // 打出的牌
+   179→            showedCards: {}, // playerId -> { fa: [], gang: [] }
+   180→            faUsed: {}, // playerId -> 玩家是否已换过发
+   181→            lastDrawn: null, // 最后摸的牌
+   182→            gameStartTime: null, // 游戏开始时间
+   183→            totalGameTime: 0, // 游戏总时长（秒）
+   184→            roundPhase: 'waiting' // waiting=等待准备, dice=掷骰子阶段, playing=游戏中, ended=本局结束
+   185→        };
+   186→    }
+   187→
+   188→    // 获取按座位排序的玩家ID数组
+   189→    getSortedPlayerIds() {
+   190→        return Array.from(this.players.entries())
+   191→            .sort((a, b) => a[1].seatNum - b[1].seatNum)
+   192→            .map(([id]) => id);
+   193→    }
+   194→
+   195→    // 添加玩家
+   196→    addPlayer(ws, playerId, playerName, seatNum = null) {
+   197→        if (this.players.size >= this.maxPlayers) return false;
+   198→        if (this.gameState.started) return false;
+   199→
+   200→        let actualSeat;
+   201→        if (seatNum !== null && seatNum >= 1 && seatNum <= 4) {
+   202→            const occupied = Array.from(this.players.values()).some(p => p.seatNum === seatNum);
+   203→            if (occupied) return false;
+   204→            actualSeat = seatNum;
+   205→        } else {
+   206→            const occupiedSeats = new Set(Array.from(this.players.values()).map(p => p.seatNum));
+   207→            for (let i = 1; i <= 4; i++) {
+   208→                if (!occupiedSeats.has(i)) {
+   209→                    actualSeat = i;
+   210→                    break;
+   211→                }
+   212→            }
+   213→        }
+   214→
+   215→        this.players.set(playerId, {
+   216→            ws,
+   217→            id: playerId,
+   218→            name: playerName,
+   219→            seatNum: actualSeat,
+   220→            ready: false,
+   221→            isAI: false
+   222→        });
+   223→
+   224→        return true;
+   225→    }
+   226→
+   227→    // 移除玩家
+   228→    removePlayer(playerId) {
+   229→        this.players.delete(playerId);
+   230→        return this.players.size === 0;
+   231→    }
+   232→
+   233→    // 检查是否所有玩家都已断开连接
+   234→    isAllPlayersDisconnected() {
+   235→        if (this.players.size === 0) return true;
+   236→        for (const player of this.players.values()) {
+   237→            if (player.ws && player.ws.readyState === WebSocket.OPEN) {
+   238→                return false;
+   239→            }
+   240→        }
+   241→        return true;
+   242→    }
+   243→
+   244→    // 设置准备状态
+   245→    setPlayerReady(playerId, ready) {
+   246→        const player = this.players.get(playerId);
+   247→        if (player) {
+   248→            player.ready = ready;
+   249→            this.broadcastPlayerList();
+   250→            this.checkStartGame();
+   251→        }
+   252→    }
+   253→
+   254→    // 检查是否可以开始游戏
+   255→    checkStartGame() {
+   256→        const allReady = Array.from(this.players.values()).every(p => p.ready);
+   257→
+   258→        if (this.gameState.roundPhase === 'waiting' || !this.gameState.started) {
+   259→            // 新游戏或新一周期的开始
+   260→            if (allReady && this.players.size >= 1) {
+   261→                // 检查是否是新周期
+   262→                if (!this.cycleStartTime || (Date.now() - this.cycleStartTime >= this.cycleDuration)) {
+   263→                    this.cycleStartTime = Date.now();
+   264→                    this.currentRound = 0;
+   265→                    console.log(`牌桌${this.tableNumber} 开始新周期`);
+   266→                }
+   267→                this.startDicePhase();
+   268→            }
+   269→        } else if (this.gameState.roundPhase === 'ended') {
+   270→            // 局间准备，检查所有人是否都准备了
+   271→            const allRoundReady = this.roundReadyPlayers.size === this.players.size;
+   272→            if (allRoundReady) {
+   273→                this.startDicePhase();
+   274→            }
+   275→        }
+   276→    }
+   277→
+   278→    // 开始掷骰子阶段
+   279→    startDicePhase() {
+   280→        // 先初始化牌堆和庄家
+   281→        this.initDeckAndDealer();
+   282→
+   283→        this.gameState.roundPhase = 'dice';
+   284→        this.diceState = {
+   285→            firstRoll: null,
+   286→            secondRoll: null,
+   287→            currentRoller: null,
+   288→            rollPhase: 1
+   289→        };
+   290→
+   291→        // 确定第一次掷骰子的人
+   292→        const firstRollerId = this.getFirstRoller();
+   293→        const firstRoller = this.players.get(firstRollerId);
+   294→        this.diceState.currentRoller = firstRollerId;
+   295→
+   296→        this.broadcastMessage(`🎲 第${this.currentRound + 1}局开始！请 ${firstRoller.name} 掷骰子`);
+   297→
+   298→        // 通知所有人骰子状态
+   299→        this.broadcastDiceState();
+   300→
+   301→        // 检查是否轮到AI掷骰子
+   302→        setTimeout(() => this.checkAITurn(), 500);
+   303→    }
+   304→
+   305→    // 获取第一次掷骰子的人
+   306→    getFirstRoller() {
+   307→        const playerIds = this.getSortedPlayerIds();
+   308→
+   309→        if (this.currentRound === 0) {
+   310→            // 周期第一局：座东的玩家坐庄并先掷骰子
+   311→            const dongPlayer = Array.from(this.players.values()).find(p => p.seatNum === 1);
+   312→            if (dongPlayer) {
+   313→                this.gameState.dealerSeat = 1;
+   314→                this.gameState.dealer = playerIds.indexOf(dongPlayer.id);
+   315→                return dongPlayer.id;
+   316→            }
+   317→        } else {
+   318→            // 后续局：上一局胡牌者掷第一次骰子
+   319→            if (this.lastWinner) {
+   320→                // 上局赢家成为庄家
+   321→                const winner = this.players.get(this.lastWinner);
+   322→                if (winner) {
+   323→                    this.gameState.dealerSeat = winner.seatNum;
+   324→                    this.gameState.dealer = playerIds.indexOf(this.lastWinner);
+   325→                }
+   326→                return this.lastWinner;
+   327→            }
+   328→        }
+   329→
+   330→        // 默认返回第一个玩家
+   331→        return playerIds[0];
+   332→    }
+   333→
+   334→    // 获取第二次掷骰子的人（根据第一次骰子点数和，逆时针数）
+   335→    getSecondRoller(firstSum) {
+   336→        const playerIds = this.getSortedPlayerIds();
+   337→        const firstRollerIndex = playerIds.indexOf(this.diceState.firstRoll.playerId);
+   338→
+   339→        // playerIds 是 [座位1, 座位2, 座位3, 座位4]（顺时针：东→南→西→北）
+   340→        // 逆时针顺序：东(0)→北(3)→西(2)→南(1)→东(0)
+   341→        // 逆时针移动一步 = 索引 -1（或 +3 mod 4）
+   342→        // 数firstSum步，从1开始数（所以-1）
+   343→        const secondRollerIndex = (firstRollerIndex - (firstSum - 1) % 4 + 4) % 4;
+   344→        return playerIds[secondRollerIndex];
+   345→    }
+   346→
+   347→    // 掷骰子
+   348→    rollDice(playerId, values) {
+   349→        if (this.diceState.currentRoller !== playerId) {
+   350→            return { success: false, message: '不是你的回合掷骰子' };
+   351→        }
+   352→
+   353→        const player = this.players.get(playerId);
+   354→
+   355→        if (this.diceState.rollPhase === 1) {
+   356→            // 第一次掷骰子
+   357→            this.diceState.firstRoll = { playerId, playerName: player.name, values };
+   358→            this.diceState.rollPhase = 2;
+   359→
+   360→            // 根据第一次骰子点数和，确定第二次掷骰子的人
+   361→            const firstSum = values[0] + values[1];
+   362→            const secondRollerId = this.getSecondRoller(firstSum);
+   363→            this.diceState.currentRoller = secondRollerId;
+   364→            const secondRoller = this.players.get(secondRollerId);
+   365→
+   366→            this.broadcastMessage(`🎲 ${player.name} 掷出 ${values[0]}+${values[1]}=${firstSum} 点`);
+   367→            this.broadcastMessage(`🎲 从${player.name}逆时针数${firstSum}步，请 ${secondRoller.name} 掷第二次骰子`);
+   368→
+   369→            this.broadcastDiceState();
+   370→
+   371→            // 检查是否轮到AI掷第二次骰子
+   372→            setTimeout(() => this.checkAITurn(), 500);
+   373→
+   374→            return { success: true, phase: 1, values };
+   375→
+   376→        } else if (this.diceState.rollPhase === 2) {
+   377→            // 第二次掷骰子
+   378→            this.diceState.secondRoll = { playerId, playerName: player.name, values };
+   379→            this.diceState.rollPhase = 3;
+   380→
+   381→            this.broadcastMessage(`🎲 ${player.name} 掷出 ${values[0]}+${values[1]}=${values[0]+values[1]} 点`);
+   382→
+   383→            // 确定抓牌位置和癞子
+   384→            this.determineWildCard();
+   385→
+   386→            // 开始发牌
+   387→            setTimeout(() => {
+   388→                this.startDealCards();
+   389→            }, 1000);
+   390→
+   391→            this.broadcastDiceState();
+   392→
+   393→            return { success: true, phase: 2, values };
+   394→        }
+   395→
+   396→        return { success: false, message: '骰子阶段错误' };
+   397→    }
+   398→
+   399→    // 根据亮牌确定癞子（下一张牌）
+   400→    getWildCardFromShown(shownCard) {
+   401→        // 普通牌（筒条万）：1-9循环
+   402→        if (shownCard.type === 'number') {
+   403→            const nextRank = shownCard.rank >= 9 ? 1 : shownCard.rank + 1;
+   404→            return {
+   405→                suit: shownCard.suit,
+   406→                rank: nextRank,
+   407→                type: 'number'
+   408→            };
+   409→        }
+   410→        // 风牌：东南西北循环
+   411→        if (shownCard.type === 'wind') {
+   412→            const windOrder = ['东', '南', '西', '北'];
+   413→            const currentIndex = windOrder.indexOf(shownCard.rank);
+   414→            const nextIndex = (currentIndex + 1) % 4;
+   415→            return {
+   416→                suit: '风',
+   417→                rank: windOrder[nextIndex],
+   418→                type: 'wind'
+   419→            };
+   420→        }
+   421→        // 箭牌：中发白循环
+   422→        if (shownCard.type === 'arrow') {
+   423→            const arrowOrder = ['中', '发', '白'];
+   424→            const currentIndex = arrowOrder.indexOf(shownCard.rank);
+   425→            const nextIndex = (currentIndex + 1) % 3;
+   426→            return {
+   427→                suit: '箭',
+   428→                rank: arrowOrder[nextIndex],
+   429→                type: 'arrow'
+   430→            };
+   431→        }
+   432→        return null;
+   433→    }
+   434→
+   435→    // 确定万能牌（癞子）和抓牌位置 - 根据骰子结果
+   436→    determineWildCard() {
+   437→        const firstSum = this.diceState.firstRoll.values[0] + this.diceState.firstRoll.values[1];
+   438→        const secondSum = this.diceState.secondRoll.values[0] + this.diceState.secondRoll.values[1];
+   439→        const total = firstSum + secondSum;
+   440→
+   441→        console.log(`第1次骰子: ${firstSum}, 第2次骰子: ${secondSum}, 总计: ${total}`);
+   442→
+   443→        // 牌墙布局：每个玩家面前17墩牌（每墩2张），按逆时针排列
+   444→        // 座位1(东) -> 座位4(北) -> 座位3(西) -> 座位2(南) -> 座位1(东)
+   445→        // 牌墙索引：0-33(东), 34-67(北), 68-101(西), 102-135(南)
+   446→        // 每个方位17墩，每墩2张牌
+   447→
+   448→        const firstRollerSeat = this.players.get(this.diceState.firstRoll.playerId)?.seatNum || 1;
+   449→
+   450→        // 根据第一次骰子确定从哪个方位开始数
+   451→        // 逆时针方向：东(1) -> 北(4) -> 西(3) -> 南(2) -> 东(1)
+   452→        const seatToDirection = { 1: '东', 2: '南', 3: '西', 4: '北' };
+   453→        const directionOrder = [1, 4, 3, 2]; // 逆时针顺序
+   454→
+   455→        // 第1次骰子点数决定从哪个方位开始（从掷骰者的方位开始数）
+   456→        const startDirectionIndex = directionOrder.indexOf(firstRollerSeat);
+   457→        const countDirection = (startDirectionIndex + firstSum - 1) % 4;
+   458→        const startDirection = directionOrder[countDirection];
+   459→
+   460→        console.log(`开始方位: ${seatToDirection[startDirection]} (座位${startDirection})`);
+   461→
+   462→        // 计算从开始方位最左边数起，数total墩
+   463→        // 每个方位17墩
+   464→        const pilesPerDirection = 17;
+   465→        let remainingPiles = total;
+   466→        let currentDirection = startDirection;
+   467→        let directionIdx = directionOrder.indexOf(currentDirection);
+   468→
+   469→        // 数牌墩
+   470→        while (remainingPiles > pilesPerDirection) {
+   471→            remainingPiles -= pilesPerDirection;
+   472→            directionIdx = (directionIdx + 1) % 4;
+   473→            currentDirection = directionOrder[directionIdx];
+   474→        }
+   475→
+   476→        // 确定抓牌起始位置
+   477→        // 抓牌从第remainingPiles墩的下一墩开始
+   478→        const drawPile = remainingPiles; // 第几墩（1-17）
+   479→        const drawDirection = currentDirection;
+   480→
+   481→        console.log(`抓牌位置: ${seatToDirection[drawDirection]}方第${drawPile}墩后开始`);
+   482→
+   483→        // 确定亮牌位置
+   484→        // 抓牌那墩的逆时针玩家面前的牌墩从右往左数第一次骰子的数量
+   485→        const drawDirectionIdx = directionOrder.indexOf(drawDirection);
+   486→        const shownDirectionIdx = (drawDirectionIdx + 1) % 4; // 逆时针下一个
+   487→        const shownDirection = directionOrder[shownDirectionIdx];
+   488→
+   489→        // 从右往左数第firstSum墩
+   490→        const shownPile = pilesPerDirection - firstSum + 1; // 从右往左数
+   491→
+   492→        console.log(`亮牌位置: ${seatToDirection[shownDirection]}方第${shownPile}墩（从右往左数第${firstSum}墩）`);
+   493→
+   494→        // 计算牌堆中的实际索引
+   495→        // 牌墙按 [东17墩][北17墩][西17墩][南17墩] 排列
+   496→        const directionToOffset = { 1: 0, 4: 17, 3: 34, 2: 51 }; // 座位到牌墩偏移
+   497→        const shownPileIndex = directionToOffset[shownDirection] + (shownPile - 1);
+   498→
+   499→        // 每墩2张牌，取上面那张（索引*2）
+   500→        const shownCardIndex = shownPileIndex * 2;
+   501→
+   502→        // 获取亮牌
+   503→        let shownCard = null;
+   504→        if (shownCardIndex >= 0 && shownCardIndex < this.gameState.deck.length) {
+   505→            shownCard = this.gameState.deck[shownCardIndex];
+   506→            console.log(`亮牌索引: ${shownCardIndex}, 亮牌: ${cardName(shownCard)}`);
+   507→
+   508→            // 从牌堆中移除亮牌（玩家不可获取）
+   509→            this.gameState.shownCard = shownCard;
+   510→            this.gameState.deck.splice(shownCardIndex, 1);
+   511→            console.log(`亮牌已移除，剩余牌数: ${this.gameState.deck.length}`);
+   512→
+   513→            // 根据亮牌确定癞子
+   514→            const wildCardInfo = this.getWildCardFromShown(shownCard);
+   515→            if (wildCardInfo) {
+   516→                // 在牌堆中找到对应的癞子牌
+   517→                this.gameState.wildCard = this.gameState.deck.find(c =>
+   518→                    c.suit === wildCardInfo.suit && c.rank === wildCardInfo.rank
+   519→                ) || wildCardInfo; // 如果找不到，使用信息对象
+   520→                console.log(`癞子: ${cardName(this.gameState.wildCard)} (根据亮牌${cardName(shownCard)}确定)`);
+   521→            }
+   522→        } else {
+   523→            // 备用：随机选择
+   524→            const wildIndex = total % this.gameState.deck.length;
+   525→            this.gameState.wildCard = this.gameState.deck[wildIndex];
+   526→            console.log(`亮牌索引超出范围，使用备用计算: ${cardName(this.gameState.wildCard)}`);
+   527→        }
+   528→
+   529→        // 保存抓牌信息用于发牌
+   530→        this.gameState.drawInfo = {
+   531→            startDirection,
+   532→            drawDirection,
+   533→            drawPile,
+   534→            totalPiles: total,
+   535→            shownCard,
+   536→            shownDirection,
+   537→            shownPile
+   538→        };
+   539→    }
+   540→
+   541→    // 广播骰子状态
+   542→    broadcastDiceState() {
+   543→        const message = JSON.stringify({
+   544→            type: 'diceState',
+   545→            data: {
+   546→                firstRoll: this.diceState.firstRoll,
+   547→                secondRoll: this.diceState.secondRoll,
+   548→                currentRoller: this.diceState.currentRoller,
+   549→                rollPhase: this.diceState.rollPhase,
+   550→                roundPhase: this.gameState.roundPhase,
+   551→                shownCard: this.gameState.shownCard || null,
+   552→                wildCard: this.gameState.wildCard || null,
+   553→                drawInfo: this.gameState.drawInfo || null
+   554→            }
+   555→        });
+   556→
+   557→        for (const player of this.players.values()) {
+   558→            if (player.ws && player.ws.readyState === WebSocket.OPEN) {
+   559→                player.ws.send(message);
+   560→            }
+   561→        }
+   562→    }
+   563→
+   564→    // 开始发牌
+   565→    startDealCards() {
+   566→        this.currentRound++;
+   567→        this.gameState.roundPhase = 'playing';
+   568→        this.roundReadyPlayers.clear();
+   569→
+   570→        // 重置玩家准备状态（局间准备用）
+   571→        for (const player of this.players.values()) {
+   572→            player.ready = false;
+   573→        }
+   574→
+   575→        // 重置每局游戏状态
+   576→        this.gameState.discardedPile = [];
+   577→        this.gameState.showedCards = {};
+   578→        this.gameState.faUsed = {};
+   579→        this.gameState.lastDrawn = null;
+   580→
+   581→        // 初始化手牌
+   582→        const playerIds = this.getSortedPlayerIds();
+   583→        for (const pid of playerIds) {
+   584→            this.gameState.hands[pid] = [];
+   585→            this.gameState.showedCards[pid] = { fa: [], gang: [] };
+   586→            this.gameState.faUsed[pid] = false;
+   587→        }
+   588→
+   589→        // 逆时针顺序：东(1)→北(4)→西(3)→南(2)
+   590→        // playerIds 是 [座位1, 座位2, 座位3, 座位4]（顺时针）
+   591→        // 逆时针需要调整为 [座位1, 座位4, 座位3, 座位2]
+   592→        const counterClockwiseIds = [
+   593→            playerIds[0], // 座位1(东)
+   594→            playerIds[3], // 座位4(北)
+   595→            playerIds[2], // 座位3(西)
+   596→            playerIds[1]  // 座位2(南)
+   597→        ];
+   598→
+   599→        // 发牌：每人4张×3轮，然后每人1张，庄家多1张
+   600→        // 每人4张×3轮（逆时针顺序）
+   601→        for (let round = 0; round < 3; round++) {
+   602→            for (const pid of counterClockwiseIds) {
+   603→                for (let i = 0; i < 4; i++) {
+   604→                    const card = this.gameState.deck.pop();
+   605→                    if (card) this.gameState.hands[pid].push(card);
+   606→                }
+   607→            }
+   608→        }
+   609→
+   610→        // 每人1张（逆时针顺序）
+   611→        for (const pid of counterClockwiseIds) {
+   612→            const card = this.gameState.deck.pop();
+   613→            if (card) this.gameState.hands[pid].push(card);
+   614→        }
+   615→
+   616→        // 庄家多拿1张
+   617→        const dealerPid = playerIds[this.gameState.dealer];
+   618→        const extraCard = this.gameState.deck.pop();
+   619→        if (extraCard) this.gameState.hands[dealerPid].push(extraCard);
+   620→
+   621→        // 庄家先出牌
+   622→        this.gameState.currentPlayer = this.gameState.dealer;
+   623→
+   624→        // 排序手牌
+   625→        for (const pid of playerIds) {
+   626→            this.sortHand(pid);
+   627→        }
+   628→
+   629→        console.log(`牌桌${this.tableNumber} 第${this.currentRound}局开始，庄家座位: ${this.gameState.dealerSeat}，万能牌: ${cardName(this.gameState.wildCard)}`);
+   630→
+   631→        // 先发送发牌动画消息
+   632→        this.broadcastDealStart();
+   633→
+   634→        // 等待发牌动画完成后发送游戏状态
+   635→        setTimeout(() => {
+   636→            this.broadcastGameState();
+   637→            // 检查是否轮到AI出牌
+   638→            this.checkAITurn();
+   639→        }, 5000);
+   640→    }
+   641→
+   642→    // 随机换座位（周期开始时调用）
+   643→    randomizeSeats() {
+   644→        const playerList = Array.from(this.players.values());
+   645→        const seats = [1, 2, 3, 4];
+   646→
+   647→        // 洗牌座位
+   648→        for (let i = seats.length - 1; i > 0; i--) {
+   649→            const j = Math.floor(Math.random() * (i + 1));
+   650→            [seats[i], seats[j]] = [seats[j], seats[i]];
+   651→        }
+   652→
+   653→        // 分配新座位
+   654→        playerList.forEach((player, index) => {
+   655→            player.seatNum = seats[index];
+   656→        });
+   657→
+   658→        console.log(`牌桌${this.tableNumber} 座位已随机更换`);
+   659→        this.broadcastPlayerList();
+   660→    }
+   661→
+   662→    // 初始化牌局（洗牌、确定庄家等）
+   663→    initDeckAndDealer() {
+   664→        this.gameState.started = true;
+   665→        this.gameState.gameStartTime = Date.now();
+   666→        this.gameState.totalGameTime = 0;
+   667→
+   668→        // 启动游戏计时器（每秒更新）
+   669→        if (this.gameTimer) clearInterval(this.gameTimer);
+   670→        this.gameTimer = setInterval(() => {
+   671→            if (this.gameState.started) {
+   672→                this.gameState.totalGameTime = Math.floor((Date.now() - this.gameState.gameStartTime) / 1000);
+   673→            }
+   674→        }, 1000);
+   675→
+   676→        // 洗牌
+   677→        this.gameState.deck = shuffle(createDeck());
+   678→
+   679→        // 确定庄家
+   680→        const playerIds = this.getSortedPlayerIds();
+   681→
+   682→        if (this.currentRound === 0 || this.currentRound === 1) {
+   683→            // 周期第一局：座东的玩家坐庄
+   684→            const dongPlayer = Array.from(this.players.values()).find(p => p.seatNum === 1);
+   685→            if (dongPlayer) {
+   686→                this.gameState.dealerSeat = 1; // 东（1号位）是庄家
+   687→                this.gameState.dealer = playerIds.indexOf(dongPlayer.id);
+   688→            } else {
+   689→                this.gameState.dealerSeat = 1;
+   690→                this.gameState.dealer = 0;
+   691→            }
+   692→        } else {
+   693→            // 后续局：上一局胡牌者坐庄（已在胡牌时设置）
+   694→            // 如果 lastWinner 存在，使用它；否则保持庄家不变
+   695→            if (this.lastWinner) {
+   696→                const winnerIndex = playerIds.indexOf(this.lastWinner);
+   697→                if (winnerIndex >= 0) {
+   698→                    this.gameState.dealer = winnerIndex;
+   699→                    const winner = this.players.get(this.lastWinner);
+   700→                    if (winner) this.gameState.dealerSeat = winner.seatNum;
+   701→                }
+   702→            }
+   703→        }
+   704→
+   705→        console.log(`牌桌${this.tableNumber} 第${this.currentRound}局，庄家座位: ${this.gameState.dealerSeat}`);
+   706→    }
+   707→
+   708→    // 获取按座位排序的玩家ID数组（辅助方法）
+   709→    getSortedPlayerIds() {
+   710→        return Array.from(this.players.entries())
+   711→            .sort((a, b) => a[1].seatNum - b[1].seatNum)
+   712→            .map(([id]) => id);
+   713→    }
+   714→
+   715→    // 处理骰子掷出
+   716→    handleDiceRoll(playerId, values) {
+   717→        return this.rollDice(playerId, values);
+   718→    }
+   719→
+   720→    // 一局结束
+   721→    endRound(winnerId) {
+   722→        this.gameState.roundPhase = 'ended';
+   723→        this.lastWinner = winnerId;
+   724→        this.roundReadyPlayers.clear();
+   725→
+   726→        // 重置所有玩家的准备状态
+   727→        for (const player of this.players.values()) {
+   728→            player.ready = false;
+   729→        }
+   730→
+   731→        this.broadcastMessage(`第${this.currentRound}局结束！请所有玩家准备开始下一局`);
+   732→        this.broadcastPlayerList();
+   733→    }
+   734→
+   735→    // 局间准备
+   736→    setRoundReady(playerId, ready) {
+   737→        if (this.gameState.roundPhase !== 'ended') return;
+   738→
+   739→        if (ready) {
+   740→            this.roundReadyPlayers.add(playerId);
+   741→        } else {
+   742→            this.roundReadyPlayers.delete(playerId);
+   743→        }
+   744→
+   745→        // 更新玩家的准备状态显示
+   746→        const player = this.players.get(playerId);
+   747→        if (player) {
+   748→            player.ready = ready;
+   749→        }
+   750→
+   751→        this.broadcastPlayerList();
+   752→        this.checkStartGame();
+   753→    }
+   754→
+   755→    // 广播发牌开始消息
+   756→    broadcastDealStart() {
+   757→        const message = JSON.stringify({ type: 'dealStart' });
+   758→        for (const player of this.players.values()) {
+   759→            if (player.ws && player.ws.readyState === WebSocket.OPEN) {
+   760→                player.ws.send(message);
+   761→            }
+   762→        }
+   763→    }
+   764→
+   765→    // 排序手牌
+   766→    sortHand(playerId) {
+   767→        const hand = this.gameState.hands[playerId];
+   768→        if (!hand) return;
+   769→
+   770→        const suitOrder = { '筒': 0, '条': 1, '万': 2, '风': 3, '箭': 4 };
+   771→        const windOrder = { '东': 0, '南': 1, '西': 2, '北': 3 };
+   772→        const arrowOrder = { '中': 0, '发': 1, '白': 2 };
+   773→
+   774→        hand.sort((a, b) => {
+   775→            // 万能牌放最后
+   776→            if (this.isWildCard(a) && !this.isWildCard(b)) return 1;
+   777→            if (!this.isWildCard(a) && this.isWildCard(b)) return -1;
+   778→
+   779→            const suitA = suitOrder[a.suit] ?? 5;
+   780→            const suitB = suitOrder[b.suit] ?? 5;
+   781→            if (suitA !== suitB) return suitA - suitB;
+   782→
+   783→            if (a.type === 'number' && b.type === 'number') {
+   784→                return a.rank - b.rank;
+   785→            } else if (a.type === 'wind' && b.type === 'wind') {
+   786→                return (windOrder[a.rank] ?? 0) - (windOrder[b.rank] ?? 0);
+   787→            } else if (a.type === 'arrow' && b.type === 'arrow') {
+   788→                return (arrowOrder[a.rank] ?? 0) - (arrowOrder[b.rank] ?? 0);
+   789→            }
+   790→            return 0;
+   791→        });
+   792→    }
+   793→
+   794→    // 判断是否是万能牌（相同牌或红中）
+   795→    isWildCard(card) {
+   796→        const wild = this.gameState.wildCard;
+   797→        if (!wild) return false;
+   798→
+   799→        // 相同牌是万能牌
+   800→        if (card.suit === wild.suit && card.rank === wild.rank) return true;
+   801→        // 红中也是万能牌
+   802→        if (card.type === 'arrow' && card.rank === '中') return true;
+   803→
+   804→        return false;
+   805→    }
+   806→
+   807→    // 摸牌
+   808→    drawCard(playerId) {
+   809→        if (this.gameState.deck.length === 0) {
+   810→            return null; // 流局
+   811→        }
+   812→
+   813→        const card = this.gameState.deck.pop();
+   814→        if (card) {
+   815→            this.gameState.hands[playerId].push(card);
+   816→            this.gameState.lastDrawn = card;
+   817→            this.sortHand(playerId);
+   818→
+   819→            // 更新牌墙状态
+   820→            this.updateWallState();
+   821→        }
+   822→        return card;
+   823→    }
+   824→
+   825→    // 更新牌墙状态
+   826→    updateWallState() {
+   827→        // 计算剩余牌数对应的牌墩
+   828→        const totalCards = this.gameState.deck.length;
+   829→        const totalPiles = Math.ceil(totalCards / 2);
+   830→
+   831→        // 简化处理：均匀分配到四个方位
+   832→        const pilesPerDirection = Math.floor(totalPiles / 4);
+   833→        const remainder = totalPiles % 4;
+   834→
+   835→        this.gameState.wallState = {
+   836→            1: pilesPerDirection + (remainder > 0 ? 1 : 0),
+   837→            2: pilesPerDirection + (remainder > 1 ? 1 : 0),
+   838→            3: pilesPerDirection + (remainder > 2 ? 1 : 0),
+   839→            4: pilesPerDirection
+   840→        };
+   841→    }
+   842→
+   843→    // 出牌
+   844→    playCard(playerId, cardId) {
+   845→        const hand = this.gameState.hands[playerId];
+   846→        if (!hand) return false;
+   847→
+   848→        const cardIndex = hand.findIndex(c => c.id === cardId);
+   849→        if (cardIndex === -1) return false;
+   850→
+   851→        const card = hand.splice(cardIndex, 1)[0];
+   852→
+   853→        // 打出的牌背面朝上，加入弃牌堆
+   854→        this.gameState.discardedPile.push({
+   855→            playerId,
+   856→            card,
+   857→            hidden: true // 背面朝上
+   858→        });
+   859→
+   860→        // 下一位玩家
+   861→        this.nextPlayer();
+   862→
+   863→        return true;
+   864→    }
+   865→
+   866→    // 换牌（发或红中）
+   867→    changeFa(playerId) {
+   868→        // 检查是否已换过
+   869→        if (this.gameState.faUsed[playerId]) return false;
+   870→
+   871→        const hand = this.gameState.hands[playerId];
+   872→        if (!hand) return false;
+   873→
+   874→        const wild = this.gameState.wildCard;
+   875→        const isWildFa = wild && wild.type === 'arrow' && wild.rank === '发';
+   876→
+   877→        // 如果万能牌是"发"，找红中；否则找"发"
+   878→        let targetRank = isWildFa ? '中' : '发';
+   879→        const faIndex = hand.findIndex(c => c.type === 'arrow' && c.rank === targetRank);
+   880→        if (faIndex === -1) return false;
+   881→
+   882→        // 移出牌到展示区
+   883→        const faCard = hand.splice(faIndex, 1)[0];
+   884→        this.gameState.showedCards[playerId].fa.push(faCard);
+   885→        this.gameState.faUsed[playerId] = true;
+   886→
+   887→        // 摸一张新牌
+   888→        const newCard = this.drawCard(playerId);
+   889→
+   890→        return { faCard, newCard };
+   891→    }
+   892→
+   893→    // 暗杠
+   894→    doGang(playerId, cardId) {
+   895→        const hand = this.gameState.hands[playerId];
+   896→        if (!hand) return false;
+   897→
+   898→        // 找到这张牌
+   899→        const targetCard = hand.find(c => c.id === cardId);
+   900→        if (!targetCard) return false;
+   901→
+   902→        // 找所有相同的牌（不包括万能牌替代）
+   903→        const sameCards = hand.filter(c =>
+   904→            c.suit === targetCard.suit && c.rank === targetCard.rank
+   905→        );
+   906→
+   907→        if (sameCards.length !== 4) return false;
+   908→
+   909→        // 移除这4张牌
+   910→        this.gameState.hands[playerId] = hand.filter(c =>
+   911→            !(c.suit === targetCard.suit && c.rank === targetCard.rank)
+   912→        );
+   913→
+   914→        // 加入展示区
+   915→        this.gameState.showedCards[playerId].gang.push(sameCards);
+   916→
+   917→        return sameCards;
+   918→    }
+   919→
+   920→    // 检查是否可以暗杠
+   921→    canGang(playerId) {
+   922→        const hand = this.gameState.hands[playerId];
+   923→        if (!hand) return [];
+   924→
+   925→        const counts = {};
+   926→        for (const card of hand) {
+   927→            const key = `${card.suit}_${card.rank}`;
+   928→            counts[key] = (counts[key] || 0) + 1;
+   929→        }
+   930→
+   931→        const gangable = [];
+   932→        for (const [key, count] of Object.entries(counts)) {
+   933→            if (count === 4) {
+   934→                const [suit, rank] = key.split('_');
+   935→                gangable.push({ suit, rank });
+   936→            }
+   937→        }
+   938→
+   939→        return gangable;
+   940→    }
+   941→
+   942→    // 检查是否有牌可以换（发或红中）
+   943→    hasFa(playerId) {
+   944→        const hand = this.gameState.hands[playerId];
+   945→        if (!hand) return false;
+   946→
+   947→        // 如果已经换过，不能换
+   948→        if (this.gameState.faUsed[playerId]) return false;
+   949→
+   950→        const wild = this.gameState.wildCard;
+   951→        const isWildFa = wild && wild.type === 'arrow' && wild.rank === '发';
+   952→
+   953→        // 如果万能牌是"发"，用红中换牌；否则用"发"换牌
+   954→        if (isWildFa) {
+   955→            return hand.some(c => c.type === 'arrow' && c.rank === '中');
+   956→        } else {
+   957→            return hand.some(c => c.type === 'arrow' && c.rank === '发');
+   958→        }
+   959→    }
+   960→
+   961→    // 获取当前用于换牌的牌名（发或中）
+   962→    getExchangeCardName() {
+   963→        const wild = this.gameState.wildCard;
+   964→        const isWildFa = wild && wild.type === 'arrow' && wild.rank === '发';
+   965→        return isWildFa ? '中' : '发';
+   966→    }
+   967→
+   968→    // 下一位玩家
+   969→    // 下一位玩家（逆时针）
+   970→    // 座位顺序：1(东)→2(南)→3(西)→4(北) 是顺时针
+   971→    // 逆时针：0→3→2→1→0（在数组中）
+   972→    nextPlayer() {
+   973→        this.gameState.currentPlayer = (this.gameState.currentPlayer + 3) % 4;
+   974→    }
+   975→
+   976→    // 获取当前玩家ID
+   977→    getCurrentPlayerId() {
+   978→        const playerIds = this.getSortedPlayerIds();
+   979→        return playerIds[this.gameState.currentPlayer];
+   980→    }
+   981→
+   982→    // ==================== AI玩家逻辑 ====================
+   983→
+   984→    // 添加AI玩家
+   985→    addAIPlayer(seatNum) {
+   986→        if (this.players.size >= this.maxPlayers) return false;
+   987→        if (this.gameState.started) return false;
+   988→
+   989→        const aiId = `ai_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+   990→        const aiNames = ['机器人小东', '机器人小南', '机器人小西', '机器人小北'];
+   991→        const aiName = aiNames[seatNum - 1] || `AI玩家${seatNum}`;
+   992→
+   993→        let actualSeat = seatNum;
+   994→        if (!actualSeat) {
+   995→            const occupiedSeats = new Set(Array.from(this.players.values()).map(p => p.seatNum));
+   996→            for (let i = 1; i <= 4; i++) {
+   997→                if (!occupiedSeats.has(i)) {
+   998→                    actualSeat = i;
+   999→                    break;
+  1000→                }
+  1001→            }
+  1002→        }
+  1003→
+  1004→        // 检查座位是否已被占用
+  1005→        const occupied = Array.from(this.players.values()).some(p => p.seatNum === actualSeat);
+  1006→        if (occupied) return false;
+  1007→
+  1008→        this.players.set(aiId, {
+  1009→            ws: null, // AI没有WebSocket连接
+  1010→            id: aiId,
+  1011→            name: aiName,
+  1012→            seatNum: actualSeat,
+  1013→            ready: true, // AI默认准备
+  1014→            isAI: true
+  1015→        });
+  1016→
+  1017→        console.log(`牌桌${this.tableNumber} 添加AI玩家: ${aiName} 座位${actualSeat}`);
+  1018→        return aiId;
+  1019→    }
+  1020→
+  1021→    // 检查并执行AI行动
+  1022→    checkAITurn() {
+  1023→        // 检查骰子阶段
+  1024→        if (this.gameState.roundPhase === 'dice' && this.diceState.currentRoller) {
+  1025→            const roller = this.players.get(this.diceState.currentRoller);
+  1026→            if (roller && roller.isAI) {
+  1027→                // AI延迟500ms后掷骰子
+  1028→                setTimeout(() => this.aiRollDice(this.diceState.currentRoller), 500);
+  1029→            }
+  1030→        }
+  1031→
+  1032→        // 检查游戏阶段
+  1033→        if (this.gameState.roundPhase === 'playing') {
+  1034→            const currentPlayerId = this.getCurrentPlayerId();
+  1035→            const currentPlayer = this.players.get(currentPlayerId);
+  1036→            if (currentPlayer && currentPlayer.isAI) {
+  1037→                // AI延迟800ms后出牌
+  1038→                setTimeout(() => this.aiPlayCard(currentPlayerId), 800);
+  1039→            }
+  1040→        }
+  1041→    }
+  1042→
+  1043→    // AI掷骰子
+  1044→    aiRollDice(playerId) {
+  1045→        if (this.diceState.currentRoller !== playerId) return;
+  1046→
+  1047→        const player = this.players.get(playerId);
+  1048→        if (!player || !player.isAI) return;
+  1049→
+  1050→        // 随机骰子值
+  1051→        const dice1 = Math.floor(Math.random() * 6) + 1;
+  1052→        const dice2 = Math.floor(Math.random() * 6) + 1;
+  1053→
+  1054→        console.log(`AI ${player.name} 掷骰子: ${dice1}+${dice2}`);
+  1055→
+  1056→        this.rollDice(playerId, [dice1, dice2]);
+  1057→
+  1058→        // 检查第二次掷骰子
+  1059→        setTimeout(() => this.checkAITurn(), 300);
+  1060→    }
+  1061→
+  1062→    // AI出牌
+  1063→    aiPlayCard(playerId) {
+  1064→        const currentPlayerId = this.getCurrentPlayerId();
+  1065→        if (currentPlayerId !== playerId) return;
+  1066→
+  1067→        const player = this.players.get(playerId);
+  1068→        if (!player || !player.isAI) return;
+  1069→
+  1070→        const hand = this.gameState.hands[playerId];
+  1071→        if (!hand || hand.length === 0) return;
+  1072→
+  1073→        // AI简单策略：随机选一张牌出
+  1074→        // 优先出非万能牌，优先出单张
+  1075→        const wild = this.gameState.wildCard;
+  1076→        const cardScores = hand.map(card => {
+  1077→            let score = 0;
+  1078→            // 万能牌不出
+  1079→            if (wild && card.suit === wild.suit && card.rank === wild.rank) {
+  1080→                score -= 100;
+  1081→            }
+  1082→            // 风牌和箭牌优先出
+  1083→            if (card.type === 'wind' || card.type === 'arrow') {
+  1084→                score += 10;
+  1085→            }
+  1086→            // 随机因素
+  1087→            score += Math.random() * 5;
+  1088→            return { card, score };
+  1089→        });
+  1090→
+  1091→        // 按分数排序，选最高的
+  1092→        cardScores.sort((a, b) => b.score - a.score);
+  1093→        const selectedCard = cardScores[0].card;
+  1094→
+  1095→        console.log(`AI ${player.name} 出牌: ${selectedCard.rank}${selectedCard.suit || ''}`);
+  1096→
+  1097→        if (this.playCard(playerId, selectedCard.id)) {
+  1098→            this.broadcastGameState();
+  1099→        }
+  1100→    }
+  1101→
+  1102→    // 获取AI玩家数量
+  1103→    getAIPlayerCount() {
+  1104→        let count = 0;
+  1105→        for (const player of this.players.values()) {
+  1106→            if (player.isAI) count++;
+  1107→        }
+  1108→        return count;
+  1109→    }
+  1110→
+  1111→    // 广播玩家列表
+  1112→    broadcastPlayerList() {
+  1113→        const players = Array.from(this.players.values()).map(p => ({
+  1114→            id: p.id,
+  1115→            name: p.name,
+  1116→            seatNum: p.seatNum,
+  1117→            ready: p.ready,
+  1118→            isAI: p.isAI
+  1119→        }));
+  1120→
+  1121→        const message = JSON.stringify({
+  1122→            type: 'playerList',
+  1123→            players,
+  1124→            tableNumber: this.tableNumber,
+  1125→            started: this.gameState.started
+  1126→        });
+  1127→
+  1128→        for (const player of this.players.values()) {
+  1129→            if (player.ws && player.ws.readyState === WebSocket.OPEN) {
+  1130→                player.ws.send(message);
+  1131→            }
+  1132→        }
+  1133→
+  1134→        for (const spectator of this.spectators.values()) {
+  1135→            if (spectator.ws && spectator.ws.readyState === WebSocket.OPEN) {
+  1136→                spectator.ws.send(message);
+  1137→            }
+  1138→        }
+  1139→    }
+  1140→
+  1141→    // 广播游戏状态
+  1142→    broadcastGameState() {
+  1143→        const playerIds = this.getSortedPlayerIds();
+  1144→
+  1145→        // 调试：打印万能牌信息
+  1146→        console.log(`广播游戏状态，万能牌: ${JSON.stringify(this.gameState.wildCard)}`);
+  1147→
+  1148→        for (const [playerId, player] of this.players) {
+  1149→            if (!player.ws || player.ws.readyState !== WebSocket.OPEN) continue;
+  1150→
+  1151→            const state = this.getPlayerGameState(playerId);
+  1152→            console.log(`发送游戏状态给 ${player.name}: 手牌数量=${state.myHand.length}, 万能牌: ${JSON.stringify(state.wildCard)}`);
+  1153→            player.ws.send(JSON.stringify({
+  1154→                type: 'gameState',
+  1155→                data: state
+  1156→            }));
+  1157→        }
+  1158→    }
+  1159→
+  1160→    // 获取单个玩家视角的游戏状态
+  1161→    getPlayerGameState(playerId) {
+  1162→        const playerIds = this.getSortedPlayerIds();
+  1163→        const myIndex = playerIds.indexOf(playerId);
+  1164→
+  1165→        // 构建各玩家信息
+  1166→        const playerInfo = {};
+  1167→        for (let i = 0; i < playerIds.length; i++) {
+  1168→            const pid = playerIds[i];
+  1169→            const p = this.players.get(pid);
+  1170→            playerInfo[pid] = {
+  1171→                name: p?.name || '',
+  1172→                seatNum: p?.seatNum || (i + 1),
+  1173→                handCount: this.gameState.hands[pid]?.length || 0,
+  1174→                showedCards: this.gameState.showedCards[pid] || { fa: [], gang: [] }
+  1175→            };
+  1176→        }
+  1177→
+  1178→        // 只返回自己的手牌
+  1179→        const myHand = this.gameState.hands[playerId] || [];
+  1180→
+  1181→        // 获取当前玩家的座位号
+  1182→        const currentPid = playerIds[this.gameState.currentPlayer];
+  1183→        const currentPlayerSeat = this.players.get(currentPid)?.seatNum || 1;
+  1184→
+  1185→        // 获取庄家的座位号
+  1186→        const dealerPid = playerIds[this.gameState.dealer];
+  1187→        const dealerSeat = this.players.get(dealerPid)?.seatNum || 1;
+  1188→
+  1189→        return {
+  1190→            started: this.gameState.started,
+  1191→            currentPlayer: this.gameState.currentPlayer,
+  1192→            currentPlayerSeat,
+  1193→            dealer: this.gameState.dealer,
+  1194→            dealerSeat,
+  1195→            myIndex,
+  1196→            myHand,
+  1197→            wildCard: this.gameState.wildCard,
+  1198→            shownCard: this.gameState.shownCard || null,
+  1199→            deckCount: this.gameState.deck.length,
+  1200→            totalGameTime: this.gameState.totalGameTime,
+  1201→            playerInfo,
+  1202→            discardedCount: this.gameState.discardedPile.length,
+  1203→            wallState: this.gameState.wallState || { 1: 17, 2: 17, 3: 17, 4: 17 },
+  1204→            roundPhase: this.gameState.roundPhase,
+  1205→            currentRound: this.currentRound,
+  1206→            canChangeFa: this.hasFa(playerId) && this.getCurrentPlayerId() === playerId,
+  1207→            canGang: this.canGang(playerId).length > 0 && this.getCurrentPlayerId() === playerId
+  1208→        };
+  1209→    }
+  1210→
+  1211→    // 获取单个玩家视角的游戏状态
+  1212→    getPlayerGameState(playerId) {
+  1213→        const playerIds = this.getSortedPlayerIds();
+  1214→        const myIndex = playerIds.indexOf(playerId);
+  1215→
+  1216→        // 构建各玩家信息
+  1217→        const playerInfo = {};
+  1218→        for (let i = 0; i < playerIds.length; i++) {
+  1219→            const pid = playerIds[i];
+  1220→            const p = this.players.get(pid);
+  1221→            playerInfo[pid] = {
+  1222→                name: p?.name || '',
+  1223→                seatNum: p?.seatNum || (i + 1),
+  1224→                handCount: this.gameState.hands[pid]?.length || 0,
+  1225→                showedCards: this.gameState.showedCards[pid] || { fa: [], gang: [] }
+  1226→            };
+  1227→        }
+  1228→
+  1229→        // 只返回自己的手牌
+  1230→        const myHand = this.gameState.hands[playerId] || [];
+  1231→
+  1232→        // 获取当前玩家的座位号
+  1233→        const currentPid = playerIds[this.gameState.currentPlayer];
+  1234→        const currentPlayerSeat = this.players.get(currentPid)?.seatNum || 1;
+  1235→
+  1236→        // 获取庄家的座位号
+  1237→        const dealerPid = playerIds[this.gameState.dealer];
+  1238→        const dealerSeat = this.players.get(dealerPid)?.seatNum || 1;
+  1239→
+  1240→        return {
+  1241→            started: this.gameState.started,
+  1242→            currentPlayer: this.gameState.currentPlayer,
+  1243→            currentPlayerSeat,
+  1244→            dealer: this.gameState.dealer,
+  1245→            dealerSeat,
+  1246→            myIndex,
+  1247→            myHand,
+  1248→            wildCard: this.gameState.wildCard,
+  1249→            deckCount: this.gameState.deck.length,
+  1250→            totalGameTime: this.gameState.totalGameTime,
+  1251→            playerInfo,
+  1252→            discardedCount: this.gameState.discardedPile.length,
+  1253→            canChangeFa: this.hasFa(playerId) && this.getCurrentPlayerId() === playerId,
+  1254→            canGang: this.canGang(playerId).length > 0 && this.getCurrentPlayerId() === playerId
+  1255→        };
+  1256→    }
+  1257→
+  1258→    // 广播消息
+  1259→    broadcastMessage(text) {
+  1260→        const message = JSON.stringify({ type: 'message', text });
+  1261→        for (const player of this.players.values()) {
+  1262→            if (player.ws && player.ws.readyState === WebSocket.OPEN) {
+  1263→                player.ws.send(message);
+  1264→            }
+  1265→        }
+  1266→    }
+  1267→
+  1268→    // 获取牌桌信息（用于大厅显示）
+  1269→    getTableInfo() {
+  1270→        return {
+  1271→            id: this.id,
+  1272→            tableNumber: this.tableNumber,
+  1273→            playerCount: this.players.size,
+  1274→            maxPlayers: this.maxPlayers,
+  1275→            started: this.gameState.started,
+  1276→            deckCount: this.gameState.deck ? this.gameState.deck.length : 0,
+  1277→            players: Array.from(this.players.values()).map(p => ({
+  1278→                name: p.name,
+  1279→                seatNum: p.seatNum,
+  1280→                ready: p.ready
+  1281→            }))
+  1282→        };
+  1283→    }
+  1284→}
+  1285→
+  1286→// ==================== WebSocket连接处理 ====================
+  1287→wss.on('connection', (ws) => {
+  1288→    let playerId = null;
+  1289→    let playerName = null;
+  1290→    let currentTableId = null;
+  1291→
+  1292→    console.log('新客户端连接');
+  1293→
+  1294→    ws.on('message', (data) => {
+  1295→        try {
+  1296→            const msg = JSON.parse(data);
+  1297→
+  1298→            switch (msg.type) {
+  1299→                case 'login':
+  1300→                    playerId = `player_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  1301→                    playerName = msg.name || '玩家';
+  1302→
+  1303→                    // 添加到已登录客户端集合
+  1304→                    loggedInClients.add(ws);
+  1305→
+  1306→                    ws.send(JSON.stringify({
+  1307→                        type: 'loginSuccess',
+  1308→                        playerId,
+  1309→                        playerName
+  1310→                    }));
+  1311→
+  1312→                    // 发送牌桌列表
+  1313→                    sendTableList(ws);
+  1314→                    break;
+  1315→
+  1316→                case 'getTableList':
+  1317→                    sendTableList(ws);
+  1318→                    break;
+  1319→
+  1320→                case 'createTable':
+  1321→                    const newTable = createTable();
+  1322→                    // 加入牌桌
+  1323→                    if (joinTable(ws, playerId, playerName, newTable.id, msg.seatNum)) {
+  1324→                        currentTableId = newTable.id;
+  1325→                    }
+  1326→                    // 添加AI玩家
+  1327→                    const aiCount = msg.aiCount || 0;
+  1328→                    for (let i = 0; i < aiCount; i++) {
+  1329→                        newTable.addAIPlayer();
+  1330→                    }
+  1331→                    // 广播牌桌列表更新给所有人
+  1332→                    broadcastTableList();
+  1333→                    break;
+  1334→
+  1335→                case 'joinTable':
+  1336→                    if (joinTable(ws, playerId, playerName, msg.tableId, msg.seatNum)) {
+  1337→                        currentTableId = msg.tableId;
+  1338→                        // 广播牌桌列表更新给所有人
+  1339→                        broadcastTableList();
+  1340→                    }
+  1341→                    break;
+  1342→
+  1343→                case 'ready':
+  1344→                    if (currentTableId) {
+  1345→                        const table = tables.get(currentTableId);
+  1346→                        if (table) {
+  1347→                            table.setPlayerReady(playerId, msg.ready);
+  1348→                        }
+  1349→                    }
+  1350→                    break;
+  1351→
+  1352→                case 'play':
+  1353→                    if (currentTableId) {
+  1354→                        const table = tables.get(currentTableId);
+  1355→                        if (table && table.getCurrentPlayerId() === playerId) {
+  1356→                            if (table.playCard(playerId, msg.cardId)) {
+  1357→                                table.broadcastGameState();
+  1358→                                // 检查AI出牌
+  1359→                                table.checkAITurn();
+  1360→                            }
+  1361→                        }
+  1362→                    }
+  1363→                    break;
+  1364→
+  1365→                case 'changeFa':
+  1366→                    if (currentTableId) {
+  1367→                        const table = tables.get(currentTableId);
+  1368→                        if (table && table.getCurrentPlayerId() === playerId) {
+  1369→                            const result = table.changeFa(playerId);
+  1370→                            if (result) {
+  1371→                                table.broadcastMessage(`${playerName} 换了一张"發"`);
+  1372→                                table.broadcastGameState();
+  1373→                            }
+  1374→                        }
+  1375→                    }
+  1376→                    break;
+  1377→
+  1378→                case 'gang':
+  1379→                    if (currentTableId) {
+  1380→                        const table = tables.get(currentTableId);
+  1381→                        if (table && table.getCurrentPlayerId() === playerId) {
+  1382→                            const result = table.doGang(playerId, msg.cardId);
+  1383→                            if (result) {
+  1384→                                table.broadcastMessage(`${playerName} 暗杠！`);
+  1385→                                table.broadcastGameState();
+  1386→                            }
+  1387→                        }
+  1388→                    }
+  1389→                    break;
+  1390→
+  1391→                case 'draw':
+  1392→                    if (currentTableId) {
+  1393→                        const table = tables.get(currentTableId);
+  1394→                        if (table && table.getCurrentPlayerId() === playerId) {
+  1395→                            const card = table.drawCard(playerId);
+  1396→                            if (card) {
+  1397→                                table.broadcastGameState();
+  1398→                            } else {
+  1399→                                table.broadcastMessage('牌堆已空，流局！');
+  1400→                            }
+  1401→                        }
+  1402→                    }
+  1403→                    break;
+  1404→
+  1405→                case 'chat':
+  1406→                    if (currentTableId) {
+  1407→                        const table = tables.get(currentTableId);
+  1408→                        if (table) {
+  1409→                            table.broadcastMessage(`${playerName}: ${msg.text}`);
+  1410→                        }
+  1411→                    }
+  1412→                    break;
+  1413→            }
+  1414→        } catch (e) {
+  1415→            console.error('消息处理错误:', e);
+  1416→        }
+  1417→    });
+  1418→
+  1419→    ws.on('close', () => {
+  1420→        console.log('客户端断开:', playerName);
+  1421→
+  1422→        // 从已登录客户端集合中移除
+  1423→        loggedInClients.delete(ws);
+  1424→
+  1425→        if (currentTableId && playerId) {
+  1426→            const table = tables.get(currentTableId);
+  1427→            if (table) {
+  1428→                // 标记玩家断开
+  1429→                const player = table.players.get(playerId);
+  1430→                if (player) {
+  1431→                    player.ws = null;
+  1432→                    player.ready = false;
+  1433→                }
+  1434→
+  1435→                // 如果游戏未开始，直接移除玩家
+  1436→                if (!table.gameState.started) {
+  1437→                    table.removePlayer(playerId);
+  1438→                }
+  1439→
+  1440→                // 检查是否所有玩家都已断开连接，如果是则删除房间
+  1441→                if (table.isAllPlayersDisconnected()) {
+  1442→                    tables.delete(currentTableId);
+  1443→                    console.log(`牌桌 ${currentTableId} 所有人已离开，自动解散`);
+  1444→                } else {
+  1445→                    table.broadcastPlayerList();
+  1446→                }
+  1447→            }
+  1448→            playerToTable.delete(playerId);
+  1449→
+  1450→            // 广播牌桌列表更新（因为有人离开）
+  1451→            broadcastTableList();
+  1452→        }
+  1453→    });
+  1454→});
+  1455→
+  1456→// 发送牌桌列表
+  1457→function sendTableList(ws) {
+  1458→    const tableList = Array.from(tables.values()).map(t => t.getTableInfo());
+  1459→    ws.send(JSON.stringify({
+  1460→        type: 'tableList',
+  1461→        tables: tableList
+  1462→    }));
+  1463→}
+  1464→
+  1465→// 广播牌桌列表给所有已登录客户端
+  1466→function broadcastTableList() {
+  1467→    const tableList = Array.from(tables.values()).map(t => t.getTableInfo());
+  1468→    const message = JSON.stringify({
+  1469→        type: 'tableList',
+  1470→        tables: tableList
+  1471→    });
+  1472→
+  1473→    // 广播给所有连接的客户端
+  1474→    let count = 0;
+  1475→    wss.clients.forEach(client => {
+  1476→        if (client.readyState === WebSocket.OPEN) {
+  1477→            client.send(message);
+  1478→            count++;
+  1479→        }
+  1480→    });
+  1481→    console.log(`广播牌桌列表给 ${count} 个客户端，当前牌桌数: ${tableList.length}`);
+  1482→}
+  1483→
+  1484→// 创建牌桌
+  1485→function createTable() {
+  1486→    tableCounter++;
+  1487→    const tableId = `table_${tableCounter}`;
+  1488→    const table = new GameTable(tableId, tableCounter);
+  1489→    tables.set(tableId, table);
+  1490→    console.log(`创建新牌桌: ${tableId}`);
+  1491→    return table;
+  1492→}
+  1493→
+  1494→// 加入牌桌
+  1495→function joinTable(ws, playerId, playerName, tableId, seatNum) {
+  1496→    const table = tables.get(tableId);
+  1497→    if (!table) {
+  1498→        ws.send(JSON.stringify({ type: 'error', message: '牌桌不存在' }));
+  1499→        return false;
+  1500→    }
+  1501→
+  1502→    if (table.addPlayer(ws, playerId, playerName, seatNum)) {
+  1503→        playerToTable.set(playerId, tableId);
+  1504→        table.broadcastPlayerList();
+  1505→        console.log(`${playerName} 加入牌桌 ${tableId}`);
+  1506→        return true;
+  1507→    } else {
+  1508→        ws.send(JSON.stringify({ type: 'error', message: '无法加入牌桌（已满或游戏已开始）' }));
+  1509→        return false;
+  1510→    }
+  1511→}
+  1512→
+  1513→// 获取本机IP
+  1514→function getLocalIP() {
+  1515→    const os = require('os');
+  1516→    const interfaces = os.networkInterfaces();
+  1517→
+  1518→    for (const name of Object.keys(interfaces)) {
+  1519→        for (const iface of interfaces[name]) {
+  1520→            if (iface.family === 'IPv4' && !iface.internal) {
+  1521→                return iface.address;
+  1522→            }
+  1523→        }
+  1524→    }
+  1525→    return 'localhost';
+  1526→}
+  1527→
+  1528→// 启动服务器
+  1529→server.listen(PORT, () => {
+  1530→    const localIP = getLocalIP();
+  1531→    console.log('');
+  1532→    console.log('Majiang Server Started!');
+  1533→    console.log(`Game URL: http://localhost:${PORT}`);
+  1534→    console.log(`LAN URL: http://${localIP}:${PORT}`);
+  1535→    console.log('');
+  1536→});
+  1537→
+  1538→// 定时清理空桌子（每5分钟检查一次）
+  1539→setInterval(() => {
+  1540→    for (const [tableId, table] of tables) {
+  1541→        // 如果桌子没有玩家，或者所有玩家都已断开连接
+  1542→        if (table.players.size === 0) {
+  1543→            tables.delete(tableId);
+  1544→            console.log(`Cleaned up empty table: ${tableId}`);
+  1545→        } else {
+  1546→            // 检查是否所有玩家都已断开
+  1547→            let allDisconnected = true;
+  1548→            for (const player of table.players.values()) {
+  1549→                if (player.ws && player.ws.readyState === WebSocket.OPEN) {
+  1550→                    allDisconnected = false;
+  1551→                    break;
+  1552→                }
+  1553→            }
+  1554→            if (allDisconnected && !table.gameState.started) {
+  1555→                tables.delete(tableId);
+  1556→                console.log(`Cleaned up disconnected table: ${tableId}`);
+  1557→            }
+  1558→        }
+  1559→    }
+  1560→}, 300000); // 5分钟
+  1561→
+  1562→// 导出
+  1563→module.exports = { GameTable, createDeck, shuffle };
+  1564→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

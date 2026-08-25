@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "mcp__firecrawl-mcp__firecrawl_scrape"
+      "Bash(python3:*)",
+      "Bash(ls:*)",
+      "Bash(powershell -Command \"[System.IO.File]::ReadAllText\\(''F:\\\\HFF\\\\Obsidian\\\\FFNotes\\\\迷你传奇\\\\pz.ini'', [System.Text.Encoding]::GetEncoding\\(''GBK''\\)\\)\")",
+      "Bash(powershell -Command \"[System.IO.File]::ReadAllText\\(''F:\\\\HFF\\\\Obsidian\\\\FFNotes\\\\迷你传奇\\\\修改游戏.bat'', [System.Text.Encoding]::GetEncoding\\(''GBK''\\)\\)\")",
+      "Bash(powershell:*)"
     ]
   }
 }

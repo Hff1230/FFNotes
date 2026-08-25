@@ -1,0 +1,235 @@
+using FairyGUI;
+using UnityEngine;
+
+namespace DayZ
+{
+    /// <summary>
+    /// 英雄图标组件 - 用于英雄列表中的每个英雄卡片
+    /// </summary>
+    public class HeroIconCom : GComponent
+    {
+        #region Constants
+        private const string CONTROLLER_OWN_STATE = "c1";
+        private const string CONTROLLER_QUALITY = "c2";
+        private const string TRANSITION_T2 = "t2";
+
+        // 控制器页面索引
+        private const int PAGE_OWNED = 0;       // 已获得
+        private const int PAGE_NOT_OWNED = 1;   // 未获得
+        private const int PAGE_CAN_COMPOSE = 2; // 可合成
+
+        // 品质页面索引
+        private const int PAGE_QUALITY_WHITE = 0;
+        private const int PAGE_QUALITY_GREEN = 1;
+        private const int PAGE_QUALITY_BLUE = 2;
+        private const int PAGE_QUALITY_PURPLE = 3;
+        private const int PAGE_QUALITY_GOLD = 4;
+        private const int PAGE_QUALITY_RED = 5;
+        #endregion
+
+        #region Components
+        private GComponent _icon;
+        private GLoader _loader;
+        private GComponent _redPoint;
+        private GProgressBar _progressBar;
+        private GComponent _upgradeRedPoint;
+        private GButton _btnEmpty;
+        private GComponent _heroType;
+        private GComponent _starsList;
+        private GTextField _textCompose;
+        private GTextField _textLevel;
+        private Transition _transitionT2;
+        #endregion
+
+        #region Controllers
+        private Controller _ownStateController;
+        private Controller _qualityController;
+        #endregion
+
+        #region Properties
+        public long HeroId { get; private set; }
+        public bool IsOwned { get; private set; }
+        public bool CanCompose { get; private set; }
+        #endregion
+
+        #region Events
+        public event System.Action<HeroIconCom> OnItemClick;
+        #endregion
+
+        #region Lifecycle
+        public override void ConstructFromXML(FairyGUI.Utils.XML xml)
+        {
+            base.ConstructFromXML(xml);
+
+            InitializeComponents();
+            InitializeControllers();
+            BindEvents();
+        }
+
+        private void InitializeComponents()
+        {
+            // 获取组件引用
+            _icon = GetChild("icon") as GComponent;
+            _loader = GetChild("n81") as GLoader;
+            _redPoint = GetChild("n54") as GComponent;
+            _progressBar = GetChild("n63") as GProgressBar;
+            _upgradeRedPoint = GetChild("n68") as GComponent;
+            _btnEmpty = GetChild("n69") as GButton;
+            _heroType = GetChild("n62") as GComponent;
+            _starsList = GetChild("n58") as GComponent;
+            _textCompose = GetChild("text") as GTextField;
+            _textLevel = GetChild("Lv") as GTextField;
+
+            // 获取动效
+            _transitionT2 = GetTransition(TRANSITION_T2);
+        }
+
+        private void InitializeControllers()
+        {
+            _ownStateController = GetController(CONTROLLER_OWN_STATE);
+            _qualityController = GetController(CONTROLLER_QUALITY);
+        }
+
+        private void BindEvents()
+        {
+            if (_btnEmpty != null)
+            {
+                _btnEmpty.onClick.Add(OnButtonItemClick);
+            }
+        }
+
+        public override void Dispose()
+        {
+            UnbindEvents();
+            base.Dispose();
+        }
+
+        private void UnbindEvents()
+        {
+            if (_btnEmpty != null)
+            {
+                _btnEmpty.onClick.Remove(OnButtonItemClick);
+            }
+        }
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// 更新英雄数据
+        /// </summary>
+        public void UpdateData(HeroListData data)
+        {
+            if (data == null) return;
+
+            HeroId = data.HeroId;
+            IsOwned = data.IsOwned;
+            CanCompose = data.CanCompose;
+
+            UpdateOwnState(data);
+            UpdateQuality(data.Quality);
+            UpdateLevel(data.Level);
+            UpdateStars(data.StarCount);
+            UpdateProgress(data.FragmentCount, data.FragmentNeed);
+            UpdateRedPoint(data.HasRedPoint);
+            UpdateIcon(data.IconUrl);
+        }
+
+        /// <summary>
+        /// 设置选中状态
+        /// </summary>
+        public void SetSelected(bool selected)
+        {
+            // TODO: 实现选中效果
+        }
+
+        /// <summary>
+        /// 播放开启动效
+        /// </summary>
+        public void PlayEnterAnimation()
+        {
+            _transitionT2?.Play();
+        }
+        #endregion
+
+        #region Private Methods
+        private void UpdateOwnState(HeroListData data)
+        {
+            if (_ownStateController == null) return;
+
+            if (data.IsOwned)
+            {
+                _ownStateController.selectedIndex = PAGE_OWNED;
+            }
+            else if (data.CanCompose)
+            {
+                _ownStateController.selectedIndex = PAGE_CAN_COMPOSE;
+            }
+            else
+            {
+                _ownStateController.selectedIndex = PAGE_NOT_OWNED;
+            }
+        }
+
+        private void UpdateQuality(HeroQualityEnum quality)
+        {
+            if (_qualityController == null) return;
+
+            int pageIndex = quality switch
+            {
+                HeroQualityEnum.White => PAGE_QUALITY_WHITE,
+                HeroQualityEnum.Green => PAGE_QUALITY_GREEN,
+                HeroQualityEnum.Blue => PAGE_QUALITY_BLUE,
+                HeroQualityEnum.Purple => PAGE_QUALITY_PURPLE,
+                HeroQualityEnum.Gold => PAGE_QUALITY_GOLD,
+                HeroQualityEnum.Red => PAGE_QUALITY_RED,
+                _ => PAGE_QUALITY_WHITE
+            };
+
+            _qualityController.selectedIndex = pageIndex;
+        }
+
+        private void UpdateLevel(int level)
+        {
+            if (_textLevel != null)
+            {
+                _textLevel.text = $"Lv.{level}";
+            }
+        }
+
+        private void UpdateStars(int starCount)
+        {
+            // TODO: 星级组件由 fiveStarsList 处理
+        }
+
+        private void UpdateProgress(int current, int need)
+        {
+            if (_progressBar == null || need <= 0) return;
+
+            _progressBar.max = need;
+            _progressBar.value = current;
+        }
+
+        private void UpdateRedPoint(bool show)
+        {
+            if (_redPoint != null)
+            {
+                _redPoint.visible = show;
+            }
+        }
+
+        private void UpdateIcon(string iconUrl)
+        {
+            if (string.IsNullOrEmpty(iconUrl)) return;
+
+            // TODO: 设置英雄头像
+        }
+        #endregion
+
+        #region Event Handlers
+        private void OnButtonItemClick()
+        {
+            OnItemClick?.Invoke(this);
+        }
+        #endregion
+    }
+}

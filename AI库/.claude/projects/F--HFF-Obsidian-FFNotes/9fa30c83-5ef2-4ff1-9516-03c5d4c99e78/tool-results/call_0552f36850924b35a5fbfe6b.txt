@@ -1,0 +1,2342 @@
+     1→<!DOCTYPE html>
+     2→<html lang="zh-CN">
+     3→<head>
+     4→    <meta charset="UTF-8">
+     5→    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6→    <title>桐城自摸麻将 - 局域网版</title>
+     7→    <style>
+     8→        * {
+     9→            margin: 0;
+    10→            padding: 0;
+    11→            box-sizing: border-box;
+    12→        }
+    13→
+    14→        body {
+    15→            font-family: 'Microsoft YaHei', sans-serif;
+    16→            background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%);
+    17→            min-height: 100vh;
+    18→            color: #fff;
+    19→        }
+    20→
+    21→        /* 大厅样式 - 登录界面 */
+    22→        #loginScreen {
+    23→            position: fixed;
+    24→            top: 0;
+    25→            left: 0;
+    26→            width: 100%;
+    27→            height: 100%;
+    28→            background: rgba(13, 40, 24, 0.98);
+    29→            display: flex;
+    30→            flex-direction: column;
+    31→            justify-content: center;
+    32→            align-items: center;
+    33→            z-index: 200;
+    34→            overflow-y: auto;
+    35→            padding: 20px;
+    36→        }
+    37→
+    38→        #loginScreen h1 {
+    39→            font-size: 48px;
+    40→            color: #ffd700;
+    41→            text-shadow: 0 0 20px #ffd700;
+    42→            margin-bottom: 10px;
+    43→            animation: glow 2s ease-in-out infinite alternate;
+    44→        }
+    45→
+    46→        @keyframes glow {
+    47→            from { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700; }
+    48→            to { text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700, 0 0 60px #ff8c00; }
+    49→        }
+    50→
+    51→        #loginScreen .subtitle {
+    52→            color: #90ee90;
+    53→            font-size: 18px;
+    54→            margin-bottom: 30px;
+    55→        }
+    56→
+    57→        .name-bar {
+    58→            display: flex;
+    59→            gap: 15px;
+    60→            align-items: center;
+    61→            justify-content: center;
+    62→            padding: 20px;
+    63→            background: rgba(0, 0, 0, 0.5);
+    64→            border-radius: 10px;
+    65→            margin-bottom: 20px;
+    66→        }
+    67→
+    68→        .name-bar label {
+    69→            color: #ffd700;
+    70→            font-size: 14px;
+    71→        }
+    72→
+    73→        .name-bar input {
+    74→            width: 200px;
+    75→            padding: 10px 15px;
+    76→            background: rgba(0, 0, 0, 0.5);
+    77→            border: 2px solid #ffd700;
+    78→            border-radius: 8px;
+    79→            color: #fff;
+    80→            font-size: 16px;
+    81→        }
+    82→
+    83→        .name-bar input:focus {
+    84→            outline: none;
+    85→            box-shadow: 0 0 15px #ffd700;
+    86→        }
+    87→
+    88→        .name-bar input::placeholder {
+    89→            color: #666;
+    90→        }
+    91→
+    92→        /* 牌桌列表容器 */
+    93→        .lobby-container {
+    94→            width: 90%;
+    95→            max-width: 800px;
+    96→            margin-top: 10px;
+    97→        }
+    98→
+    99→        .lobby-header {
+   100→            display: flex;
+   101→            justify-content: space-between;
+   102→            align-items: center;
+   103→            margin-bottom: 20px;
+   104→            padding: 0 10px;
+   105→        }
+   106→
+   107→        .lobby-header h2 {
+   108→            color: #ffd700;
+   109→            font-size: 24px;
+   110→        }
+   111→
+   112→        .btn {
+   113→            padding: 10px 20px;
+   114→            font-size: 16px;
+   115→            border: none;
+   116→            border-radius: 5px;
+   117→            cursor: pointer;
+   118→            transition: all 0.3s;
+   119→        }
+   120→
+   121→        .btn-primary {
+   122→            background: #4CAF50;
+   123→            color: white;
+   124→        }
+   125→
+   126→        .btn-primary:hover {
+   127→            background: #45a049;
+   128→        }
+   129→
+   130→        .btn-danger {
+   131→            background: #f44336;
+   132→            color: white;
+   133→        }
+   134→
+   135→        .btn-secondary {
+   136→            background: #607D8B;
+   137→            color: white;
+   138→        }
+   139→
+   140→        .table-list {
+   141→            display: grid;
+   142→            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+   143→            gap: 15px;
+   144→            padding: 20px;
+   145→        }
+   146→
+   147→        .table-card {
+   148→            background: rgba(255,255,255,0.1);
+   149→            border-radius: 10px;
+   150→            padding: 15px;
+   151→            text-align: center;
+   152→            cursor: pointer;
+   153→            transition: all 0.3s;
+   154→            border: 2px solid transparent;
+   155→        }
+   156→
+   157→        .table-card:hover {
+   158→            background: rgba(255,255,255,0.2);
+   159→            transform: translateY(-2px);
+   160→        }
+   161→
+   162→        .table-card.empty {
+   163→            border-color: #4CAF50;
+   164→        }
+   165→
+   166→        .table-card.waiting {
+   167→            border-color: #FFC107;
+   168→        }
+   169→
+   170→        .table-card.playing {
+   171→            border-color: #2196F3;
+   172→        }
+   173→
+   174→        .table-card.full {
+   175→            border-color: #f44336;
+   176→            opacity: 0.7;
+   177→        }
+   178→
+   179→        .table-card.new-table {
+   180→            background: rgba(76, 175, 80, 0.3);
+   181→            border: 2px dashed #4CAF50;
+   182→        }
+   183→
+   184→        .table-number {
+   185→            font-size: 1.5em;
+   186→            font-weight: bold;
+   187→            margin-bottom: 10px;
+   188→        }
+   189→
+   190→        .table-status {
+   191→            font-size: 0.9em;
+   192→            color: #ccc;
+   193→        }
+   194→
+   195→        .table-players {
+   196→            margin-top: 10px;
+   197→            font-size: 0.8em;
+   198→        }
+   199→
+   200→        /* 牌桌列表中的小型圆桌布局 */
+   201→        .mini-table-layout {
+   202→            position: relative;
+   203→            width: 120px;
+   204→            height: 120px;
+   205→            margin: 10px auto;
+   206→        }
+   207→
+   208→        .mini-table-center {
+   209→            position: absolute;
+   210→            top: 50%;
+   211→            left: 50%;
+   212→            transform: translate(-50%, -50%);
+   213→            width: 40px;
+   214→            height: 40px;
+   215→            border-radius: 50%;
+   216→            background: linear-gradient(135deg, #2d5a3d 0%, #1a3d2a 100%);
+   217→            border: 2px solid #FFD700;
+   218→            display: flex;
+   219→            align-items: center;
+   220→            justify-content: center;
+   221→            font-size: 16px;
+   222→        }
+   223→
+   224→        .mini-seat {
+   225→            position: absolute;
+   226→            text-align: center;
+   227→            width: 32px;
+   228→        }
+   229→
+   230→        /* 逆时针顺序: 1(底) → 2(右) → 3(顶) → 4(左) */
+   231→        .mini-seat-1 { bottom: 0; left: 50%; transform: translateX(-50%); }
+   232→        .mini-seat-2 { right: 0; top: 50%; transform: translateY(-50%); }
+   233→        .mini-seat-3 { top: 0; left: 50%; transform: translateX(-50%); }
+   234→        .mini-seat-4 { left: 0; top: 50%; transform: translateY(-50%); }
+   235→
+   236→        .mini-seat-avatar {
+   237→            width: 32px;
+   238→            height: 32px;
+   239→            border-radius: 50%;
+   240→            background: rgba(255, 255, 255, 0.2);
+   241→            display: flex;
+   242→            align-items: center;
+   243→            justify-content: center;
+   244→            font-size: 12px;
+   245→            font-weight: bold;
+   246→            border: 2px solid #555;
+   247→            transition: all 0.3s;
+   248→            color: #fff;
+   249→        }
+   250→
+   251→        .mini-seat-avatar.occupied {
+   252→            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+   253→            border-color: #81C784;
+   254→        }
+   255→
+   256→        .mini-seat-avatar:hover:not(.occupied) {
+   257→            background: rgba(255, 215, 0, 0.3);
+   258→            border-color: #FFD700;
+   259→            cursor: pointer;
+   260→        }
+   261→
+   262→        .table-header {
+   263→            display: flex;
+   264→            justify-content: space-between;
+   265→            align-items: center;
+   266→            padding: 0 5px;
+   267→        }
+   268→
+   269→        .table-id {
+   270→            color: #FFD700;
+   271→            font-size: 14px;
+   272→            font-weight: bold;
+   273→        }
+   274→
+   275→        .table-mode-badge {
+   276→            font-size: 11px;
+   277→            padding: 2px 6px;
+   278→            border-radius: 4px;
+   279→            background: rgba(255, 215, 0, 0.2);
+   280→            color: #FFD700;
+   281→        }
+   282→
+   283→        .table-footer {
+   284→            text-align: center;
+   285→            font-size: 12px;
+   286→            color: #ccc;
+   287→            margin-top: 10px;
+   288→        }
+   289→
+   290→        .table-footer.full {
+   291→            color: #ff6b6b;
+   292→        }
+   293→
+   294→        .table-footer.playing {
+   295→            color: #4dabf7;
+   296→        }
+   297→
+   298→        .deck-info {
+   299→            text-align: center;
+   300→            font-size: 11px;
+   301→            color: #90ee90;
+   302→            margin-top: 5px;
+   303→            padding: 3px 8px;
+   304→            background: rgba(0, 0, 0, 0.3);
+   305→            border-radius: 4px;
+   306→        }
+   307→
+   308→        /* 创建新桌卡片样式 */
+   309→        .create-table-card {
+   310→            background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(46, 125, 50, 0.3));
+   311→            border: 2px dashed #4CAF50;
+   312→            display: flex;
+   313→            flex-direction: column;
+   314→            align-items: center;
+   315→            justify-content: center;
+   316→            min-height: 200px;
+   317→        }
+   318→
+   319→        .create-table-card .plus {
+   320→            font-size: 48px;
+   321→            color: #4CAF50;
+   322→            line-height: 1;
+   323→        }
+   324→
+   325→        .create-table-card .text {
+   326→            color: #4CAF50;
+   327→            font-size: 16px;
+   328→            margin-top: 10px;
+   329→        }
+   330→
+   331→        .create-table-card:hover {
+   332→            background: linear-gradient(135deg, rgba(76, 175, 80, 0.5), rgba(46, 125, 50, 0.5));
+   333→        }
+   334→
+   335→        /* 游戏界面样式 */
+   336→        .game-container {
+   337→            display: none;
+   338→            width: 100vw;
+   339→            height: 100vh;
+   340→            position: relative;
+   341→        }
+   342→
+   343→        .game-table {
+   344→            width: 100%;
+   345→            height: 100%;
+   346→            position: relative;
+   347→            background: radial-gradient(ellipse at center, #2d5a3d 0%, #1a472a 100%);
+   348→        }
+   349→
+   350→        /* 玩家区域 */
+   351→        .player-area {
+   352→            position: absolute;
+   353→            display: flex;
+   354→            flex-direction: column;
+   355→            align-items: center;
+   356→        }
+   357→
+   358→        .player-area.bottom {
+   359→            bottom: 10px;
+   360→            left: 50%;
+   361→            transform: translateX(-50%);
+   362→            width: 80%;
+   363→        }
+   364→
+   365→        .player-area.top {
+   366→            top: 10px;
+   367→            left: 50%;
+   368→            transform: translateX(-50%);
+   369→        }
+   370→
+   371→        .player-area.left {
+   372→            left: 10px;
+   373→            top: 50%;
+   374→            transform: translateY(-50%);
+   375→        }
+   376→
+   377→        .player-area.right {
+   378→            right: 10px;
+   379→            top: 50%;
+   380→            transform: translateY(-50%);
+   381→        }
+   382→
+   383→        .player-info {
+   384→            background: rgba(0,0,0,0.5);
+   385→            padding: 8px 15px;
+   386→            border-radius: 5px;
+   387→            margin-bottom: 5px;
+   388→            text-align: center;
+   389→        }
+   390→
+   391→        .player-info.active {
+   392→            border: 2px solid #FFD700;
+   393→            box-shadow: 0 0 10px #FFD700;
+   394→        }
+   395→
+   396→        .player-name {
+   397→            font-weight: bold;
+   398→        }
+   399→
+   400→        .hand-count {
+   401→            font-size: 0.9em;
+   402→            color: #ccc;
+   403→        }
+   404→
+   405→        /* 展示区 */
+   406→        .showed-area {
+   407→            display: flex;
+   408→            gap: 5px;
+   409→            margin: 5px 0;
+   410→            flex-wrap: wrap;
+   411→            justify-content: center;
+   412→        }
+   413→
+   414→        .showed-card {
+   415→            width: 30px;
+   416→            height: 40px;
+   417→            background: #fff;
+   418→            border-radius: 3px;
+   419→            display: flex;
+   420→            align-items: center;
+   421→            justify-content: center;
+   422→            font-size: 12px;
+   423→            color: #333;
+   424→        }
+   425→
+   426→        .showed-card.fa {
+   427→            background: #FFD700;
+   428→        }
+   429→
+   430→        .showed-card.gang {
+   431→            background: #90EE90;
+   432→        }
+   433→
+   434→        /* 手牌区域 */
+   435→        .hand-area {
+   436→            display: flex;
+   437→            flex-wrap: wrap;
+   438→            justify-content: center;
+   439→            gap: 1px;
+   440→            padding: 10px;
+   441→            background: linear-gradient(180deg, #1a472a 0%, #0d2818 100%);
+   442→            border-radius: 10px;
+   443→            max-width: 100%;
+   444→            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+   445→        }
+   446→
+   447→        /* 麻将牌精灵图样式 */
+   448→        .tile-sprite {
+   449→            /* 精灵图参数：图片617x373，4行9列 */
+   450→            /* 每张牌在精灵图中的完整尺寸（含白色外框） */
+   451→            --sprite-tile-width: 68.5px;   /* 617/9 = 每张牌宽度 */
+   452→            --sprite-tile-height: 93.25px; /* 373/4 = 每张牌高度 */
+   453→            --scale: 0.65;
+   454→            /* 显示尺寸等于精灵图中每张牌的完整尺寸（含边框） */
+   455→            width: calc(var(--sprite-tile-width) * var(--scale));
+   456→            height: calc(var(--sprite-tile-height) * var(--scale));
+   457→            background-image: url('麻将大图.jpg');
+   458→            background-size: calc(617px * var(--scale)) calc(373px * var(--scale));
+   459→            border-radius: 4px;
+   460→            cursor: pointer;
+   461→            transition: all 0.1s ease;
+   462→            position: relative;
+   463→            box-shadow:
+   464→                1px 0 0 #c8c0b8,
+   465→                0 2px 0 #d0c8c0,
+   466→                0 3px 0 #c0b8b0,
+   467→                0 4px 0 #b0a8a0,
+   468→                0 5px 3px rgba(0,0,0,0.3);
+   469→            border: 1px solid #d8d0c8;
+   470→            flex-shrink: 0;
+   471→        }
+   472→
+   473→        .tile-sprite:hover {
+   474→            transform: translateY(-5px);
+   475→            box-shadow:
+   476→                1px 0 0 #c8c0b8,
+   477→                0 3px 0 #d0c8c0,
+   478→                0 5px 0 #c0b8b0,
+   479→                0 7px 0 #b0a8a0,
+   480→                0 9px 6px rgba(0,0,0,0.35);
+   481→            z-index: 10;
+   482→        }
+   483→
+   484→        .tile-sprite.selected {
+   485→            transform: translateY(-12px);
+   486→            box-shadow:
+   487→                1px 0 0 #c8c0b8,
+   488→                0 4px 0 #d0c8c0,
+   489→                0 7px 0 #c0b8b0,
+   490→                0 10px 0 #b0a8a0,
+   491→                0 13px 10px rgba(0,0,0,0.4);
+   492→            z-index: 20;
+   493→        }
+   494→
+   495→        /* 万能牌样式 - 癞子 */
+   496→        .tile-sprite.wild {
+   497→            border: 2px solid #ffa000;
+   498→            box-shadow:
+   499→                1px 0 0 #ff8f00,
+   500→                0 2px 0 #f57c00,
+   501→                0 3px 0 #ef6c00,
+   502→                0 4px 0 #e65100,
+   503→                0 5px 3px rgba(255,152,0,0.4),
+   504→                0 0 10px rgba(255,160,0,0.5);
+   505→        }
+   506→
+   507→        /* 癞子标记 */
+   508→        .tile-sprite.wild::before {
+   509→            content: '癞';
+   510→            position: absolute;
+   511→            top: -2px;
+   512→            right: -2px;
+   513→            width: 14px;
+   514→            height: 14px;
+   515→            background: linear-gradient(135deg, #ff5722 0%, #e64a19 100%);
+   516→            color: white;
+   517→            font-size: 9px;
+   518→            font-weight: bold;
+   519→            display: flex;
+   520→            align-items: center;
+   521→            justify-content: center;
+   522→            border-radius: 0 3px 0 4px;
+   523→            box-shadow: -1px 1px 2px rgba(0,0,0,0.3);
+   524→            z-index: 5;
+   525→            line-height: 1;
+   526→        }
+   527→
+   528→        /* 筒子位置 (第1行: row 0) */
+   529→        .tile-sprite.tong1 { background-position: calc(-0 * 68.5px * 0.65) calc(-0 * 93.25px * 0.65); }
+   530→        .tile-sprite.tong2 { background-position: calc(-1 * 68.5px * 0.65) calc(-0 * 93.25px * 0.65); }
+   531→        .tile-sprite.tong3 { background-position: calc(-2 * 68.5px * 0.65) calc(-0 * 93.25px * 0.65); }
+   532→        .tile-sprite.tong4 { background-position: calc(-3 * 68.5px * 0.65) calc(-0 * 93.25px * 0.65); }
+   533→        .tile-sprite.tong5 { background-position: calc(-4 * 68.5px * 0.65) calc(-0 * 93.25px * 0.65); }
+   534→        .tile-sprite.tong6 { background-position: calc(-5 * 68.5px * 0.65) calc(-0 * 93.25px * 0.65); }
+   535→        .tile-sprite.tong7 { background-position: calc(-6 * 68.5px * 0.65) calc(-0 * 93.25px * 0.65); }
+   536→        .tile-sprite.tong8 { background-position: calc(-7 * 68.5px * 0.65) calc(-0 * 93.25px * 0.65); }
+   537→        .tile-sprite.tong9 { background-position: calc(-8 * 68.5px * 0.65) calc(-0 * 93.25px * 0.65); }
+   538→
+   539→        /* 条子位置 (第2行: row 1) */
+   540→        .tile-sprite.tiao1 { background-position: calc(-0 * 68.5px * 0.65) calc(-1 * 93.25px * 0.65); }
+   541→        .tile-sprite.tiao2 { background-position: calc(-1 * 68.5px * 0.65) calc(-1 * 93.25px * 0.65); }
+   542→        .tile-sprite.tiao3 { background-position: calc(-2 * 68.5px * 0.65) calc(-1 * 93.25px * 0.65); }
+   543→        .tile-sprite.tiao4 { background-position: calc(-3 * 68.5px * 0.65) calc(-1 * 93.25px * 0.65); }
+   544→        .tile-sprite.tiao5 { background-position: calc(-4 * 68.5px * 0.65) calc(-1 * 93.25px * 0.65); }
+   545→        .tile-sprite.tiao6 { background-position: calc(-5 * 68.5px * 0.65) calc(-1 * 93.25px * 0.65); }
+   546→        .tile-sprite.tiao7 { background-position: calc(-6 * 68.5px * 0.65) calc(-1 * 93.25px * 0.65); }
+   547→        .tile-sprite.tiao8 { background-position: calc(-7 * 68.5px * 0.65) calc(-1 * 93.25px * 0.65); }
+   548→        .tile-sprite.tiao9 { background-position: calc(-8 * 68.5px * 0.65) calc(-1 * 93.25px * 0.65); }
+   549→
+   550→        /* 万子位置 (第3行: row 2) */
+   551→        .tile-sprite.wan1 { background-position: calc(-0 * 68.5px * 0.65) calc(-2 * 93.25px * 0.65); }
+   552→        .tile-sprite.wan2 { background-position: calc(-1 * 68.5px * 0.65) calc(-2 * 93.25px * 0.65); }
+   553→        .tile-sprite.wan3 { background-position: calc(-2 * 68.5px * 0.65) calc(-2 * 93.25px * 0.65); }
+   554→        .tile-sprite.wan4 { background-position: calc(-3 * 68.5px * 0.65) calc(-2 * 93.25px * 0.65); }
+   555→        .tile-sprite.wan5 { background-position: calc(-4 * 68.5px * 0.65) calc(-2 * 93.25px * 0.65); }
+   556→        .tile-sprite.wan6 { background-position: calc(-5 * 68.5px * 0.65) calc(-2 * 93.25px * 0.65); }
+   557→        .tile-sprite.wan7 { background-position: calc(-6 * 68.5px * 0.65) calc(-2 * 93.25px * 0.65); }
+   558→        .tile-sprite.wan8 { background-position: calc(-7 * 68.5px * 0.65) calc(-2 * 93.25px * 0.65); }
+   559→        .tile-sprite.wan9 { background-position: calc(-8 * 68.5px * 0.65) calc(-2 * 93.25px * 0.65); }
+   560→
+   561→        /* 风牌位置 (第4行: row 3) */
+   562→        .tile-sprite.feng_dong { background-position: calc(-0 * 68.5px * 0.65) calc(-3 * 93.25px * 0.65); }
+   563→        .tile-sprite.feng_nan { background-position: calc(-1 * 68.5px * 0.65) calc(-3 * 93.25px * 0.65); }
+   564→        .tile-sprite.feng_xi { background-position: calc(-2 * 68.5px * 0.65) calc(-3 * 93.25px * 0.65); }
+   565→        .tile-sprite.feng_bei { background-position: calc(-3 * 68.5px * 0.65) calc(-3 * 93.25px * 0.65); }
+   566→
+   567→        /* 箭牌位置 (第4行: row 3, 续) */
+   568→        .tile-sprite.jian_zhong { background-position: calc(-4 * 68.5px * 0.65) calc(-3 * 93.25px * 0.65); }
+   569→        .tile-sprite.jian_fa { background-position: calc(-5 * 68.5px * 0.65) calc(-3 * 93.25px * 0.65); }
+   570→        .tile-sprite.jian_bai { background-position: calc(-6 * 68.5px * 0.65) calc(-3 * 93.25px * 0.65); }
+   571→
+   572→        /* 麻将牌基础样式 - 图片中的真实样式 */
+   573→        .card {
+   574→            width: 34px;
+   575→            height: 48px;
+   576→            background: linear-gradient(180deg, #f5f5f0 0%, #e8e8e0 50%, #ddd8d0 100%);
+   577→            border-radius: 3px;
+   578→            display: flex;
+   579→            flex-direction: column;
+   580→            align-items: center;
+   581→            justify-content: center;
+   582→            cursor: pointer;
+   583→            transition: all 0.1s ease;
+   584→            position: relative;
+   585→            box-shadow:
+   586→                1px 0 0 #c8c0b8,
+   587→                0 2px 0 #d0c8c0,
+   588→                0 3px 0 #c0b8b0,
+   589→                0 4px 0 #b0a8a0,
+   590→                0 5px 3px rgba(0,0,0,0.3);
+   591→            border: 1px solid #d8d0c8;
+   592→        }
+   593→
+   594→        .card:hover {
+   595→            transform: translateY(-5px);
+   596→            box-shadow:
+   597→                1px 0 0 #c8c0b8,
+   598→                0 3px 0 #d0c8c0,
+   599→                0 5px 0 #c0b8b0,
+   600→                0 7px 0 #b0a8a0,
+   601→                0 9px 6px rgba(0,0,0,0.35);
+   602→            z-index: 10;
+   603→        }
+   604→
+   605→        .card.selected {
+   606→            transform: translateY(-12px);
+   607→            box-shadow:
+   608→                1px 0 0 #c8c0b8,
+   609→                0 4px 0 #d0c8c0,
+   610→                0 7px 0 #c0b8b0,
+   611→                0 10px 0 #b0a8a0,
+   612→                0 13px 10px rgba(0,0,0,0.4);
+   613→            z-index: 20;
+   614→        }
+   615→
+   616→        .card.dragging {
+   617→            opacity: 0.6;
+   618→            transform: scale(1.1);
+   619→        }
+   620→
+   621→        .card.drag-over {
+   622→            border-left: 3px solid #FFD700;
+   623→        }
+   624→
+   625→        /* 万能牌样式 - 癞子 */
+   626→        .card.wild {
+   627→            background: linear-gradient(180deg, #fff8e1 0%, #ffecb3 50%, #ffe082 100%);
+   628→            border: 2px solid #ffa000;
+   629→            box-shadow:
+   630→                1px 0 0 #ff8f00,
+   631→                0 2px 0 #f57c00,
+   632→                0 3px 0 #ef6c00,
+   633→                0 4px 0 #e65100,
+   634→                0 5px 3px rgba(255,152,0,0.4),
+   635→                0 0 10px rgba(255,160,0,0.5);
+   636→        }
+   637→
+   638→        /* 癞子标记 */
+   639→        .card.wild::before {
+   640→            content: '癞';
+   641→            position: absolute;
+   642→            top: -2px;
+   643→            right: -2px;
+   644→            width: 13px;
+   645→            height: 13px;
+   646→            background: linear-gradient(135deg, #ff5722 0%, #e64a19 100%);
+   647→            color: white;
+   648→            font-size: 8px;
+   649→            font-weight: bold;
+   650→            display: flex;
+   651→            align-items: center;
+   652→            justify-content: center;
+   653→            border-radius: 0 3px 0 4px;
+   654→            box-shadow: -1px 1px 2px rgba(0,0,0,0.3);
+   655→            z-index: 5;
+   656→            line-height: 1;
+   657→        }
+   658→
+   659→        /* 牌面内容容器 */
+   660→        .card-face {
+   661→            width: 28px;
+   662→            height: 40px;
+   663→            display: flex;
+   664→            flex-direction: column;
+   665→            align-items: center;
+   666→            justify-content: center;
+   667→            background: #fafaf5;
+   668→            border-radius: 2px;
+   669→            box-shadow: inset 0 0 2px rgba(0,0,0,0.05);
+   670→            border: 1px solid #e8e0d8;
+   671→        }
+   672→
+   673→        /* 筒子牌 - 圆点图案 */
+   674→        .card.tong .card-face {
+   675→            position: relative;
+   676→        }
+   677→
+   678→        .card.tong .dot-container {
+   679→            width: 24px;
+   680→            height: 32px;
+   681→            display: grid;
+   682→            place-items: center;
+   683→        }
+   684→
+   685→        .card.tong .dot {
+   686→            width: 6px;
+   687→            height: 6px;
+   688→            background: radial-gradient(circle at 40% 40%, #90caf9, #1976d2 70%, #0d47a1);
+   689→            border-radius: 50%;
+   690→            box-shadow:
+   691→                inset 0 1px 2px rgba(255,255,255,0.5),
+   692→                0 1px 1px rgba(0,0,0,0.15);
+   693→        }
+   694→
+   695→        /* 1筒 - 大圆带花边 */
+   696→        .card.tong.p1 .dot-container {
+   697→            display: flex;
+   698→            align-items: center;
+   699→            justify-content: center;
+   700→        }
+   701→        .card.tong.p1 .dot {
+   702→            width: 12px;
+   703→            height: 12px;
+   704→            background: radial-gradient(circle at 40% 40%, #64b5f6, #1976d2 60%, #0d47a1);
+   705→            box-shadow:
+   706→                inset 0 1px 3px rgba(255,255,255,0.6),
+   707→                inset 0 -1px 2px rgba(0,0,0,0.2),
+   708→                0 1px 2px rgba(0,0,0,0.15);
+   709→        }
+   710→
+   711→        /* 2筒 */
+   712→        .card.tong.p2 .dot-container {
+   713→            display: flex;
+   714→            flex-direction: column;
+   715→            gap: 5px;
+   716→        }
+   717→
+   718→        /* 3筒 */
+   719→        .card.tong.p3 .dot-container {
+   720→            display: grid;
+   721→            grid-template-columns: repeat(2, 1fr);
+   722→            grid-template-rows: repeat(2, 1fr);
+   723→            gap: 1px;
+   724→        }
+   725→        .card.tong.p3 .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+   726→        .card.tong.p3 .dot:nth-child(2) { grid-column: 2; grid-row: 1; }
+   727→        .card.tong.p3 .dot:nth-child(3) { grid-column: 1 / 3; grid-row: 2; justify-self: center; }
+   728→
+   729→        /* 4筒 */
+   730→        .card.tong.p4 .dot-container {
+   731→            display: grid;
+   732→            grid-template-columns: repeat(2, 1fr);
+   733→            grid-template-rows: repeat(2, 1fr);
+   734→            gap: 4px;
+   735→            padding: 2px;
+   736→        }
+   737→
+   738→        /* 5筒 */
+   739→        .card.tong.p5 .dot-container {
+   740→            display: grid;
+   741→            grid-template-columns: repeat(3, 1fr);
+   742→            grid-template-rows: repeat(3, 1fr);
+   743→            gap: 1px;
+   744→        }
+   745→        .card.tong.p5 .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+   746→        .card.tong.p5 .dot:nth-child(2) { grid-column: 3; grid-row: 1; }
+   747→        .card.tong.p5 .dot:nth-child(3) { grid-column: 2; grid-row: 2; width: 8px; height: 8px; }
+   748→        .card.tong.p5 .dot:nth-child(4) { grid-column: 1; grid-row: 3; }
+   749→        .card.tong.p5 .dot:nth-child(5) { grid-column: 3; grid-row: 3; }
+   750→
+   751→        /* 6筒 */
+   752→        .card.tong.p6 .dot-container {
+   753→            display: grid;
+   754→            grid-template-columns: repeat(2, 1fr);
+   755→            grid-template-rows: repeat(3, 1fr);
+   756→            gap: 2px;
+   757→        }
+   758→
+   759→        /* 7筒 */
+   760→        .card.tong.p7 .dot-container {
+   761→            display: grid;
+   762→            grid-template-columns: repeat(3, 1fr);
+   763→            grid-template-rows: repeat(3, 1fr);
+   764→            gap: 1px;
+   765→        }
+   766→        .card.tong.p7 .dot:nth-child(1) { grid-column: 2; grid-row: 1; }
+   767→        .card.tong.p7 .dot:nth-child(2) { grid-column: 1; grid-row: 2; }
+   768→        .card.tong.p7 .dot:nth-child(3) { grid-column: 3; grid-row: 2; }
+   769→        .card.tong.p7 .dot:nth-child(4) { grid-column: 1; grid-row: 3; }
+   770→        .card.tong.p7 .dot:nth-child(5) { grid-column: 2; grid-row: 3; }
+   771→        .card.tong.p7 .dot:nth-child(6) { grid-column: 3; grid-row: 3; }
+   772→        .card.tong.p7 .dot:nth-child(7) { grid-column: 2; grid-row: 2; width: 8px; height: 8px; }
+   773→
+   774→        /* 8筒 */
+   775→        .card.tong.p8 .dot-container {
+   776→            display: grid;
+   777→            grid-template-columns: repeat(3, 1fr);
+   778→            grid-template-rows: repeat(3, 1fr);
+   779→            gap: 1px;
+   780→        }
+   781→        .card.tong.p8 .dot:nth-child(4) { grid-column: 2; grid-row: 2; display: none; }
+   782→        .card.tong.p8 .dot { width: 5px; height: 5px; }
+   783→
+   784→        /* 9筒 */
+   785→        .card.tong.p9 .dot-container {
+   786→            display: grid;
+   787→            grid-template-columns: repeat(3, 1fr);
+   788→            grid-template-rows: repeat(3, 1fr);
+   789→            gap: 2px;
+   790→        }
+   791→        .card.tong.p9 .dot { width: 5px; height: 5px; }
+   792→
+   793→        /* 条子牌 - 竹节图案 */
+   794→        .card.tiao .card-face {
+   795→            padding: 2px;
+   796→        }
+   797→        .card.tiao .bamboo-container {
+   798→            display: flex;
+   799→            flex-direction: column;
+   800→            gap: 1px;
+   801→            align-items: center;
+   802→        }
+   803→        .card.tiao .bamboo-stick {
+   804→            width: 4px;
+   805→            height: 6px;
+   806→            background: linear-gradient(90deg, #2e7d32, #4caf50 40%, #66bb6a 50%, #4caf50 60%, #2e7d32);
+   807→            border-radius: 1px;
+   808→            box-shadow:
+   809→                inset 0 1px 0 rgba(255,255,255,0.3),
+   810→                0 1px 1px rgba(0,0,0,0.1);
+   811→        }
+   812→        .card.tiao .bamboo-row {
+   813→            display: flex;
+   814→            gap: 2px;
+   815→        }
+   816→
+   817→        /* 万子牌 */
+   818→        .card.wan .card-face {
+   819→            display: flex;
+   820→            flex-direction: column;
+   821→            align-items: center;
+   822→            justify-content: center;
+   823→            gap: 0px;
+   824→        }
+   825→        .card.wan .wan-num {
+   826→            font-size: 14px;
+   827→            font-weight: bold;
+   828→            color: #c62828;
+   829→            line-height: 1;
+   830→            font-family: 'KaiTi', 'STKaiti', 'SimSun', serif;
+   831→        }
+   832→        .card.wan .wan-char {
+   833→            font-size: 10px;
+   834→            color: #c62828;
+   835→            font-weight: bold;
+   836→            font-family: 'KaiTi', 'STKaiti', 'SimSun', serif;
+   837→        }
+   838→
+   839→        /* 风牌 */
+   840→        .card.feng .card-face {
+   841→            display: flex;
+   842→            align-items: center;
+   843→            justify-content: center;
+   844→        }
+   845→        .card.feng .feng-char {
+   846→            font-size: 18px;
+   847→            font-weight: bold;
+   848→            color: #1565c0;
+   849→            font-family: 'KaiTi', 'STKaiti', 'SimSun', serif;
+   850→            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+   851→        }
+   852→
+   853→        /* 箭牌 */
+   854→        .card.jian .card-face {
+   855→            display: flex;
+   856→            align-items: center;
+   857→            justify-content: center;
+   858→        }
+   859→        .card.jian .jian-char {
+   860→            font-size: 18px;
+   861→            font-weight: bold;
+   862→            font-family: 'KaiTi', 'STKaiti', 'SimSun', serif;
+   863→        }
+   864→
+   865→        .card.jian.zhong .jian-char {
+   866→            color: #c62828;
+   867→            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+   868→        }
+   869→        .card.jian.fa .jian-char {
+   870→            color: #2e7d32;
+   871→            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+   872→        }
+   873→        .card.jian.bai .jian-char {
+   874→            color: #455a64;
+   875→            text-shadow: 1px 1px 0 #78909c, -1px -1px 0 #fff;
+   876→        }
+   877→
+   878→        /* 兼容旧样式（用于其他区域显示） */
+   879→        .card-rank {
+   880→            font-size: 14px;
+   881→            font-weight: bold;
+   882→        }
+   883→        .card-suit {
+   884→            font-size: 9px;
+   885→            color: #666;
+   886→        }
+   887→
+   888→        /* 中央信息区 */
+   889→        .center-info {
+   890→            position: absolute;
+   891→            top: 50%;
+   892→            left: 50%;
+   893→            transform: translate(-50%, -50%);
+   894→            text-align: center;
+   895→            background: rgba(0,0,0,0.7);
+   896→            padding: 15px;
+   897→            border-radius: 50%;
+   898→            width: 200px;
+   899→            height: 200px;
+   900→            display: flex;
+   901→            flex-direction: column;
+   902→            align-items: center;
+   903→            justify-content: center;
+   904→        }
+   905→
+   906→        /* 方位标记 */
+   907→        .direction-marks {
+   908→            position: absolute;
+   909→            width: 100%;
+   910→            height: 100%;
+   911→            top: 0;
+   912→            left: 0;
+   913→        }
+   914→
+   915→        .direction {
+   916→            position: absolute;
+   917→            font-size: 16px;
+   918→            font-weight: bold;
+   919→            color: #FFD700;
+   920→        }
+   921→
+   922→        .direction.north { top: 5px; left: 50%; transform: translateX(-50%); }
+   923→        .direction.south { bottom: 5px; left: 50%; transform: translateX(-50%); }
+   924→        .direction.east { right: 15px; top: 50%; transform: translateY(-50%); }
+   925→        .direction.west { left: 15px; top: 50%; transform: translateY(-50%); }
+   926→
+   927→        /* 中央内容 */
+   928→        .center-content {
+   929→            z-index: 1;
+   930→        }
+   931→
+   932→        .beijing-time {
+   933→            font-size: 18px;
+   934→            font-weight: bold;
+   935→            color: #fff;
+   936→            text-shadow: 0 0 10px #FFD700;
+   937→            margin-bottom: 8px;
+   938→        }
+   939→
+   940→        .dice-area {
+   941→            display: flex;
+   942→            gap: 10px;
+   943→            justify-content: center;
+   944→            margin-bottom: 8px;
+   945→        }
+   946→
+   947→        .dice {
+   948→            width: 36px;
+   949→            height: 36px;
+   950→            background: linear-gradient(135deg, #fff, #ddd);
+   951→            border-radius: 6px;
+   952→            display: flex;
+   953→            align-items: center;
+   954→            justify-content: center;
+   955→            font-size: 20px;
+   956→            font-weight: bold;
+   957→            color: #333;
+   958→            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+   959→        }
+   960→
+   961→        .dice.rolling {
+   962→            animation: diceRoll 0.5s ease-in-out;
+   963→        }
+   964→
+   965→        @keyframes diceRoll {
+   966→            0%, 100% { transform: rotate(0deg); }
+   967→            25% { transform: rotate(15deg); }
+   968→            75% { transform: rotate(-15deg); }
+   969→        }
+   970→
+   971→        .roll-dice-btn {
+   972→            padding: 5px 12px;
+   973→            font-size: 12px;
+   974→            background: linear-gradient(135deg, #e74c3c, #c0392b);
+   975→            color: #fff;
+   976→            border: none;
+   977→            border-radius: 15px;
+   978→            cursor: pointer;
+   979→            transition: all 0.3s;
+   980→        }
+   981→
+   982→        .roll-dice-btn:hover {
+   983→            transform: scale(1.05);
+   984→            box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+   985→        }
+   986→
+   987→        .roll-dice-btn:disabled {
+   988→            opacity: 0.5;
+   989→            cursor: not-allowed;
+   990→        }
+   991→
+   992→        .wild-card-info {
+   993→            margin-top: 8px;
+   994→            white-space: nowrap;
+   995→        }
+   996→
+   997→        .wild-card-info .label {
+   998→            font-size: 12px;
+   999→            color: #ccc;
+  1000→            display: inline;
+  1001→        }
+  1002→
+  1003→        .wild-card-info .card-display {
+  1004→            font-size: 16px;
+  1005→            font-weight: bold;
+  1006→            color: #FFD700;
+  1007→            display: inline;
+  1008→            margin-left: 5px;
+  1009→        }
+  1010→
+  1011→        .deck-count {
+  1012→            font-size: 12px;
+  1013→            color: #ccc;
+  1014→            margin-top: 5px;
+  1015→        }
+  1016→
+  1017→        /* 操作按钮 */
+  1018→        .action-buttons {
+  1019→            display: flex;
+  1020→            gap: 10px;
+  1021→            justify-content: center;
+  1022→            margin-top: 10px;
+  1023→            flex-wrap: wrap;
+  1024→        }
+  1025→
+  1026→        .action-btn {
+  1027→            padding: 8px 20px;
+  1028→            font-size: 14px;
+  1029→            border: none;
+  1030→            border-radius: 5px;
+  1031→            cursor: pointer;
+  1032→            transition: all 0.3s;
+  1033→        }
+  1034→
+  1035→        .action-btn:disabled {
+  1036→            opacity: 0.5;
+  1037→            cursor: not-allowed;
+  1038→        }
+  1039→
+  1040→        .action-btn.play {
+  1041→            background: #4CAF50;
+  1042→            color: white;
+  1043→        }
+  1044→
+  1045→        .action-btn.fa {
+  1046→            background: #FFD700;
+  1047→            color: #333;
+  1048→        }
+  1049→
+  1050→        .action-btn.gang {
+  1051→            background: #9C27B0;
+  1052→            color: white;
+  1053→        }
+  1054→
+  1055→        .action-btn.hu {
+  1056→            background: #f44336;
+  1057→            color: white;
+  1058→        }
+  1059→
+  1060→        /* 聊天区域 */
+  1061→        .chat-area {
+  1062→            position: absolute;
+  1063→            bottom: 200px;
+  1064→            right: 10px;
+  1065→            width: 200px;
+  1066→            background: rgba(0,0,0,0.5);
+  1067→            border-radius: 10px;
+  1068→            padding: 10px;
+  1069→        }
+  1070→
+  1071→        .chat-messages {
+  1072→            height: 150px;
+  1073→            overflow-y: auto;
+  1074→            font-size: 12px;
+  1075→            margin-bottom: 10px;
+  1076→        }
+  1077→
+  1078→        .chat-input {
+  1079→            display: flex;
+  1080→            gap: 5px;
+  1081→        }
+  1082→
+  1083→        .chat-input input {
+  1084→            flex: 1;
+  1085→            padding: 5px;
+  1086→            border: none;
+  1087→            border-radius: 3px;
+  1088→        }
+  1089→
+  1090→        /* 准备界面 */
+  1091→        .ready-panel {
+  1092→            position: absolute;
+  1093→            top: 50%;
+  1094→            left: 50%;
+  1095→            transform: translate(-50%, -50%);
+  1096→            background: rgba(0,0,0,0.8);
+  1097→            padding: 30px;
+  1098→            border-radius: 10px;
+  1099→            text-align: center;
+  1100→            z-index: 100;
+  1101→        }
+  1102→
+  1103→        .ready-panel h2 {
+  1104→            margin-bottom: 20px;
+  1105→        }
+  1106→
+  1107→        .seat-list {
+  1108→            display: grid;
+  1109→            grid-template-columns: repeat(2, 1fr);
+  1110→            gap: 10px;
+  1111→            margin-bottom: 20px;
+  1112→        }
+  1113→
+  1114→        .seat-item {
+  1115→            background: rgba(255,255,255,0.1);
+  1116→            padding: 10px;
+  1117→            border-radius: 5px;
+  1118→        }
+  1119→
+  1120→        .seat-item.occupied {
+  1121→            background: rgba(76, 175, 80, 0.3);
+  1122→        }
+  1123→
+  1124→        .seat-item.me {
+  1125→            border: 2px solid #FFD700;
+  1126→        }
+  1127→
+  1128→        /* 玩家列表面板 */
+  1129→        .players-panel {
+  1130→            position: absolute;
+  1131→            top: 10px;
+  1132→            left: 10px;
+  1133→            background: rgba(0,0,0,0.5);
+  1134→            padding: 15px;
+  1135→            border-radius: 10px;
+  1136→        }
+  1137→
+  1138→        .players-panel h3 {
+  1139→            margin-bottom: 10px;
+  1140→            font-size: 14px;
+  1141→        }
+  1142→
+  1143→        .player-item {
+  1144→            display: flex;
+  1145→            align-items: center;
+  1146→            gap: 10px;
+  1147→            padding: 5px 0;
+  1148→            font-size: 13px;
+  1149→        }
+  1150→
+  1151→        .player-item .seat {
+  1152→            background: rgba(255,255,255,0.2);
+  1153→            padding: 2px 8px;
+  1154→            border-radius: 3px;
+  1155→            font-size: 12px;
+  1156→        }
+  1157→
+  1158→        .player-item .ready-status {
+  1159→            color: #4CAF50;
+  1160→            font-size: 12px;
+  1161→        }
+  1162→
+  1163→        .player-item .not-ready {
+  1164→            color: #999;
+  1165→        }
+  1166→
+  1167→        /* 隐藏 */
+  1168→        .hidden {
+  1169→            display: none !important;
+  1170→        }
+  1171→
+  1172→        /* 当前玩家指示 */
+  1173→        .current-turn {
+  1174→            color: #FFD700 !important;
+  1175→            font-weight: bold;
+  1176→        }
+  1177→
+  1178→        .current-turn::before {
+  1179→            content: '▶ ';
+  1180→            color: #FFD700;
+  1181→        }
+  1182→
+  1183→        /* 回合提示条 */
+  1184→        .turn-indicator {
+  1185→            position: absolute;
+  1186→            top: 50%;
+  1187→            left: 50%;
+  1188→            transform: translate(-50%, -180px);
+  1189→            background: linear-gradient(135deg, rgba(255, 215, 0, 0.95), rgba(255, 180, 0, 0.95));
+  1190→            color: #333;
+  1191→            padding: 12px 30px;
+  1192→            border-radius: 25px;
+  1193→            font-size: 18px;
+  1194→            font-weight: bold;
+  1195→            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.5);
+  1196→            z-index: 100;
+  1197→            white-space: nowrap;
+  1198→            animation: pulse 1.5s ease-in-out infinite;
+  1199→        }
+  1200→
+  1201→        .turn-indicator.my-turn {
+  1202→            background: linear-gradient(135deg, rgba(76, 175, 80, 0.95), rgba(46, 125, 50, 0.95));
+  1203→            color: #fff;
+  1204→            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.5);
+  1205→            animation: pulseGreen 1s ease-in-out infinite;
+  1206→        }
+  1207→
+  1208→        @keyframes pulse {
+  1209→            0%, 100% { transform: translate(-50%, -180px) scale(1); }
+  1210→            50% { transform: translate(-50%, -180px) scale(1.05); }
+  1211→        }
+  1212→
+  1213→        @keyframes pulseGreen {
+  1214→            0%, 100% { transform: translate(-50%, -180px) scale(1); box-shadow: 0 4px 20px rgba(76, 175, 80, 0.5); }
+  1215→            50% { transform: translate(-50%, -180px) scale(1.1); box-shadow: 0 4px 30px rgba(76, 175, 80, 0.8); }
+  1216→        }
+  1217→
+  1218→        /* 自己回合时的手牌区域高亮 */
+  1219→        .hand-area.my-turn {
+  1220→            border: 3px solid #FFD700;
+  1221→            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), inset 0 2px 8px rgba(0,0,0,0.5);
+  1222→            animation: handGlow 1.5s ease-in-out infinite;
+  1223→        }
+  1224→
+  1225→        @keyframes handGlow {
+  1226→            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), inset 0 2px 8px rgba(0,0,0,0.5); }
+  1227→            50% { box-shadow: 0 0 35px rgba(255, 215, 0, 0.8), inset 0 2px 8px rgba(0,0,0,0.5); }
+  1228→        }
+  1229→
+  1230→        /* 发牌动画 */
+  1231→        .deal-animation {
+  1232→            position: fixed;
+  1233→            top: 0;
+  1234→            left: 0;
+  1235→            width: 100%;
+  1236→            height: 100%;
+  1237→            background: rgba(0,0,0,0.8);
+  1238→            display: flex;
+  1239→            flex-direction: column;
+  1240→            align-items: center;
+  1241→            justify-content: center;
+  1242→            z-index: 1000;
+  1243→        }
+  1244→
+  1245→        .deal-piles {
+  1246→            display: flex;
+  1247→            gap: 20px;
+  1248→            margin-bottom: 30px;
+  1249→        }
+  1250→
+  1251→        .deal-pile {
+  1252→            display: flex;
+  1253→            flex-direction: column;
+  1254→            align-items: center;
+  1255→        }
+  1256→
+  1257→        .deal-pile-label {
+  1258→            color: #fff;
+  1259→            margin-bottom: 10px;
+  1260→            font-size: 14px;
+  1261→        }
+  1262→
+  1263→        .deal-pile-cards {
+  1264→            display: flex;
+  1265→            flex-wrap: wrap;
+  1266→            width: 120px;
+  1267→            gap: 2px;
+  1268→        }
+  1269→
+  1270→        .deal-card-back {
+  1271→            width: 25px;
+  1272→            height: 35px;
+  1273→            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  1274→            border-radius: 3px;
+  1275→            border: 1px solid #3949ab;
+  1276→        }
+  1277→
+  1278→        .deal-info {
+  1279→            color: #FFD700;
+  1280→            font-size: 24px;
+  1281→            margin-bottom: 20px;
+  1282→        }
+  1283→
+  1284→        .deal-progress {
+  1285→            color: #fff;
+  1286→            font-size: 16px;
+  1287→        }
+  1288→    </style>
+  1289→</head>
+  1290→<body>
+  1291→    <!-- 登录/大厅界面 -->
+  1292→    <div id="loginScreen">
+  1293→        <h1>🀄 桐城自摸麻将 🀄</h1>
+  1294→        <div class="subtitle">安徽桐城特色麻将 · 局域网版</div>
+  1295→
+  1296→        <!-- 底部名称栏 -->
+  1297→        <div class="name-bar">
+  1298→            <label>玩家名称:</label>
+  1299→            <input type="text" id="playerName" placeholder="输入你的名称" maxlength="10">
+  1300→        </div>
+  1301→
+  1302→        <!-- 牌桌列表 -->
+  1303→        <div class="lobby-container">
+  1304→            <div class="lobby-header">
+  1305→                <h2>🪑 牌桌列表</h2>
+  1306→            </div>
+  1307→            <div class="table-list" id="tableList">
+  1308→                <!-- 创建新桌卡片 -->
+  1309→                <div class="table-card create-table-card" onclick="createTable()">
+  1310→                    <div class="plus">+</div>
+  1311→                    <div class="text">开房</div>
+  1312→                </div>
+  1313→            </div>
+  1314→        </div>
+  1315→    </div>
+  1316→
+  1317→    <!-- 游戏界面 -->
+  1318→    <div class="game-container" id="gameContainer">
+  1319→        <div class="game-table">
+  1320→            <!-- 玩家信息面板 -->
+  1321→            <div class="players-panel" id="playersPanel">
+  1322→                <h3>桌号: <span id="tableNumDisplay">1</span></h3>
+  1323→                <div id="playersList"></div>
+  1324→            </div>
+  1325→
+  1326→            <!-- 回合提示 -->
+  1327→            <div class="turn-indicator" id="turnIndicator">等待开始...</div>
+  1328→
+  1329→            <!-- 中央信息 -->
+  1330→            <div class="center-info">
+  1331→                <!-- 方位标记 -->
+  1332→                <div class="direction-marks">
+  1333→                    <div class="direction north">北</div>
+  1334→                    <div class="direction south">南</div>
+  1335→                    <div class="direction east">东</div>
+  1336→                    <div class="direction west">西</div>
+  1337→                </div>
+  1338→                <!-- 中央内容 -->
+  1339→                <div class="center-content">
+  1340→                    <div class="beijing-time" id="beijingTime">00:00</div>
+  1341→                    <div class="dice-area">
+  1342→                        <div class="dice" id="dice1">?</div>
+  1343→                        <div class="dice" id="dice2">?</div>
+  1344→                    </div>
+  1345→                    <button class="roll-dice-btn" id="rollDiceBtn" onclick="rollDice()">🎲 掷骰子</button>
+  1346→                </div>
+  1347→                <!-- 万能牌信息 -->
+  1348→                <div class="wild-card-info">
+  1349→                    <div class="label">万能牌</div>
+  1350→                    <div class="card-display" id="wildCardDisplay">-</div>
+  1351→                </div>
+  1352→                <div class="deck-count">牌堆: <span id="deckCount">0</span>张</div>
+  1353→            </div>
+  1354→
+  1355→            <!-- 上家 (3号位) -->
+  1356→            <div class="player-area top">
+  1357→                <div class="player-info" id="player3Info">
+  1358→                    <div class="player-name" id="player3Name">等待中...</div>
+  1359→                    <div class="hand-count">手牌: <span id="player3Count">0</span></div>
+  1360→                </div>
+  1361→                <div class="showed-area" id="player3Showed"></div>
+  1362→            </div>
+  1363→
+  1364→            <!-- 左家 (4号位) -->
+  1365→            <div class="player-area left">
+  1366→                <div class="player-info" id="player4Info">
+  1367→                    <div class="player-name" id="player4Name">等待中...</div>
+  1368→                    <div class="hand-count">手牌: <span id="player4Count">0</span></div>
+  1369→                </div>
+  1370→                <div class="showed-area" id="player4Showed"></div>
+  1371→            </div>
+  1372→
+  1373→            <!-- 右家 (2号位) -->
+  1374→            <div class="player-area right">
+  1375→                <div class="player-info" id="player2Info">
+  1376→                    <div class="player-name" id="player2Name">等待中...</div>
+  1377→                    <div class="hand-count">手牌: <span id="player2Count">0</span></div>
+  1378→                </div>
+  1379→                <div class="showed-area" id="player2Showed"></div>
+  1380→            </div>
+  1381→
+  1382→            <!-- 自己 (1号位) -->
+  1383→            <div class="player-area bottom">
+  1384→                <div class="showed-area" id="player1Showed"></div>
+  1385→                <div class="hand-area" id="myHand"></div>
+  1386→                <div class="action-buttons" id="actionButtons">
+  1387→                    <button class="action-btn play" id="playBtn" onclick="playCard()" disabled>出牌</button>
+  1388→                    <button class="action-btn fa" id="faBtn" onclick="changeFa()" disabled>换發</button>
+  1389→                    <button class="action-btn gang" id="gangBtn" onclick="doGang()" disabled>暗杠</button>
+  1390→                    <button class="action-btn hu" id="huBtn" onclick="declareHu()" disabled>胡牌</button>
+  1391→                </div>
+  1392→            </div>
+  1393→
+  1394→            <!-- 聊天区域 -->
+  1395→            <div class="chat-area">
+  1396→                <div class="chat-messages" id="chatMessages"></div>
+  1397→                <div class="chat-input">
+  1398→                    <input type="text" id="chatInput" placeholder="输入消息..." onkeypress="handleChatKey(event)">
+  1399→                    <button class="btn btn-primary" onclick="sendChat()">发送</button>
+  1400→                </div>
+  1401→            </div>
+  1402→
+  1403→            <!-- 准备面板 -->
+  1404→            <div class="ready-panel" id="readyPanel">
+  1405→                <h2>等待玩家...</h2>
+  1406→                <div class="seat-list" id="seatList"></div>
+  1407→                <button class="btn btn-primary" id="readyBtn" onclick="toggleReady()">准备</button>
+  1408→                <button class="btn btn-secondary" onclick="leaveTable()" style="margin-left: 10px;">离开</button>
+  1409→            </div>
+  1410→
+  1411→            <!-- 发牌动画 -->
+  1412→            <div class="deal-animation hidden" id="dealAnimation">
+  1413→                <div class="deal-info" id="dealInfo">洗牌中...</div>
+  1414→                <div class="deal-piles" id="dealPiles">
+  1415→                    <!-- 四堆牌将动态生成 -->
+  1416→                </div>
+  1417→                <div class="deal-progress" id="dealProgress"></div>
+  1418→            </div>
+  1419→        </div>
+  1420→    </div>
+  1421→
+  1422→    <script>
+  1423→        // 全局变量
+  1424→        let ws = null;
+  1425→        let playerId = null;
+  1426→        let playerName = '';
+  1427→        let currentTableId = null;
+  1428→        let selectedCard = null;
+  1429→        let gameState = null;
+  1430→        let myIndex = 0;
+  1431→        let isReady = false;
+  1432→
+  1433→        // 连接WebSocket
+  1434→        function connect() {
+  1435→            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  1436→            ws = new WebSocket(`${protocol}//${window.location.host}`);
+  1437→
+  1438→            ws.onopen = () => {
+  1439→                console.log('WebSocket已连接');
+  1440→                // 连接后立即获取牌桌列表
+  1441→                ws.send(JSON.stringify({ type: 'getTableList' }));
+  1442→            };
+  1443→
+  1444→            ws.onmessage = (event) => {
+  1445→                const data = JSON.parse(event.data);
+  1446→                handleMessage(data);
+  1447→            };
+  1448→
+  1449→            ws.onclose = () => {
+  1450→                console.log('WebSocket已断开');
+  1451→                setTimeout(() => {
+  1452→                    if (playerId) {
+  1453→                        connect();
+  1454→                    }
+  1455→                }, 3000);
+  1456→            };
+  1457→
+  1458→            ws.onerror = (error) => {
+  1459→                console.error('WebSocket错误:', error);
+  1460→            };
+  1461→        }
+  1462→
+  1463→        // 处理消息
+  1464→        function handleMessage(data) {
+  1465→            switch (data.type) {
+  1466→                case 'loginSuccess':
+  1467→                    playerId = data.playerId;
+  1468→                    playerName = data.playerName;
+  1469→                    // 登录成功后获取牌桌列表
+  1470→                    if (ws && ws.readyState === WebSocket.OPEN) {
+  1471→                        ws.send(JSON.stringify({ type: 'getTableList' }));
+  1472→                    }
+  1473→                    break;
+  1474→
+  1475→                case 'tableList':
+  1476→                    renderTableList(data.tables);
+  1477→                    break;
+  1478→
+  1479→                case 'playerList':
+  1480→                    renderPlayerList(data);
+  1481→                    break;
+  1482→
+  1483→                case 'dealStart':
+  1484→                    // 开始发牌动画
+  1485→                    showDealAnimation();
+  1486→                    break;
+  1487→
+  1488→                case 'gameState':
+  1489→                    gameState = data.data;
+  1490→                    myIndex = gameState.myIndex;
+  1491→                    console.log('收到游戏状态:', gameState);
+  1492→                    console.log('我的手牌:', gameState.myHand);
+  1493→                    console.log('手牌数量:', gameState.myHand ? gameState.myHand.length : 0);
+  1494→                    showGame();  // 确保显示游戏界面
+  1495→                    updateGameUI();
+  1496→                    break;
+  1497→
+  1498→                case 'message':
+  1499→                    addChatMessage(data.text);
+  1500→                    break;
+  1501→
+  1502→                case 'error':
+  1503→                    alert(data.message);
+  1504→                    break;
+  1505→            }
+  1506→        }
+  1507→
+  1508→        // 确保已登录
+  1509→        function ensureLogin(callback) {
+  1510→            const name = document.getElementById('playerName').value.trim();
+  1511→            if (!name) {
+  1512→                alert('请先输入名称');
+  1513→                return false;
+  1514→            }
+  1515→
+  1516→            if (!playerId || !playerName) {
+  1517→                playerName = name;
+  1518→                if (!ws || ws.readyState !== WebSocket.OPEN) {
+  1519→                    connect();
+  1520→                    setTimeout(() => {
+  1521→                        ws.send(JSON.stringify({ type: 'login', name }));
+  1522→                        if (callback) setTimeout(callback, 300);
+  1523→                    }, 500);
+  1524→                } else {
+  1525→                    ws.send(JSON.stringify({ type: 'login', name }));
+  1526→                    if (callback) setTimeout(callback, 300);
+  1527→                }
+  1528→                return true;
+  1529→            }
+  1530→            return true;
+  1531→        }
+  1532→
+  1533→        // 登录
+  1534→        function login() {
+  1535→            const name = document.getElementById('playerName').value.trim();
+  1536→            if (!name) {
+  1537→                alert('请输入名字');
+  1538→                return;
+  1539→            }
+  1540→
+  1541→            playerName = name;
+  1542→            if (!ws || ws.readyState !== WebSocket.OPEN) {
+  1543→                connect();
+  1544→                setTimeout(() => {
+  1545→                    ws.send(JSON.stringify({ type: 'login', name }));
+  1546→                }, 500);
+  1547→            } else {
+  1548→                ws.send(JSON.stringify({ type: 'login', name }));
+  1549→            }
+  1550→        }
+  1551→
+  1552→        // 退出
+  1553→        function logout() {
+  1554→            if (currentTableId) {
+  1555→                leaveTable();
+  1556→            }
+  1557→            playerId = null;
+  1558→            playerName = '';
+  1559→        }
+  1560→
+  1561→        // 渲染牌桌列表
+  1562→        function renderTableList(tables) {
+  1563→            const container = document.getElementById('tableList');
+  1564→            container.innerHTML = '';
+  1565→
+  1566→            // 创建新桌卡片
+  1567→            const createCard = document.createElement('div');
+  1568→            createCard.className = 'table-card create-table-card';
+  1569→            createCard.innerHTML = `
+  1570→                <div class="plus">+</div>
+  1571→                <div class="text">开房</div>
+  1572→            `;
+  1573→            createCard.onclick = createTable;
+  1574→            container.appendChild(createCard);
+  1575→
+  1576→            // 现有牌桌
+  1577→            tables.forEach((table, index) => {
+  1578→                const card = document.createElement('div');
+  1579→                const isFull = table.playerCount >= 4;
+  1580→                const isPlaying = table.started;
+  1581→
+  1582→                card.className = `table-card ${isFull ? 'full' : ''} ${isPlaying ? 'playing' : ''}`;
+  1583→
+  1584→                // 生成圆桌座位显示
+  1585→                let seatsHtml = '';
+  1586→                for (let i = 0; i < 4; i++) {
+  1587→                    const seatNum = i + 1;
+  1588→                    const player = table.players.find(p => p.seatNum === seatNum);
+  1589→                    const occupied = !!player;
+  1590→                    const occupiedClass = occupied ? 'occupied' : '';
+  1591→                    const clickHandler = (!occupied && !isPlaying) ? `onclick="event.stopPropagation(); joinTableById('${table.id}', ${seatNum})"` : '';
+  1592→                    const title = occupied && player ? player.name : (isPlaying ? '' : '点击加入');
+  1593→                    const displayChar = occupied ? (player ? player.name.charAt(0) : '?') : '+';
+  1594→
+  1595→                    seatsHtml += `
+  1596→                        <div class="mini-seat mini-seat-${seatNum}">
+  1597→                            <div class="mini-seat-avatar ${occupiedClass}" ${clickHandler} title="${title}">
+  1598→                                ${displayChar}
+  1599→                            </div>
+  1600→                        </div>
+  1601→                    `;
+  1602→                }
+  1603→
+  1604→                // 状态文字
+  1605→                let statusText = `${table.playerCount}/4 人`;
+  1606→                let statusClass = '';
+  1607→                let deckInfo = '';
+  1608→                if (isPlaying) {
+  1609→                    const deckCount = table.deckCount !== undefined ? table.deckCount : '?';
+  1610→                    deckInfo = `<div class="deck-info">剩余: ${deckCount}张</div>`;
+  1611→                    statusText = '🀄 游戏中';
+  1612→                    statusClass = 'playing';
+  1613→                } else if (isFull) {
+  1614→                    statusText = '已满员';
+  1615→                    statusClass = 'full';
+  1616→                }
+  1617→
+  1618→                card.innerHTML = `
+  1619→                    <div class="table-header">
+  1620→                        <div class="table-id">牌桌：${table.tableNumber}</div>
+  1621→                        <div class="table-mode-badge">${isPlaying ? '游戏中' : '等待中'}</div>
+  1622→                    </div>
+  1623→                    <div class="mini-table-layout">
+  1624→                        <div class="mini-table-center">🀄</div>
+  1625→                        ${seatsHtml}
+  1626→                    </div>
+  1627→                    <div class="table-footer ${statusClass}">${statusText}</div>
+  1628→                    ${deckInfo}
+  1629→                `;
+  1630→
+  1631→                // 点击整个卡片也可以加入（如果未满且未开始）
+  1632→                if (!isFull && !isPlaying) {
+  1633→                    card.onclick = () => joinTableById(table.id);
+  1634→                }
+  1635→
+  1636→                container.appendChild(card);
+  1637→            });
+  1638→        }
+  1639→
+  1640→        // 通过ID加入牌桌
+  1641→        function joinTableById(tableId, seatNum = null) {
+  1642→            joinTable(tableId, seatNum);
+  1643→        }
+  1644→
+  1645→        // 创建牌桌
+  1646→        function createTable() {
+  1647→            if (!ensureLogin(() => {
+  1648→                if (ws && ws.readyState === WebSocket.OPEN) {
+  1649→                    ws.send(JSON.stringify({ type: 'createTable' }));
+  1650→                }
+  1651→            })) {
+  1652→                if (playerId && ws && ws.readyState === WebSocket.OPEN) {
+  1653→                    ws.send(JSON.stringify({ type: 'createTable' }));
+  1654→                }
+  1655→            }
+  1656→        }
+  1657→
+  1658→        // 加入牌桌
+  1659→        function joinTable(tableId, seatNum = null) {
+  1660→            if (!ensureLogin(() => {
+  1661→                if (ws && ws.readyState === WebSocket.OPEN) {
+  1662→                    ws.send(JSON.stringify({ type: 'joinTable', tableId, seatNum }));
+  1663→                    currentTableId = tableId;
+  1664→                }
+  1665→            })) {
+  1666→                if (playerId && ws && ws.readyState === WebSocket.OPEN) {
+  1667→                    ws.send(JSON.stringify({ type: 'joinTable', tableId, seatNum }));
+  1668→                    currentTableId = tableId;
+  1669→                }
+  1670→            }
+  1671→        }
+  1672→
+  1673→        // 离开牌桌
+  1674→        function leaveTable() {
+  1675→            showLobby();
+  1676→            currentTableId = null;
+  1677→            isReady = false;
+  1678→        }
+  1679→
+  1680→        // 显示大厅
+  1681→        function showLobby() {
+  1682→            document.getElementById('loginScreen').style.display = 'flex';
+  1683→            document.getElementById('gameContainer').style.display = 'none';
+  1684→            if (ws && ws.readyState === WebSocket.OPEN) {
+  1685→                ws.send(JSON.stringify({ type: 'getTableList' }));
+  1686→            }
+  1687→        }
+  1688→
+  1689→        // 显示游戏界面
+  1690→        function showGame() {
+  1691→            document.getElementById('loginScreen').style.display = 'none';
+  1692→            document.getElementById('gameContainer').style.display = 'block';
+  1693→        }
+  1694→
+  1695→        // 渲染玩家列表
+  1696→        function renderPlayerList(data) {
+  1697→            showGame();
+  1698→
+  1699→            document.getElementById('tableNumDisplay').textContent = data.tableNumber;
+  1700→
+  1701→            // 更新准备面板
+  1702→            const seatList = document.getElementById('seatList');
+  1703→            seatList.innerHTML = '';
+  1704→
+  1705→            const players = data.players || [];
+  1706→            for (let i = 1; i <= 4; i++) {
+  1707→                const player = players.find(p => p.seatNum === i);
+  1708→                const div = document.createElement('div');
+  1709→                div.className = 'seat-item';
+  1710→
+  1711→                if (player) {
+  1712→                    div.classList.add('occupied');
+  1713→                    if (player.id === playerId) {
+  1714→                        div.classList.add('me');
+  1715→                    }
+  1716→                    div.innerHTML = `
+  1717→                        <div><strong>${i}号位</strong></div>
+  1718→                        <div>${player.name} ${player.ready ? '✓已准备' : ''}</div>
+  1719→                    `;
+  1720→                } else {
+  1721→                    div.innerHTML = `
+  1722→                        <div><strong>${i}号位</strong></div>
+  1723→                        <div>空位</div>
+  1724→                    `;
+  1725→                }
+  1726→                seatList.appendChild(div);
+  1727→            }
+  1728→
+  1729→            // 游戏已开始，隐藏准备面板
+  1730→            if (data.started) {
+  1731→                document.getElementById('readyPanel').classList.add('hidden');
+  1732→            } else {
+  1733→                document.getElementById('readyPanel').classList.remove('hidden');
+  1734→            }
+  1735→
+  1736→            // 更新准备按钮
+  1737→            const myPlayer = players.find(p => p.id === playerId);
+  1738→            isReady = myPlayer ? myPlayer.ready : false;
+  1739→            document.getElementById('readyBtn').textContent = isReady ? '取消准备' : '准备';
+  1740→        }
+  1741→
+  1742→        // 切换准备状态
+  1743→        function toggleReady() {
+  1744→            isReady = !isReady;
+  1745→            ws.send(JSON.stringify({ type: 'ready', ready: isReady }));
+  1746→        }
+  1747→
+  1748→        // 发牌动画
+  1749→        function showDealAnimation() {
+  1750→            const dealAnimation = document.getElementById('dealAnimation');
+  1751→            const dealPiles = document.getElementById('dealPiles');
+  1752→            const dealInfo = document.getElementById('dealInfo');
+  1753→            const dealProgress = document.getElementById('dealProgress');
+  1754→
+  1755→            dealAnimation.classList.remove('hidden');
+  1756→            dealPiles.innerHTML = '';
+  1757→
+  1758→            // 创建四堆牌（每堆17张，两层）
+  1759→            for (let i = 0; i < 4; i++) {
+  1760→                const pile = document.createElement('div');
+  1761→                pile.className = 'deal-pile';
+  1762→                pile.innerHTML = `
+  1763→                    <div class="deal-pile-label">${i + 1}号位</div>
+  1764→                    <div class="deal-pile-cards" id="pile${i}"></div>
+  1765→                `;
+  1766→                dealPiles.appendChild(pile);
+  1767→            }
+  1768→
+  1769→            // 动画展示牌堆
+  1770→            dealInfo.textContent = '展示牌堆...';
+  1771→            let cardIndex = 0;
+  1772→            const totalCards = 68; // 4人 × 17张
+  1773→
+  1774→            const addCard = setInterval(() => {
+  1775→                if (cardIndex >= totalCards) {
+  1776→                    clearInterval(addCard);
+  1777→                    dealInfo.textContent = '发牌中...';
+  1778→                    // 开始发牌动画
+  1779→                    startDealing();
+  1780→                    return;
+  1781→                }
+  1782→
+  1783→                const pileIndex = cardIndex % 4;
+  1784→                const pile = document.getElementById(`pile${pileIndex}`);
+  1785→                if (pile) {
+  1786→                    const card = document.createElement('div');
+  1787→                    card.className = 'deal-card-back';
+  1788→                    pile.appendChild(card);
+  1789→                }
+  1790→
+  1791→                cardIndex++;
+  1792→                dealProgress.textContent = `${cardIndex} / ${totalCards}`;
+  1793→            }, 30);
+  1794→        }
+  1795→
+  1796→        // 发牌动画
+  1797→        function startDealing() {
+  1798→            const dealInfo = document.getElementById('dealInfo');
+  1799→            const dealProgress = document.getElementById('dealProgress');
+  1800→
+  1801→            let round = 0;
+  1802→            let player = 0;
+  1803→            let cardInRound = 0;
+  1804→            const totalRounds = 4; // 4轮发牌
+  1805→
+  1806→            const dealCard = setInterval(() => {
+  1807→                if (round >= totalRounds) {
+  1808→                    clearInterval(dealCard);
+  1809→                    dealInfo.textContent = '发牌完成！';
+  1810→                    // 隐藏发牌动画，显示游戏界面
+  1811→                    setTimeout(() => {
+  1812→                        document.getElementById('dealAnimation').classList.add('hidden');
+  1813→                    }, 500);
+  1814→                    return;
+  1815→                }
+  1816→
+  1817→                // 从牌堆移除一张牌
+  1818→                const piles = document.querySelectorAll('.deal-pile-cards');
+  1819→                for (let p of piles) {
+  1820→                    if (p.lastChild) {
+  1821→                        p.removeChild(p.lastChild);
+  1822→                        break;
+  1823→                    }
+  1824→                }
+  1825→
+  1826→                cardInRound++;
+  1827→                if (cardInRound >= 4) {
+  1828→                    cardInRound = 0;
+  1829→                    round++;
+  1830→                }
+  1831→
+  1832→                dealProgress.textContent = `第 ${round + 1} 轮`;
+  1833→            }, 100);
+  1834→        }
+  1835→
+  1836→        // 更新游戏UI
+  1837→        function updateGameUI() {
+  1838→            if (!gameState) return;
+  1839→
+  1840→            // 游戏开始后隐藏准备面板和发牌动画
+  1841→            if (gameState.started) {
+  1842→                document.getElementById('readyPanel').classList.add('hidden');
+  1843→                document.getElementById('dealAnimation').classList.add('hidden');
+  1844→            }
+  1845→
+  1846→            // 更新万能牌
+  1847→            if (gameState.wildCard) {
+  1848→                document.getElementById('wildCardDisplay').textContent =
+  1849→                    getCardDisplayName(gameState.wildCard);
+  1850→            }
+  1851→
+  1852→            // 更新牌堆数量
+  1853→            document.getElementById('deckCount').textContent = gameState.deckCount;
+  1854→
+  1855→            // 更新游戏时间
+  1856→            if (gameState.totalGameTime !== undefined) {
+  1857→                const minutes = Math.floor(gameState.totalGameTime / 60);
+  1858→                const seconds = gameState.totalGameTime % 60;
+  1859→                const timeEl = document.getElementById('beijingTime');
+  1860→                if (timeEl) {
+  1861→                    timeEl.textContent =
+  1862→                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  1863→                }
+  1864→            }
+  1865→
+  1866→            // 更新各玩家信息
+  1867→            // 先找到自己的座位号
+  1868→            let mySeatNum = 1;
+  1869→            for (const [pid, info] of Object.entries(gameState.playerInfo)) {
+  1870→                if (pid === Object.keys(gameState.playerInfo)[myIndex]) {
+  1871→                    mySeatNum = info.seatNum;
+  1872→                    break;
+  1873→                }
+  1874→            }
+  1875→
+  1876→            console.log('我的座位号:', mySeatNum);
+  1877→
+  1878→            // 根据座位号计算显示位置
+  1879→            // position: 0=bottom(自己), 1=right, 2=top, 3=left
+  1880→            for (let seatNum = 1; seatNum <= 4; seatNum++) {
+  1881→                // 计算相对位置
+  1882→                let relativePos = (seatNum - mySeatNum + 4) % 4;
+  1883→
+  1884→                // 映射到UI位置: 0->1(bottom), 1->2(right), 2->3(top), 3->4(left)
+  1885→                const posNames = ['player1', 'player2', 'player3', 'player4'];
+  1886→                const posName = posNames[relativePos];
+  1887→
+  1888→                console.log(`座位${seatNum} -> 相对位置${relativePos} -> UI元素${posName}`);
+  1889→
+  1890→                // 找到这个座位的玩家
+  1891→                let foundPlayer = null;
+  1892→                for (const [pid, info] of Object.entries(gameState.playerInfo)) {
+  1893→                    if (info.seatNum === seatNum) {
+  1894→                        foundPlayer = info;
+  1895→                        break;
+  1896→                    }
+  1897→                }
+  1898→
+  1899→                const nameEl = document.getElementById(`${posName}Name`);
+  1900→                const countEl = document.getElementById(`${posName}Count`);
+  1901→                const infoEl = document.getElementById(`${posName}Info`);
+  1902→                const showedEl = document.getElementById(`${posName}Showed`);
+  1903→
+  1904→                if (!nameEl || !countEl || !infoEl || !showedEl) {
+  1905→                    console.error('找不到元素:', posName);
+  1906→                    continue;
+  1907→                }
+  1908→
+  1909→                if (foundPlayer) {
+  1910→                    nameEl.textContent = foundPlayer.name;
+  1911→                    countEl.textContent = foundPlayer.handCount;
+  1912→
+  1913→                    // 高亮当前玩家
+  1914→                    if (gameState.currentPlayerSeat === seatNum) {
+  1915→                        infoEl.classList.add('active');
+  1916→                        nameEl.classList.add('current-turn');
+  1917→                    } else {
+  1918→                        infoEl.classList.remove('active');
+  1919→                        nameEl.classList.remove('current-turn');
+  1920→                    }
+  1921→
+  1922→                    // 展示区
+  1923→                    showedEl.innerHTML = '';
+  1924→
+  1925→                    if (foundPlayer.showedCards) {
+  1926→                        foundPlayer.showedCards.fa.forEach(card => {
+  1927→                            const div = document.createElement('div');
+  1928→                            div.className = 'showed-card fa';
+  1929→                            div.textContent = '發';
+  1930→                            showedEl.appendChild(div);
+  1931→                        });
+  1932→
+  1933→                        foundPlayer.showedCards.gang.forEach(gang => {
+  1934→                            gang.forEach(card => {
+  1935→                                const div = document.createElement('div');
+  1936→                                div.className = 'showed-card gang';
+  1937→                                div.textContent = getCardShortName(card);
+  1938→                                showedEl.appendChild(div);
+  1939→                            });
+  1940→                        });
+  1941→                    }
+  1942→                }
+  1943→            }
+  1944→
+  1945→            // 更新自己的手牌
+  1946→            renderMyHand();
+  1947→
+  1948→            // 更新按钮状态
+  1949→            const isMyTurn = gameState.currentPlayer === myIndex;
+  1950→            document.getElementById('playBtn').disabled = !isMyTurn || !selectedCard;
+  1951→            document.getElementById('faBtn').disabled = !gameState.canChangeFa;
+  1952→            document.getElementById('gangBtn').disabled = !gameState.canGang;
+  1953→
+  1954→            // 更新回合提示
+  1955→            updateTurnIndicator();
+  1956→        }
+  1957→
+  1958→        // 更新回合提示
+  1959→        function updateTurnIndicator() {
+  1960→            const turnIndicator = document.getElementById('turnIndicator');
+  1961→            const handArea = document.getElementById('myHand');
+  1962→
+  1963→            if (!gameState || !gameState.started) {
+  1964→                turnIndicator.textContent = '等待开始...';
+  1965→                turnIndicator.classList.remove('my-turn');
+  1966→                handArea.classList.remove('my-turn');
+  1967→                return;
+  1968→            }
+  1969→
+  1970→            // 找到当前玩家的名字
+  1971→            let currentPlayerName = '';
+  1972→            for (const [pid, info] of Object.entries(gameState.playerInfo)) {
+  1973→                if (info.seatNum === gameState.currentPlayerSeat) {
+  1974→                    currentPlayerName = info.name;
+  1975→                    break;
+  1976→                }
+  1977→            }
+  1978→
+  1979→            const isMyTurn = gameState.currentPlayer === myIndex;
+  1980→
+  1981→            if (isMyTurn) {
+  1982→                turnIndicator.textContent = '🎯 轮到你出牌！';
+  1983→                turnIndicator.classList.add('my-turn');
+  1984→                handArea.classList.add('my-turn');
+  1985→            } else {
+  1986→                turnIndicator.textContent = `轮到 ${currentPlayerName} 出牌`;
+  1987→                turnIndicator.classList.remove('my-turn');
+  1988→                handArea.classList.remove('my-turn');
+  1989→            }
+  1990→        }
+  1991→
+  1992→        // 获取牌对应的精灵图CSS类名
+  1993→        function getTileSpriteClass(card) {
+  1994→            if (card.type === 'number') {
+  1995→                if (card.suit === '筒') {
+  1996→                    return `tong${card.rank}`;
+  1997→                } else if (card.suit === '条') {
+  1998→                    return `tiao${card.rank}`;
+  1999→                } else if (card.suit === '万') {
+  2000→                    return `wan${card.rank}`;
+  2001→                }
+  2002→            } else if (card.type === 'wind') {
+  2003→                const windMap = { '东': 'feng_dong', '南': 'feng_nan', '西': 'feng_xi', '北': 'feng_bei' };
+  2004→                return windMap[card.rank] || '';
+  2005→            } else if (card.type === 'arrow') {
+  2006→                const arrowMap = { '中': 'jian_zhong', '发': 'jian_fa', '白': 'jian_bai' };
+  2007→                return arrowMap[card.rank] || '';
+  2008→            }
+  2009→            return '';
+  2010→        }
+  2011→
+  2012→        // 渲染自己的手牌
+  2013→        function renderMyHand() {
+  2014→            const container = document.getElementById('myHand');
+  2015→            container.innerHTML = '';
+  2016→
+  2017→            console.log('renderMyHand 被调用, gameState:', gameState ? '存在' : '不存在');
+  2018→            console.log('myHand:', gameState?.myHand);
+  2019→
+  2020→            if (!gameState || !gameState.myHand) {
+  2021→                console.log('没有手牌数据，返回');
+  2022→                return;
+  2023→            }
+  2024→
+  2025→            console.log('开始渲染手牌，数量:', gameState.myHand.length);
+  2026→
+  2027→            gameState.myHand.forEach(card => {
+  2028→                const div = document.createElement('div');
+  2029→                div.className = 'tile-sprite';
+  2030→
+  2031→                // 添加对应的牌面类
+  2032→                const tileClass = getTileSpriteClass(card);
+  2033→                if (tileClass) {
+  2034→                    div.classList.add(tileClass);
+  2035→                }
+  2036→
+  2037→                // 判断是否是万能牌
+  2038→                const isWild = isWildCard(card);
+  2039→                if (isWild) {
+  2040→                    div.classList.add('wild');
+  2041→                }
+  2042→
+  2043→                // 选中状态
+  2044→                if (selectedCard && selectedCard.id === card.id) {
+  2045→                    div.classList.add('selected');
+  2046→                }
+  2047→
+  2048→                div.onclick = () => selectCard(card);
+  2049→                div.dataset.cardId = card.id;
+  2050→
+  2051→                // 拖拽功能
+  2052→                div.draggable = true;
+  2053→                div.addEventListener('dragstart', handleDragStart);
+  2054→                div.addEventListener('dragend', handleDragEnd);
+  2055→                div.addEventListener('dragover', handleDragOver);
+  2056→                div.addEventListener('drop', handleDrop);
+  2057→                div.addEventListener('dragleave', handleDragLeave);
+  2058→
+  2059→                container.appendChild(div);
+  2060→            });
+  2061→        }
+  2062→
+  2063→        // 创建筒子圆点
+  2064→        function createDots(count) {
+  2065→            let dots = '';
+  2066→            for (let i = 0; i < count; i++) {
+  2067→                dots += '<div class="dot"></div>';
+  2068→            }
+  2069→            return dots;
+  2070→        }
+  2071→
+  2072→        // 创建条子竹节
+  2073→        function createBamboo(count) {
+  2074→            let bamboo = '';
+  2075→            if (count === 1) {
+  2076→                bamboo = '<div class="bamboo-stick"></div>';
+  2077→            } else if (count === 2) {
+  2078→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div></div>';
+  2079→            } else if (count === 3) {
+  2080→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+  2081→            } else if (count === 4) {
+  2082→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+  2083→            } else if (count === 5) {
+  2084→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+  2085→            } else if (count === 6) {
+  2086→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+  2087→            } else if (count === 7) {
+  2088→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+  2089→            } else if (count === 8) {
+  2090→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+  2091→            } else if (count === 9) {
+  2092→                bamboo = '<div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div><div class="bamboo-row"><div class="bamboo-stick"></div><div class="bamboo-stick"></div><div class="bamboo-stick"></div></div>';
+  2093→            }
+  2094→            return bamboo;
+  2095→        }
+  2096→
+  2097→        // 拖拽相关变量
+  2098→        let draggedCardId = null;
+  2099→
+  2100→        function handleDragStart(e) {
+  2101→            draggedCardId = e.target.dataset.cardId;
+  2102→            e.target.classList.add('dragging');
+  2103→            e.dataTransfer.effectAllowed = 'move';
+  2104→        }
+  2105→
+  2106→        function handleDragEnd(e) {
+  2107→            e.target.classList.remove('dragging');
+  2108→            document.querySelectorAll('.card').forEach(card => {
+  2109→                card.classList.remove('drag-over');
+  2110→            });
+  2111→            draggedCardId = null;
+  2112→        }
+  2113→
+  2114→        function handleDragOver(e) {
+  2115→            e.preventDefault();
+  2116→            e.dataTransfer.dropEffect = 'move';
+  2117→            const target = e.target.closest('.card');
+  2118→            if (target && target.dataset.cardId !== draggedCardId) {
+  2119→                target.classList.add('drag-over');
+  2120→            }
+  2121→        }
+  2122→
+  2123→        function handleDragLeave(e) {
+  2124→            const target = e.target.closest('.card');
+  2125→            if (target) {
+  2126→                target.classList.remove('drag-over');
+  2127→            }
+  2128→        }
+  2129→
+  2130→        function handleDrop(e) {
+  2131→            e.preventDefault();
+  2132→            const target = e.target.closest('.card');
+  2133→            if (!target || !draggedCardId) return;
+  2134→
+  2135→            const targetCardId = target.dataset.cardId;
+  2136→            if (targetCardId === draggedCardId) return;
+  2137→
+  2138→            // 重新排序手牌
+  2139→            const fromIndex = gameState.myHand.findIndex(c => c.id === draggedCardId);
+  2140→            const toIndex = gameState.myHand.findIndex(c => c.id === targetCardId);
+  2141→
+  2142→            if (fromIndex !== -1 && toIndex !== -1) {
+  2143→                const [movedCard] = gameState.myHand.splice(fromIndex, 1);
+  2144→                gameState.myHand.splice(toIndex, 0, movedCard);
+  2145→                renderMyHand();
+  2146→            }
+  2147→
+  2148→            target.classList.remove('drag-over');
+  2149→        }
+  2150→
+  2151→        // 判断是否是万能牌
+  2152→        function isWildCard(card) {
+  2153→            if (!gameState || !gameState.wildCard) {
+  2154→                console.log('isWildCard: 没有gameState或wildCard');
+  2155→                return false;
+  2156→            }
+  2157→            const wild = gameState.wildCard;
+  2158→
+  2159→            // 调试：打印比较信息
+  2160→            console.log('比较牌:', JSON.stringify(card), '万能牌:', JSON.stringify(wild));
+  2161→
+  2162→            // 检查是否与翻出的牌相同（精确匹配花色、点数、类型）
+  2163→            const sameCard = (card.suit === wild.suit &&
+  2164→                             String(card.rank) === String(wild.rank) &&
+  2165→                             card.type === wild.type);
+  2166→
+  2167→            if (sameCard) {
+  2168→                console.log('匹配：与翻出的牌相同');
+  2169→                return true;
+  2170→            }
+  2171→
+  2172→            // 红中永远是万能牌
+  2173→            if (card.type === 'arrow' && card.rank === '中') {
+  2174→                console.log('匹配：红中是万能牌');
+  2175→                return true;
+  2176→            }
+  2177→
+  2178→            return false;
+  2179→        }
+  2180→
+  2181→        // 获取牌的短名称
+  2182→        function getCardShortName(card) {
+  2183→            if (card.type === 'number') {
+  2184→                return card.rank;
+  2185→            } else {
+  2186→                return card.rank;
+  2187→            }
+  2188→        }
+  2189→
+  2190→        // 获取牌的显示名称
+  2191→        function getCardDisplayName(card) {
+  2192→            if (card.type === 'number') {
+  2193→                return `${card.rank}${card.suit}`;
+  2194→            } else if (card.type === 'wind') {
+  2195→                return card.rank;
+  2196→            } else {
+  2197→                return card.rank;
+  2198→            }
+  2199→        }
+  2200→
+  2201→        // 选择牌
+  2202→        function selectCard(card) {
+  2203→            if (selectedCard && selectedCard.id === card.id) {
+  2204→                selectedCard = null;
+  2205→            } else {
+  2206→                selectedCard = card;
+  2207→            }
+  2208→
+  2209→            // 如果是自己回合且有选中的牌，启用出牌按钮
+  2210→            const isMyTurn = gameState && gameState.currentPlayer === myIndex;
+  2211→            document.getElementById('playBtn').disabled = !isMyTurn || !selectedCard;
+  2212→
+  2213→            renderMyHand();
+  2214→        }
+  2215→
+  2216→        // 出牌
+  2217→        function playCard() {
+  2218→            if (!selectedCard) return;
+  2219→
+  2220→            ws.send(JSON.stringify({
+  2221→                type: 'play',
+  2222→                cardId: selectedCard.id
+  2223→            }));
+  2224→
+  2225→            selectedCard = null;
+  2226→        }
+  2227→
+  2228→        // 换发
+  2229→        // 换發
+  2230→        function changeFa() {
+  2231→            ws.send(JSON.stringify({ type: 'changeFa' }));
+  2232→        }
+  2233→
+  2234→        // 暗杠
+  2235→        function doGang() {
+  2236→            if (selectedCard) {
+  2237→                ws.send(JSON.stringify({
+  2238→                    type: 'gang',
+  2239→                    cardId: selectedCard.id
+  2240→                }));
+  2241→            }
+  2242→        }
+  2243→
+  2244→        // 胡牌
+  2245→        function declareHu() {
+  2246→            ws.send(JSON.stringify({ type: 'hu' }));
+  2247→        }
+  2248→
+  2249→        // 聊天
+  2250→        function sendChat() {
+  2251→            const input = document.getElementById('chatInput');
+  2252→            const text = input.value.trim();
+  2253→            if (text) {
+  2254→                ws.send(JSON.stringify({ type: 'chat', text }));
+  2255→                input.value = '';
+  2256→            }
+  2257→        }
+  2258→
+  2259→        function handleChatKey(event) {
+  2260→            if (event.key === 'Enter') {
+  2261→                sendChat();
+  2262→            }
+  2263→        }
+  2264→
+  2265→        // 添加聊天消息
+  2266→        function addChatMessage(text) {
+  2267→            const container = document.getElementById('chatMessages');
+  2268→            const div = document.createElement('div');
+  2269→            div.textContent = text;
+  2270→            div.style.marginBottom = '5px';
+  2271→            container.appendChild(div);
+  2272→            container.scrollTop = container.scrollHeight;
+  2273→        }
+  2274→
+  2275→        // 更新北京时间
+  2276→        function updateBeijingTime() {
+  2277→            const now = new Date();
+  2278→            // 获取北京时间 (UTC+8)
+  2279→            const beijingTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }));
+  2280→            const hours = String(beijingTime.getHours()).padStart(2, '0');
+  2281→            const minutes = String(beijingTime.getMinutes()).padStart(2, '0');
+  2282→            document.getElementById('beijingTime').textContent = `${hours}:${minutes}`;
+  2283→        }
+  2284→
+  2285→        // 掷骰子
+  2286→        let diceValues = [0, 0];
+  2287→        function rollDice() {
+  2288→            const dice1 = document.getElementById('dice1');
+  2289→            const dice2 = document.getElementById('dice2');
+  2290→            const btn = document.getElementById('rollDiceBtn');
+  2291→
+  2292→            btn.disabled = true;
+  2293→            dice1.classList.add('rolling');
+  2294→            dice2.classList.add('rolling');
+  2295→
+  2296→            let count = 0;
+  2297→            const interval = setInterval(() => {
+  2298→                dice1.textContent = Math.floor(Math.random() * 6) + 1;
+  2299→                dice2.textContent = Math.floor(Math.random() * 6) + 1;
+  2300→                count++;
+  2301→
+  2302→                if (count >= 10) {
+  2303→                    clearInterval(interval);
+  2304→                    dice1.classList.remove('rolling');
+  2305→                    dice2.classList.remove('rolling');
+  2306→
+  2307→                    // 最终结果
+  2308→                    diceValues[0] = Math.floor(Math.random() * 6) + 1;
+  2309→                    diceValues[1] = Math.floor(Math.random() * 6) + 1;
+  2310→                    dice1.textContent = diceValues[0];
+  2311→                    dice2.textContent = diceValues[1];
+  2312→
+  2313→                    // 发送骰子结果给服务器
+  2314→                    if (ws && ws.readyState === WebSocket.OPEN) {
+  2315→                        ws.send(JSON.stringify({
+  2316→                            type: 'diceRoll',
+  2317→                            values: diceValues
+  2318→                        }));
+  2319→                    }
+  2320→
+  2321→                    setTimeout(() => {
+  2322→                        btn.disabled = false;
+  2323→                    }, 1000);
+  2324→                }
+  2325→            }, 100);
+  2326→        }
+  2327→
+  2328→        // 初始化
+  2329→        document.addEventListener('DOMContentLoaded', () => {
+  2330→            connect();
+  2331→            // 启动北京时间更新
+  2332→            updateBeijingTime();
+  2333→            setInterval(updateBeijingTime, 1000);
+  2334→        });
+  2335→    </script>
+  2336→</body>
+  2337→</html>
+  2338→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

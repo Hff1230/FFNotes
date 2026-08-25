@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "sessionId": "1b83b44b-79a0-491a-8536-7673c1765be2",
+      "fullPath": "C:\\Users\\hufeifei.JOY\\.claude\\projects\\E--WorkSpace-RedAlert-SuperFormation\\1b83b44b-79a0-491a-8536-7673c1765be2.jsonl",
+      "fileMtime": 1772503918322,
+      "firstPrompt": "<ide_opened_file>The user opened the file c:\\Users\\hufeifei.JOY\\AppData\\Local\\Temp\\测试体系文档.md in the IDE. This may or may not be related to the current task.</ide_opened_file>",
+      "summary": "NewHeroes Data and Command Class Creation",
+      "messageCount": 11,
+      "created": "2026-02-28T01:26:46.095Z",
+      "modified": "2026-02-28T01:41:35.916Z",
+      "gitBranch": "HEAD",
+      "projectPath": "e:\\WorkSpace\\RedAlert_SuperFormation",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "32a37d25-2deb-486f-8670-bbfd72c02582",
+      "fullPath": "C:\\Users\\hufeifei.JOY\\.claude\\projects\\E--WorkSpace-RedAlert-SuperFormation\\32a37d25-2deb-486f-8670-bbfd72c02582.jsonl",
+      "fileMtime": 1772503918991,
+      "firstPrompt": "<ide_opened_file>The user opened the file e:\\WorkSpace\\RedAlert_SuperFormation\\Assets\\DevCodeFM\\IF\\DayZClasses\\view\\Mining\\MiningMyAssistTroop.cs in the IDE. This may or may not be related to the curr…",
+      "summary": "Agent visualization windows for Unity & VSCode",
+      "messageCount": 25,
+      "created": "2026-02-28T02:18:22.179Z",
+      "modified": "2026-02-28T05:49:13.084Z",
+      "gitBranch": "HEAD",
+      "projectPath": "e:\\WorkSpace\\RedAlert_SuperFormation",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "3b9e4e7f-a86a-44d8-a193-95a811bd6c03",
+      "fullPath": "C:\\Users\\hufeifei.JOY\\.claude\\projects\\E--WorkSpace-RedAlert-SuperFormation\\3b9e4e7f-a86a-44d8-a193-95a811bd6c03.jsonl",
+      "fileMtime": 1772503919569,
+      "firstPrompt": "<ide_opened_file>The user opened the file e:\\WorkSpace\\RedAlert_SuperFormation\\Assets\\DevCodeFM\\IF\\DayZClasses\\view\\SuperFormation\\SuperFormationController.cs in the IDE. This may or may not be relate…",
+      "summary": "Claude Code技能创建与使用指南",
+      "messageCount": 15,
+      "created": "2026-02-27T03:58:21.406Z",
+      "modified": "2026-02-28T01:25:46.702Z",
+      "gitBranch": "HEAD",
+      "projectPath": "e:\\WorkSpace\\RedAlert_SuperFormation",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "3ee617b0-a395-48fb-ba67-00aebcbce766",
+      "fullPath": "C:\\Users\\hufeifei.JOY\\.claude\\projects\\E--WorkSpace-RedAlert-SuperFormation\\3ee617b0-a395-48fb-ba67-00aebcbce766.jsonl",
+      "fileMtime": 1772503920542,
+      "firstPrompt": "No prompt",
+      "summary": "StrongestKingdomData refactoring, property fixes",
+      "messageCount": 23,
+      "created": "2026-02-04T05:52:15.616Z",
+      "modified": "2026-02-04T06:03:49.344Z",
+      "gitBranch": "",
+      "projectPath": "e:\\WorkSpace\\RedAlert_SuperFormation",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "50f54230-6e53-4a87-b5c3-91018deb43d6",
+      "fullPath": "C:\\Users\\hufeifei.JOY\\.claude\\projects\\E--WorkSpace-RedAlert-SuperFormation\\50f54230-6e53-4a87-b5c3-91018deb43d6.jsonl",
+      "fileMtime": 1772503921131,
+      "firstPrompt": "<ide_selection>The user selected the lines 34 to 35 from e:\\WorkSpace\\RedAlert_SuperFormation\\Assets\\DevCodeFM\\IF\\DayZClasses\\view\\Mining\\MiningAssistanceView.cs: \r   This may or may not be related to…",
+      "summary": "Chinese mode activated for Unity DayZ mining assistance",
+      "messageCount": 2,
+      "created": "2026-02-25T06:17:27.692Z",
+      "modified": "2026-02-25T06:17:34.434Z",
+      "gitBranch": "HEAD",
+      "projectPath": "e:\\WorkSpace\\RedAlert_SuperFormation",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "bdff638d-0355-4998-9327-e8f3681b70a6",
+      "fullPath": "C:\\Users\\hufeifei.JOY\\.claude\\projects\\E--WorkSpace-RedAlert-SuperFormation\\bdff638d-0355-4998-9327-e8f3681b70a6.jsonl",
+      "fileMtime": 1772503921767,
+      "firstPrompt": "<ide_opened_file>The user opened the file e:\\WorkSpace\\RedAlert_SuperFormation\\Assets\\DevCodeFM\\IF\\DayZClasses\\view\\NewMail\\SnowMail\\SnowBattleDetail\\SnowBattleDetailView.cs in the IDE. This may or ma…",
+      "summary": "Unity Console日志读取和项目日志文件定位",
+      "messageCount": 9,
+      "created": "2026-02-09T08:43:55.192Z",
+      "modified": "2026-02-09T08:59:38.688Z",
+      "gitBranch": "HEAD",
+      "projectPath": "e:\\WorkSpace\\RedAlert_SuperFormation",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "7394237a-a42a-4ab4-96ef-e4c39d8b86b1",
+      "fullPath": "C:\\Users\\hufeifei.JOY\\.claude\\projects\\E--WorkSpace-RedAlert-SuperFormation\\7394237a-a42a-4ab4-96ef-e4c39d8b86b1.jsonl",
+      "fileMtime": 1772508518705,
+      "firstPrompt": "@Assets/DevCodeFM/IF/DayZClasses/view/NewMail/SnowMail/SnowBattleDetail/MailDetail_PlayerInfo_help.cs 添加日志清除注释代码",
+      "summary": "SnowMail代码清理：移除注释并添加日志",
+      "messageCount": 3,
+      "created": "2026-03-03T02:28:58.273Z",
+      "modified": "2026-03-03T02:33:34.974Z",
+      "gitBranch": "HEAD",
+      "projectPath": "e:\\WorkSpace\\RedAlert_SuperFormation",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "8b695772-87bb-493d-9d63-747c62ea7a87",
+      "fullPath": "C:\\Users\\hufeifei.JOY\\.claude\\projects\\E--WorkSpace-RedAlert-SuperFormation\\8b695772-87bb-493d-9d63-747c62ea7a87.jsonl",
+      "fileMtime": 1772508519207,
+      "firstPrompt": "<task-notification> <task-id>b94b0b8</task-id> <output-file>C:\\Users\\hufeifei.JOY\\AppData\\Local\\Temp\\claude\\E--WorkSpace-RedAlert-SuperFormation\\tasks\\b94b0b8.output</output-file> <status>failed</stat…",
+      "summary": "添加自改进代理技能任务失败",
+      "messageCount": 1,
+      "created": "2026-03-03T02:19:26.948Z",
+      "modified": "2026-03-03T02:19:27.031Z",
+      "gitBranch": "",
+      "projectPath": "E:\\WorkSpace\\RedAlert_SuperFormation",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "9b42567e-0082-4294-a715-c959115cabdb",
+      "fullPath": "C:\\Users\\hufeifei.JOY\\.claude\\projects\\E--WorkSpace-RedAlert-SuperFormation\\9b42567e-0082-4294-a715-c959115cabdb.jsonl",
+      "fileMtime": 1772508519701,
+      "firstPrompt": "<ide_opened_file>The user opened the file e:\\WorkSpace\\RedAlert_SuperFormation\\Assets\\DevCodeFM\\IF\\DayZClasses\\view\\NewMail\\SnowMail\\SnowBattleDetail\\MailDetail_PlayerInfo_help.cs in the IDE. This may…",
+      "summary": "设置Claude Code默认中文语言",
+      "messageCount": 7,
+      "created": "2026-03-03T02:25:17.742Z",
+      "modified": "2026-03-03T02:27:45.343Z",
+      "gitBranch": "HEAD",
+      "projectPath": "e:\\WorkSpace\\RedAlert_SuperFormation",
+      "isSidechain": false
+    }
+  ],
+  "originalPath": "e:\\WorkSpace\\RedAlert_SuperFormation"
+}

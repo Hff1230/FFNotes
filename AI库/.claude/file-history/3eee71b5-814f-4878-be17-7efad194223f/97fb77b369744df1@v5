@@ -1,0 +1,82 @@
+# Unity3D 开发指南索引
+
+## 代码规范 (必须遵守)
+
+**规范文件**: `C:\Users\hufeifei.JOY\.claude\rule\unity3d-code-standards.md`
+
+生成代码时必须遵守此规范文件中的所有规则。
+
+## 界面基类 (必须继承)
+
+**基类**: `Assets/DevCodeFM/IF/DayZClasses/view/popup/PopupBaseView.cs`
+
+所有界面控制器必须继承 `PopupBaseView`，生命周期: `Awake → OnEnable → Init → Open → Start`
+
+## 自动代码审查
+
+**审查Agent**: `unity-code-reviewer`
+
+每次代码生成/修改后自动触发审查，只读模式，生成审查报告。
+
+### 工作流程
+```
+代码生成/修改 → unity-code-reviewer 审查 → 生成报告 → 告知用户
+                                      ↓
+                              发现问题 → 反馈给 unity3d-code-standards 修复
+```
+
+## 快速参考
+
+### PopupBaseView 生命周期
+```
+Awake → OnEnable → Init(params) → Open() → Start → ... → Close()
+```
+
+### 关键方法调用顺序
+1. `base.Awake()` - 预加载
+2. `base.OnEnable()` - 回调注册
+3. `base.Init(data)` - 触发 DynamicON 动效
+4. `base.Open()` - 初始化模糊背景
+5. `InitializeFairyComponents()` - 获取FairyGUI组件 (在Start中调用)
+
+### PopupBaseView 核心成员
+- `_mainView` - 主视图组件
+- `_title` / `setTitleName(string)` - 标题
+- `returnBtn` / `closeBtn` - 返回/关闭按钮
+- `closeSelf()` - 关闭界面
+
+## 文档列表
+
+| 文档 | 路径 | 描述 |
+|------|------|------|
+| 代码规范 (规则) | `C:\Users\hufeifei.JOY\.claude\rule\unity3d-code-standards.md` | **必须遵守的代码规范** |
+| 代码审查Skill | `C:\Users\hufeifei.JOY\.claude\skills\unity-code-reviewer\SKILL.md` | **只读代码审查Agent** |
+| AI Agent 指南 | `C:\Users\hufeifei.JOY\.claude\rule\unity-ai-agent-guide.md` | Unity MCP 自动化操作指南 |
+
+## 快速参考
+
+### 命名规范速查
+- **类名**: PascalCase (如 `PlayerController`)
+- **接口**: IPascalCase (如 `IDamageable`)
+- **私有字段**: _camelCase (如 `_currentHealth`)
+- **常量**: UPPER_SNAKE_CASE (如 `MAX_HEALTH`)
+
+### 核心 Skills
+- `unity-mcp-skill`: Unity 编辑器自动化
+- `browser-automation`: Web 应用测试
+- `simplify`: 代码简化审查
+
+### 性能优化要点
+1. 缓存组件引用（transform, GetComponent 结果）
+2. 使用 Animator.StringToHash 缓存参数哈希
+3. 复用 WaitForSeconds 对象
+4. 避免在 Update 中分配内存
+
+### 事件模式
+```csharp
+public static event Action OnEvent;
+public static void TriggerEvent() => OnEvent?.Invoke();
+```
+
+---
+*最后更新: 2026-03-20*

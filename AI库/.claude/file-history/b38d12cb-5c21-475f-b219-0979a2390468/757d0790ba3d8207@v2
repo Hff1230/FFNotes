@@ -1,0 +1,133 @@
+using System;
+
+namespace Game.UI.Hero
+{
+    /// <summary>
+    /// 英雄品质枚举
+    /// </summary>
+    public enum HeroQuality
+    {
+        White = 0,
+        Green = 1,
+        Blue = 2,
+        Purple = 3,
+        Gold = 4,
+        Red = 5
+    }
+
+    /// <summary>
+    /// 英雄列表数据模型
+    /// </summary>
+    [Serializable]
+    public class HeroListData
+    {
+        /// <summary>
+        /// 英雄唯一ID
+        /// </summary>
+        public long HeroId;
+
+        /// <summary>
+        /// 英雄配置ID
+        /// </summary>
+        public int ConfigId;
+
+        /// <summary>
+        /// 英雄名称
+        /// </summary>
+        public string Name;
+
+        /// <summary>
+        /// 英雄等级
+        /// </summary>
+        public int Level;
+
+        /// <summary>
+        /// 星级数量 (1-5)
+        /// </summary>
+        public int StarCount;
+
+        /// <summary>
+        /// 英雄品质
+        /// </summary>
+        public HeroQuality Quality;
+
+        /// <summary>
+        /// 英雄类型 (战士/法师/射手等)
+        /// </summary>
+        public int HeroType;
+
+        /// <summary>
+        /// 头像图标URL
+        /// </summary>
+        public string IconUrl;
+
+        /// <summary>
+        /// 半身像URL
+        /// </summary>
+        public string BustUrl;
+
+        /// <summary>
+        /// 是否已获得
+        /// </summary>
+        public bool IsOwned;
+
+        /// <summary>
+        /// 是否可合成
+        /// </summary>
+        public bool CanCompose;
+
+        /// <summary>
+        /// 当前碎片数量
+        /// </summary>
+        public int FragmentCount;
+
+        /// <summary>
+        /// 合成所需碎片数量
+        /// </summary>
+        public int FragmentNeed;
+
+        /// <summary>
+        /// 是否有红点提示
+        /// </summary>
+        public bool HasRedPoint;
+
+        /// <summary>
+        /// 战斗力
+        /// </summary>
+        public long CombatPower;
+
+        /// <summary>
+        /// 排序权重
+        /// </summary>
+        public int SortWeight;
+
+        /// <summary>
+        /// 创建默认的英雄数据
+        /// </summary>
+        public static HeroListData CreateDefault(long heroId, string name)
+        {
+            return new HeroListData
+            {
+                HeroId = heroId,
+                Name = name,
+                Level = 1,
+                StarCount = 1,
+                Quality = HeroQuality.White,
+                IsOwned = true,
+                FragmentCount = 0,
+                FragmentNeed = 30,
+                HasRedPoint = false,
+                SortWeight = 0
+            };
+        }
+
+        /// <summary>
+        /// 获取碎片进度百分比
+        /// </summary>
+        public float GetFragmentProgress()
+        {
+            if (FragmentNeed <= 0) return 0f;
+            return (float)FragmentCount / FragmentNeed;
+        }
+    }
+}

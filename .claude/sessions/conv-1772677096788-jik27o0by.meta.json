@@ -1,0 +1,19 @@
+{
+  "id": "conv-1772677096788-jik27o0by",
+  "title": "Setup git repo from downloaded ZIP",
+  "titleGenerationStatus": "success",
+  "createdAt": 1772677096788,
+  "updatedAt": 1774596866104,
+  "lastResponseAt": 1774596866104,
+  "sessionId": "e26030bb-c98d-4108-acb5-cdb42ce97dcd",
+  "sdkSessionId": "e26030bb-c98d-4108-acb5-cdb42ce97dcd",
+  "usage": {
+    "model": "opus",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 0,
+    "percentage": 0
+  }
+}

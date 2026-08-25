@@ -1,0 +1,328 @@
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\ai-players-test.js:288:        const bigJokers = jokers.filter(c => c.rank === '大王');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\ai-players-test.js:321:        const cardStr = cards.map(c => `${c.suit}${c.rank}`).join(' ');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:13:    '小王': 15, '大王': 16
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:17:function createCard(suit, rank) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:19:        suit,
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:22:        isJoker: rank === '大王' || rank === '小王',
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:23:        isTrump: suit === '♥' && rank === '3' // 假设当前打3
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:28:    return cards.map(([suit, rank]) => createCard(suit, rank));
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:50:        const bigJokers = cards.filter(c => c.rank === '大王').length;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:150:        for (const suit of SUITS) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:152:                deck.push(createCard(suit, rank));
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:158:        deck.push(createCard('🃏', '大王'));
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:269:                createCard('🃏', '大王'), createCard('🃏', '大王'),
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:453:            const bigJokers = deck.filter(c => c.rank === '大王').length;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:461:            for (const suit of SUITS) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:463:                    const count = deck.filter(c => c.suit === suit && c.rank === rank).length;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:482:            const originalIds = deck.map(c => `${c.suit}${c.rank}`).sort();
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:483:            const shuffledIds = shuffled.map(c => `${c.suit}${c.rank}`).sort();
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:493:                c.suit === shuffled2[i].suit && c.rank === shuffled2[i].rank
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:622:                return SUITS.indexOf(a.suit) - SUITS.indexOf(b.suit);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:631:                createCard('🃏', '大王'), // 大王
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:638:            // 排序后应该是：大王 > 小王 > 级牌5 > A > 6
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan.test.js:639:            expect(hand[0].rank).toBe('大王');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:52:    '小王': 15, '大王': 16
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:266:            for (const suit of SUITS) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:272:                        suit, rank, value: cardValue,
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:274:                        isTrump: suit === '♥' && rank === trumpRank, // 只有红桃级牌是逢人配
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:282:            deck.push({ suit: '🃏', rank: '小王', value: 15, isJoker: true, isTrump: false, isLevelCard: false });
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:283:            deck.push({ suit: '🃏', rank: '大王', value: 16, isJoker: true, isTrump: false, isLevelCard: false });
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:312:            // 计算排序值：大王=16, 小王=15, 级牌=14.5, A=14, K=13...
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:325:            return SUITS.indexOf(a.suit) - SUITS.indexOf(b.suit);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:349:            if (hand.some(card => card.suit === '♥' && card.rank === '3')) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:467:            // 两张大王或两张小王可以作为对子
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:468:            const bigJokers = cards.filter(c => c.rank === '大王');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:493:        if (cards.length === 4 && cards.filter(c => c.rank === '大王').length === 2 && cards.filter(c => c.rank === '小王').length === 2) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:523:            const bigJokers = cards.filter(c => c.rank === '大王');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:653:                        const normalSuits = [...new Set(normalCards.map(c => c.suit))];
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:787:            const idx = hand.findIndex(c => c.suit === card.suit && c.rank === card.rank);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:801:            const idx = hand.findIndex(c => c.suit === card.suit && c.rank === card.rank);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1047:            console.log(`aiPlayCards: 选中的牌 [${cards.map(c => c.suit + c.rank).join(', ')}]`);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1072:                console.log(`aiPlayCards: 强制出牌 [${forcedCard.map(c => c.suit + c.rank).join(', ')}]`);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1355:        const suitGroups = {};
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1357:            if (!suitGroups[c.suit]) suitGroups[c.suit] = [];
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1358:            suitGroups[c.suit].push(c);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1376:        for (const suit in suitGroups) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1377:            const suitCards = suitGroups[suit];
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1378:            const values = [...new Set(suitCards.map(c => getSeqValue(c)))];
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1386:                    const card = suitCards.find(c => getSeqValue(c) === v && !usedCards.includes(c));
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1462:        const bigJokers = hand.filter(c => c.rank === '大王');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1697:                tributeCards[`${tp.playerIndex}-${card.suit}-${card.rank}`] = true;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1705:                const cardKey = `${playerIndex}-${card.suit}-${card.rank}`;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1788:                totalBigJokers += hand.filter(c => c.rank === '大王').length;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1798:        const bigJokers = hand.filter(c => c.rank === '大王');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1808:        const nonTrumpCards = hand.filter(c => !(c.suit === '♥' && c.rank === trumpRank));
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1840:            const idx = hand.findIndex(c => c.suit === card.suit && c.rank === card.rank);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:1998:                    if (this.gameState.hands[playerIds[i]].some(c => c.suit === '♥' && c.rank === '3')) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:2118:        const idx = hand.findIndex(c => c.suit === card.suit && c.rank === card.rank);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-server.js:2214:                if (hand.some(card => card.suit === '♥' && card.rank === '3')) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:1000:        #myHand .card .card-suit {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:1067:        .card .corner-top .suit {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:1088:        .card .corner-bottom .suit {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:1093:        .card .center-suit {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:1121:        .card.card-small .corner-top .suit,
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:1122:        .card.card-small .corner-bottom .suit {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:1126:        .card.card-small .center-suit {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:1162:        .card-small .suit {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:2382:        playedCards['大王'] = 0;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:2408:        const bigRemaining = 2 - (playedCards['大王'] || 0);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:2415:                <div class="card-name joker-big">大王</div>
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3022:        const bigJokers = cards.filter(c => c.rank === '大王').length;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3070:        const suits = [...new Set(cards.map(c => c.suit))];
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3071:        if (suits.length === 1 && cards.length === 5) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3282:            JSON.stringify(gameState.lastPlay.cards.map(c => c.suit + c.rank)) : null;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3293:            JSON.stringify(gameState.lastPlay.cards.map(c => c.suit + c.rank)) : null;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3531:    // 手牌排序模式: 'value'=按牌面大小, 'suit'=按花色
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3536:        sortMode = sortMode === 'value' ? 'suit' : 'value';
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3565:                return SUITS_ORDER[a.suit] - SUITS_ORDER[b.suit]; // 同点数按花色
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3571:                const suitDiff = SUITS_ORDER[a.suit] - SUITS_ORDER[b.suit];
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3572:                if (suitDiff !== 0) return suitDiff;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3614:                    selectedCards[j].suit === card.suit &&
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3630:            cardEl.dataset.suit = card.suit;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3731:        const effectiveSuit = card.displaySuit || card.suit;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3735:            el.classList.add(card.rank === '大王' ? 'joker-red' : 'joker-black');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3747:        const displayRank = card.isJoker ? (card.rank === '大王' ? '大' : '小') : effectiveRank;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3757:                <span class="suit">${displaySuit}</span>
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3759:            <div class="center-suit">${displaySuit}</div>
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3762:                <span class="suit">${displaySuit}</span>
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3787:                sc.suit === cardToRemove.suit &&
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:3968:        const normalSuits = [...new Set(normalCards.map(c => c.suit))];
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:4092:                displaySuit: tc.suit,
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:4245:            return `${c.suit}${c.rank}`;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:4276:        const normalSuits = [...new Set(normalCards.map(c => c.suit))];
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:4483:            const bigJokers = cards.filter(c => c.rank === '大王').length;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:4539:                        const normalSuits = [...new Set(normalCards.map(c => c.suit))];
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:4721:            return ['♠', '♥', '♦', '♣'].indexOf(a.suit) - ['♠', '♥', '♦', '♣'].indexOf(b.suit);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:4864:                showNotification(`🛡️ 你有两个大王，正在自动抗贡...`);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:4878:        showNotification(`🎁 ${data.playerName} 进贡了 ${data.card.suit}${data.card.rank}，牌放到桌面`);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:4889:        showNotification(`🔄 ${data.playerName} 还贡了 ${data.card.suit}${data.card.rank}，等待交换...`);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:4980:        const isRed = card.suit === '♥' || card.suit === '♦' || card.rank === '大王' || card.rank === '小王';
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:4982:        return `<span class="card-mini ${color}">${card.suit}${card.rank}</span>`;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:5050:        if (!card || !card.suit) return '<span class="card">?</span>';
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:5051:        const isRed = card.suit === '♥' || card.suit === '♦';
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:5053:        return `<span class="card" style="color: ${color}; background: white; padding: 5px 10px; border-radius: 5px; font-size: 18px; font-weight: bold;">${card.suit}${card.rank}</span>`;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:5067:            <p style="margin-bottom: 15px;">你收到了 <b>${tributeCard.suit}${tributeCard.rank}</b>，请还贡一张牌</p>
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:5099:                const isJoker = card.rank === '小王' || card.rank === '大王';
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:5980:        const bigJokers = hand.filter(c => c.rank === '大王');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:6011:        const suitGroups = {};
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:6013:            if (!suitGroups[c.suit]) suitGroups[c.suit] = [];
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:6014:            suitGroups[c.suit].push(c);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:6081:        for (const suit in suitGroups) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:6082:            const suitCards = suitGroups[suit];
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:6084:            const result = checkStraightWithTrump(suitCards, trumpCards.length, length);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\guandan-lan.html:6275:                    sortedCards[i].suit === card.suit &&
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\server.log:157:aiPlayCards: 选中的牌 [🃏大王]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\server.log:204:aiPlayCards: 选中的牌 [🃏大王]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\server.log:397:aiPlayCards: 选中的牌 [🃏大王]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\server.log:564:aiPlayCards: 选中的牌 [🃏大王]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\server.log:1045:aiPlayCards: 选中的牌 [🃏大王]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\server.log:1241:aiPlayCards: 选中的牌 [🃏大王]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\server.log:1574:aiPlayCards: 选中的牌 [🃏大王]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\server.log:1938:aiPlayCards: 选中的牌 [🃏大王]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\server.log:2405:aiPlayCards: 选中的牌 [🃏大王]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\server.log:2462:aiPlayCards: 选中的牌 [🃏大王]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\局域网版使用说明.md:212:大王 > 小王 > 级牌(所有花色) > A > K > Q > J > 10 > 9 > 8 > 7 > 6 > 5 > 4 > 3 > 2
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\局域网版使用说明.md:234:| 三带二 | 三张相同+一对(可以对小王、对大王)          |
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\局域网版使用说明.md:244:- **可代替除大王、小王以外的任意一张牌**
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\局域网版使用说明.md:263:- **抗贡**: 手牌只有大王、小王、级牌时可抗贡，无需进贡
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@sinonjs\fake-timers\README.md:367:FakeTimers has a comprehensive test suite. If you're thinking of contributing bug
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\argparse\lib\action_container.js:301:    // unique (hopefully?) string suitable as dictionary key
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\trace-mapping\types\trace-mapping.d.mts:69: * Returns a sourcemap object (with decoded mappings) suitable for passing to a library that expects
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\trace-mapping\types\trace-mapping.d.mts:76: * Returns a sourcemap object (with encoded mappings) suitable for passing to a library that expects
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\trace-mapping\types\trace-mapping.d.cts:69: * Returns a sourcemap object (with decoded mappings) suitable for passing to a library that expects
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\trace-mapping\types\trace-mapping.d.cts:76: * Returns a sourcemap object (with encoded mappings) suitable for passing to a library that expects
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\ansi-styles\index.js:49:	for (const [sourceSpace, suite] of Object.entries(colorConvert)) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\ansi-styles\index.js:53:		} else if (typeof suite === 'object') {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\ansi-styles\index.js:54:			styles[name] = wrap(suite[targetSpace], offset);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\trace-mapping\src\trace-mapping.ts:251:  // SourceMapConsumer uses LEAST_UPPER_BOUND for some reason, so we follow suit.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\trace-mapping\src\trace-mapping.ts:330: * Returns a sourcemap object (with decoded mappings) suitable for passing to a library that expects
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\trace-mapping\src\trace-mapping.ts:340: * Returns a sourcemap object (with encoded mappings) suitable for passing to a library that expects
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\crypto.d.ts:2481:     * would allow an attacker to guess one of the values. This is suitable for
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\baseline-browser-mapping\LICENSE.txt:83:      cross-claim or counterclaim in a lawsuit) alleging that the Work
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\tls.d.ts:151:         * IETF name for the cipher suite.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\tls.d.ts:271:         * Returns an object containing information on the negotiated cipher suite.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\tls.d.ts:609:         * requires explicitly specifying a cipher suite with the `ciphers` option.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\tls.d.ts:798:         * Cipher suite specification, replacing the default. For more
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\tls.d.ts:799:         * information, see modifying the default cipher suite. Permitted
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\tls.d.ts:830:         * Attempt to use the server's cipher suite preferences instead of the
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\tls.d.ts:1107:     * [Modifying the default TLS cipher suite](https://nodejs.org/docs/latest-v25.x/api/tls.html#modifying-the-default-tls-cipher-suite).
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:97:     * if `test()` is called within a suite, it fulfills immediately.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:125:     * @return Fulfilled with `undefined` once the test completes, or immediately if the test runs within a suite.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:133:        export { suite as describe, test as it };
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:157:         * The `suite()` function is imported from the `node:test` module.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:158:         * @param name The name of the suite, which is displayed when reporting test results.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:160:         * @param options Configuration options for the suite. This supports the same options as {@link test}.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:161:         * @param fn The suite function declaring nested tests and suites. The first argument to this function is a {@link SuiteContext} object.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:165:        function suite(name?: string, options?: TestOptions, fn?: SuiteFn): Promise<void>;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:166:        function suite(name?: string, fn?: SuiteFn): Promise<void>;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:167:        function suite(options?: TestOptions, fn?: SuiteFn): Promise<void>;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:168:        function suite(fn?: SuiteFn): Promise<void>;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:169:        namespace suite {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:171:             * Shorthand for skipping a suite. This is the same as calling {@link suite} with `options.skip` set to `true`.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:179:             * Shorthand for marking a suite as `TODO`. This is the same as calling {@link suite} with `options.todo` set to `true`.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:187:             * Shorthand for marking a suite as `only`. This is the same as calling {@link suite} with `options.only` set to `true`.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:225:         * The type of a suite test function. The argument to this function is a {@link SuiteContext} object.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:701:                     * The type of the test, used to denote whether this is a suite.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:703:                    type?: "suite" | "test";
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:736:                 * The test type. Either `'suite'` or `'test'`.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:739:                type: "suite" | "test";
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:751:                 * The test type. Either `'suite'` or `'test'`.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:754:                type: "suite" | "test";
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:770:                     * The type of the test, used to denote whether this is a suite.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:773:                    type?: "suite" | "test";
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:812:                     * The type of the test, used to denote whether this is a suite.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:815:                    type?: "suite" | "test";
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:908:                     * The total number of suites run.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:910:                    suites: number;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:912:                     * The total number of tests run, excluding suites.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:920:                     * The total number of top level tests and suites.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:1277:         * An instance of `SuiteContext` is passed to each suite function in order to
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:1284:             * The absolute path of the test file that created the current suite. If a test file imports
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:1285:             * additional modules that generate suites, the imported suites will return the path of the root test file.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:1290:             * The name of the suite.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:1350:         * This function creates a hook that runs before executing a suite.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:1366:         * This function creates a hook that runs after executing a suite.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:1382:         * This function creates a hook that runs before each test in the current suite.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\test.d.ts:1398:         * This function creates a hook that runs after each test in the current suite.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@types\node\v8.d.ts:956:         * This can be used to release resources that should not or cannot be serialized or to convert user data into a form more suitable for serialization.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\gen-mapping\types\gen-mapping.d.mts:71: * Returns a sourcemap object (with decoded mappings) suitable for passing to a library that expects
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\gen-mapping\types\gen-mapping.d.mts:76: * Returns a sourcemap object (with encoded mappings) suitable for passing to a library that expects
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\gen-mapping\types\gen-mapping.d.cts:71: * Returns a sourcemap object (with decoded mappings) suitable for passing to a library that expects
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\gen-mapping\types\gen-mapping.d.cts:76: * Returns a sourcemap object (with encoded mappings) suitable for passing to a library that expects
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\gen-mapping\src\gen-mapping.ts:255: * Returns a sourcemap object (with decoded mappings) suitable for passing to a library that expects
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\gen-mapping\src\gen-mapping.ts:285: * Returns a sourcemap object (with encoded mappings) suitable for passing to a library that expects
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\ws\README.md:10:Passes the quite extensive Autobahn test suite: [server][server-report],
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\gen-mapping\dist\types\gen-mapping.d.ts:71: * Returns a sourcemap object (with decoded mappings) suitable for passing to a library that expects
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jridgewell\gen-mapping\dist\types\gen-mapping.d.ts:76: * Returns a sourcemap object (with encoded mappings) suitable for passing to a library that expects
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\human-signals\LICENSE:83:      cross-claim or counterclaim in a lawsuit) alleging that the Work
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\test-sequencer\build\index.js:112:    const shardRest = options.suiteLength % options.shardCount;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\test-sequencer\build\index.js:113:    const ratio = options.suiteLength / options.shardCount;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\test-sequencer\build\index.js:148:      suiteLength: tests.length
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\test-sequencer\build\index.js:153:      suiteLength: tests.length
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\path-scurry\node_modules\lru-cache\dist\esm\index.min.js.map:4:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\path-scurry\node_modules\lru-cache\dist\esm\index.js.map:1:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\path-scurry\node_modules\lru-cache\dist\esm\index.d.ts:658:         * suitable for adding to the cache.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\test-result\build\index.d.ts:151:  suites: Array<Suite>;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\test-result\build\index.d.mts:61:  suites: Array<Suite>;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\fast-json-stable-stringify\benchmark\index.js:4:const suite = new Benchmark.Suite;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\fast-json-stable-stringify\benchmark\index.js:21:  suite.add(name, function() {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\fast-json-stable-stringify\benchmark\index.js:26:suite
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\path-scurry\node_modules\lru-cache\dist\commonjs\index.min.js.map:4:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\path-scurry\node_modules\lru-cache\dist\commonjs\index.js.map:1:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\path-scurry\node_modules\lru-cache\dist\commonjs\index.d.ts:658:         * suitable for adding to the cache.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\error-ex\README.md:57:    array of lines (suitable for multi-line messages).
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\glob\README.md:923:cases where the choices that `fast-glob` makes in pursuit of
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\glob\node_modules\minimatch\README.md:194:supplied argument, suitable for use with `Array.filter`. Example:
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\glob\node_modules\minimatch\README.md:392:- `2` (or higher) - Much more aggressive optimizations, suitable
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\js-yaml\lib\js-yaml\dumper.js:274://    STYLE_LITERAL => no lines are suitable for folding (or lineWidth is -1).
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\js-yaml\lib\js-yaml\dumper.js:411:// Note: a long line without a suitable break point will exceed the width limit.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\exit-x\test\exit_test.js:53:    test.ok(grep, 'A suitable "grep" or "find" program was not found in the PATH.');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\js-yaml\dist\js-yaml.js:377://    STYLE_LITERAL => no lines are suitable for folding (or lineWidth is -1).
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\js-yaml\dist\js-yaml.js:514:// Note: a long line without a suitable break point will exceed the width limit.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\glob\node_modules\minimatch\dist\esm\ast.js.map:1:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\glob\node_modules\minimatch\dist\esm\ast.js:489:    // the BODY of the regexp, along with the start/end portions suitable
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:844:      throw new Error(`Sum(${computedTotal}) of passed (${passedTestSuites}) and failed (${failedTestSuites}) test suites is greater than the total number of test suites (${totalTestSuites}). Please report the bug at https://github.com/jestjs/jest/issues`);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:876:  getResultTree(suiteResult, testPath, suitePerf) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:881:      performanceInfo: suitePerf
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:884:    for (const element of suiteResult) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:910:      const newChild = this.getResultChildren(suiteResult, element);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:918:  getResultChildren(suiteResult, ancestors) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:925:    for (const element of suiteResult) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:954:      const newChild = this.getResultChildren(suiteResult, element);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1570:    return _chalk().default.dim('Ran all test suites') + testInfo + nameInfo + contextInfo + _chalk().default.dim('.');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1638:      suites: [],
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1645:      // Find the target suite for this test,
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1646:      // creating nested suites as necessary.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1648:        let matchingSuite = targetSuite.suites.find(s => s.title === title);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1651:            suites: [],
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1655:          targetSuite.suites.push(matchingSuite);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1678:  _logSuite(suite, indentLevel) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1679:    if (suite.title) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1680:      this._logLine(suite.title, indentLevel);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1682:    this._logTests(suite.tests, indentLevel + 1);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1683:    for (const innerSuite of suite.suites) {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1966:    summary.push(`${SNAPSHOT_ADDED(`${ARROW + (0, _jestUtil().pluralize)('snapshot', snapshots.added)} written `)}from ${(0, _jestUtil().pluralize)('test suite', snapshots.filesAdded)}.`);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1969:    summary.push(`${FAIL_COLOR(`${ARROW}${(0, _jestUtil().pluralize)('snapshot', snapshots.unmatched)} failed`)} from ${(0, _jestUtil().pluralize)('test suite', snapshots.filesUnmatched)}. ${SNAPSHOT_NOTE(`Inspect your code changes or ${updateCommand} to update them.`)}`);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1972:    summary.push(`${SNAPSHOT_UPDATED(`${ARROW + (0, _jestUtil().pluralize)('snapshot', snapshots.updated)} updated `)}from ${(0, _jestUtil().pluralize)('test suite', snapshots.filesUpdated)}.`);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1976:      summary.push(`${SNAPSHOT_REMOVED(`${ARROW}${(0, _jestUtil().pluralize)('snapshot file', snapshots.filesRemoved)} removed `)}from ${(0, _jestUtil().pluralize)('test suite', snapshots.filesRemoved)}.`);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1978:      summary.push(`${OBSOLETE_COLOR(`${ARROW}${(0, _jestUtil().pluralize)('snapshot file', snapshots.filesRemoved)} obsolete `)}from ${(0, _jestUtil().pluralize)('test suite', snapshots.filesRemoved)}. ${SNAPSHOT_NOTE(`To remove ${snapshots.filesRemoved === 1 ? 'it' : 'them all'}, ${updateCommand}.`)}`);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1990:      summary.push(`${SNAPSHOT_REMOVED(`${ARROW}${(0, _jestUtil().pluralize)('snapshot', snapshots.unchecked)} removed `)}from ${(0, _jestUtil().pluralize)('test suite', snapshots.uncheckedKeysByFile.length)}.`);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:1992:      summary.push(`${OBSOLETE_COLOR(`${ARROW}${(0, _jestUtil().pluralize)('snapshot', snapshots.unchecked)} obsolete `)}from ${(0, _jestUtil().pluralize)('test suite', snapshots.uncheckedKeysByFile.length)}. ${SNAPSHOT_NOTE(`To remove ${snapshots.unchecked === 1 ? 'it' : 'them all'}, ${updateCommand}.`)}`);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:2113:  const suitesFailed = aggregatedResults.numFailedTestSuites;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:2114:  const suitesPassed = aggregatedResults.numPassedTestSuites;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:2115:  const suitesPending = aggregatedResults.numPendingTestSuites;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:2116:  const suitesRun = suitesFailed + suitesPassed;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:2117:  const suitesTotal = aggregatedResults.numTotalTestSuites;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:2134:  const suites = `${_chalk().default.bold('Test Suites: ') + (suitesFailed ? `${_chalk().default.bold.red(`${suitesFailed} failed`)}, ` : '') + (suitesPending ? `${_chalk().default.bold.yellow(`${suitesPending} skipped`)}, ` : '') + (suitesPassed ? `${_chalk().default.bold.green(`${suitesPassed} passed`)}, ` : '') + (suitesRun === suitesTotal ? suitesTotal : `${suitesRun} of ${suitesTotal}`)} total`;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\reporters\build\index.js:2143:  return [...optionalLines, suites, tests, snapshots, time].join('\n');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-validate\README.md:64:Almost anything can be overwritten to suite your needs.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\esprima\bin\esvalidate.js:129:    console.log('<testsuites>');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\esprima\bin\esvalidate.js:155:            console.log('<testsuite name="' + fname + '" errors="0" ' +
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\esprima\bin\esvalidate.js:172:            console.log('</testsuite>');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\esprima\bin\esvalidate.js:188:            console.log('<testsuite name="' + fname + '" errors="1" failures="0" tests="1" ' +
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\esprima\bin\esvalidate.js:195:            console.log('</testsuite>');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\esprima\bin\esvalidate.js:226:        console.log('</testsuites>');
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\esprima\ChangeLog:80:      * Run the test suite with major web browsers (issue 1259, 1317)
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\esprima\ChangeLog:90:      * Run the test suite with Node.js and IE 11 on Windows (issue 1294)
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\esprima\ChangeLog:95:      * Run the test suite in a browser environment (issue 1004)
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\glob\node_modules\minimatch\dist\commonjs\ast.js.map:1:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\glob\node_modules\minimatch\dist\commonjs\ast.js:492:    // the BODY of the regexp, along with the start/end portions suitable
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-util\Readme.md:47:Checks whether the current environment is suitable for interactive terminal interactions.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\README.md:12:jest-each allows you to provide multiple arguments to your `test`/`describe` which results in the test/suite being run once per row of parameters.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\README.md:28:- `.describe` to runs test suites with parameterised data
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\README.md:29:- `.describe.only` to only run the parameterised suite of tests
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\README.md:31:- `.describe.skip` to skip the parameterised suite of tests
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\README.md:130:#### `each([parameters]).describe(name, suiteFn)`
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\README.md:134:- parameters: `Array` of Arrays with the arguments that are passed into the `suiteFn` for each row
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\README.md:155:- suiteFn: `Function` the suite of `test`/`it`s to be ran, this is the function that will receive the parameters in each row as function arguments
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\README.md:363:#### `each[tagged template].test(name, suiteFn)`
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\README.md:388:#### `each[tagged template].describe(name, suiteFn)`
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\README.md:422:- suiteFn: `Function` the suite of `test`/`it`s to be ran, this is the function that will receive the parameters in each row as function arguments
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\build\index.js:397:  const describe = (title, suite, timeout) => (0, _bind.default)(g.describe, false)(table, ...data)(title, suite, timeout);
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\build\index.d.ts:28:        suite: Global_2.EachTestFn<Global_2.BlockFn>,
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\build\index.d.ts:94:      suite: Global_2.EachTestFn<Global_2.BlockFn>,
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\build\index.d.mts:12:    (title: string, suite: Global$1.EachTestFn<Global$1.BlockFn>, timeout?: number): any;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-each\build\index.d.mts:46:      (title: string, suite: Global$1.EachTestFn<Global$1.BlockFn>, timeout?: number): any;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-util\build\index.js:917:    stream.write(_chalk().default.bold.dim('Determining test suites to run...'));
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\minipass\README.md:577:  again suitable to `write()` into the stream.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-runner\build\index.js:532:    // Send test suites to workers continuously instead of all at once to track
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-message-util\build\index.js:74:const EXEC_ERROR_MESSAGE = 'Test suite failed to run';
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-message-util\build\index.js:111:// ExecError is an error thrown outside of the test suite (not inside an `it` or
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\minipass\dist\esm\index.js.map:1:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\minipass\dist\esm\index.js:455:        // This makes MP more suitable to write-only use cases.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\minipass\dist\esm\index.d.ts.map:1:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-config\build\index.js:229:  globalSetup: 'A path to a module which exports an async function that is triggered once before all test suites',
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-config\build\index.js:230:  globalTeardown: 'A path to a module which exports an async function that is triggered once after all test suites',
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-config\build\index.js:1495:// _replaceRootDirTags is specifically well-suited for substituting
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\minipass\dist\commonjs\index.d.ts.map:1:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\minimatch\README.md:194:supplied argument, suitable for use with `Array.filter`. Example:
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\minimatch\README.md:394:- `2` (or higher) - Much more aggressive optimizations, suitable
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\minipass\dist\commonjs\index.js.map:1:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\minipass\dist\commonjs\index.js:472:        // This makes MP more suitable to write-only use cases.
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-cli\build\index.js:81:    description: 'Exit the test suite immediately after `n` number of failing tests.',
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-cli\build\index.js:346:    description: 'A list of custom reporters for the test suite.',
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-cli\build\index.js:532:    description: 'Use this flag to re-record snapshots. ' + 'Can be used together with a test suite pattern or with ' + '`--testNamePattern` to re-record snapshot for test matching ' + 'the pattern',
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\jest-cli\build\index.js:540:    description: 'Display individual test results with the test suite hierarchy.',
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\minimatch\dist\esm\ast.js.map:1:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\minimatch\dist\esm\ast.js:554:    // the BODY of the regexp, along with the start/end portions suitable
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\minimatch\dist\commonjs\ast.js.map:1:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\minimatch\dist\commonjs\ast.js:557:    // the BODY of the regexp, along with the start/end portions suitable
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\caniuse-lite\data\features\chacha20-poly1305.js:1:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\signal-exit\README.md:34:If the global `process` object is not suitable for this purpose
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\core\build\index.js:46:    this._enabledTestsMap = (testResults || []).reduce((suiteMap, testResult) => {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\core\build\index.js:48:        suiteMap[testResult.testFilePath] = {};
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\core\build\index.js:49:        return suiteMap;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\core\build\index.js:52:        return suiteMap;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\core\build\index.js:54:      suiteMap[testResult.testFilePath] = testResult.testResults.reduce((testMap, test) => {
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\core\build\index.js:61:      return suiteMap;
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\core\build\index.js:1054:        const message = 'Your test suite must contain at least one test.';
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@jest\core\build\index.js:1063:        const message = `${_chalk().default.red.bold('EXPERIMENTAL FEATURE!\n')}Your test suite is leaking memory. Please ensure all references are cleaned.\n` + '\n' + 'There is a number of things that can leak memory:\n' + '  - Async operations that have not finished (e.g. fs.readFile).\n' + '  - Timers not properly mocked (e.g. setInterval, setTimeout).\n' + '  - Keeping references to the global scope.';
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\signal-exit\dist\mjs\index.d.ts:24: * If the global process object is not suitable for instrumentation,
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\signal-exit\dist\mjs\index.js:253: * If the global process object is not suitable for instrumentation,
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\signal-exit\dist\mjs\index.js.map:1:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\signal-exit\dist\cjs\index.d.ts:24: * If the global process object is not suitable for instrumentation,
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@istanbuljs\schema\index.js:263:		description: 'whether or not to instrument all files of the project (not just the ones touched by your test suite)',
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\signal-exit\dist\cjs\index.js.map:1:[Omitted long matching line]
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\signal-exit\dist\cjs\index.js:257: * If the global process object is not suitable for instrumentation,
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\test-exclude\node_modules\minimatch\README.md:133:supplied argument, suitable for use with `Array.filter`.  Example:
+f:\HFF\Obsidian\FFNotes\AI库\小游戏\掼蛋\node_modules\@pkgjs\parseargs\LICENSE:83:      cross-claim or counterclaim in a lawsuit) alleging that the Work

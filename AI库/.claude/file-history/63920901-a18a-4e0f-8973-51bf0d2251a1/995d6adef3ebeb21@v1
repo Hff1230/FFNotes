@@ -1,0 +1,357 @@
+using FairyGUI;
+using System;
+using System.Collections.Generic;
+
+namespace DayZ
+{
+    public class FBAllianceGiftView : PopupBaseView, IReusePanel
+    {
+        private GList list;
+        private GTextField giftLevel;
+        private GImage giftLevelProgress;
+        private Controller controller;
+        private Controller giftTab;
+        private GProgressBar boxProgress;
+        private GButton boxBtn;
+        private GButton boxRewardBtn;
+        private GTextField boxNameText;
+        private GObject previewLocationPos;
+        private GButton anonymSetBtn;
+
+        //private GTextField boxNumText;
+        private CommonRedTipComponent boxRedNode;
+        private GButton m_getAllNormalBtn;
+
+        private int currentTab = 0;
+
+        private bool firstInView = false;
+
+        private List<FBAllianceGiftInfo> data = new List<FBAllianceGiftInfo>();
+        private List<FBAllianceGiftInfo> boxes = new List<FBAllianceGiftInfo>();
+        private PresentListView m_presentView;
+        private GButton normalGiftBtn;
+        private GButton specialGiftBtn;
+        private CommonRedTipComponent normalRedNode;
+        private CommonRedTipComponent specialRedNode;
+        private GTextField recvGiftCountText;
+        private GButton recvLimitTipButton;
+        private GTextField sendGiftCountText;
+        private GButton sendLimitTipButton;
+
+        public static FBAllianceGiftView create()
+        {
+            return PopupViewController.getInstance().CreatePopupView<FBAllianceGiftView>("FBAllianceGiftView");
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            UIObjectFactory.SetPackageItemExtension("ui://league/presentItem", typeof(FBAllianceGiftCell));
+            UIObjectFactory.SetPackageItemExtension("ui://league/C_presentlist", typeof(PresentListView));
+            UIObjectFactory.SetPackageItemExtension("ui://league/presentList", typeof(GCommonGiftItem));
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            CCSafeNotificationCenter.sharedNotificationCenter().addObserver(this, RefreshView, "refresh_alliance_gift", null);
+            CCSafeNotificationCenter.sharedNotificationCenter().addObserver(this, RefreshView, "retGetRewardCmd", null);
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            normalRedNode.SetData("");
+            specialRedNode.SetData("");
+            CCSafeNotificationCenter.sharedNotificationCenter().removeObserver(this, "refresh_alliance_gift");
+            CCSafeNotificationCenter.sharedNotificationCenter().removeObserver(this, "retGetRewardCmd");
+        }
+
+        public override void InitializeFairyComponents()
+        {
+            base.InitializeFairyComponents();
+            list = _mainView.GetChild("n24").asList;
+            list.SetVirtual();
+            this.list.itemRenderer = ItemRenderer;
+
+            giftLevel = _mainView.GetChild("n11").asTextField;
+
+            giftLevelProgress = _mainView.GetChild("n52").asImage;
+
+            var button = _mainView.GetChild("n26").asButton;
+            button.title = Global._lang("2000001028");
+            button.onClick.Add(OnClickBuyButton);
+
+            boxProgress = _mainView.GetChild("n4").asProgress;
+            boxBtn = _mainView.GetChild("n58").asButton;
+            boxBtn.onClick.Add(onPrevOrGetRewardClick);
+
+            controller = _mainView.GetController("c1");
+
+            giftTab = _mainView.GetController("c2");
+            giftTab.onChanged.Add(onChangeTab);
+
+            normalGiftBtn = _mainView.GetChild("n30").asButton;
+            specialGiftBtn = _mainView.GetChild("n31").asButton;
+
+            m_getAllNormalBtn = _mainView.GetChild("n69").asButton;
+            m_getAllNormalBtn.onClick.Add(onGetAllNormalClick);
+
+            normalRedNode = normalGiftBtn.GetChild("n6") as CommonRedTipComponent;
+            specialRedNode = specialGiftBtn.GetChild("n6") as CommonRedTipComponent;
+
+            _mainView.onTouchEnd.Add(onTouchEnded);
+
+            boxRedNode = _mainView.GetChild("n65") as CommonRedTipComponent;
+            //boxNumText = _mainView.GetChild("boxNum").asTextField;
+            boxNameText = _mainView.GetChild("boxName").asTextField;
+
+            previewLocationPos = _mainView.GetChild("n68");
+
+            anonymSetBtn = _mainView.GetChild("select").asButton;
+            anonymSetBtn.onChanged.Add(OnChangeAnomyStatus);
+
+            var tipBtn = _mainView.GetChild("Detail").asButton;
+            tipBtn.onClick.Add(OnClickProbTip);
+
+            recvGiftCountText = _mainView.GetChild("n72").asTextField;
+            recvLimitTipButton = _mainView.GetChild("Detail1").asButton;
+            recvLimitTipButton.onClick.Add(OnShowRecvLimitTip);
+
+            sendGiftCountText = _mainView.GetChild("n74").asTextField;
+            sendLimitTipButton = _mainView.GetChild("Detail2").asButton;
+            sendLimitTipButton.onClick.Add(OnShowSendLimitTip);
+
+            _mainView.GetChild("n7").asTextField.text = Global._lang("77000202");
+            _mainView.GetChild("n9").asTextField.text = Global._lang("2000001784");
+            _mainView.GetChild("n25").asTextField.text = Global._lang("2000001026");
+
+            CCCommonUtils.setButtonTitle(normalGiftBtn, Global._lang("2000001716"));
+            CCCommonUtils.setButtonTitle(specialGiftBtn, Global._lang("2000001717"));
+
+            CCCommonUtils.setButtonTitle(m_getAllNormalBtn, Global._lang("83401193"));
+            CCCommonUtils.setButtonTitle(anonymSetBtn, Global._lang("ZH400040904"));
+
+            setTitleName(Global._lang("90902027"));
+
+            if (FunctionOnController.Instance.CheckFunctionOn("AllianceGift"))
+            {
+                anonymSetBtn.visible = true;
+            }
+            else
+            {
+                anonymSetBtn.visible = false;
+            }
+        }
+
+        private void OnShowRecvLimitTip(EventContext context)
+        {
+            int limit = FBAllianceGiftController.getInstance().m_recGiftLimit;
+            CCCommonUtils.ShowDescriptionTip(recvLimitTipButton, Global._lang_1("ZH400042889", limit));
+        }
+
+        private void OnShowSendLimitTip(EventContext context)
+        {
+            int limit = FBAllianceGiftController.getInstance().m_sendGiftLimit;
+            CCCommonUtils.ShowDescriptionTip(sendLimitTipButton, Global._lang_1("ZH400042890", limit));
+        }
+
+        private void OnClickProbTip()
+        {
+            string title = Global._lang("ZH400041797");
+            string desc = Global._lang("ZH400041799");
+            CCCommonUtils.ShowProbItemsView(title, desc, 4, "");
+        }
+
+        private void OnChangeAnomyStatus(EventContext context)
+        {
+            var cmd = new AGModifyUnnamedStatusCommand(anonymSetBtn.selected ? 1 : 0);
+            cmd.send();
+        }
+
+        private void onGetAllNormalClick(EventContext context)
+        {
+            FBAllianceGiftController.getInstance().sendGetAllRewardCmd();
+        }
+
+        private void onPrevOrGetRewardClick(EventContext context)
+        {
+            if (boxes.Count > 0)
+            {
+                string boxId = boxes[0].id;
+                //领取宝箱
+                FBAllianceGiftController.getInstance().sendGetRewardCmd(0, boxId);
+            }
+            else
+            {
+                //预览宝箱
+                int giftLvl = FBAllianceGiftController.getInstance().getOnLevel();
+                Alliance_box box = DataAtlasManager.Instance.GetDataWithTypeById<Alliance_box>(giftLvl.ToString());
+                var cmd = CommandBase.create("3rd.facebook.getbindreward");
+                cmd.setSuccessCallback(GetRewardDataCallBack);
+                cmd.putParam("rewardId", box.reward);
+                cmd.sendAndRelease();
+            }
+        }
+
+        private void GetRewardDataCallBack(NetResult obj)
+        {
+            List<ItemInfo> itemList = new List<ItemInfo>();
+            var dict = obj.Data as CCDictionary;
+            if (dict != null)
+            {
+                var rewards = dict["rewards"] as CCArray;
+                if (rewards != null)
+                {
+                    CCCommonUtils.ParseServerReward(rewards, itemList);
+                    if (m_presentView == null)
+                    {
+                        m_presentView = PresentListView.create(itemList);
+                        m_presentView.setPosition(previewLocationPos.xy);
+                        _mainView.AddChild(m_presentView);
+                    }
+                    else
+                    {
+                        m_presentView.setVisible(true);
+                        m_presentView.setData(itemList);
+                    }
+                }
+            }
+        }
+
+        private void onTouchEnded(EventContext context)
+        {
+            if (m_presentView != null && m_presentView.visible
+                && !Global.isTouchInside(m_presentView, context))
+            {
+                m_presentView.setVisible(false);
+            }
+        }
+
+        private void onChangeTab(EventContext context)
+        {
+            currentTab = giftTab.selectedIndex;
+            RefreshView(null);
+        }
+
+        public override void Init(params object[] data)
+        {
+            base.Init(data);
+
+            this.controller.selectedIndex = 0;
+            firstInView = true;
+            //处理礼包头
+            var list = LiBaoController.getInstance().getGoldExchangeDataByType("37", "");
+            FBAllianceGiftController.getInstance().getServerData(0, 10000);
+            RefreshView(null);
+            if (m_presentView != null && m_presentView.visible)
+                m_presentView.setVisible(false);
+        }
+
+        private void RefreshView(object p)
+        {
+            if (!FBAllianceGiftController.getInstance().getIsDataBack())
+            {
+                boxRedNode.OnRedTipUpdate(0, RedTipStrategy.Number);
+                normalRedNode.SetData("");
+                specialRedNode.SetData("");
+                return;
+            }
+            normalRedNode.SetData("Alliance_generalGift");
+            specialRedNode.SetData("Alliance_specialGift");
+            if (firstInView)
+            {
+                firstInView = false;
+                CCCommonUtils.CheckAllianceGiftNums(out var nNum, out var sNum);
+                if (nNum < 1 && sNum > 0)
+                {
+                    giftTab.SetSelectedIndex(1);
+                }
+                else
+                {
+                    giftTab.SetSelectedIndex(0);
+                }
+                currentTab = giftTab.selectedIndex;
+            }
+
+            int recvLimit = FBAllianceGiftController.getInstance().m_recGiftLimit;
+            int recvCount = recvLimit - FBAllianceGiftController.getInstance().m_recGiftCount;
+            recvGiftCountText.text = Global._lang_2("ZH400042887", recvCount.ToString(), recvLimit.ToString());
+
+            int sendLimit = FBAllianceGiftController.getInstance().m_sendGiftLimit;
+            int sendCount = sendLimit - FBAllianceGiftController.getInstance().m_sendGiftCount;
+            sendGiftCountText.text = Global._lang_2("ZH400042888", sendCount.ToString(), sendLimit.ToString());
+
+            boxes.Clear();
+            boxes.AddRange(FBAllianceGiftController.getInstance().m_fbAllianceBoxInfo.Values);
+            boxes.Sort((L, R) => L.createTime.CompareTo(R.createTime));
+
+            if (boxes.Count < 1)
+            {
+                boxNameText.setString(Global._lang_1("2000001715",
+                    FBAllianceGiftController.getInstance().getOnLevel()));
+                //boxNumText.setString("");
+                //boxRedNode.setVisible(false);
+                boxRedNode.OnRedTipUpdate(0, RedTipStrategy.Number);
+            }
+            else
+            {
+                //boxRedNode.setVisible(true);
+                boxNameText.setString(Global._lang_1("2000001715", boxes[0].level));
+                //boxNumText.setString(boxes.Count.ToString());
+                boxRedNode.OnRedTipUpdate(boxes.Count, RedTipStrategy.Number);
+            }
+
+            data.Clear();
+            foreach (var gift in FBAllianceGiftController.getInstance().m_fbAllianceGiftInfo.Values)
+            {
+                if (gift.type == currentTab)
+                {
+                    data.Add(gift);
+                }
+            }
+
+            data.Sort((gift1, gift2) => gift1.createTime.CompareTo(gift2.createTime));
+            list.numItems = data.Count;
+            refreshBar1();
+            refreshBar2();
+            this.controller.selectedIndex = data.Count > 0 ? 0 : 1;
+
+            anonymSetBtn.selected = FBAllianceGiftController.getInstance().getUnnamedStatus() == 1;
+        }
+        public void refreshBar1(object p = null)
+        {
+            giftLevel.text = Global._lang_1("77100055", FBAllianceGiftController.getInstance().getOnLevel());
+            double max = FBAllianceGiftController.getInstance().getOnMaxExp();
+            double value = FBAllianceGiftController.getInstance().getOnCurrExp();
+            giftLevelProgress.fillAmount = (float)(value / max);
+            LogCommon.LogError("alliance gift box : {0}-{1}-{2}", giftLevel.text, value, max);
+        }
+        private void refreshBar2()
+        {
+            int curExp = FBAllianceGiftController.getInstance().getBoxExp();
+            int maxExp = FBAllianceGiftController.getInstance().getBoxMaxExp();
+            boxProgress.setScaleX(curExp, maxExp);
+        }
+        private void OnClickBuyButton()
+        {
+            PopupViewController.getInstance().removeAllPopupView();
+            ActivityView.Create("DailyReward");
+        }
+
+        public void ItemRenderer(int idx, GObject item)
+        {
+            if (idx >= data.Count)
+                return;
+
+            FBAllianceGiftCell cell = item as FBAllianceGiftCell;
+            if (cell != null)
+                cell.SetData(idx, data[idx]);
+        }
+
+        public void Reset()
+        {
+            this.list.numItems = 0;
+        }
+    }
+}

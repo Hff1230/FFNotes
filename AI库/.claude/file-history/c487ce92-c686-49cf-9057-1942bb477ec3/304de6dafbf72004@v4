@@ -1,0 +1,905 @@
+# Unity3D 游戏开发代码规范
+
+## 目录
+- [命名规范](#命名规范)
+- [代码结构](#代码结构)
+- [组件设计原则](#组件设计原则)
+- [性能优化规范](#性能优化规范)
+- [内存管理规范](#内存管理规范)
+- [协程与异步规范](#协程与异步规范)
+- [事件系统规范](#事件系统规范)
+- [对象池规范](#对象池规范)
+- [UI开发规范](#ui开发规范)
+- [FairyGUI 界面开发规范](#fairygui-界面开发规范)
+- [资源管理规范](#资源管理规范)
+
+---
+
+## 命名规范
+
+### 通用规则
+```
+// ✅ 正确示例
+public class PlayerController : MonoBehaviour { }
+private const int MAX_HEALTH = 100;
+private int _currentHealth;
+public float MoveSpeed { get; set; }
+
+// ❌ 错误示例
+public class playercontroller : MonoBehaviour { }
+private const int maxHealth = 100;
+private int currentHealth;
+public float moveSpeed { get; set; }
+```
+
+### 命名约定表
+
+| 类型 | 命名规则 | 示例 |
+|------|----------|------|
+| 类名 | PascalCase | `PlayerController`, `GameManager` |
+| 接口 | IPascalCase | `IDamageable`, `IInteractable` |
+| 方法 | PascalCase | `TakeDamage()`, `UpdatePosition()` |
+| 属性 | PascalCase | `HealthPoints`, `IsAlive` |
+| 公共字段 | PascalCase | `MaxSpeed`, `Damage` |
+| 私有字段 | _camelCase | `_currentHealth`, `_isJumping` |
+| 局部变量 | camelCase | `targetPosition`, `damageAmount` |
+| 常量 | UPPER_SNAKE_CASE | `MAX_PLAYERS`, `DEFAULT_SPEED` |
+| 静态只读 | UPPER_SNAKE_CASE | `Instance`, `DefaultSettings` |
+| 枚举 | ***Enum | `HeroQualityEnum`, `GameStateEnum` |
+| 事件 | PascalCase | `OnDeath`, `OnLevelComplete` |
+| 界面类 | ***View | `HeroListView`, `ShopView` |
+| 组件类 | ***Com | `HeroIconCom`, `ProgressBarCom` |
+
+### 前缀约定
+
+```csharp
+// Inspector 序列化字段
+[SerializeField] private int _maxHealth;  // 私有字段使用下划线前缀
+
+// Inspector 显示名称使用 Header
+[Header("Movement Settings")]
+[SerializeField] private float _moveSpeed = 5f;
+
+// 常见组件缓存前缀
+private Transform _transform;
+private Rigidbody _rigidbody;
+private Animator _animator;
+private AudioSource _audioSource;
+
+// 序列化字段使用 s_ 前缀区分
+[SerializeField] private static int s_instanceCount;
+```
+
+---
+
+## 代码结构
+
+### MonoBehaviour 标准模板
+
+```csharp
+/// <summary>
+/// 玩家控制器 - 处理玩家输入和移动
+/// </summary>
+public class PlayerController : MonoBehaviour
+{
+    #region Constants
+    private const float DEFAULT_MOVE_SPEED = 5f;
+    private const string HORIZONTAL_AXIS = "Horizontal";
+    #endregion
+
+    #region Serialized Fields
+    [Header("Movement Settings")]
+    [SerializeField] private float _moveSpeed = DEFAULT_MOVE_SPEED;
+    [SerializeField] private float _rotationSpeed = 10f;
+
+    [Header("References")]
+    [SerializeField] private Transform _cameraTransform;
+    #endregion
+
+    #region Private Fields
+    private Vector3 _moveDirection;
+    private float _horizontalInput;
+    private bool _isMoving;
+    #endregion
+
+    #region Properties
+    public float MoveSpeed => _moveSpeed;
+    public bool IsMoving => _isMoving;
+    #endregion
+
+    #region Unity Lifecycle
+    private void Awake()
+    {
+        InitializeComponents();
+    }
+
+    private void Start()
+    {
+        InitializeReferences();
+    }
+
+    private void Update()
+    {
+        HandleInput();
+        UpdateMovement();
+    }
+
+    private void FixedUpdate()
+    {
+        ApplyPhysics();
+    }
+
+    private void OnDestroy()
+    {
+        Cleanup();
+    }
+    #endregion
+
+    #region Public Methods
+    public void SetMoveSpeed(float speed)
+    {
+        _moveSpeed = Mathf.Max(0, speed);
+    }
+    #endregion
+
+    #region Private Methods
+    private void InitializeComponents()
+    {
+        // 缓存组件引用
+    }
+
+    private void InitializeReferences()
+    {
+        // 初始化外部引用
+    }
+
+    private void HandleInput()
+    {
+        _horizontalInput = Input.GetAxis(HORIZONTAL_AXIS);
+    }
+
+    private void UpdateMovement()
+    {
+        // 更新移动逻辑
+    }
+
+    private void ApplyPhysics()
+    {
+        // 物理相关逻辑
+    }
+
+    private void Cleanup()
+    {
+        // 清理资源
+    }
+    #endregion
+
+    #region Event Handlers
+    private void OnGamePaused()
+    {
+        enabled = false;
+    }
+
+    private void OnGameResumed()
+    {
+        enabled = true;
+    }
+    #endregion
+}
+```
+
+---
+
+## 组件设计原则
+
+### 单一职责原则
+
+```csharp
+// ✅ 正确：职责分离
+public class PlayerMovement : MonoBehaviour { }
+public class PlayerHealth : MonoBehaviour { }
+public class PlayerInventory : MonoBehaviour { }
+
+// ❌ 错误：单一组件承担过多职责
+public class Player : MonoBehaviour
+{
+    public void Move() { }
+    public void TakeDamage() { }
+    public void AddItem() { }
+    public void Attack() { }
+    public void Jump() { }
+}
+```
+
+### 组件通信模式
+
+```csharp
+// 1. 直接引用 - 适用于紧耦合组件
+public class PlayerController : MonoBehaviour
+{
+    [SerializeField] private PlayerHealth _health;
+
+    public void TakeDamage(int damage)
+    {
+        _health?.Damage(damage);
+    }
+}
+
+// 2. 事件系统 - 适用于松耦合
+public class GameEvents : MonoBehaviour
+{
+    public static event Action<int> OnScoreChanged;
+    public static event Action OnPlayerDeath;
+
+    public static void TriggerScoreChanged(int score)
+    {
+        OnScoreChanged?.Invoke(score);
+    }
+}
+
+// 3. 接口依赖 - 适用于多态
+public interface IDamageable
+{
+    void TakeDamage(int damage);
+}
+
+public class Projectile : MonoBehaviour
+{
+    private void OnCollisionEnter(Collision collision)
+    {
+        var damageable = collision.gameObject.GetComponent<IDamageable>();
+        damageable?.TakeDamage(_damage);
+    }
+}
+```
+
+---
+
+## 性能优化规范
+
+### 缓存引用
+
+```csharp
+// ✅ 正确：缓存组件引用
+public class Enemy : MonoBehaviour
+{
+    private Transform _transform;
+    private Animator _animator;
+    private NavMeshAgent _agent;
+
+    private void Awake()
+    {
+        _transform = transform;
+        _animator = GetComponent<Animator>();
+        _agent = GetComponent<NavMeshAgent>();
+    }
+
+    private void Update()
+    {
+        // 使用缓存的引用
+        Vector3 position = _transform.position;
+    }
+}
+
+// ❌ 错误：每次调用都获取组件
+private void Update()
+{
+    Vector3 position = transform.position;  // 属性访问开销
+    var animator = GetComponent<Animator>(); // 严重性能问题
+}
+```
+
+### 避免每帧分配
+
+```csharp
+// ✅ 正确：复用变量
+public class ProjectileSpawner : MonoBehaviour
+{
+    private List<Projectile> _activeProjectiles = new List<Projectile>();
+    private Vector3 _spawnPosition;
+
+    private void Update()
+    {
+        _spawnPosition = transform.position;
+        // 使用复用的列表和位置变量
+    }
+}
+
+// ❌ 错误：每帧分配新对象
+private void Update()
+{
+    var projectiles = new List<Projectile>(); // 每帧分配!
+    Vector3 spawnPos = new Vector3(); // 每帧分配!
+}
+```
+
+### 字符串优化
+
+```csharp
+// ✅ 正确：使用 StringBuilder 或字符串缓存
+private static readonly StringBuilder _sb = new StringBuilder();
+private const string SCORE_PREFIX = "Score: ";
+
+public void UpdateScoreDisplay(int score)
+{
+    _sb.Clear();
+    _sb.Append(SCORE_PREFIX);
+    _sb.Append(score);
+    scoreText.text = _sb.ToString();
+}
+
+// ✅ 正确：Animator 参数使用哈希
+private static readonly int SpeedHash = Animator.StringToHash("Speed");
+private static readonly int JumpHash = Animator.StringToHash("Jump");
+
+private void Update()
+{
+    _animator.SetFloat(SpeedHash, _currentSpeed);
+}
+
+// ❌ 错误：使用字符串参数
+_animator.SetFloat("Speed", _currentSpeed); // 每次计算哈希
+```
+
+### 层级与标签缓存
+
+```csharp
+// ✅ 正确：缓存层级和标签
+public class CollisionDetector : MonoBehaviour
+{
+    private static readonly int EnemyLayer = LayerMask.NameToLayer("Enemy");
+    private static readonly int EnemyLayerMask = 1 << EnemyLayer;
+
+    private void CheckCollision()
+    {
+        if (Physics.CheckSphere(position, radius, EnemyLayerMask))
+        {
+            // 检测到敌人
+        }
+    }
+}
+```
+
+---
+
+## 内存管理规范
+
+### 对象生命周期管理
+
+```csharp
+public class ResourceManager : MonoBehaviour
+{
+    private List<IDisposable> _disposables = new List<IDisposable>();
+
+    public void RegisterDisposable(IDisposable disposable)
+    {
+        _disposables.Add(disposable);
+    }
+
+    private void OnDestroy()
+    {
+        foreach (var disposable in _disposables)
+        {
+            disposable?.Dispose();
+        }
+        _disposables.Clear();
+    }
+}
+```
+
+### 避免内存泄漏
+
+```csharp
+// ✅ 正确：正确注销事件
+public class Enemy : MonoBehaviour, IDamageable
+{
+    private void OnEnable()
+    {
+        GameEvents.OnGamePaused += HandleGamePaused;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnGamePaused -= HandleGamePaused;
+    }
+
+    private void HandleGamePaused() { }
+}
+
+// ❌ 错误：未注销事件导致内存泄漏
+private void Start()
+{
+    GameEvents.OnGamePaused += HandleGamePaused;
+    // OnDestroy 中没有注销!
+}
+```
+
+---
+
+## 协程与异步规范
+
+### 协程最佳实践
+
+```csharp
+// ✅ 正确：缓存 WaitForSeconds
+public class CooldownSystem : MonoBehaviour
+{
+    private static readonly WaitForSeconds WaitOneSecond = new WaitForSeconds(1f);
+    private static readonly WaitForSeconds WaitPointOne = new WaitForSeconds(0.1f);
+
+    private Coroutine _cooldownCoroutine;
+
+    public void StartCooldown(float duration)
+    {
+        if (_cooldownCoroutine != null)
+        {
+            StopCoroutine(_cooldownCoroutine);
+        }
+        _cooldownCoroutine = StartCoroutine(CooldownRoutine(duration));
+    }
+
+    private IEnumerator CooldownRoutine(float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        OnCooldownComplete();
+    }
+}
+
+// ❌ 错误：每次创建新的 WaitForSeconds
+private IEnumerator BadCoroutine()
+{
+    yield return new WaitForSeconds(1f); // 每次分配新对象!
+}
+```
+
+### 异步/等待模式 (Unity 2023+)
+
+```csharp
+public class AsyncOperationExample : MonoBehaviour
+{
+    private CancellationTokenSource _cts;
+
+    private async void Start()
+    {
+        _cts = new CancellationTokenSource();
+        try
+        {
+            await LoadSceneAsync("GameScene", _cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            // 处理取消
+        }
+    }
+
+    private void OnDestroy()
+    {
+        _cts?.Cancel();
+        _cts?.Dispose();
+    }
+
+    private async Task LoadSceneAsync(string sceneName, CancellationToken token)
+    {
+        var operation = SceneManager.LoadSceneAsync(sceneName);
+        while (!operation.isDone)
+        {
+            token.ThrowIfCancellationRequested();
+            await Task.Yield();
+        }
+    }
+}
+```
+
+---
+
+## 事件系统规范
+
+### 事件定义模式
+
+```csharp
+// ✅ 正确：标准事件模式
+public class PlayerEvents
+{
+    // 简单事件
+    public static event Action OnJump;
+    public static event Action<int> OnScoreChanged;
+
+    // 带参数的事件
+    public static event Action<float, Vector3> OnDamageTaken;
+
+    // 触发方法
+    public static void TriggerJump() => OnJump?.Invoke();
+    public static void TriggerScoreChanged(int score) => OnScoreChanged?.Invoke(score);
+}
+
+// ✅ 正确：使用事件参数类
+public class DamageEventArgs : EventArgs
+{
+    public float Damage { get; }
+    public Vector3 HitPoint { get; }
+    public GameObject Source { get; }
+
+    public DamageEventArgs(float damage, Vector3 hitPoint, GameObject source)
+    {
+        Damage = damage;
+        HitPoint = hitPoint;
+        Source = source;
+    }
+}
+
+public event EventHandler<DamageEventArgs> OnDamaged;
+```
+
+---
+
+## 对象池规范
+
+### 通用对象池实现
+
+```csharp
+public class ObjectPool<T> where T : Component
+{
+    private readonly Queue<T> _pool = new Queue<T>();
+    private readonly T _prefab;
+    private readonly Transform _parent;
+    private readonly int _initialSize;
+
+    public ObjectPool(T prefab, Transform parent, int initialSize = 10)
+    {
+        _prefab = prefab;
+        _parent = parent;
+        _initialSize = initialSize;
+
+        Preallocate();
+    }
+
+    private void Preallocate()
+    {
+        for (int i = 0; i < _initialSize; i++)
+        {
+            var obj = CreateNew();
+            obj.gameObject.SetActive(false);
+            _pool.Enqueue(obj);
+        }
+    }
+
+    public T Get()
+    {
+        T obj = _pool.Count > 0 ? _pool.Dequeue() : CreateNew();
+        obj.gameObject.SetActive(true);
+        return obj;
+    }
+
+    public void Return(T obj)
+    {
+        obj.gameObject.SetActive(false);
+        obj.transform.SetParent(_parent);
+        _pool.Enqueue(obj);
+    }
+
+    private T CreateNew()
+    {
+        return Object.Instantiate(_prefab, _parent);
+    }
+}
+```
+
+---
+
+## UI开发规范
+
+### MVVM 模式示例
+
+```csharp
+// ViewModel
+public class HealthViewModel : MonoBehaviour
+{
+    [SerializeField] private PlayerHealth _model;
+    [SerializeField] private HealthView _view;
+
+    private void OnEnable()
+    {
+        _model.OnHealthChanged += UpdateView;
+    }
+
+    private void OnDisable()
+    {
+        _model.OnHealthChanged -= UpdateView;
+    }
+
+    private void UpdateView(float currentHealth, float maxHealth)
+    {
+        float percentage = currentHealth / maxHealth;
+        _view.SetHealthBar(percentage);
+        _view.SetHealthText($"{currentHealth}/{maxHealth}");
+    }
+}
+
+// View
+public class HealthView : MonoBehaviour
+{
+    [SerializeField] private Image _healthBar;
+    [SerializeField] private TMP_Text _healthText;
+
+    public void SetHealthBar(float percentage)
+    {
+        _healthBar.fillAmount = percentage;
+    }
+
+    public void SetHealthText(string text)
+    {
+        _healthText.text = text;
+    }
+}
+```
+
+---
+
+## FairyGUI 界面开发规范
+
+### 界面基类: PopupBaseView
+
+所有界面控制器必须继承自 `PopupBaseView`，位于：
+```
+Assets/DevCodeFM/IF/DayZClasses/view/popup/PopupBaseView.cs
+```
+
+### 生命周期
+
+```
+Awake → OnEnable → Init → Open → Start → ... → Close
+```
+
+| 方法 | 用途 | 注意事项 |
+|------|------|----------|
+| `Awake()` | 预加载、组件扩展设置 | 调用 `base.Awake()` |
+| `OnEnable()` | 回调注册 | 调用 `base.OnEnable()` |
+| `Init(params object[])` | 解析外部参数 | 调用 `base.Init()` 触发 DynamicON 动效 |
+| `Open()` | 界面打开逻辑 | 调用 `base.Open()` 初始化模糊背景 |
+| `Start()` | FairyGUI GetChild | **不要在 Awake/OnEnable 中调用 GetChild** |
+| `Close()` | 界面关闭逻辑 | 调用 `base.Close()` |
+
+### PopupBaseView 标准模板
+
+```csharp
+namespace DayZ
+{
+    /// <summary>
+    /// 英雄列表界面 - 示例模板
+    /// 生命周期: Awake → OnEnable → Init → Open → Start
+    /// </summary>
+    public class HeroListController : PopupBaseView
+    {
+        #region Constants
+        private const string PACKAGE_NAME = "601_NewHero";
+        private const string COMPONENT_NAME = "HeroList";
+        #endregion
+
+        #region Serialized Fields
+        [Header("UI Settings")]
+        [SerializeField] private string _packageName = PACKAGE_NAME;
+        #endregion
+
+        #region Private Fields
+        private GList _heroList;
+        private GButton _btnRecruit;
+        #endregion
+
+        #region Events
+        public event System.Action<HeroListData> OnHeroSelected;
+        #endregion
+
+        #region Lifecycle - Override PopupBaseView
+        protected override void Awake()
+        {
+            base.Awake();
+            // 预加载逻辑
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            // 回调注册
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            // 回调注销
+        }
+
+        /// <summary>
+        /// 获取FairyGUI组件和注册监听事件
+        /// 在Start中调用，不要在Awake或OnEnable中调用
+        /// </summary>
+        public override void InitializeFairyComponents()
+        {
+            base.InitializeFairyComponents(); // 必须调用，初始化 _mainView 等
+
+            // 获取组件
+            _heroList = _mainView.GetChild("n1") as GList;
+            _btnRecruit = _mainView.GetChild("n3") as GButton;
+
+            // 绑定事件
+            if (_heroList != null)
+            {
+                _heroList.onClickItem.Add(OnHeroItemClick);
+            }
+            if (_btnRecruit != null)
+            {
+                _btnRecruit.onClick.Add(OnRecruitClick);
+            }
+        }
+
+        /// <summary>
+        /// 解析外部传进来的参数
+        /// </summary>
+        public override void Init(params object[] data)
+        {
+            base.Init(data); // 必须调用，触发 DynamicON 动效
+
+            // 解析参数
+            if (data != null && data.Length > 0)
+            {
+                if (data[0] is string title)
+                {
+                    setTitleName(title); // 使用基类方法设置标题
+                }
+            }
+        }
+
+        /// <summary>
+        /// 界面打开时的逻辑
+        /// </summary>
+        public override void Open()
+        {
+            base.Open(); // 必须调用，初始化模糊背景
+
+            // 刷新数据
+            RefreshData();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            // FairyGUI GetChild 可以在这里调用
+        }
+        #endregion
+
+        #region Public Methods
+        public void RefreshData()
+        {
+            // 刷新数据逻辑
+        }
+        #endregion
+
+        #region Event Handlers
+        private void OnHeroItemClick(EventContext context)
+        {
+            var item = context.data as GComponent;
+            // 处理点击
+        }
+
+        private void OnRecruitClick()
+        {
+            // 处理招募按钮点击
+        }
+        #endregion
+    }
+}
+```
+
+### PopupBaseView 核心成员
+
+| 成员 | 类型 | 说明 |
+|------|------|------|
+| `_mainView` | GComponent | 主视图组件 |
+| `_title` | GTextField | 标题文本 |
+| `returnBtn` | GButton | 返回按钮 (headline中) |
+| `closeBtn` | GButton | 关闭按钮 (headline中) |
+| `canClose` | bool | 是否可关闭 |
+| `ClassName` | string | 类名标识 |
+
+### PopupBaseView 核心方法
+
+| 方法 | 说明 |
+|------|------|
+| `setTitleName(string)` | 设置标题文本 |
+| `getChild(string)` | 获取子节点 (带日志) |
+| `getController(string)` | 获取控制器 (带日志) |
+| `closeSelf()` | 关闭当前界面 (带 DynamicOff 动效) |
+| `SetNeedBlur(bool)` | 设置是否需要模糊背景 |
+
+### 界面创建规范
+
+```csharp
+// ✅ 正确：通过 PopupViewController 创建
+PopupViewController.getInstance().ShowPopupView<HeroListController>("标题");
+
+// ✅ 正确：带参数创建
+PopupViewController.getInstance().ShowPopupView<HeroListController>("标题", heroId, param2);
+
+// ❌ 错误：直接实例化
+var view = new HeroListController(); // 不支持
+```
+
+### FairyGUI 组件获取时机
+
+```csharp
+// ✅ 正确：在 InitializeFairyComponents 或 Start 中获取
+public override void InitializeFairyComponents()
+{
+    base.InitializeFairyComponents();
+    _heroList = _mainView.GetChild("n1") as GList;
+}
+
+// ❌ 错误：在 Awake 或 OnEnable 中获取
+protected override void Awake()
+{
+    base.Awake();
+    _heroList = _mainView.GetChild("n1") as GList; // _mainView 可能未初始化
+}
+```
+
+---
+
+## 资源管理规范
+
+### Addressables 使用规范
+
+```csharp
+public class AssetLoader : MonoBehaviour
+{
+    private readonly List<AsyncOperationHandle> _handles = new List<AsyncOperationHandle>();
+
+    public async Task<T> LoadAssetAsync<T>(string address) where T : Object
+    {
+        var handle = Addressables.LoadAssetAsync<T>(address);
+        await handle.Task;
+
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            _handles.Add(handle);
+            return handle.Result;
+        }
+
+        Debug.LogError($"Failed to load asset: {address}");
+        return null;
+    }
+
+    private void OnDestroy()
+    {
+        foreach (var handle in _handles)
+        {
+            Addressables.Release(handle);
+        }
+        _handles.Clear();
+    }
+}
+```
+
+---
+
+## 检查清单
+
+### 代码提交前检查
+
+- [ ] 所有公共方法有XML注释
+- [ ] 私有字段使用下划线前缀
+- [ ] 组件引用已缓存
+- [ ] 事件正确注销
+- [ ] 协程使用缓存的 WaitForSeconds
+- [ ] Animator 参数使用哈希
+- [ ] 无 Debug.Log 在生产代码中（使用条件编译）
+- [ ] 魔法数字已替换为常量
+- [ ] Inspector 字段有 Header 和 Tooltip
+- [ ] 资源引用正确释放
+
+---
+
+*文档版本: 1.0 | 更新日期: 2026-03-20*

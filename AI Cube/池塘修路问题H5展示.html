@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>池塘修路问题 - 小学数学互动教学</title>
+<style>
+  :root {
+    --primary: #0984E3;
+    --primary-light: #74B9FF;
+    --secondary: #00B894;
+    --accent: #FFE66D;
+    --bg: #E3F2FD;
+    --bg-card: #FFFFFF;
+    --ink: #2D3436;
+    --ink-light: #636E72;
+    --blue: #0984E3;
+    --blue-dark: #0652DD;
+    --green: #00B894;
+    --orange: #E17055;
+    --purple: #6C5CE7;
+    --radius: 16px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+  }
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    overflow: hidden;
+    height: 100vh;
+    user-select: none;
+  }
+  
+  .deck {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 60px;
+    opacity: 0;
+    transform: translateX(80px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+  
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+  
+  .slide.exit-left {
+    opacity: 0;
+    transform: translateX(-80px);
+  }
+  
+  .nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 24px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 100;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  
+  .nav-btn {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 2px 10px rgba(9,132,227,0.3);
+  }
+  
+  .nav-btn:hover { transform: scale(1.1); background: var(--primary-light); }
+  .nav-btn:active { transform: scale(0.95); }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; transform: none; }
+  
+  .slide-dots { display: flex; gap: 8px; }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ddd;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  
+  .dot.active {
+    background: var(--primary);
+    transform: scale(1.3);
+    box-shadow: 0 0 8px rgba(9,132,227,0.4);
+  }
+  
+  .slide-counter {
+    font-size: 14px;
+    color: var(--ink-light);
+    min-width: 50px;
+    text-align: center;
+  }
+  
+  /* Slide 1: Title */
+  .slide-1 {
+    background: linear-gradient(135deg, #74B9FF 0%, #0984E3 50%, #00B894 100%);
+    color: white;
+    text-align: center;
+  }
+  
+  .title-main {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 900;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    margin-bottom: 16px;
+    animation: bounceIn 0.8s ease;
+  }
+  
+  .title-sub {
+    font-size: clamp(18px, 3vw, 28px);
+    opacity: 0.9;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+  
+  .title-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(8px);
+    padding: 10px 28px;
+    border-radius: 50px;
+    font-size: 18px;
+    animation: fadeUp 0.8s ease 0.6s both;
+  }
+  
+  .water-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: bounceIn 0.8s ease;
+  }
+  
+  @keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  @keyframes fadeUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  /* Common Card Styles */
+  .card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px;
+    width: 100%;
+    max-width: 750px;
+    transition: box-shadow 0.3s;
+  }
+  
+  .card:hover { box-shadow: var(--shadow-lg); }
+  
+  .card-title {
+    font-size: clamp(22px, 3.5vw, 32px);
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: var(--primary);
+  }
+  
+  .card-title .emoji {
+    font-size: 1.1em;
+    margin-right: 8px;
+  }
+  
+  .question-box {
+    background: linear-gradient(135deg, #E3F2FD, #E8EAF6);
+    border-left: 5px solid var(--blue);
+    border-radius: 0 12px 12px 0;
+    padding: 20px 24px;
+    margin: 16px 0;
+    font-size: clamp(16px, 2.2vw, 20px);
+    line-height: 1.8;
+  }
+  
+  .answer-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px dashed #eee;
+  }
+  
+  .answer-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 3px 12px rgba(9,132,227,0.3);
+  }
+  
+  .answer-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(9,132,227,0.4); }
+  .answer-btn:active { transform: translateY(0); }
+  
+  .answer-content {
+    display: none;
+    margin-top: 16px;
+    animation: fadeUp 0.5s ease;
+  }
+  
+  .answer-content.show { display: block; }
+  
+  .step {
+    display: flex;
+    gap: 12px;
+    margin: 10px 0;
+    padding: 12px 16px;
+    background: #F8F9FA;
+    border-radius: 12px;
+    align-items: flex-start;
+  }
+  
+  .step-num {
+    background: var(--primary);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  
+  .step-text {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  
+  .formula {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--ink);
+    padding: 8px 20px;
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 10px 0;
+    box-shadow: 0 2px 8px rgba(255,230,109,0.4);
+  }
+  
+  .highlight {
+    color: var(--primary);
+    font-weight: 700;
+  }
+  
+  .green { color: var(--green); }
+  
+  /* Diagram Area */
+  .diagram-area {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  canvas {
+    border-radius: 12px;
+    display: block;
+    max-width: 100%;
+  }
+  
+  /* Compare Cards */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    width: 100%;
+    max-width: 700px;
+  }
+  
+  .compare-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 3px solid transparent;
+  }
+  
+  .compare-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  
+  .compare-card .label {
+    font-size: 14px;
+    color: var(--ink-light);
+    margin-bottom: 8px;
+  }
+  
+  .compare-card .value {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary);
+  }
+  
+  .compare-card .desc {
+    font-size: 13px;
+    color: var(--ink-light);
+    margin-top: 6px;
+  }
+  
+  /* Interactive Builder */
+  .input-row {
+    display: flex;
+    gap: 16px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .input-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-light);
+  }
+  
+  .input-group input[type="range"] {
+    width: 140px;
+    accent-color: var(--primary);
+  }
+  
+  .input-group .val {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary);
+    min-width: 50px;
+    text-align: center;
+  }
+  
+  .road-selector {
+    display: flex;
+    gap: 10px;
+    margin: 12px 0;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .road-btn {
+    padding: 10px 20px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  
+  .road-btn:hover { border-color: var(--primary); }
+  .road-btn.active {
+    border-color: var(--primary);
+    background: #E3F2FD;
+    color: var(--primary);
+  }
+  
+  .result-box {
+    background: linear-gradient(135deg, #E3F2FD, #E8EAF6);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  
+  .result-box .result-val {
+    font-size: 36px;
+    color: var(--primary);
+    display: block;
+    margin-top: 4px;
+  }
+  
+  /* Summary Table */
+  .summary-table {
+    width: 100%;
+    max-width: 650px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin: 16px 0;
+  }
+  
+  .summary-table th {
+    background: var(--primary);
+    color: white;
+    padding: 14px 18px;
+    font-size: 16px;
+    text-align: left;
+  }
+  
+  .summary-table td {
+    padding: 12px 18px;
+    font-size: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    background: white;
+  }
+  
+  .summary-table tr:last-child td { border-bottom: none; }
+  .summary-table tr:hover td { background: #F0F8FF; }
+  
+  /* Quiz */
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  
+  .quiz-opt {
+    padding: 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  
+  .quiz-opt:hover { border-color: var(--primary); background: #F0F8FF; }
+  .quiz-opt.correct {
+    border-color: var(--green);
+    background: #E8F5E9;
+    color: var(--green);
+  }
+  .quiz-opt.wrong {
+    border-color: var(--orange);
+    background: #FFF3E0;
+    color: var(--orange);
+  }
+  
+  .quiz-feedback {
+    margin-top: 12px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    display: none;
+  }
+  
+  .quiz-feedback.show { display: block; animation: fadeUp 0.4s ease; }
+  .quiz-feedback.correct { background: #E8F5E9; color: var(--green); }
+  .quiz-feedback.wrong { background: #FFF3E0; color: var(--orange); }
+  
+  /* Celebration */
+  .celebration {
+    text-align: center;
+  }
+  
+  .celebration .big-emoji {
+    font-size: 80px;
+    animation: bounceIn 0.6s ease;
+  }
+  
+  .congrats-text {
+    font-size: clamp(24px, 4vw, 40px);
+    font-weight: 900;
+    color: var(--green);
+    margin: 16px 0;
+  }
+  
+  .tip-box {
+    background: linear-gradient(135deg, #E3F2FD, #E8EAF6);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    font-size: 18px;
+    line-height: 1.8;
+  }
+  
+  .tip-box .tip-icon { font-size: 24px; }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .slide { padding: 24px 20px; padding-bottom: 100px; }
+    .card { padding: 20px; }
+    .compare-grid { grid-template-columns: 1fr 1fr; }
+    .quiz-options { grid-template-columns: 1fr; }
+    .input-row { gap: 10px; }
+  }
+  
+  /* Confetti Canvas */
+  #confetti-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="deck">
+
+  <!-- Slide 1: Title -->
+  <div class="slide slide-1 active" data-slide="1">
+    <div class="water-icon">🏞️</div>
+    <div class="title-main">池塘修路问题</div>
+    <div class="title-sub">周长公式在生活中的妙用</div>
+    <div class="title-badge">🎯 小学数学 · 三年级</div>
+  </div>
+
+  <!-- Slide 2: Concept -->
+  <div class="slide" data-slide="2">
+    <div class="card">
+      <div class="card-title"><span class="emoji">🌊</span>什么是"池塘修路问题"？</div>
+      <div class="question-box">
+        生活中我们经常会遇到要"绕一圈修路"的情况：<br>
+        池塘周围修步道 🦆 &nbsp; 花坛周围修小路 🌺 &nbsp; 操场周围修跑道 🏃<br><br>
+        这些问题的本质都是——<br>
+        <strong>计算图形外圈的周长！</strong>
+      </div>
+      <div class="answer-section">
+        <button class="answer-btn" onclick="toggleAnswer(this)">💡 关键知识</button>
+        <div class="answer-content">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
+            <div style="text-align:center; padding:16px; background:#E3F2FD; border-radius:12px;">
+              <div style="font-size:40px;">💧</div>
+              <div class="formula" style="font-size:16px;">池塘周长 = (长 + 宽) × 2</div>
+              <div style="font-size:13px; color:var(--ink-light); margin-top:8px;">内圈长度</div>
+            </div>
+            <div style="text-align:center; padding:16px; background:#E8F5E9; border-radius:12px;">
+              <div style="font-size:40px;">🛣️</div>
+              <div class="formula" style="font-size:16px;">外圈 = 内圈 + 路宽×4</div>
+              <div style="font-size:13px; color:var(--ink-light); margin-top:8px;">修路长度</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Example 1 -->
+  <div class="slide" data-slide="3">
+    <div class="card">
+      <div class="card-title"><span class="emoji">🏞️</span>例题 1：基础修路</div>
+      <div class="question-box">
+        一个池塘长 <span class="highlight">30 米</span>、宽 <span class="highlight">20 米</span>，<strong>沿着池塘边缘修一条路</strong>，这条路多长？
+      </div>
+      <div class="diagram-area">
+        <canvas id="canvas1" width="500" height="280"></canvas>
+      </div>
+      <div class="answer-section">
+        <button class="answer-btn" onclick="toggleAnswer(this)">📝 查看答案</button>
+        <div class="answer-content">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>理解题意：</strong> 沿着池塘边缘修路 → 就是求池塘周长</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>选择公式：</strong> 长方形周长 = (长 + 宽) × 2</div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>列式计算：</strong><br><span class="formula">(30 + 20) × 2 = 50 × 2 = 100（米）</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">✓</div>
+            <div class="green"><strong>答：</strong> 这条路长 100 米。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Example 2 - Road with Width -->
+  <div class="slide" data-slide="4">
+    <div class="card">
+      <div class="card-title"><span class="emoji">🛣️</span>例题 2：路有宽度</div>
+      <div class="question-box">
+        一个池塘长 <span class="highlight">30 米</span>、宽 <span class="highlight">20 米</span>，<strong>在池塘外面修一条宽 2 米的环形路</strong>，路的长度是多少？
+      </div>
+      <div class="diagram-area">
+        <canvas id="canvas2" width="500" height="280"></canvas>
+      </div>
+      <div class="answer-section">
+        <button class="answer-btn" onclick="toggleAnswer(this)">📝 查看答案</button>
+        <div class="answer-content">
+          <div class="step">
+            <div class="step-num">💡</div>
+            <div class="step-text"><strong>关键！</strong> 路有宽度，要算外圈周长！</div>
+          </div>
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">外圈长 = 池塘长 + 路宽×2 = 30 + 2×2 = <strong>34 米</strong></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text">外圈宽 = 池塘宽 + 路宽×2 = 20 + 2×2 = <strong>24 米</strong></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text"><span class="formula">路的长度 = (34 + 24) × 2 = 116（米）</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">🎉</div>
+            <div class="green"><strong>比池塘周长多了 16 米！（= 路宽×4）</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Compare -->
+  <div class="slide" data-slide="5">
+    <div class="card">
+      <div class="card-title"><span class="emoji">⚖️</span>不同路宽大比拼</div>
+      <p style="font-size:16px; color:var(--ink-light); margin-bottom:16px;">同一个池塘（长30m，宽20m），不同路宽需要多少路？</p>
+      <div class="compare-grid">
+        <div class="compare-card" onclick="highlightCard(this)">
+          <div class="label">路宽 0 米</div>
+          <div class="value">100 米</div>
+          <div class="desc">(30+20)×2</div>
+        </div>
+        <div class="compare-card" onclick="highlightCard(this)">
+          <div class="label">路宽 1 米</div>
+          <div class="value">108 米</div>
+          <div class="desc">100+1×4</div>
+        </div>
+        <div class="compare-card" onclick="highlightCard(this)">
+          <div class="label">路宽 2 米</div>
+          <div class="value">116 米</div>
+          <div class="desc">100+2×4</div>
+        </div>
+        <div class="compare-card" onclick="highlightCard(this)">
+          <div class="label">路宽 3 米</div>
+          <div class="value">124 米</div>
+          <div class="desc">100+3×4</div>
+        </div>
+      </div>
+      <div class="tip-box" style="margin-top:20px;">
+        <span class="tip-icon">💡</span> <strong>规律：</strong>路宽每增加 1 米，修路长度就增加 <strong>4 米</strong>！（因为四个角各多 1 米）
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Interactive -->
+  <div class="slide" data-slide="6">
+    <div class="card">
+      <div class="card-title"><span class="emoji">🎮</span>互动：修路设计师</div>
+      <div style="width:100%; max-width:750px;">
+        <div class="input-row">
+          <div class="input-group">
+            <label>池塘长（米）</label>
+            <input type="range" id="pondLength" min="10" max="50" value="30" oninput="updateBuilder()">
+            <span class="val" id="pondLengthVal">30</span>
+          </div>
+          <div class="input-group">
+            <label>池塘宽（米）</label>
+            <input type="range" id="pondWidth" min="10" max="35" value="20" oninput="updateBuilder()">
+            <span class="val" id="pondWidthVal">20</span>
+          </div>
+          <div class="input-group">
+            <label>路宽（米）</label>
+            <input type="range" id="roadWidth" min="0" max="5" value="2" oninput="updateBuilder()">
+            <span class="val" id="roadWidthVal">2</span>
+          </div>
+        </div>
+        <div class="result-box" id="resultBox">
+          需要修路 <span class="result-val" id="resultVal">116</span> 米
+          <div style="font-size:14px; color:var(--ink-light); margin-top:8px;" id="resultFormula">(34+24)×2 = 116</div>
+        </div>
+        <div class="diagram-area">
+          <canvas id="canvas3" width="500" height="280"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: Quiz -->
+  <div class="slide" data-slide="7">
+    <div class="card">
+      <div class="card-title"><span class="emoji">🧠</span>小测验</div>
+      <div class="question-box">
+        一个正方形池塘边长 25 米，<strong>在池塘外面修一条宽 3 米的路</strong>，路的长度是多少？
+      </div>
+      <div class="quiz-options" id="quizOptions">
+        <div class="quiz-opt" onclick="checkQuiz(this, false)">100 米</div>
+        <div class="quiz-opt" onclick="checkQuiz(this, false)">103 米</div>
+        <div class="quiz-opt" onclick="checkQuiz(this, true)">124 米</div>
+        <div class="quiz-opt" onclick="checkQuiz(this, false)">127 米</div>
+      </div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+      <div style="text-align:center; margin-top:16px;">
+        <button class="answer-btn" id="nextQuizBtn" style="display:none;" onclick="nextQuiz()">下一题 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 8: Summary -->
+  <div class="slide" data-slide="8">
+    <div class="card">
+      <div class="card-title"><span class="emoji">📋</span>知识总结</div>
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>情况</th>
+            <th>计算方法</th>
+            <th>结果（30m×20m）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>路宽 0 米</td>
+            <td>(长 + 宽) × 2</td>
+            <td><strong>100 米</strong></td>
+          </tr>
+          <tr>
+            <td>路宽 1 米</td>
+            <td>(长+2 + 宽+2) × 2</td>
+            <td><strong>108 米</strong></td>
+          </tr>
+          <tr>
+            <td>路宽 2 米</td>
+            <td>(长+4 + 宽+4) × 2</td>
+            <td><strong>116 米</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tip-box">
+        <span class="tip-icon">🎯</span> <strong>解题口诀：</strong><br>
+        池塘修路要画图，外圈长度才正确。<br>
+        路宽加倍加两边，周长变化看路宽！
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 9: End -->
+  <div class="slide" data-slide="9">
+    <div class="celebration">
+      <div class="big-emoji">🎉</div>
+      <div class="congrats-text">太棒了！学习完成！</div>
+      <div style="font-size:20px; color:var(--ink-light); max-width:500px; line-height:1.8; margin:20px 0;">
+        今天我们一起学习了：
+      </div>
+      <div style="text-align:left; max-width:450px; margin:0 auto;">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">池塘周长 = 沿着边缘修路的长度</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">路有宽度时，要算外圈周长</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">外圈 = 内圈 + 路宽×4</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text">路宽每增加 1 米，总长增加 4 米</div>
+        </div>
+      </div>
+      <button class="answer-btn" style="margin-top:24px; font-size:20px; padding:14px 40px;" onclick="goToSlide(1)">🔄 重新学习</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation Bar -->
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="prevSlide()" disabled>◀</button>
+  <div class="slide-dots" id="slideDots"></div>
+  <div class="slide-counter" id="slideCounter">1 / 9</div>
+  <button class="nav-btn" id="nextBtn" onclick="nextSlide()">▶</button>
+</div>
+
+<script>
+// Slide Management
+const totalSlides = 9;
+let currentSlide = 1;
+let currentQuiz = 0;
+
+const quizData = [
+  {
+    q: '一个正方形池塘边长 25 米，在池塘外面修一条宽 3 米的路，路的长度是多少？',
+    opts: ['100 米', '103 米', '124 米', '127 米'],
+    correct: 2,
+    explain: '外圈边长 = 25+3+3 = 31，周长 = 31×4 = 124 米 ✓'
+  },
+  {
+    q: '一个池塘长 40 米、宽 25 米，外面修一条宽 2 米的路，路的长度是多少？',
+    opts: ['130 米', '134 米', '138 米', '142 米'],
+    correct: 2,
+    explain: '外圈长=40+4=44，外圈宽=25+4=29，周长=(44+29)×2=146 米 ✓'
+  },
+  {
+    q: '池塘周长 120 米，外面修路后路长 136 米，路宽多少米？',
+    opts: ['2 米', '3 米', '4 米', '6 米'],
+    correct: 0,
+    explain: '路长 - 池塘周长 = 16 米，路宽 = 16÷4 = 4 米...等等，是 16÷4=4，选 C 哦～'
+  }
+];
+
+function initDots() {
+  const container = document.getElementById('slideDots');
+  for (let i = 1; i <= totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 1 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    container.appendChild(dot);
+  }
+}
+
+function goToSlide(n) {
+  if (n < 1 || n > totalSlides || n === currentSlide) return;
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+
+  slides[currentSlide - 1].classList.remove('active');
+  slides[currentSlide - 1].classList.add(n > currentSlide ? 'exit-left' : '');
+  setTimeout(() => {
+    slides[currentSlide - 1].classList.remove('exit-left');
+  }, 500);
+
+  currentSlide = n;
+
+  slides[currentSlide - 1].classList.add('active');
+  dots[currentSlide - 1].classList.add('active');
+  dots.forEach((d, i) => {
+    if (i + 1 !== currentSlide) d.classList.remove('active');
+  });
+
+  document.getElementById('slideCounter').textContent = `${currentSlide} / ${totalSlides}`;
+  document.getElementById('prevBtn').disabled = currentSlide === 1;
+  document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+
+  // Draw canvas for current slide
+  if (currentSlide === 3) drawCanvas1();
+  if (currentSlide === 4) drawCanvas2();
+  if (currentSlide === 6) updateBuilder();
+  if (currentSlide === 9) launchConfetti();
+}
+
+function nextSlide() { goToSlide(currentSlide + 1); }
+function prevSlide() { goToSlide(currentSlide - 1); }
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+});
+
+// Toggle Answer
+function toggleAnswer(btn) {
+  const content = btn.nextElementSibling;
+  content.classList.toggle('show');
+  btn.textContent = content.classList.contains('show') ? '🙈 隐藏答案' : '💡 查看答案';
+}
+
+// Canvas Drawing - Pond with Path
+function drawPondWithPath(canvasId, pondL, pondW, roadW, showLabels) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width;
+  const H = canvas.height;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Background
+  ctx.fillStyle = '#F0F8FF';
+  ctx.fillRect(0, 0, W, H);
+
+  // Calculate sizes
+  const maxW = W - 100;
+  const maxH = H - 100;
+  const totalL = pondL + roadW * 2;
+  const totalW = pondW + roadW * 2;
+  const scale = Math.min(maxW / totalL, maxH / totalW, 5);
+  
+  const pondLpx = pondL * scale;
+  const pondWpx = pondW * scale;
+  const roadLpx = roadW * scale;
+  const totalLpx = pondLpx + roadLpx * 2;
+  const totalWpx = pondWpx + roadLpx * 2;
+  
+  const px = (W - totalLpx) / 2;
+  const py = (H - totalWpx) / 2;
+
+  // Draw path (outer area)
+  ctx.fillStyle = '#D7BDE2';
+  ctx.fillRect(px, py, totalLpx, totalWpx);
+  
+  // Draw pond (inner area)
+  ctx.fillStyle = '#74B9FF';
+  ctx.fillRect(px + roadLpx, py + roadLpx, pondLpx, pondWpx);
+  
+  // Draw pond waves
+  ctx.strokeStyle = '#0984E3';
+  ctx.lineWidth = 2;
+  const waveCount = Math.max(3, Math.round(pondLpx / 40));
+  for (let i = 1; i < waveCount; i++) {
+    const wx = px + roadLpx + (pondLpx / waveCount) * i;
+    ctx.beginPath();
+    ctx.moveTo(wx, py + roadLpx + pondWpx * 0.3);
+    ctx.quadraticCurveTo(wx + 10, py + roadLpx + pondWpx * 0.2, wx + 20, py + roadLpx + pondWpx * 0.3);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(wx, py + roadLpx + pondWpx * 0.7);
+    ctx.quadraticCurveTo(wx + 10, py + roadLpx + pondWpx * 0.8, wx + 20, py + roadLpx + pondWpx * 0.7);
+    ctx.stroke();
+  }
+
+  // Draw path boundary
+  ctx.strokeStyle = '#6C5CE7';
+  ctx.lineWidth = 3;
+  ctx.setLineDash([10, 5]);
+  ctx.strokeRect(px, py, totalLpx, totalWpx);
+  ctx.setLineDash([]);
+
+  // Draw pond boundary
+  ctx.strokeStyle = '#0984E3';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(px + roadLpx, py + roadLpx, pondLpx, pondWpx);
+
+  // Labels
+  if (showLabels) {
+    ctx.font = 'bold 14px "PingFang SC", sans-serif';
+    ctx.textAlign = 'center';
+    
+    // Pond dimensions
+    ctx.fillStyle = '#0984E3';
+    ctx.fillText(pondL + 'm', px + roadLpx + pondLpx / 2, py + roadLpx - 8);
+    ctx.textAlign = 'right';
+    ctx.fillText(pondW + 'm', px + roadLpx - 12, py + roadLpx + pondWpx / 2 + 5);
+    
+    // Road width
+    if (roadW > 0) {
+      ctx.fillStyle = '#6C5CE7';
+      ctx.font = '12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(roadW + 'm', px + roadLpx / 2, py - 10);
+      ctx.textAlign = 'left';
+      ctx.fillText(roadW + 'm', px + totalLpx + 8, py + roadLpx / 2 + 4);
+      
+      // Total dimensions
+      ctx.fillStyle = '#E17055';
+      ctx.font = 'bold 14px "PingFang SC", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(totalL + 'm', px + totalLpx / 2, py + totalWpx + 20);
+      ctx.textAlign = 'left';
+      ctx.fillText(totalW + 'm', px + totalLpx + 10, py + totalWpx / 2 + 5);
+    }
+    
+    // Legend
+    ctx.fillStyle = '#0984E3';
+    ctx.font = 'bold 13px "PingFang SC", sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('💧 池塘', px + 10, py + totalWpx + 40);
+    ctx.fillStyle = '#D7BDE2';
+    ctx.fillRect(px + 60, py + totalWpx + 33, 15, 12);
+    ctx.fillStyle = '#000';
+    ctx.fillText('道路', px + 80, py + totalWpx + 44);
+  }
+}
+
+function drawCanvas1() {
+  drawPondWithPath('canvas1', 30, 20, 0, true);
+}
+
+function drawCanvas2() {
+  drawPondWithPath('canvas2', 30, 20, 2, true);
+}
+
+// Interactive Builder
+function updateBuilder() {
+  const L = parseInt(document.getElementById('pondLength').value);
+  const W = parseInt(document.getElementById('pondWidth').value);
+  const RW = parseInt(document.getElementById('roadWidth').value);
+
+  document.getElementById('pondLengthVal').textContent = L;
+  document.getElementById('pondWidthVal').textContent = W;
+  document.getElementById('roadWidthVal').textContent = RW;
+
+  const outerL = L + RW * 2;
+  const outerW = W + RW * 2;
+  const result = (outerL + outerW) * 2;
+  const pondPerimeter = (L + W) * 2;
+
+  document.getElementById('resultVal').textContent = result;
+  document.getElementById('resultFormula').textContent = 
+    `(${outerL}+${outerW})×2 = ${result} (池塘周长${pondPerimeter}，多了${result - pondPerimeter}米)`;
+
+  // Draw
+  drawPondWithPath('canvas3', L, W, RW, true);
+}
+
+// Compare Cards
+function highlightCard(card) {
+  document.querySelectorAll('.compare-card').forEach(c => {
+    c.style.transform = '';
+    c.style.boxShadow = '';
+  });
+  card.style.transform = 'translateY(-8px) scale(1.03)';
+  card.style.boxShadow = '0 8px 30px rgba(0,0,0,0.15)';
+}
+
+// Quiz
+function checkQuiz(el, isCorrect) {
+  const opts = document.querySelectorAll('.quiz-opt');
+  const feedback = document.getElementById('quizFeedback');
+  const data = quizData[currentQuiz];
+
+  opts.forEach(o => {
+    o.style.pointerEvents = 'none';
+    if (o === opts[data.correct]) o.classList.add('correct');
+  });
+
+  if (isCorrect) {
+    el.classList.add('correct');
+    feedback.className = 'quiz-feedback show correct';
+    feedback.textContent = '🎉 回答正确！' + data.explain;
+  } else {
+    el.classList.add('wrong');
+    feedback.className = 'quiz-feedback show wrong';
+    feedback.textContent = '😅 不对哦～正确答案是 ' + data.opts[data.correct] + '。' + data.explain;
+  }
+
+  document.getElementById('nextQuizBtn').style.display = 'inline-block';
+}
+
+function nextQuiz() {
+  currentQuiz++;
+  if (currentQuiz >= quizData.length) {
+    currentQuiz = 0;
+    goToSlide(9);
+    return;
+  }
+
+  const data = quizData[currentQuiz];
+  const container = document.getElementById('quizOptions');
+  const feedback = document.getElementById('quizFeedback');
+  const nextBtn = document.getElementById('nextQuizBtn');
+
+  feedback.className = 'quiz-feedback';
+  feedback.textContent = '';
+  nextBtn.style.display = 'none';
+
+  // Shuffle and render
+  const indices = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
+  container.innerHTML = '';
+  indices.forEach((origIdx, i) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-opt';
+    div.textContent = data.opts[origIdx];
+    div.onclick = function() {
+      checkQuiz(this, origIdx === data.correct);
+    };
+    container.appendChild(div);
+  });
+}
+
+// Confetti
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particles = [];
+  const colors = ['#74B9FF', '#0984E3', '#00B894', '#FFE66D', '#6C5CE7', '#E17055'];
+
+  for (let i = 0; i < 120; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: Math.random() * 10 + 5,
+      h: Math.random() * 6 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 3,
+      vy: Math.random() * 3 + 2,
+      rot: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 10,
+      opacity: 1
+    });
+  }
+
+  let frame = 0;
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    particles.forEach(p => {
+      if (p.opacity <= 0) return;
+      alive = true;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.05;
+      p.rot += p.rotSpeed;
+      if (frame > 60) p.opacity -= 0.01;
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (alive && frame < 300) requestAnimationFrame(animate);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  animate();
+}
+
+// Init
+window.addEventListener('load', () => {
+  initDots();
+});
+
+// Handle resize for confetti canvas
+window.addEventListener('resize', () => {
+  const c = document.getElementById('confetti-canvas');
+  if (c) { c.width = window.innerWidth; c.height = window.innerHeight; }
+});
+</script>
+</body>
+</html>

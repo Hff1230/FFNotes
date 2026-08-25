@@ -1,0 +1,1163 @@
+2026-03-30T07:33:47.293Z [DEBUG] Watching for changes in setting files C:\Users\hufeifei.JOY\.claude, C:\Users\hufeifei.JOY\.claude...
+2026-03-30T07:33:47.297Z [DEBUG] [init] configureGlobalMTLS starting
+2026-03-30T07:33:47.297Z [DEBUG] [init] configureGlobalMTLS complete
+2026-03-30T07:33:47.297Z [DEBUG] [init] configureGlobalAgents starting
+2026-03-30T07:33:47.297Z [DEBUG] [init] configureGlobalAgents complete
+2026-03-30T07:33:48.080Z [DEBUG] Using bash path: "D:\Program Files\Git\bin\bash.exe"
+2026-03-30T07:33:48.096Z [DEBUG] Applying permission update: Adding 39 allow rule(s) to destination 'userSettings': ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:33:48.096Z [DEBUG] Applying permission update: Adding 39 allow rule(s) to destination 'projectSettings': ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:33:49.173Z [DEBUG] Applying permission update: Adding 1 directory with destination 'cliArg': ["f:\\HFF\\Obsidian\\FFNotes\\AI库\\Skill\\compound-engineering-zh\\skills"]
+2026-03-30T07:33:49.174Z [DEBUG] [STARTUP] Loading MCP configs...
+2026-03-30T07:33:49.176Z [DEBUG] [ToolSearch:optimistic] mode=tst-auto, ENABLE_TOOL_SEARCH=undefined, result=true
+2026-03-30T07:33:49.177Z [DEBUG] [STARTUP] Running setup()...
+2026-03-30T07:33:49.178Z [DEBUG] Found 0 plugins (0 enabled, 0 disabled)
+2026-03-30T07:33:49.180Z [DEBUG] Loading skills from: managed=C:\ProgramData\ClaudeCode\.claude\skills, user=C:\Users\hufeifei.JOY\.claude\skills, project=[]
+2026-03-30T07:33:49.195Z [DEBUG] Error log sink initialized
+2026-03-30T07:33:49.199Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-30T07:33:49.199Z [DEBUG] Total plugin skills loaded: 0
+2026-03-30T07:33:49.199Z [DEBUG] Total plugin commands loaded: 0
+2026-03-30T07:33:49.199Z [DEBUG] Registered 0 hooks from 0 plugins
+2026-03-30T07:33:49.199Z [DEBUG] [STARTUP] setup() completed in 22ms
+2026-03-30T07:33:49.199Z [DEBUG] [STARTUP] Loading commands and agents...
+2026-03-30T07:33:49.200Z [DEBUG] Total plugin agents loaded: 0
+2026-03-30T07:33:49.202Z [DEBUG] Loaded 12 unique skills (managed: 0, user: 12, project: 0, legacy commands: 0)
+2026-03-30T07:33:49.202Z [DEBUG] getSkills returning: 12 skill dir commands, 0 plugin skills, 1 bundled skills
+2026-03-30T07:33:49.203Z [DEBUG] [STARTUP] Commands and agents loaded in 4ms
+2026-03-30T07:33:49.203Z [DEBUG] [STARTUP] Running showSetupScreens()...
+2026-03-30T07:33:49.205Z [DEBUG] [render] initLayout starting
+2026-03-30T07:33:49.205Z [DEBUG] Layout engine: yoga
+2026-03-30T07:33:49.245Z [DEBUG] [render] initLayout complete
+2026-03-30T07:33:49.249Z [DEBUG] [render] first ink render: 2839ms since process start
+2026-03-30T07:33:49.254Z [DEBUG] [keybindings] KeybindingSetup initialized with 99 bindings, 0 warnings
+2026-03-30T07:33:49.319Z [DEBUG] [Claude in Chrome] Found chrome profiles: Default
+2026-03-30T07:33:49.320Z [DEBUG] [keybindings] Skipping file watcher - user customization disabled
+2026-03-30T07:33:49.321Z [DEBUG] Watching for changes in skill/command directories: C:\Users\hufeifei.JOY\.claude\skills, C:\Users\hufeifei.JOY\.claude\skills...
+2026-03-30T07:33:49.328Z [DEBUG] [Claude in Chrome] Found edge profiles: Default
+2026-03-30T07:33:49.330Z [DEBUG] [Claude in Chrome] Extension not found in any browser
+2026-03-30T07:33:50.643Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-30T07:33:50.679Z [DEBUG] [STARTUP] showSetupScreens() completed in 1476ms
+2026-03-30T07:33:50.679Z [DEBUG] [LSP MANAGER] initializeLspServerManager() called
+2026-03-30T07:33:50.679Z [DEBUG] [LSP MANAGER] Created manager instance, state=pending
+2026-03-30T07:33:50.679Z [DEBUG] [LSP MANAGER] Starting async initialization (generation 1)
+2026-03-30T07:33:50.680Z [DEBUG] Total LSP servers loaded: 0
+2026-03-30T07:33:50.680Z [DEBUG] [STARTUP] MCP configs loaded in 1506ms
+2026-03-30T07:33:50.687Z [DEBUG] MCP server "chrome-devtools": Starting connection with timeout of 30000ms
+2026-03-30T07:33:50.721Z [DEBUG] MCP server "zai-mcp-server": Starting connection with timeout of 30000ms
+2026-03-30T07:33:50.755Z [DEBUG] MCP server "firecrawl-mcp": Initializing HTTP transport to http://3.38.179.98:25152/mcp
+2026-03-30T07:33:50.755Z [DEBUG] MCP server "firecrawl-mcp": Node version: v24.12.0, Platform: win32
+2026-03-30T07:33:50.755Z [DEBUG] MCP server "firecrawl-mcp": Environment: {"NODE_OPTIONS":"not set","UV_THREADPOOL_SIZE":"default","HTTP_PROXY":"not set","HTTPS_PROXY":"not set","NO_PROXY":"not set"}
+2026-03-30T07:33:50.756Z [DEBUG] MCP server "unity-mcp": Initializing HTTP transport to http://localhost:9998/mcp
+2026-03-30T07:33:50.756Z [DEBUG] MCP server "unity-mcp": Node version: v24.12.0, Platform: win32
+2026-03-30T07:33:50.756Z [DEBUG] MCP server "unity-mcp": Environment: {"NODE_OPTIONS":"not set","UV_THREADPOOL_SIZE":"default","HTTP_PROXY":"not set","HTTPS_PROXY":"not set","NO_PROXY":"not set"}
+2026-03-30T07:33:50.757Z [DEBUG] MCP server "web-search-mcp": Initializing HTTP transport to http://8.213.135.91:25152/mcp
+2026-03-30T07:33:50.757Z [DEBUG] MCP server "web-search-mcp": Node version: v24.12.0, Platform: win32
+2026-03-30T07:33:50.757Z [DEBUG] MCP server "web-search-mcp": Environment: {"NODE_OPTIONS":"not set","UV_THREADPOOL_SIZE":"default","HTTP_PROXY":"not set","HTTPS_PROXY":"not set","NO_PROXY":"not set"}
+2026-03-30T07:33:50.805Z [DEBUG] [Reconnection] computeInitialTeamContext: No teammate context set (not a teammate)
+2026-03-30T07:33:50.816Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.23884.1774856030816
+2026-03-30T07:33:50.816Z [DEBUG] Preserving file permissions: 100666
+2026-03-30T07:33:50.817Z [DEBUG] Temp file written successfully, size: 10267 bytes
+2026-03-30T07:33:50.817Z [DEBUG] Applied original permissions to temp file
+2026-03-30T07:33:50.817Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.23884.1774856030816 to C:\Users\hufeifei.JOY\.claude.json
+2026-03-30T07:33:50.819Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-03-30T07:33:50.876Z [DEBUG] [LSP SERVER MANAGER] getAllLspServers returned 0 server(s)
+2026-03-30T07:33:50.876Z [DEBUG] LSP manager initialized with 0 servers
+2026-03-30T07:33:50.877Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-03-30T07:33:50.877Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-30T07:33:50.879Z [DEBUG] Getting matching hook commands for SessionStart with query: startup
+2026-03-30T07:33:50.879Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:33:50.879Z [DEBUG] Matched 0 unique hooks for query "startup" (0 before deduplication)
+2026-03-30T07:33:50.879Z [DEBUG] LSP server manager initialized successfully
+2026-03-30T07:33:50.880Z [DEBUG] LSP notification handlers registered successfully for all 0 server(s)
+2026-03-30T07:33:50.880Z [DEBUG] MCP server "firecrawl-mcp": Proxy options: default
+2026-03-30T07:33:50.880Z [DEBUG] MCP server "firecrawl-mcp": HTTP transport options: {"url":"http://3.38.179.98:25152/mcp","headers":{"User-Agent":"claude-code/2.1.25","Authorization":"[REDACTED]"},"hasAuthProvider":true,"timeoutMs":60000}
+2026-03-30T07:33:50.880Z [DEBUG] MCP server "firecrawl-mcp": HTTP transport created successfully
+2026-03-30T07:33:50.881Z [DEBUG] MCP server "firecrawl-mcp": Client created, setting up request handler
+2026-03-30T07:33:50.881Z [DEBUG] MCP server "firecrawl-mcp": Starting connection with timeout of 30000ms
+2026-03-30T07:33:50.881Z [DEBUG] MCP server "firecrawl-mcp": Testing basic HTTP connectivity to http://3.38.179.98:25152/mcp
+2026-03-30T07:33:50.881Z [DEBUG] MCP server "firecrawl-mcp": Parsed URL: host=3.38.179.98, port=25152, protocol=http:
+2026-03-30T07:33:50.881Z [DEBUG] MCP server "unity-mcp": Proxy options: default
+2026-03-30T07:33:50.881Z [DEBUG] MCP server "unity-mcp": HTTP transport options: {"url":"http://localhost:9998/mcp","headers":{"User-Agent":"claude-code/2.1.25"},"hasAuthProvider":true,"timeoutMs":60000}
+2026-03-30T07:33:50.881Z [DEBUG] MCP server "unity-mcp": HTTP transport created successfully
+2026-03-30T07:33:50.882Z [DEBUG] MCP server "unity-mcp": Client created, setting up request handler
+2026-03-30T07:33:50.882Z [DEBUG] MCP server "unity-mcp": Starting connection with timeout of 30000ms
+2026-03-30T07:33:50.882Z [DEBUG] MCP server "unity-mcp": Testing basic HTTP connectivity to http://localhost:9998/mcp
+2026-03-30T07:33:50.882Z [DEBUG] MCP server "unity-mcp": Parsed URL: host=localhost, port=9998, protocol=http:
+2026-03-30T07:33:50.882Z [DEBUG] MCP server "unity-mcp": Using loopback address: localhost
+2026-03-30T07:33:50.882Z [DEBUG] MCP server "web-search-mcp": Proxy options: default
+2026-03-30T07:33:50.882Z [DEBUG] MCP server "web-search-mcp": HTTP transport options: {"url":"http://8.213.135.91:25152/mcp","headers":{"User-Agent":"claude-code/2.1.25","Authorization":"[REDACTED]"},"hasAuthProvider":true,"timeoutMs":60000}
+2026-03-30T07:33:50.882Z [DEBUG] MCP server "web-search-mcp": HTTP transport created successfully
+2026-03-30T07:33:50.883Z [DEBUG] MCP server "web-search-mcp": Client created, setting up request handler
+2026-03-30T07:33:50.883Z [DEBUG] MCP server "web-search-mcp": Starting connection with timeout of 30000ms
+2026-03-30T07:33:50.883Z [DEBUG] MCP server "web-search-mcp": Testing basic HTTP connectivity to http://8.213.135.91:25152/mcp
+2026-03-30T07:33:50.883Z [DEBUG] MCP server "web-search-mcp": Parsed URL: host=8.213.135.91, port=25152, protocol=http:
+2026-03-30T07:33:50.887Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-03-30T07:33:50.887Z [DEBUG] MCP server "unity-mcp": No token data found
+2026-03-30T07:33:50.888Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-03-30T07:33:50.888Z [DEBUG] [render] initLayout starting
+2026-03-30T07:33:50.893Z [DEBUG] [render] initLayout complete
+2026-03-30T07:33:50.894Z [DEBUG] [render] first ink render: 4484ms since process start
+2026-03-30T07:33:50.994Z [DEBUG] [keybindings] KeybindingSetup initialized with 99 bindings, 0 warnings
+2026-03-30T07:33:51.064Z [DEBUG] Git remote URL: null
+2026-03-30T07:33:51.064Z [DEBUG] No git remote URL found
+2026-03-30T07:33:51.064Z [DEBUG] Not in a GitHub repository, skipping path mapping update
+2026-03-30T07:33:51.114Z [DEBUG] [keybindings] Skipping file watcher - user customization disabled
+2026-03-30T07:33:51.114Z [DEBUG] [REPL:mount] REPL mounted, disabled=false
+2026-03-30T07:33:51.205Z [DEBUG] Official marketplace auto-install skipped: already_attempted
+2026-03-30T07:33:51.207Z [DEBUG] performStartupChecks called
+2026-03-30T07:33:51.208Z [DEBUG] Starting background plugin installations
+2026-03-30T07:33:51.208Z [DEBUG] performBackgroundPluginInstallations called
+2026-03-30T07:33:51.221Z [DEBUG] [claudeai-mcp] Checking gate (cached)...
+2026-03-30T07:33:51.221Z [DEBUG] [claudeai-mcp] Gate returned: false
+2026-03-30T07:33:51.221Z [DEBUG] [claudeai-mcp] Disabled via gate
+2026-03-30T07:33:51.222Z [DEBUG] Setting installation status: 0 marketplaces, 0 installable plugins, 0 uninstallable plugins
+2026-03-30T07:33:51.224Z [DEBUG] Loaded plugins - Enabled: 0, Disabled: 0, Commands: 0, Agents: 0, Errors: 0
+2026-03-30T07:33:51.229Z [DEBUG] MCP server "unity-mcp": HTTP Connection failed after 473ms: fetch failed (code: none, errno: none)
+2026-03-30T07:33:51.229Z [ERROR] MCP server "unity-mcp" TypeError: fetch failed
+2026-03-30T07:33:51.244Z [DEBUG] MCP server "unity-mcp": Connection failed after 488ms: fetch failed
+2026-03-30T07:33:51.245Z [ERROR] MCP server "unity-mcp" Connection failed: fetch failed
+2026-03-30T07:33:51.260Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-03-30T07:33:51.308Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.23884.1774856031308
+2026-03-30T07:33:51.308Z [DEBUG] Preserving file permissions: 100666
+2026-03-30T07:33:51.309Z [DEBUG] Temp file written successfully, size: 10267 bytes
+2026-03-30T07:33:51.310Z [DEBUG] Applied original permissions to temp file
+2026-03-30T07:33:51.310Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.23884.1774856031308 to C:\Users\hufeifei.JOY\.claude.json
+2026-03-30T07:33:51.312Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-03-30T07:33:51.364Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-03-30T07:33:51.365Z [DEBUG] MCP server "web-search-mcp": Successfully connected to http server in 608ms
+2026-03-30T07:33:51.365Z [DEBUG] MCP server "web-search-mcp": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"firecrawl-fastmcp","version":"3.0.0"}}
+2026-03-30T07:33:51.365Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-03-30T07:33:51.409Z [DEBUG] MCP server "web-search-mcp": HTTP connection dropped after 0s uptime
+2026-03-30T07:33:51.409Z [DEBUG] MCP server "web-search-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-03-30T07:33:51.409Z [DEBUG] MCP server "web-search-mcp": HTTP connection dropped after 0s uptime
+2026-03-30T07:33:51.409Z [DEBUG] MCP server "web-search-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-03-30T07:33:51.493Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-03-30T07:33:51.939Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-03-30T07:33:51.939Z [DEBUG] MCP server "firecrawl-mcp": Successfully connected to http server in 1184ms
+2026-03-30T07:33:51.939Z [DEBUG] MCP server "firecrawl-mcp": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"firecrawl-fastmcp","version":"3.0.0"}}
+2026-03-30T07:33:51.940Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-03-30T07:33:52.166Z [DEBUG] MCP server "firecrawl-mcp": HTTP connection dropped after 0s uptime
+2026-03-30T07:33:52.166Z [DEBUG] MCP server "firecrawl-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-03-30T07:33:52.166Z [DEBUG] MCP server "firecrawl-mcp": HTTP connection dropped after 0s uptime
+2026-03-30T07:33:52.166Z [DEBUG] MCP server "firecrawl-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-03-30T07:33:52.234Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:33:54.232Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-30T07:33:54.218Z] INFO: MCP Server Application initialized
+[2026-03-30T07:33:54.219Z] INFO: Starting MCP server...
+[2026-03-30T07:33:54.220Z] INFO: UI to Artifact tool registered successfully
+[2026-03-30T07:33:54.220Z] INFO: Text Extraction tool registered successfully
+[2026-03-30T07:33:54.220Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-30T07:33:54.221Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-30T07:33:54.221Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-30T07:33:54.221Z] INFO: UI Diff Check tool registered successfully
+[2026-03-30T07:33:54.221Z] INFO: General Image Analysis tool registered successfully
+[2026-03-30T07:33:54.221Z] INFO: Video analysis tool registered successfully
+[2026-03-30T07:33:54.221Z] INFO: Successfully registered all tools
+[2026-03-30T07:33:54.222Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-30T07:33:54.232Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 3512ms
+2026-03-30T07:33:54.232Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-30T07:33:54.232Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-30T07:33:54.232Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 3550ms
+2026-03-30T07:33:54.232Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.20.3"}}
+2026-03-30T07:34:18.549Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:34:18.549Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:34:19.078Z [DEBUG] Sending 12 skills via attachment (initial, 12 total sent)
+2026-03-30T07:34:19.078Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:34:19.079Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:34:19.081Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-03-30T07:34:19.081Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:34:19.081Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-30T07:34:19.085Z [DEBUG] FileHistory: Added snapshot for bba7df42-9b08-4b8f-b69e-84110a0fb328, tracking 0 files
+2026-03-30T07:34:19.108Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-30T07:34:19.112Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\bbaec37e-b311-4af0-b996-ac1b40b6a90d-agent-bbaec37e-b311-4af0-b996-ac1b40b6a90d.json.tmp.23884.1774856059112
+2026-03-30T07:34:19.113Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-30T07:34:19.113Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\bbaec37e-b311-4af0-b996-ac1b40b6a90d-agent-bbaec37e-b311-4af0-b996-ac1b40b6a90d.json.tmp.23884.1774856059112 to C:\Users\hufeifei.JOY\.claude\todos\bbaec37e-b311-4af0-b996-ac1b40b6a90d-agent-bbaec37e-b311-4af0-b996-ac1b40b6a90d.json
+2026-03-30T07:34:19.114Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\bbaec37e-b311-4af0-b996-ac1b40b6a90d-agent-bbaec37e-b311-4af0-b996-ac1b40b6a90d.json written atomically
+2026-03-30T07:34:19.166Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:34:19.167Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.282; cc_entrypoint=cli;
+2026-03-30T07:34:19.168Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:34:19.168Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:34:19.170Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-30T07:34:19.170Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:34:19.259Z [DEBUG] Stats cache is up to date
+2026-03-30T07:34:19.278Z [DEBUG] Summarizing all 25 messages (~0 tokens)
+2026-03-30T07:34:19.279Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:34:19.280Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.22a; cc_entrypoint=cli;
+2026-03-30T07:34:19.280Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:34:19.280Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:34:19.281Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:34:19.352Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:34:19.352Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:34:19.352Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:34:19.739Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:34:19.950Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:34:20.224Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:34:20.231Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:34:20.232Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:34:20.232Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:34:20.233Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:34:20.257Z [DEBUG] Generated summary for session 788210b3-6446-4f37-83a9-1183ea2fb5e9: "装备套装ID重复检测问题排查"
+2026-03-30T07:34:20.261Z [DEBUG] Session index: added 1, updated 0, removed 0, summaries generated 1 (total: 5)
+2026-03-30T07:34:20.514Z [ERROR] Error streaming, falling back to non-streaming mode: {"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"},"request_id":"202603301534202f79b6fce7134057"}
+2026-03-30T07:34:20.514Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:34:20.514Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:34:20.514Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:34:27.921Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-30T07:34:27.922Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-30T07:34:27.922Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:34:27.922Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:34:28.033Z [DEBUG] tree-sitter: loaded from disk
+2026-03-30T07:34:28.046Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:34:28.046Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:34:28.046Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:34:28.046Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:34:28.047Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:34:38.640Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:34:38.656Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell:*"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-30T07:34:38.656Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-30T07:34:38.657Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-30T07:34:38.657Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:34:38.657Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:34:44.677Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-30T07:34:44.677Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:34:44.677Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-30T07:35:34.122Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:35:34.133Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:35:34.144Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:35:34.144Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:35:34.154Z [DEBUG] High write ratio: blit=0, write=1246 (100.0% writes), screen=34x120
+2026-03-30T07:35:37.108Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:35:37.116Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:35:37.127Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:35:37.127Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:35:37.173Z [DEBUG] High write ratio: blit=0, write=1246 (100.0% writes), screen=34x120
+2026-03-30T07:35:42.150Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:35:42.159Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:35:42.170Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:35:42.170Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:35:42.215Z [DEBUG] High write ratio: blit=0, write=1244 (100.0% writes), screen=34x120
+2026-03-30T07:35:44.857Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:35:44.865Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:35:44.875Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:35:44.875Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:35:44.882Z [DEBUG] High write ratio: blit=0, write=1247 (100.0% writes), screen=34x120
+2026-03-30T07:35:46.542Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:35:46.551Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:35:46.563Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:35:46.563Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:35:46.623Z [DEBUG] High write ratio: blit=0, write=1244 (100.0% writes), screen=34x120
+2026-03-30T07:36:07.251Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:36:07.259Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:36:07.269Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:07.269Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:07.276Z [DEBUG] High write ratio: blit=0, write=1244 (100.0% writes), screen=34x120
+2026-03-30T07:36:08.777Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:36:08.786Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:36:08.797Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:08.797Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:08.839Z [DEBUG] High write ratio: blit=0, write=1244 (100.0% writes), screen=34x120
+2026-03-30T07:36:14.094Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:36:14.102Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:36:14.112Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:14.112Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:14.158Z [DEBUG] High write ratio: blit=0, write=1244 (100.0% writes), screen=34x120
+2026-03-30T07:36:20.200Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:36:20.209Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:36:20.220Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:20.220Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:20.265Z [DEBUG] High write ratio: blit=0, write=1244 (100.0% writes), screen=34x120
+2026-03-30T07:36:22.668Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:36:22.676Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:36:22.686Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:22.686Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:22.764Z [DEBUG] High write ratio: blit=0, write=1244 (100.0% writes), screen=34x120
+2026-03-30T07:36:25.276Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:36:25.285Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:36:25.297Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:25.297Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:25.339Z [DEBUG] High write ratio: blit=0, write=1244 (100.0% writes), screen=34x120
+2026-03-30T07:36:30.300Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:36:30.308Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:36:30.319Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:30.319Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:30.367Z [DEBUG] High write ratio: blit=0, write=1244 (100.0% writes), screen=34x120
+2026-03-30T07:36:32.097Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:36:32.106Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:36:32.117Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:32.117Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:32.161Z [DEBUG] High write ratio: blit=0, write=1244 (100.0% writes), screen=34x120
+2026-03-30T07:36:36.280Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:36:36.289Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:36:36.299Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:36.299Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:36.344Z [DEBUG] High write ratio: blit=0, write=1244 (100.0% writes), screen=34x120
+2026-03-30T07:36:51.339Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T07:36:51.348Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-03-30T07:36:51.360Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:51.360Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 39 rule(s): ["Bash(dir:*)","Bash(findstr:*)","Bash(taskkill //F //IM node.exe)","Read(//c/Users/hufeifei.JOYY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Read(//c/Users/hufeifei.JOY/AppData/Local/Temp/claude/f--HFF-Obsidian-FFNotes/tasks/**)","Bash(timeout 3)","Bash(taskkill /F /PID 1856)","Bash(cmd //c \"taskkill /F /PID 1856\")","Read(//c//**)","mcp__chrome-devtools__list_pages","Bash(node --check guandan-server.js)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8081/)","Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)","Bash(taskkill /F /PID 10392)","Bash(cmd //c \"taskkill /F /PID 10392\")","Bash(cmd //c \"taskkill /F /PID 21420\")","Bash(curl -s http://localhost:8081/)","Bash(taskkill /F /PID 24556)","Bash(powershell -Command \"Stop-Process -Id 24556 -Force\")","Bash(npm start)","Bash(powershell -Command \"Stop-Process -Id 24708 -Force\")","Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(node majiang-server.js)","Bash(ls -la \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/\"*.js)","Bash(start /B node majiang-server.js)","Bash(curl -s http://localhost:8082)","Read(//f/HFF/Obsidian/FFNotes/$USERPROFILE/**)","Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif\\)$\")","Read(//c/Users/$USER/**)","Read(//c/Users/hufeifei.JOY/Downloads/**)","mcp__chrome-devtools__get_console_message","mcp__chrome-devtools__fill_form","mcp__chrome-devtools__handle_dialog","Bash(grep -E \"\\\\.js$|\\\\.bat$\")","Bash(identify \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg\")","Bash(python3 -c \"from PIL import Image; img = Image.open\\(''f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/麻将大图.jpg''\\); print\\(f''Size: {img.size}''\\)\")","Bash(start \"\" \"f:/HFF/Obsidian/FFNotes/AI库/小游戏/桐城自摸麻将/split-tiles.html\")","Bash(powershell -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force\")","Bash(taskkill /F /PID 30648)"]
+2026-03-30T07:36:51.367Z [DEBUG] High write ratio: blit=0, write=1244 (100.0% writes), screen=34x120
+2026-03-30T07:37:02.931Z [DEBUG] Creating shell snapshot for bash (D:\Program Files\Git\bin\bash.exe)
+2026-03-30T07:37:02.931Z [DEBUG] Looking for shell config file: C:\Users\hufeifei.JOY\.bashrc
+2026-03-30T07:37:02.931Z [DEBUG] Shell config file not found: C:\Users\hufeifei.JOY\.bashrc, creating snapshot with Claude Code defaults only
+2026-03-30T07:37:02.931Z [DEBUG] Snapshots directory: C:\Users\hufeifei.JOY\.claude\shell-snapshots
+2026-03-30T07:37:03.112Z [DEBUG] Creating snapshot at: C:\Users\hufeifei.JOY\.claude\shell-snapshots\snapshot-bash-1774856222931-7ehmtw.sh
+2026-03-30T07:37:03.112Z [DEBUG] Shell binary exists: true
+2026-03-30T07:37:03.112Z [DEBUG] Execution timeout: 10000ms
+2026-03-30T07:37:03.616Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:37:07.058Z [DEBUG] Shell snapshot created successfully (369 bytes)
+2026-03-30T07:37:08.095Z [DEBUG] Session environment not yet supported on Windows
+2026-03-30T07:37:13.874Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:37:13.874Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-30T07:37:13.875Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:37:13.875Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:37:13.878Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-30T07:37:13.878Z [DEBUG] Found 3 hook matchers in settings
+2026-03-30T07:37:13.878Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:37:13.878Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:37:13.884Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:37:13.884Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:37:14.314Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:37:14.314Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:37:14.738Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:37:14.743Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:37:14.743Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:37:14.743Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:37:14.744Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:37:15.245Z [ERROR] Error streaming, falling back to non-streaming mode: {"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"},"request_id":"20260330153714b51d015088074a65"}
+2026-03-30T07:37:15.246Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:37:15.246Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:37:15.246Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:37:15.319Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:37:30.365Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-30T07:37:30.366Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-30T07:37:30.366Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:37:30.366Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:37:30.370Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:37:30.370Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:37:30.370Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:37:30.371Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:37:30.371Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:37:30.371Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:37:30.371Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:37:30.371Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:37:30.372Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:37:30.372Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:37:31.438Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:37:31.497Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:37:31.636Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -NoProfile -Command \"Get-ItemProperty -Path ''HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Nls\\CodePage'' | Select-Object ACP, OEMCP, MACCP\""
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-30T07:37:31.637Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-30T07:37:31.638Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-30T07:37:31.638Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:37:31.638Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:37:37.664Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-30T07:37:37.664Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:37:37.664Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-30T07:38:15.475Z [DEBUG] Session environment not yet supported on Windows
+2026-03-30T07:38:16.564Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:38:21.562Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:38:21.562Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-30T07:38:21.562Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:38:21.562Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:38:21.564Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-30T07:38:21.564Z [DEBUG] Found 3 hook matchers in settings
+2026-03-30T07:38:21.564Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:38:21.564Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:38:21.567Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-30T07:38:21.567Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-30T07:38:21.567Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:38:21.567Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:38:21.570Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:38:21.570Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:38:21.570Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:38:21.570Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:38:21.571Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:38:42.206Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:38:42.271Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:38:42.285Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell:*"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-30T07:38:42.285Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-30T07:38:42.286Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-30T07:38:42.286Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:38:42.286Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:38:49.107Z [DEBUG] Session environment not yet supported on Windows
+2026-03-30T07:38:50.184Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:38:50.661Z [DEBUG] Metrics opt-out check failed: No API key available
+2026-03-30T07:38:50.661Z [DEBUG] Metrics check failed, defaulting to disabled
+2026-03-30T07:38:50.661Z [DEBUG] Metrics export disabled by organization setting
+2026-03-30T07:38:54.685Z [DEBUG] Getting matching hook commands for PostToolUseFailure with query: Bash
+2026-03-30T07:38:54.685Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:38:54.685Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:38:54.685Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:38:54.685Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:38:55.575Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:38:55.575Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:38:55.578Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:38:55.581Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:38:55.581Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:38:55.581Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:38:55.582Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:38:56.034Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:39:01.420Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-30T07:39:01.421Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-30T07:39:01.421Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:39:01.421Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:39:01.423Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:39:01.423Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:39:01.423Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:39:01.423Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:39:01.424Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:39:01.922Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:39:01.965Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell:*"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-30T07:39:01.966Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-30T07:39:01.966Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-30T07:39:01.966Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:39:01.966Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:39:05.100Z [DEBUG] Session environment not yet supported on Windows
+2026-03-30T07:39:05.179Z [DEBUG] Full reset (shrink->below): prevHeight=55, nextHeight=49, viewport=50
+2026-03-30T07:39:06.183Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:39:10.717Z [DEBUG] Getting matching hook commands for PostToolUseFailure with query: Bash
+2026-03-30T07:39:10.717Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:39:10.717Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:39:10.718Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:39:10.718Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:39:10.718Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:39:10.718Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:39:10.720Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:39:10.723Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:39:10.724Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:39:10.724Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:39:10.724Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:39:11.209Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:39:18.141Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-30T07:39:18.142Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-30T07:39:18.142Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:39:18.142Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:39:18.144Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:39:18.145Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:39:18.145Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:39:18.145Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:39:18.145Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:39:18.606Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:39:18.641Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell:*"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-30T07:39:18.641Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-30T07:39:18.642Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-30T07:39:18.642Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:39:18.642Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:39:21.516Z [DEBUG] Session environment not yet supported on Windows
+2026-03-30T07:39:22.599Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:39:27.541Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:39:27.542Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-30T07:39:27.542Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:39:27.542Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:39:27.543Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-30T07:39:27.543Z [DEBUG] Found 3 hook matchers in settings
+2026-03-30T07:39:27.543Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:39:27.543Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:39:27.546Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:39:27.546Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:39:27.546Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:39:27.546Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:39:27.548Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:39:27.551Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:39:27.552Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:39:27.552Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:39:27.552Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:39:27.960Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:39:28.031Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:39:32.062Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-30T07:39:32.063Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-30T07:39:32.063Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:39:32.063Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:39:32.065Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:39:32.065Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:39:32.065Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:39:32.065Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:39:32.066Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:39:32.374Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:39:32.481Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -NoProfile -Command \"$v = $PSVersionTable.PSVersion; Write-Host $v\""
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-30T07:39:32.481Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-30T07:39:32.482Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-30T07:39:32.482Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:39:32.482Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:39:38.499Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-30T07:39:38.499Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:39:38.499Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-30T07:40:33.677Z [DEBUG] Session environment not yet supported on Windows
+2026-03-30T07:40:34.740Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:40:40.082Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:40:40.082Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-30T07:40:40.082Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:40:40.082Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:40:40.084Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-30T07:40:40.084Z [DEBUG] Found 3 hook matchers in settings
+2026-03-30T07:40:40.084Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:40:40.084Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:40:40.086Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:40:40.086Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:40:40.086Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:40:40.086Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:40:40.088Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:40:40.092Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:40:40.092Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:40:40.092Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:40:40.092Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:40:40.469Z [ERROR] Error streaming, falling back to non-streaming mode: {"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"},"request_id":"20260330154040ca59e0b12ca545d8"}
+2026-03-30T07:40:40.469Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:40:40.469Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:40:40.469Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:40:41.005Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:40:50.758Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-30T07:40:50.759Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-30T07:40:50.759Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:40:50.759Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:40:50.762Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:40:50.762Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:40:50.762Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:40:50.762Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:40:50.763Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:40:51.291Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:40:51.343Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -NoProfile -File - <<'PSEOF'\nWrite-Host $PSVersionTable.PSVersion\nPSEOF"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-30T07:40:51.343Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-30T07:40:51.344Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-30T07:40:51.344Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:40:51.344Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:40:57.366Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-30T07:40:57.366Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:40:57.366Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-30T07:41:04.736Z [DEBUG] Session environment not yet supported on Windows
+2026-03-30T07:41:05.822Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:41:06.781Z [DEBUG] High write ratio: blit=1920, write=1947 (50.3% writes), screen=70x120
+2026-03-30T07:41:07.790Z [DEBUG] High write ratio: blit=1920, write=1947 (50.3% writes), screen=70x120
+2026-03-30T07:41:08.800Z [DEBUG] High write ratio: blit=1920, write=1947 (50.3% writes), screen=70x120
+2026-03-30T07:41:09.864Z [DEBUG] High write ratio: blit=1920, write=1963 (50.6% writes), screen=71x120
+2026-03-30T07:41:11.080Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:41:11.080Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-30T07:41:11.081Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:41:11.081Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:41:11.082Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-30T07:41:11.082Z [DEBUG] Found 3 hook matchers in settings
+2026-03-30T07:41:11.082Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:41:11.082Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:41:11.085Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:41:11.085Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:41:11.085Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:41:11.085Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:41:11.087Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:41:11.091Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:41:11.091Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:41:11.091Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:41:11.091Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:41:11.111Z [DEBUG] High write ratio: blit=1920, write=2008 (51.1% writes), screen=71x120
+2026-03-30T07:41:11.622Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:41:11.834Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:41:30.396Z [DEBUG] High write ratio: blit=1920, write=2284 (54.3% writes), screen=82x120
+2026-03-30T07:41:30.506Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-30T07:41:30.507Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-30T07:41:30.507Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:41:30.507Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:41:30.510Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:41:30.510Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:41:30.510Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:41:30.510Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:41:30.511Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:41:30.956Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:41:31.081Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -NoProfile -File - <<'PSEOF'\n$profilePath = $PROFILE.CurrentUserAllHosts\nWrite-Host \"Profile path: $profilePath\"\nWrite-Host \"Exists: $(Test-Path $profilePath)\"\nPSEOF"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-30T07:41:31.081Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-30T07:41:31.082Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-30T07:41:31.082Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:41:31.082Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:41:34.991Z [DEBUG] Session environment not yet supported on Windows
+2026-03-30T07:41:36.078Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:41:37.042Z [DEBUG] High write ratio: blit=1920, write=2313 (54.6% writes), screen=83x120
+2026-03-30T07:41:38.057Z [DEBUG] High write ratio: blit=1920, write=2313 (54.6% writes), screen=83x120
+2026-03-30T07:41:39.111Z [DEBUG] High write ratio: blit=1920, write=2313 (54.6% writes), screen=83x120
+2026-03-30T07:41:40.114Z [DEBUG] High write ratio: blit=1920, write=2329 (54.8% writes), screen=84x120
+2026-03-30T07:41:41.412Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:41:41.413Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-30T07:41:41.413Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:41:41.413Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:41:41.414Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-30T07:41:41.414Z [DEBUG] Found 3 hook matchers in settings
+2026-03-30T07:41:41.414Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:41:41.414Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:41:41.417Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:41:41.417Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:41:41.417Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:41:41.417Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:41:41.419Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:41:41.422Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:41:41.423Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:41:41.423Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:41:41.423Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:41:41.442Z [DEBUG] High write ratio: blit=1920, write=2523 (56.8% writes), screen=85x120
+2026-03-30T07:41:41.875Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:41:44.971Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:41:58.537Z [DEBUG] High write ratio: blit=1920, write=2684 (58.3% writes), screen=91x120
+2026-03-30T07:41:58.545Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-30T07:41:58.546Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-30T07:41:58.546Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:41:58.546Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:41:58.552Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:41:58.552Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:41:58.552Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:41:58.552Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:41:58.553Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:41:59.020Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:41:59.163Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -NoProfile -File - <<'PSEOF'\n$profileDir = Split-Path $PROFILE.CurrentUserAllHosts\nif (!(Test-Path $profileDir)) {\n    New-Item -ItemType Directory -Path $profileDir -Force | Out-Null\n    Write-Host \"Created directory: $profileDir\"\n}\n\n$profileContent = @'\n# === PowerShell 编码修复 ===\n# 设置控制台输入输出编码为 UTF-8\n[Console]::OutputEncoding = [System.Text.Encoding]::UTF8\n[Console]::InputEncoding = [System.Text.Encoding]::UTF8\n$OutputEncoding = [System.Text.Encoding]::UTF8\n\n# 设置控制台代码页为 UTF-8 (65001)\nchcp 65001 > $null\n\n# 启用 PSReadLine 预测智能提示（如果可用）\nif (Get-Module -ListAvailable PSReadLine) {\n    Import-Module PSReadLine\n    Set-PSReadLineOption -PredictionSource History\n    Set-PSReadLineOption -PredictionViewStyle ListView\n    Set-PSReadLineOption -EditMode Windows\n}\n'@\n\nSet-Content -Path $PROFILE.CurrentUserAllHosts -Value $profileContent -Encoding UTF8\nWrite-Host \"Profile created at: $($PROFILE.CurrentUserAllHosts)\"\nPSEOF"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-30T07:41:59.163Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-30T07:41:59.164Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-30T07:41:59.164Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:41:59.164Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:42:05.174Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-30T07:42:05.174Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:42:05.174Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-30T07:43:50.663Z [DEBUG] Metrics opt-out check failed: No API key available
+2026-03-30T07:43:50.663Z [DEBUG] Metrics check failed, defaulting to disabled
+2026-03-30T07:43:50.663Z [DEBUG] Metrics export disabled by organization setting
+2026-03-30T07:45:38.062Z [DEBUG] Session environment not yet supported on Windows
+2026-03-30T07:45:39.156Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:45:40.118Z [DEBUG] High write ratio: blit=1920, write=2716 (58.6% writes), screen=92x120
+2026-03-30T07:45:41.125Z [DEBUG] High write ratio: blit=1920, write=2716 (58.6% writes), screen=92x120
+2026-03-30T07:45:42.132Z [DEBUG] High write ratio: blit=1920, write=2716 (58.6% writes), screen=92x120
+2026-03-30T07:45:43.133Z [DEBUG] High write ratio: blit=1920, write=2732 (58.7% writes), screen=93x120
+2026-03-30T07:45:44.349Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:45:44.350Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-30T07:45:44.350Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:45:44.350Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:45:44.351Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-30T07:45:44.351Z [DEBUG] Found 3 hook matchers in settings
+2026-03-30T07:45:44.351Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:45:44.351Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:45:44.354Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:45:44.354Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:45:44.354Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:45:44.354Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:45:44.356Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:45:44.360Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:45:44.360Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:45:44.360Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:45:44.361Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:45:44.382Z [DEBUG] High write ratio: blit=1920, write=2913 (60.3% writes), screen=94x120
+2026-03-30T07:45:44.760Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:45:47.825Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:45:55.729Z [DEBUG] executePreToolHooks called for tool: Read
+2026-03-30T07:45:55.730Z [DEBUG] Getting matching hook commands for PreToolUse with query: Read
+2026-03-30T07:45:55.730Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:45:55.730Z [DEBUG] Matched 0 unique hooks for query "Read" (0 before deduplication)
+2026-03-30T07:46:12.172Z [DEBUG] Permission suggestions for Read: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Read",
+        "ruleContent": "//d/360MoveData/Users/hufeifei.JOY/Documents/WindowsPowerShell/**"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "session"
+  }
+]
+2026-03-30T07:46:12.172Z [DEBUG] executePermissionRequestHooks called for tool: Read
+2026-03-30T07:46:12.173Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Read
+2026-03-30T07:46:12.173Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:46:12.173Z [DEBUG] Matched 0 unique hooks for query "Read" (0 before deduplication)
+2026-03-30T07:46:13.979Z [DEBUG] High write ratio: blit=1920, write=3025 (61.2% writes), screen=103x120
+2026-03-30T07:46:19.993Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-30T07:46:19.993Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:46:19.993Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-30T07:46:42.674Z [DEBUG] Getting matching hook commands for PostToolUse with query: Read
+2026-03-30T07:46:42.674Z [DEBUG] Found 3 hook matchers in settings
+2026-03-30T07:46:42.674Z [DEBUG] Matched 1 unique hooks for query "Read" (1 before deduplication)
+2026-03-30T07:46:42.676Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:46:42.676Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:46:44.471Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:46:44.471Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:46:44.474Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:46:44.477Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:46:44.478Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:46:44.478Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:46:44.478Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:46:44.504Z [DEBUG] High write ratio: blit=1920, write=2977 (60.8% writes), screen=98x120
+2026-03-30T07:46:44.945Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:46:45.566Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:46:59.391Z [DEBUG] High write ratio: blit=1920, write=3053 (61.4% writes), screen=101x120
+2026-03-30T07:46:59.414Z [DEBUG] High write ratio: blit=1920, write=3134 (62.0% writes), screen=103x120
+2026-03-30T07:47:00.008Z [DEBUG] executePreToolHooks called for tool: Write
+2026-03-30T07:47:00.010Z [DEBUG] Getting matching hook commands for PreToolUse with query: Write
+2026-03-30T07:47:00.010Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:47:00.010Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-30T07:47:09.300Z [DEBUG] Permission suggestions for Write: [
+  {
+    "type": "setMode",
+    "mode": "acceptEdits",
+    "destination": "session"
+  },
+  {
+    "type": "addDirectories",
+    "directories": [
+      "D:\\360MoveData\\Users\\hufeifei.JOY\\Documents\\WindowsPowerShell"
+    ],
+    "destination": "session"
+  }
+]
+2026-03-30T07:47:09.300Z [DEBUG] executePermissionRequestHooks called for tool: Write
+2026-03-30T07:47:09.301Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Write
+2026-03-30T07:47:09.301Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:47:09.301Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-30T07:47:13.799Z [DEBUG] FileHistory: Tracked file modification for D:\360MoveData\Users\hufeifei.JOY\Documents\WindowsPowerShell\profile.ps1
+2026-03-30T07:47:13.802Z [DEBUG] Writing to temp file: D:\360MoveData\Users\hufeifei.JOY\Documents\WindowsPowerShell\profile.ps1.tmp.23884.1774856833802
+2026-03-30T07:47:13.802Z [DEBUG] Preserving file permissions: 100666
+2026-03-30T07:47:13.803Z [DEBUG] Temp file written successfully, size: 531 bytes
+2026-03-30T07:47:13.803Z [DEBUG] Applied original permissions to temp file
+2026-03-30T07:47:13.803Z [DEBUG] Renaming D:\360MoveData\Users\hufeifei.JOY\Documents\WindowsPowerShell\profile.ps1.tmp.23884.1774856833802 to D:\360MoveData\Users\hufeifei.JOY\Documents\WindowsPowerShell\profile.ps1
+2026-03-30T07:47:13.834Z [DEBUG] File D:\360MoveData\Users\hufeifei.JOY\Documents\WindowsPowerShell\profile.ps1 written atomically
+2026-03-30T07:47:13.837Z [DEBUG] Getting matching hook commands for PostToolUse with query: Write
+2026-03-30T07:47:13.837Z [DEBUG] Found 3 hook matchers in settings
+2026-03-30T07:47:13.837Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-30T07:47:13.838Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:47:13.838Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:47:14.288Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:47:14.288Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:47:14.291Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:47:14.294Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:47:14.294Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:47:14.294Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:47:14.295Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:47:14.341Z [DEBUG] High write ratio: blit=1920, write=5324 (73.5% writes), screen=131x120
+2026-03-30T07:47:14.385Z [DEBUG] [lspRecommendation] Looking for LSP plugins for .ps1
+2026-03-30T07:47:14.554Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:47:15.396Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:47:25.290Z [DEBUG] High write ratio: blit=1920, write=5460 (74.0% writes), screen=137x120
+2026-03-30T07:47:25.660Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-30T07:47:25.660Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-30T07:47:25.660Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:47:25.660Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:47:25.664Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:47:25.664Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:47:25.664Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:47:25.664Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:47:25.664Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:47:26.100Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:47:26.265Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell -File - <<'PSEOF'\nWrite-Host \"OutputEncoding: $([Console]::OutputEncoding.WebName)\"\nWrite-Host \"InputEncoding: $([Console]::InputEncoding.WebName)\"\nWrite-Host \"OutputEncoding var: $($OutputEncoding.WebName)\"\nWrite-Host \"--- Test Chinese: 你好世界 Hello World ---\"\nPSEOF"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-30T07:47:26.265Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-30T07:47:26.266Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-30T07:47:26.266Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:47:26.266Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:47:32.285Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-30T07:47:32.285Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:47:32.285Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-30T07:47:37.551Z [DEBUG] Session environment not yet supported on Windows
+2026-03-30T07:47:38.671Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:47:39.610Z [DEBUG] High write ratio: blit=1920, write=5492 (74.1% writes), screen=138x120
+2026-03-30T07:47:40.616Z [DEBUG] High write ratio: blit=1920, write=5492 (74.1% writes), screen=138x120
+2026-03-30T07:47:41.621Z [DEBUG] High write ratio: blit=1920, write=5492 (74.1% writes), screen=138x120
+2026-03-30T07:47:42.629Z [DEBUG] High write ratio: blit=1920, write=5879 (75.4% writes), screen=143x120
+2026-03-30T07:47:44.080Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:47:44.080Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-30T07:47:44.080Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:47:44.080Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:47:44.082Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-30T07:47:44.082Z [DEBUG] Found 3 hook matchers in settings
+2026-03-30T07:47:44.082Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:47:44.082Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:47:44.084Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:47:44.084Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:47:44.565Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:47:44.565Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:47:44.568Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:47:44.571Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:47:44.572Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:47:44.572Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:47:44.572Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:47:44.603Z [DEBUG] High write ratio: blit=1920, write=5683 (74.7% writes), screen=140x120
+2026-03-30T07:47:45.023Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:47:45.144Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:47:56.361Z [DEBUG] executePreToolHooks called for tool: Write
+2026-03-30T07:47:56.362Z [DEBUG] Getting matching hook commands for PreToolUse with query: Write
+2026-03-30T07:47:56.362Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:47:56.362Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-30T07:48:05.737Z [DEBUG] Permission suggestions for Write: [
+  {
+    "type": "setMode",
+    "mode": "acceptEdits",
+    "destination": "session"
+  },
+  {
+    "type": "addDirectories",
+    "directories": [
+      "D:\\360MoveData\\Users\\hufeifei.JOY\\Documents\\WindowsPowerShell"
+    ],
+    "destination": "session"
+  }
+]
+2026-03-30T07:48:05.737Z [DEBUG] executePermissionRequestHooks called for tool: Write
+2026-03-30T07:48:05.738Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Write
+2026-03-30T07:48:05.738Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:48:05.738Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-30T07:48:07.602Z [DEBUG] High write ratio: blit=1920, write=7442 (79.5% writes), screen=160x120
+2026-03-30T07:48:13.622Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-30T07:48:13.622Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:48:13.622Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-30T07:48:18.724Z [DEBUG] Applying permission update: Setting mode to 'acceptEdits'
+2026-03-30T07:48:18.724Z [DEBUG] Applying permission update: Adding 1 directory with destination 'session': ["D:\\360MoveData\\Users\\hufeifei.JOY\\Documents\\WindowsPowerShell"]
+2026-03-30T07:48:18.729Z [DEBUG] Writing to temp file: D:\360MoveData\Users\hufeifei.JOY\Documents\WindowsPowerShell\profile.ps1.tmp.23884.1774856898729
+2026-03-30T07:48:18.729Z [DEBUG] Preserving file permissions: 100666
+2026-03-30T07:48:18.730Z [DEBUG] Temp file written successfully, size: 247 bytes
+2026-03-30T07:48:18.731Z [DEBUG] Applied original permissions to temp file
+2026-03-30T07:48:18.731Z [DEBUG] Renaming D:\360MoveData\Users\hufeifei.JOY\Documents\WindowsPowerShell\profile.ps1.tmp.23884.1774856898729 to D:\360MoveData\Users\hufeifei.JOY\Documents\WindowsPowerShell\profile.ps1
+2026-03-30T07:48:18.760Z [DEBUG] File D:\360MoveData\Users\hufeifei.JOY\Documents\WindowsPowerShell\profile.ps1 written atomically
+2026-03-30T07:48:18.762Z [DEBUG] Getting matching hook commands for PostToolUse with query: Write
+2026-03-30T07:48:18.762Z [DEBUG] Found 3 hook matchers in settings
+2026-03-30T07:48:18.762Z [DEBUG] Matched 0 unique hooks for query "Write" (0 before deduplication)
+2026-03-30T07:48:18.763Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:48:18.763Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:48:19.208Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:48:19.208Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:48:19.210Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:48:19.214Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:48:19.214Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:48:19.214Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:48:19.214Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:48:19.250Z [DEBUG] High write ratio: blit=1920, write=7083 (78.7% writes), screen=156x120
+2026-03-30T07:48:19.724Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:48:20.451Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:48:33.739Z [DEBUG] High write ratio: blit=1920, write=7166 (78.9% writes), screen=159x120
+2026-03-30T07:48:33.744Z [DEBUG] executePreToolHooks called for tool: AskUserQuestion
+2026-03-30T07:48:33.745Z [DEBUG] Getting matching hook commands for PreToolUse with query: AskUserQuestion
+2026-03-30T07:48:33.745Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:48:33.745Z [DEBUG] Matched 0 unique hooks for query "AskUserQuestion" (0 before deduplication)
+2026-03-30T07:48:33.745Z [DEBUG] executePermissionRequestHooks called for tool: AskUserQuestion
+2026-03-30T07:48:33.746Z [DEBUG] Getting matching hook commands for PermissionRequest with query: AskUserQuestion
+2026-03-30T07:48:33.746Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:48:33.746Z [DEBUG] Matched 0 unique hooks for query "AskUserQuestion" (0 before deduplication)
+2026-03-30T07:48:41.680Z [DEBUG] Getting matching hook commands for PostToolUse with query: AskUserQuestion
+2026-03-30T07:48:41.680Z [DEBUG] Found 3 hook matchers in settings
+2026-03-30T07:48:41.680Z [DEBUG] Matched 0 unique hooks for query "AskUserQuestion" (0 before deduplication)
+2026-03-30T07:48:41.681Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:48:41.681Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:48:42.297Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:48:42.297Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:48:42.300Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:48:42.303Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:48:42.304Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:48:42.304Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:48:42.304Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:48:42.343Z [DEBUG] High write ratio: blit=1920, write=7297 (79.2% writes), screen=163x120
+2026-03-30T07:48:42.730Z [ERROR] Error streaming, falling back to non-streaming mode: {"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"},"request_id":"20260330154842f6fc5aa6b92e4922"}
+2026-03-30T07:48:42.730Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:48:42.730Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:48:42.730Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:48:43.066Z [ERROR] API error (attempt 1/11): 429 429 {"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"},"request_id":"202603301548420bc2ed02883d4501"}
+2026-03-30T07:48:43.145Z [DEBUG] High write ratio: blit=1920, write=7298 (79.2% writes), screen=163x120
+2026-03-30T07:48:43.396Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:48:43.998Z [ERROR] API error (attempt 2/11): 429 429 {"error":{"code":"1305","message":"该模型当前访问量过大，请您稍后再试"},"request_id":"20260330154843f9a0849a6c3a461f"}
+2026-03-30T07:48:44.032Z [DEBUG] High write ratio: blit=1920, write=7298 (79.2% writes), screen=163x120
+2026-03-30T07:48:50.671Z [DEBUG] Metrics opt-out check failed: No API key available
+2026-03-30T07:48:50.671Z [DEBUG] Metrics check failed, defaulting to disabled
+2026-03-30T07:48:50.671Z [DEBUG] Metrics export disabled by organization setting
+2026-03-30T07:49:00.706Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-30T07:49:00.707Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-30T07:49:00.707Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:49:00.707Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:49:00.710Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:49:00.710Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:49:00.710Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:49:00.710Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:49:00.710Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:49:00.710Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:49:00.710Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:49:00.710Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:49:00.711Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:49:00.711Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:49:00.796Z [DEBUG] High write ratio: blit=1920, write=7497 (79.6% writes), screen=169x120
+2026-03-30T07:49:01.659Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:49:01.829Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:49:01.896Z [DEBUG] Permission suggestions for Bash: []
+2026-03-30T07:49:01.896Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-30T07:49:01.897Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-30T07:49:01.897Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:49:01.897Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:49:05.293Z [DEBUG] Session environment not yet supported on Windows
+2026-03-30T07:49:06.376Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:49:07.372Z [DEBUG] High write ratio: blit=1920, write=7522 (79.7% writes), screen=170x120
+2026-03-30T07:49:08.367Z [DEBUG] High write ratio: blit=1920, write=7522 (79.7% writes), screen=170x120
+2026-03-30T07:49:09.376Z [DEBUG] High write ratio: blit=1920, write=7522 (79.7% writes), screen=170x120
+2026-03-30T07:49:10.383Z [DEBUG] High write ratio: blit=1920, write=7522 (79.7% writes), screen=170x120
+2026-03-30T07:49:11.444Z [DEBUG] High write ratio: blit=1920, write=7522 (79.7% writes), screen=170x120
+2026-03-30T07:49:12.441Z [DEBUG] High write ratio: blit=1920, write=7522 (79.7% writes), screen=170x120
+2026-03-30T07:49:13.487Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:49:13.488Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-30T07:49:13.488Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:49:13.488Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:49:13.489Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-30T07:49:13.489Z [DEBUG] Found 3 hook matchers in settings
+2026-03-30T07:49:13.489Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:49:13.489Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:49:13.491Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:49:13.491Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:49:13.957Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:49:13.957Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:49:13.959Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:49:13.963Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:49:13.964Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:49:13.964Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:49:13.964Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:49:14.040Z [DEBUG] High write ratio: blit=1920, write=7494 (79.6% writes), screen=169x120
+2026-03-30T07:49:14.445Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:49:14.519Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:49:25.085Z [DEBUG] High write ratio: blit=1920, write=7509 (79.6% writes), screen=171x120
+2026-03-30T07:49:25.090Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-30T07:49:25.091Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-30T07:49:25.091Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:49:25.091Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:49:25.093Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:49:25.093Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:49:25.094Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:49:25.094Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:49:25.094Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:49:25.094Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.49c; cc_entrypoint=cli;
+2026-03-30T07:49:25.094Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:49:25.094Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:49:25.095Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:49:25.095Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:49:25.134Z [DEBUG] High write ratio: blit=1920, write=7665 (80.0% writes), screen=175x120
+2026-03-30T07:49:25.894Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:49:25.896Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:49:26.030Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "powershell:*"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2026-03-30T07:49:26.030Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2026-03-30T07:49:26.031Z [DEBUG] Getting matching hook commands for PermissionRequest with query: Bash
+2026-03-30T07:49:26.031Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:49:26.031Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:49:32.049Z [DEBUG] Getting matching hook commands for Notification with query: permission_prompt
+2026-03-30T07:49:32.049Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:49:32.049Z [DEBUG] Matched 0 unique hooks for query "permission_prompt" (0 before deduplication)
+2026-03-30T07:49:35.733Z [DEBUG] Session environment not yet supported on Windows
+2026-03-30T07:49:36.813Z [DEBUG] AutoUpdaterWrapper: Installation type: unknown
+2026-03-30T07:49:37.802Z [DEBUG] High write ratio: blit=1920, write=7696 (80.0% writes), screen=176x120
+2026-03-30T07:49:38.801Z [DEBUG] High write ratio: blit=1920, write=7696 (80.0% writes), screen=176x120
+2026-03-30T07:49:39.811Z [DEBUG] High write ratio: blit=1920, write=7697 (80.0% writes), screen=176x120
+2026-03-30T07:49:40.816Z [DEBUG] High write ratio: blit=1920, write=7697 (80.0% writes), screen=176x120
+2026-03-30T07:49:41.982Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:49:41.982Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.e7c; cc_entrypoint=cli;
+2026-03-30T07:49:41.983Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:49:41.983Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:49:41.984Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-30T07:49:41.984Z [DEBUG] Found 3 hook matchers in settings
+2026-03-30T07:49:41.984Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-30T07:49:41.984Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:49:41.986Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:49:41.986Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:49:42.454Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:49:42.454Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:49:42.456Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:49:42.460Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:49:42.460Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:49:42.460Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:49:42.461Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:49:42.540Z [DEBUG] High write ratio: blit=1920, write=7690 (80.0% writes), screen=177x120
+2026-03-30T07:49:42.918Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:49:55.401Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:49:55.483Z [DEBUG] High write ratio: blit=1920, write=8044 (80.7% writes), screen=193x120
+2026-03-30T07:49:55.582Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-03-30T07:49:55.582Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:49:55.582Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-30T07:49:55.733Z [DEBUG] High write ratio: blit=1920, write=8010 (80.7% writes), screen=193x120
+2026-03-30T07:49:55.940Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:49:55.944Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:49:55.944Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:49:55.944Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:49:55.945Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:49:56.002Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.23884.1774856996002
+2026-03-30T07:49:56.002Z [DEBUG] Preserving file permissions: 100666
+2026-03-30T07:49:56.003Z [DEBUG] Temp file written successfully, size: 10268 bytes
+2026-03-30T07:49:56.003Z [DEBUG] Applied original permissions to temp file
+2026-03-30T07:49:56.003Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.23884.1774856996002 to C:\Users\hufeifei.JOY\.claude.json
+2026-03-30T07:49:56.005Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-03-30T07:49:56.035Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.23884.1774856996035
+2026-03-30T07:49:56.036Z [DEBUG] Preserving file permissions: 100666
+2026-03-30T07:49:56.036Z [DEBUG] Temp file written successfully, size: 10269 bytes
+2026-03-30T07:49:56.037Z [DEBUG] Applied original permissions to temp file
+2026-03-30T07:49:56.037Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.23884.1774856996035 to C:\Users\hufeifei.JOY\.claude.json
+2026-03-30T07:49:56.038Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-03-30T07:49:56.210Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:50:01.870Z [DEBUG] Forked agent [prompt_suggestion] received message: type=assistant
+2026-03-30T07:50:02.246Z [DEBUG] Getting matching hook commands for SubagentStop with query: undefined
+2026-03-30T07:50:02.246Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:50:02.246Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-30T07:50:02.246Z [DEBUG] Forked agent [prompt_suggestion] finished: 1 messages, types=[assistant], totalUsage: input=497 output=6 cacheRead=37824 cacheCreate=0
+2026-03-30T07:50:26.913Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-30T07:50:26.913Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-30T07:50:27.417Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-30T07:50:27.417Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-30T07:50:27.419Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-03-30T07:50:27.419Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:50:27.419Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-30T07:50:27.419Z [DEBUG] FileHistory: Making snapshot for message 60ea40f2-7a63-44ba-bcea-6d58fe9c7b62
+2026-03-30T07:50:27.425Z [DEBUG] FileHistory: Added snapshot for 60ea40f2-7a63-44ba-bcea-6d58fe9c7b62, tracking 1 files
+2026-03-30T07:50:27.463Z [DEBUG] High write ratio: blit=1920, write=8131 (80.9% writes), screen=198x120
+2026-03-30T07:50:27.567Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-30T07:50:27.567Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.4b6; cc_entrypoint=cli;
+2026-03-30T07:50:27.567Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:50:27.567Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:50:27.568Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:50:27.700Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:50:27.704Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:50:27.704Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:50:27.704Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:50:27.705Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:50:28.121Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:50:30.753Z [DEBUG] Stream started - received first chunk
+2026-03-30T07:50:42.356Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-03-30T07:50:42.356Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T07:50:42.356Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-30T07:50:42.498Z [DEBUG] High write ratio: blit=1920, write=8139 (80.9% writes), screen=202x120
+2026-03-30T07:50:42.760Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-30T07:50:42.764Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.525; cc_entrypoint=cli;
+2026-03-30T07:50:42.764Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-30T07:50:42.764Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-30T07:50:42.764Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-30T07:50:42.789Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.23884.1774857042789
+2026-03-30T07:50:42.790Z [DEBUG] Preserving file permissions: 100666
+2026-03-30T07:50:42.790Z [DEBUG] Temp file written successfully, size: 10269 bytes
+2026-03-30T07:50:42.791Z [DEBUG] Applied original permissions to temp file
+2026-03-30T07:50:42.791Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.23884.1774857042789 to C:\Users\hufeifei.JOY\.claude.json
+2026-03-30T07:50:42.792Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-03-30T07:50:42.814Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.23884.1774857042814
+2026-03-30T07:50:42.814Z [DEBUG] Preserving file permissions: 100666
+2026-03-30T07:50:42.814Z [DEBUG] Temp file written successfully, size: 10269 bytes
+2026-03-30T07:50:42.815Z [DEBUG] Applied original permissions to temp file
+2026-03-30T07:50:42.815Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.23884.1774857042814 to C:\Users\hufeifei.JOY\.claude.json
+2026-03-30T07:50:42.816Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-03-30T07:50:43.155Z [DEBUG] Stream started - received first chunk

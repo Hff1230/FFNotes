@@ -1,0 +1,22 @@
+[
+  {
+    "content": "Download Node.js 22 LTS installer",
+    "status": "in_progress",
+    "activeForm": "Downloading Node.js 22 LTS installer"
+  },
+  {
+    "content": "Install Node.js 22 LTS",
+    "status": "pending",
+    "activeForm": "Installing Node.js 22 LTS"
+  },
+  {
+    "content": "Verify Node.js version",
+    "status": "pending",
+    "activeForm": "Verifying Node.js version"
+  },
+  {
+    "content": "Reinstall claude-code",
+    "status": "pending",
+    "activeForm": "Reinstalling claude-code"
+  }
+]

@@ -1,0 +1,1475 @@
+2026-03-05T02:18:17.939Z [DEBUG] Watching for changes in setting files C:\Users\hufeifei.JOY\.claude, F:\HFF\Obsidian\FFNotes\.claude...
+2026-03-05T02:18:17.942Z [DEBUG] [init] configureGlobalMTLS starting
+2026-03-05T02:18:17.942Z [DEBUG] [init] configureGlobalMTLS complete
+2026-03-05T02:18:17.942Z [DEBUG] [init] configureGlobalAgents starting
+2026-03-05T02:18:17.942Z [DEBUG] [init] configureGlobalAgents complete
+2026-03-05T02:18:18.738Z [DEBUG] Using bash path: "D:\Program Files\Git\bin\bash.exe"
+2026-03-05T02:18:18.751Z [DEBUG] Applying permission update: Adding 2 allow rule(s) to destination 'userSettings': ["Bash(dir:*)","Bash(findstr:*)"]
+2026-03-05T02:18:18.751Z [DEBUG] [STARTUP] Loading MCP configs...
+2026-03-05T02:18:18.755Z [DEBUG] [ToolSearch:optimistic] mode=tst-auto, ENABLE_TOOL_SEARCH=undefined, result=true
+2026-03-05T02:18:18.756Z [DEBUG] [STARTUP] Running setup()...
+2026-03-05T02:18:18.756Z [DEBUG] Found 0 plugins (0 enabled, 0 disabled)
+2026-03-05T02:18:18.759Z [DEBUG] Loading skills from: managed=C:\ProgramData\ClaudeCode\.claude\skills, user=C:\Users\hufeifei.JOY\.claude\skills, project=[F:\HFF\Obsidian\FFNotes\.claude\skills]
+2026-03-05T02:18:18.760Z [DEBUG] Error log sink initialized
+2026-03-05T02:18:18.763Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-05T02:18:18.763Z [DEBUG] Total plugin skills loaded: 0
+2026-03-05T02:18:18.763Z [DEBUG] Total plugin commands loaded: 0
+2026-03-05T02:18:18.763Z [DEBUG] Registered 0 hooks from 0 plugins
+2026-03-05T02:18:18.763Z [DEBUG] [STARTUP] setup() completed in 7ms
+2026-03-05T02:18:18.763Z [DEBUG] [STARTUP] Loading commands and agents...
+2026-03-05T02:18:18.765Z [DEBUG] [claudeai-mcp] Checking gate (cached)...
+2026-03-05T02:18:18.765Z [DEBUG] [claudeai-mcp] Gate returned: false
+2026-03-05T02:18:18.765Z [DEBUG] [claudeai-mcp] Disabled via gate
+2026-03-05T02:18:18.899Z [DEBUG] Watching for changes in skill/command directories: F:\HFF\Obsidian\FFNotes\.claude\skills, F:\HFF\Obsidian\FFNotes\.claude\commands...
+2026-03-05T02:18:18.993Z [DEBUG] Total plugin agents loaded: 0
+2026-03-05T02:18:19.007Z [DEBUG] Ripgrep first use test: PASSED (mode=builtin, path=E:\Program Files\nodejs\node_global\node_modules\@anthropic-ai\claude-code\vendor\ripgrep\x64-win32\rg.exe)
+2026-03-05T02:18:19.069Z [DEBUG] Loaded 0 unique skills (managed: 0, user: 0, project: 0, legacy commands: 0)
+2026-03-05T02:18:19.069Z [DEBUG] getSkills returning: 0 skill dir commands, 0 plugin skills, 1 bundled skills
+2026-03-05T02:18:19.071Z [DEBUG] [STARTUP] Commands and agents loaded in 308ms
+2026-03-05T02:18:19.071Z [DEBUG] [LSP MANAGER] initializeLspServerManager() called
+2026-03-05T02:18:19.071Z [DEBUG] [LSP MANAGER] Created manager instance, state=pending
+2026-03-05T02:18:19.071Z [DEBUG] [LSP MANAGER] Starting async initialization (generation 1)
+2026-03-05T02:18:19.073Z [DEBUG] Total LSP servers loaded: 0
+2026-03-05T02:18:19.073Z [DEBUG] [STARTUP] MCP configs loaded in 322ms
+2026-03-05T02:18:19.079Z [DEBUG] MCP server "chrome-devtools": Starting connection with timeout of 30000ms
+2026-03-05T02:18:19.126Z [DEBUG] MCP server "zai-mcp-server": Starting connection with timeout of 30000ms
+2026-03-05T02:18:19.160Z [DEBUG] MCP server "web-search-mcp": Initializing HTTP transport to http://8.213.135.91:25152/mcp
+2026-03-05T02:18:19.160Z [DEBUG] MCP server "web-search-mcp": Node version: v24.12.0, Platform: win32
+2026-03-05T02:18:19.160Z [DEBUG] MCP server "web-search-mcp": Environment: {"NODE_OPTIONS":"not set","UV_THREADPOOL_SIZE":"default","HTTP_PROXY":"not set","HTTPS_PROXY":"not set","NO_PROXY":"not set"}
+2026-03-05T02:18:19.161Z [DEBUG] MCP server "unity-mcp": Initializing HTTP transport to http://localhost:9998/mcp
+2026-03-05T02:18:19.161Z [DEBUG] MCP server "unity-mcp": Node version: v24.12.0, Platform: win32
+2026-03-05T02:18:19.161Z [DEBUG] MCP server "unity-mcp": Environment: {"NODE_OPTIONS":"not set","UV_THREADPOOL_SIZE":"default","HTTP_PROXY":"not set","HTTPS_PROXY":"not set","NO_PROXY":"not set"}
+2026-03-05T02:18:19.161Z [DEBUG] MCP server "firecrawl-mcp": Initializing HTTP transport to http://3.38.179.98:25152/mcp
+2026-03-05T02:18:19.162Z [DEBUG] MCP server "firecrawl-mcp": Node version: v24.12.0, Platform: win32
+2026-03-05T02:18:19.162Z [DEBUG] MCP server "firecrawl-mcp": Environment: {"NODE_OPTIONS":"not set","UV_THREADPOOL_SIZE":"default","HTTP_PROXY":"not set","HTTPS_PROXY":"not set","NO_PROXY":"not set"}
+2026-03-05T02:18:19.162Z [DEBUG] [LSP SERVER MANAGER] getAllLspServers returned 0 server(s)
+2026-03-05T02:18:19.162Z [DEBUG] LSP manager initialized with 0 servers
+2026-03-05T02:18:19.162Z [DEBUG] LSP server manager initialized successfully
+2026-03-05T02:18:19.162Z [DEBUG] LSP notification handlers registered successfully for all 0 server(s)
+2026-03-05T02:18:19.162Z [DEBUG] MCP server "web-search-mcp": Proxy options: default
+2026-03-05T02:18:19.162Z [DEBUG] MCP server "web-search-mcp": HTTP transport options: {"url":"http://8.213.135.91:25152/mcp","headers":{"User-Agent":"claude-code/2.1.25","Authorization":"[REDACTED]"},"hasAuthProvider":true,"timeoutMs":60000}
+2026-03-05T02:18:19.162Z [DEBUG] MCP server "web-search-mcp": HTTP transport created successfully
+2026-03-05T02:18:19.163Z [DEBUG] MCP server "web-search-mcp": Client created, setting up request handler
+2026-03-05T02:18:19.163Z [DEBUG] MCP server "web-search-mcp": Starting connection with timeout of 30000ms
+2026-03-05T02:18:19.163Z [DEBUG] MCP server "web-search-mcp": Testing basic HTTP connectivity to http://8.213.135.91:25152/mcp
+2026-03-05T02:18:19.163Z [DEBUG] MCP server "web-search-mcp": Parsed URL: host=8.213.135.91, port=25152, protocol=http:
+2026-03-05T02:18:19.163Z [DEBUG] MCP server "unity-mcp": Proxy options: default
+2026-03-05T02:18:19.163Z [DEBUG] MCP server "unity-mcp": HTTP transport options: {"url":"http://localhost:9998/mcp","headers":{"User-Agent":"claude-code/2.1.25"},"hasAuthProvider":true,"timeoutMs":60000}
+2026-03-05T02:18:19.163Z [DEBUG] MCP server "unity-mcp": HTTP transport created successfully
+2026-03-05T02:18:19.163Z [DEBUG] MCP server "unity-mcp": Client created, setting up request handler
+2026-03-05T02:18:19.164Z [DEBUG] MCP server "unity-mcp": Starting connection with timeout of 30000ms
+2026-03-05T02:18:19.164Z [DEBUG] MCP server "unity-mcp": Testing basic HTTP connectivity to http://localhost:9998/mcp
+2026-03-05T02:18:19.164Z [DEBUG] MCP server "unity-mcp": Parsed URL: host=localhost, port=9998, protocol=http:
+2026-03-05T02:18:19.164Z [DEBUG] MCP server "unity-mcp": Using loopback address: localhost
+2026-03-05T02:18:19.164Z [DEBUG] MCP server "firecrawl-mcp": Proxy options: default
+2026-03-05T02:18:19.164Z [DEBUG] MCP server "firecrawl-mcp": HTTP transport options: {"url":"http://3.38.179.98:25152/mcp","headers":{"User-Agent":"claude-code/2.1.25","Authorization":"[REDACTED]"},"hasAuthProvider":true,"timeoutMs":60000}
+2026-03-05T02:18:19.164Z [DEBUG] MCP server "firecrawl-mcp": HTTP transport created successfully
+2026-03-05T02:18:19.164Z [DEBUG] MCP server "firecrawl-mcp": Client created, setting up request handler
+2026-03-05T02:18:19.164Z [DEBUG] MCP server "firecrawl-mcp": Starting connection with timeout of 30000ms
+2026-03-05T02:18:19.164Z [DEBUG] MCP server "firecrawl-mcp": Testing basic HTTP connectivity to http://3.38.179.98:25152/mcp
+2026-03-05T02:18:19.164Z [DEBUG] MCP server "firecrawl-mcp": Parsed URL: host=3.38.179.98, port=25152, protocol=http:
+2026-03-05T02:18:19.166Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-03-05T02:18:19.166Z [DEBUG] MCP server "unity-mcp": No token data found
+2026-03-05T02:18:19.166Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-03-05T02:18:19.194Z [DEBUG] MCP server "unity-mcp": HTTP Connection failed after 33ms: fetch failed (code: none, errno: none)
+2026-03-05T02:18:19.194Z [ERROR] MCP server "unity-mcp" TypeError: fetch failed
+2026-03-05T02:18:19.208Z [DEBUG] MCP server "unity-mcp": Connection failed after 46ms: fetch failed
+2026-03-05T02:18:19.208Z [ERROR] MCP server "unity-mcp" Connection failed: fetch failed
+2026-03-05T02:18:19.286Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-03-05T02:18:19.377Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-03-05T02:18:19.378Z [DEBUG] MCP server "web-search-mcp": Successfully connected to http server in 218ms
+2026-03-05T02:18:19.378Z [DEBUG] MCP server "web-search-mcp": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"firecrawl-fastmcp","version":"3.0.0"}}
+2026-03-05T02:18:19.378Z [DEBUG] MCP server "web-search-mcp": No token data found
+2026-03-05T02:18:19.423Z [DEBUG] MCP server "web-search-mcp": HTTP connection dropped after 0s uptime
+2026-03-05T02:18:19.423Z [DEBUG] MCP server "web-search-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-03-05T02:18:19.423Z [DEBUG] MCP server "web-search-mcp": HTTP connection dropped after 0s uptime
+2026-03-05T02:18:19.424Z [DEBUG] MCP server "web-search-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-03-05T02:18:19.642Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-03-05T02:18:20.093Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-03-05T02:18:20.094Z [DEBUG] MCP server "firecrawl-mcp": Successfully connected to http server in 933ms
+2026-03-05T02:18:20.094Z [DEBUG] MCP server "firecrawl-mcp": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"firecrawl-fastmcp","version":"3.0.0"}}
+2026-03-05T02:18:20.094Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-03-05T02:18:20.318Z [DEBUG] MCP server "firecrawl-mcp": HTTP connection dropped after 0s uptime
+2026-03-05T02:18:20.318Z [DEBUG] MCP server "firecrawl-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-03-05T02:18:20.318Z [DEBUG] MCP server "firecrawl-mcp": HTTP connection dropped after 0s uptime
+2026-03-05T02:18:20.318Z [DEBUG] MCP server "firecrawl-mcp": Connection error: Streamable HTTP error: Failed to open SSE stream: Bad Request
+2026-03-05T02:18:21.721Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-05T02:18:21.712Z] INFO: MCP Server Application initialized
+[2026-03-05T02:18:21.712Z] INFO: Starting MCP server...
+[2026-03-05T02:18:21.713Z] INFO: UI to Artifact tool registered successfully
+[2026-03-05T02:18:21.713Z] INFO: Text Extraction tool registered successfully
+[2026-03-05T02:18:21.714Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-05T02:18:21.714Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-05T02:18:21.714Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-05T02:18:21.714Z] INFO: UI Diff Check tool registered successfully
+[2026-03-05T02:18:21.715Z] INFO: General Image Analysis tool registered successfully
+[2026-03-05T02:18:21.715Z] INFO: Video analysis tool registered successfully
+[2026-03-05T02:18:21.715Z] INFO: Successfully registered all tools
+[2026-03-05T02:18:21.715Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-05T02:18:21.722Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 2597ms
+2026-03-05T02:18:21.722Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-05T02:18:21.911Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-05T02:18:21.911Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 2836ms
+2026-03-05T02:18:21.911Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.18.1"}}
+2026-03-05T02:18:21.980Z [DEBUG] installed_plugins.json doesn't exist, returning empty V2 object
+2026-03-05T02:18:21.980Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-05T02:18:21.981Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-05T02:18:22.124Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-05T02:18:22.132Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\e26030bb-c98d-4108-acb5-cdb42ce97dcd-agent-e26030bb-c98d-4108-acb5-cdb42ce97dcd.json.tmp.25824.1772677102132
+2026-03-05T02:18:22.133Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-05T02:18:22.133Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\e26030bb-c98d-4108-acb5-cdb42ce97dcd-agent-e26030bb-c98d-4108-acb5-cdb42ce97dcd.json.tmp.25824.1772677102132 to C:\Users\hufeifei.JOY\.claude\todos\e26030bb-c98d-4108-acb5-cdb42ce97dcd-agent-e26030bb-c98d-4108-acb5-cdb42ce97dcd.json
+2026-03-05T02:18:22.137Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\e26030bb-c98d-4108-acb5-cdb42ce97dcd-agent-e26030bb-c98d-4108-acb5-cdb42ce97dcd.json written atomically
+2026-03-05T02:18:22.246Z [DEBUG] Getting matching hook commands for SessionStart with query: startup
+2026-03-05T02:18:22.246Z [DEBUG] Found 0 hook matchers in settings
+2026-03-05T02:18:22.246Z [DEBUG] Matched 0 unique hooks for query "startup" (0 before deduplication)
+2026-03-05T02:18:22.256Z [DEBUG] Broken symlink or missing file encountered for settings.json at path: F:\HFF\Obsidian\FFNotes\.claude\settings.json
+2026-03-05T02:18:22.262Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-05T02:18:22.419Z [DEBUG] Stats cache is up to date
+2026-03-05T02:18:23.084Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-05T02:18:23.084Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-05T02:18:23.084Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-05T02:18:23.085Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-05T02:18:23.087Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-03-05T02:18:23.087Z [DEBUG] Found 0 hook matchers in settings
+2026-03-05T02:18:23.087Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-05T02:18:23.102Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-05T02:18:23.102Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-05T02:18:23.102Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-05T02:18:23.675Z [DEBUG] Auto tool search disabled: 15854 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-05T02:18:23.682Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-05T02:18:23.683Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-05T02:18:23.683Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-05T02:18:23.684Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-05T02:18:23.995Z [DEBUG] Stream started - received first chunk
+2026-03-05T02:18:46.009Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-03-05T02:18:46.009Z [DEBUG] Found 0 hook matchers in settings
+2026-03-05T02:18:46.009Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-05T02:22:42.883Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-05T02:22:42.883Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-05T02:22:42.883Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-05T02:22:42.883Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-05T02:22:42.884Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-03-05T02:22:42.884Z [DEBUG] Found 0 hook matchers in settings
+2026-03-05T02:22:42.884Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-05T02:22:42.887Z [DEBUG] Auto tool search disabled: 15854 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-05T02:22:42.890Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-05T02:22:42.891Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-05T02:22:42.891Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-05T02:22:42.892Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-05T02:22:43.259Z [DEBUG] Stream started - received first chunk
+2026-03-05T02:23:21.992Z [DEBUG] Metrics opt-out check failed: No API key available
+2026-03-05T02:23:21.993Z [DEBUG] Metrics check failed, defaulting to disabled
+2026-03-05T02:23:21.993Z [DEBUG] Metrics export disabled by organization setting
+2026-03-05T02:25:43.461Z [ERROR] Error streaming, falling back to non-streaming mode: {"type":"error","error":{"message":"操作失败","code":"500"},"request_id":"20260305102243864f50b24e824140"}
+2026-03-05T02:25:43.461Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-05T02:25:43.461Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-05T02:25:43.461Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-05T02:26:17.281Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-03-05T02:26:17.281Z [DEBUG] Found 0 hook matchers in settings
+2026-03-05T02:26:17.281Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-05T02:42:18.210Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-05T02:42:18.200Z] INFO: MCP Server Application initialized
+[2026-03-05T02:42:18.201Z] INFO: Starting MCP server...
+[2026-03-05T02:42:18.202Z] INFO: UI to Artifact tool registered successfully
+[2026-03-05T02:42:18.203Z] INFO: Text Extraction tool registered successfully
+[2026-03-05T02:42:18.203Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-05T02:42:18.203Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-05T02:42:18.203Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-05T02:42:18.204Z] INFO: UI Diff Check tool registered successfully
+[2026-03-05T02:42:18.204Z] INFO: General Image Analysis tool registered successfully
+[2026-03-05T02:42:18.204Z] INFO: Video analysis tool registered successfully
+[2026-03-05T02:42:18.204Z] INFO: Successfully registered all tools
+[2026-03-05T02:42:18.204Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-05T02:42:18.210Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 2421ms
+2026-03-05T02:42:18.210Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-05T02:42:18.378Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-05T02:42:18.378Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 2642ms
+2026-03-05T02:42:18.378Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.18.1"}}
+2026-03-05T02:42:18.448Z [DEBUG] installed_plugins.json doesn't exist, returning empty V2 object
+2026-03-05T02:42:18.448Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-05T02:42:18.449Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-05T02:42:18.595Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-05T02:42:18.606Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\eeef17a9-e873-49ba-aa4c-b8f13324bff9-agent-eeef17a9-e873-49ba-aa4c-b8f13324bff9.json.tmp.28828.1772678538606
+2026-03-05T02:42:18.607Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-05T02:42:18.607Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\eeef17a9-e873-49ba-aa4c-b8f13324bff9-agent-eeef17a9-e873-49ba-aa4c-b8f13324bff9.json.tmp.28828.1772678538606 to C:\Users\hufeifei.JOY\.claude\todos\eeef17a9-e873-49ba-aa4c-b8f13324bff9-agent-eeef17a9-e873-49ba-aa4c-b8f13324bff9.json
+2026-03-05T02:42:18.609Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\eeef17a9-e873-49ba-aa4c-b8f13324bff9-agent-eeef17a9-e873-49ba-aa4c-b8f13324bff9.json written atomically
+2026-03-05T02:42:18.678Z [DEBUG] Broken symlink or missing file encountered for settings.json at path: F:\HFF\Obsidian\FFNotes\.claude\settings.json
+2026-03-05T02:42:18.689Z [DEBUG] Stats cache is up to date
+2026-03-05T02:42:18.697Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-05T02:42:18.697Z [DEBUG] Found 0 hook matchers in settings
+2026-03-05T02:42:18.697Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-05T02:42:18.701Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-05T02:42:19.246Z [DEBUG] Session index: added 2, updated 1, removed 0, summaries generated 0 (total: 32)
+2026-03-05T09:48:31.555Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-05T09:48:31.546Z] INFO: MCP Server Application initialized
+[2026-03-05T09:48:31.547Z] INFO: Starting MCP server...
+[2026-03-05T09:48:31.548Z] INFO: UI to Artifact tool registered successfully
+[2026-03-05T09:48:31.548Z] INFO: Text Extraction tool registered successfully
+[2026-03-05T09:48:31.548Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-05T09:48:31.549Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-05T09:48:31.549Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-05T09:48:31.549Z] INFO: UI Diff Check tool registered successfully
+[2026-03-05T09:48:31.549Z] INFO: General Image Analysis tool registered successfully
+[2026-03-05T09:48:31.549Z] INFO: Video analysis tool registered successfully
+[2026-03-05T09:48:31.549Z] INFO: Successfully registered all tools
+[2026-03-05T09:48:31.550Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-05T09:48:31.555Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 2714ms
+2026-03-05T09:48:31.555Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-05T09:48:31.743Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-05T09:48:31.743Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 2959ms
+2026-03-05T09:48:31.743Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.18.1"}}
+2026-03-05T09:48:31.818Z [DEBUG] installed_plugins.json doesn't exist, returning empty V2 object
+2026-03-05T09:48:31.818Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-05T09:48:31.820Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-05T09:48:31.994Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-05T09:48:32.009Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\9c0667e1-edbe-4844-a30d-d3b4fec3e527-agent-9c0667e1-edbe-4844-a30d-d3b4fec3e527.json.tmp.15856.1772704112009
+2026-03-05T09:48:32.010Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-05T09:48:32.010Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\9c0667e1-edbe-4844-a30d-d3b4fec3e527-agent-9c0667e1-edbe-4844-a30d-d3b4fec3e527.json.tmp.15856.1772704112009 to C:\Users\hufeifei.JOY\.claude\todos\9c0667e1-edbe-4844-a30d-d3b4fec3e527-agent-9c0667e1-edbe-4844-a30d-d3b4fec3e527.json
+2026-03-05T09:48:32.015Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\9c0667e1-edbe-4844-a30d-d3b4fec3e527-agent-9c0667e1-edbe-4844-a30d-d3b4fec3e527.json written atomically
+2026-03-05T09:48:32.101Z [DEBUG] Broken symlink or missing file encountered for settings.json at path: F:\HFF\Obsidian\FFNotes\.claude\settings.json
+2026-03-05T09:48:32.118Z [DEBUG] Stats cache is up to date
+2026-03-05T09:48:32.127Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-05T09:48:32.127Z [DEBUG] Found 0 hook matchers in settings
+2026-03-05T09:48:32.127Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-05T09:48:32.132Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-05T09:48:32.861Z [DEBUG] Session index: added 6, updated 1, removed 3, summaries generated 0 (total: 35)
+2026-03-05T10:02:35.603Z [DEBUG] MCP server "zai-mcp-server": STDIO connection closed after 844s (cleanly)
+2026-03-05T10:02:35.603Z [DEBUG] MCP server "zai-mcp-server": Cleared connection cache for reconnection
+2026-03-05T10:02:35.603Z [DEBUG] MCP server "chrome-devtools": UNKNOWN connection closed after 843s (cleanly)
+2026-03-05T10:02:35.603Z [DEBUG] MCP server "chrome-devtools": Cleared connection cache for reconnection
+2026-03-06T00:33:53.761Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-06T00:33:53.762Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 5622ms
+2026-03-06T00:33:53.762Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.19.0"}}
+2026-03-06T00:33:53.832Z [DEBUG] installed_plugins.json doesn't exist, returning empty V2 object
+2026-03-06T00:33:53.832Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-06T00:33:53.834Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-06T00:33:54.021Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-06T00:33:54.146Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\ec74b2bf-5497-4726-82f0-8cfbcf114e70-agent-ec74b2bf-5497-4726-82f0-8cfbcf114e70.json.tmp.12280.1772757234146
+2026-03-06T00:33:54.147Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-06T00:33:54.147Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\ec74b2bf-5497-4726-82f0-8cfbcf114e70-agent-ec74b2bf-5497-4726-82f0-8cfbcf114e70.json.tmp.12280.1772757234146 to C:\Users\hufeifei.JOY\.claude\todos\ec74b2bf-5497-4726-82f0-8cfbcf114e70-agent-ec74b2bf-5497-4726-82f0-8cfbcf114e70.json
+2026-03-06T00:33:54.148Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\ec74b2bf-5497-4726-82f0-8cfbcf114e70-agent-ec74b2bf-5497-4726-82f0-8cfbcf114e70.json written atomically
+2026-03-06T00:33:54.246Z [DEBUG] Broken symlink or missing file encountered for settings.json at path: F:\HFF\Obsidian\FFNotes\.claude\settings.json
+2026-03-06T00:33:54.603Z [DEBUG] Stats cache stale (2026-03-04), processing 2026-03-05 to 2026-03-05 in background
+2026-03-06T00:33:54.617Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-06T00:33:54.617Z [DEBUG] Found 0 hook matchers in settings
+2026-03-06T00:33:54.617Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-06T00:33:54.625Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-06T00:33:54.781Z [DEBUG] Session index: added 0, updated 1, removed 0, summaries generated 0 (total: 35)
+2026-03-06T00:33:55.952Z [DEBUG] Stats cache saved successfully (lastComputedDate: 2026-03-05)
+2026-03-06T00:33:55.952Z [DEBUG] Stats cache updated with 9 new sessions
+2026-03-06T00:50:54.551Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-06T01:02:25.501Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-06T01:02:25.493Z] INFO: MCP Server Application initialized
+[2026-03-06T01:02:25.493Z] INFO: Starting MCP server...
+[2026-03-06T01:02:25.494Z] INFO: UI to Artifact tool registered successfully
+[2026-03-06T01:02:25.494Z] INFO: Text Extraction tool registered successfully
+[2026-03-06T01:02:25.494Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-06T01:02:25.494Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-06T01:02:25.495Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-06T01:02:25.495Z] INFO: UI Diff Check tool registered successfully
+[2026-03-06T01:02:25.495Z] INFO: General Image Analysis tool registered successfully
+[2026-03-06T01:02:25.495Z] INFO: Video analysis tool registered successfully
+[2026-03-06T01:02:25.495Z] INFO: Successfully registered all tools
+[2026-03-06T01:02:25.495Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-06T01:02:25.501Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 2232ms
+2026-03-06T01:02:25.501Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-06T01:02:25.808Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-06T01:02:25.808Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 2589ms
+2026-03-06T01:02:25.808Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.19.0"}}
+2026-03-06T01:02:25.882Z [DEBUG] installed_plugins.json doesn't exist, returning empty V2 object
+2026-03-06T01:02:25.882Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-06T01:02:25.883Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-06T01:02:26.026Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-06T01:02:26.037Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\24d4d52b-7519-4430-9093-a5a25937f5df-agent-24d4d52b-7519-4430-9093-a5a25937f5df.json.tmp.21880.1772758946037
+2026-03-06T01:02:26.038Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-06T01:02:26.038Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\24d4d52b-7519-4430-9093-a5a25937f5df-agent-24d4d52b-7519-4430-9093-a5a25937f5df.json.tmp.21880.1772758946037 to C:\Users\hufeifei.JOY\.claude\todos\24d4d52b-7519-4430-9093-a5a25937f5df-agent-24d4d52b-7519-4430-9093-a5a25937f5df.json
+2026-03-06T01:02:26.040Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\24d4d52b-7519-4430-9093-a5a25937f5df-agent-24d4d52b-7519-4430-9093-a5a25937f5df.json written atomically
+2026-03-06T01:02:26.103Z [DEBUG] Broken symlink or missing file encountered for settings.json at path: F:\HFF\Obsidian\FFNotes\.claude\settings.json
+2026-03-06T01:02:26.115Z [DEBUG] Stats cache is up to date
+2026-03-06T01:02:26.124Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-06T01:02:26.124Z [DEBUG] Found 0 hook matchers in settings
+2026-03-06T01:02:26.124Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-06T01:02:26.128Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-06T01:02:26.160Z [DEBUG] Session index: added 0, updated 1, removed 0, summaries generated 0 (total: 35)
+2026-03-06T10:01:52.447Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-06T10:01:52.435Z] INFO: MCP Server Application initialized
+[2026-03-06T10:01:52.436Z] INFO: Starting MCP server...
+[2026-03-06T10:01:52.438Z] INFO: UI to Artifact tool registered successfully
+[2026-03-06T10:01:52.438Z] INFO: Text Extraction tool registered successfully
+[2026-03-06T10:01:52.438Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-06T10:01:52.438Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-06T10:01:52.439Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-06T10:01:52.439Z] INFO: UI Diff Check tool registered successfully
+[2026-03-06T10:01:52.439Z] INFO: General Image Analysis tool registered successfully
+[2026-03-06T10:01:52.439Z] INFO: Video analysis tool registered successfully
+[2026-03-06T10:01:52.439Z] INFO: Successfully registered all tools
+[2026-03-06T10:01:52.440Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-06T10:01:52.447Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 3621ms
+2026-03-06T10:01:52.447Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-06T10:01:52.873Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-06T10:01:52.873Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 4118ms
+2026-03-06T10:01:52.873Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.19.0"}}
+2026-03-06T10:01:52.968Z [DEBUG] installed_plugins.json doesn't exist, returning empty V2 object
+2026-03-06T10:01:52.968Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-06T10:01:52.970Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-06T10:01:53.194Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-06T10:01:53.237Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\ca626d05-3aee-4fbc-87ad-ced99240b455-agent-ca626d05-3aee-4fbc-87ad-ced99240b455.json.tmp.32708.1772791313237
+2026-03-06T10:01:53.238Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-06T10:01:53.238Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\ca626d05-3aee-4fbc-87ad-ced99240b455-agent-ca626d05-3aee-4fbc-87ad-ced99240b455.json.tmp.32708.1772791313237 to C:\Users\hufeifei.JOY\.claude\todos\ca626d05-3aee-4fbc-87ad-ced99240b455-agent-ca626d05-3aee-4fbc-87ad-ced99240b455.json
+2026-03-06T10:01:53.244Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\ca626d05-3aee-4fbc-87ad-ced99240b455-agent-ca626d05-3aee-4fbc-87ad-ced99240b455.json written atomically
+2026-03-06T10:01:53.378Z [DEBUG] Broken symlink or missing file encountered for settings.json at path: F:\HFF\Obsidian\FFNotes\.claude\settings.json
+2026-03-06T10:01:53.444Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-06T10:01:53.444Z [DEBUG] Found 0 hook matchers in settings
+2026-03-06T10:01:53.444Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-06T10:01:53.465Z [DEBUG] Stats cache is up to date
+2026-03-06T10:01:53.468Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-06T10:01:54.484Z [DEBUG] Session index: added 5, updated 1, removed 0, summaries generated 0 (total: 40)
+2026-03-06T10:05:28.489Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-06T10:05:28.480Z] INFO: MCP Server Application initialized
+[2026-03-06T10:05:28.480Z] INFO: Starting MCP server...
+[2026-03-06T10:05:28.481Z] INFO: UI to Artifact tool registered successfully
+[2026-03-06T10:05:28.481Z] INFO: Text Extraction tool registered successfully
+[2026-03-06T10:05:28.482Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-06T10:05:28.482Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-06T10:05:28.482Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-06T10:05:28.482Z] INFO: UI Diff Check tool registered successfully
+[2026-03-06T10:05:28.482Z] INFO: General Image Analysis tool registered successfully
+[2026-03-06T10:05:28.482Z] INFO: Video analysis tool registered successfully
+[2026-03-06T10:05:28.482Z] INFO: Successfully registered all tools
+[2026-03-06T10:05:28.483Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-06T10:05:28.489Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 2693ms
+2026-03-06T10:05:28.489Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-06T10:05:28.807Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-06T10:05:28.807Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 3099ms
+2026-03-06T10:05:28.807Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.19.0"}}
+2026-03-06T10:05:28.890Z [DEBUG] installed_plugins.json doesn't exist, returning empty V2 object
+2026-03-06T10:05:28.890Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-06T10:05:28.892Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-06T10:05:29.060Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-06T10:05:29.074Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\0396d50e-b3d5-4830-a653-ad9d6b50b707-agent-0396d50e-b3d5-4830-a653-ad9d6b50b707.json.tmp.43064.1772791529074
+2026-03-06T10:05:29.075Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-06T10:05:29.075Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\0396d50e-b3d5-4830-a653-ad9d6b50b707-agent-0396d50e-b3d5-4830-a653-ad9d6b50b707.json.tmp.43064.1772791529074 to C:\Users\hufeifei.JOY\.claude\todos\0396d50e-b3d5-4830-a653-ad9d6b50b707-agent-0396d50e-b3d5-4830-a653-ad9d6b50b707.json
+2026-03-06T10:05:29.079Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\0396d50e-b3d5-4830-a653-ad9d6b50b707-agent-0396d50e-b3d5-4830-a653-ad9d6b50b707.json written atomically
+2026-03-06T10:05:29.192Z [DEBUG] Broken symlink or missing file encountered for settings.json at path: F:\HFF\Obsidian\FFNotes\.claude\settings.json
+2026-03-06T10:05:29.209Z [DEBUG] Stats cache is up to date
+2026-03-06T10:05:29.218Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-06T10:05:29.218Z [DEBUG] Found 0 hook matchers in settings
+2026-03-06T10:05:29.218Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-06T10:05:29.224Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-06T10:05:29.377Z [DEBUG] Session index: added 0, updated 1, removed 0, summaries generated 0 (total: 40)
+2026-03-09T02:25:03.719Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-09T02:25:03.709Z] INFO: MCP Server Application initialized
+[2026-03-09T02:25:03.710Z] INFO: Starting MCP server...
+[2026-03-09T02:25:03.711Z] INFO: UI to Artifact tool registered successfully
+[2026-03-09T02:25:03.711Z] INFO: Text Extraction tool registered successfully
+[2026-03-09T02:25:03.711Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-09T02:25:03.712Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-09T02:25:03.712Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-09T02:25:03.712Z] INFO: UI Diff Check tool registered successfully
+[2026-03-09T02:25:03.712Z] INFO: General Image Analysis tool registered successfully
+[2026-03-09T02:25:03.712Z] INFO: Video analysis tool registered successfully
+[2026-03-09T02:25:03.712Z] INFO: Successfully registered all tools
+[2026-03-09T02:25:03.713Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-09T02:25:03.719Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 3318ms
+2026-03-09T02:25:03.719Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-09T02:25:04.010Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-09T02:25:04.010Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 3671ms
+2026-03-09T02:25:04.010Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.19.0"}}
+2026-03-09T02:25:04.093Z [DEBUG] installed_plugins.json doesn't exist, returning empty V2 object
+2026-03-09T02:25:04.093Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-09T02:25:04.096Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-09T02:25:04.285Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-09T02:25:04.445Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\88619d14-06a1-41c3-923e-8825b295f760-agent-88619d14-06a1-41c3-923e-8825b295f760.json.tmp.18968.1773023104445
+2026-03-09T02:25:04.495Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-09T02:25:04.495Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\88619d14-06a1-41c3-923e-8825b295f760-agent-88619d14-06a1-41c3-923e-8825b295f760.json.tmp.18968.1773023104445 to C:\Users\hufeifei.JOY\.claude\todos\88619d14-06a1-41c3-923e-8825b295f760-agent-88619d14-06a1-41c3-923e-8825b295f760.json
+2026-03-09T02:25:04.499Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\88619d14-06a1-41c3-923e-8825b295f760-agent-88619d14-06a1-41c3-923e-8825b295f760.json written atomically
+2026-03-09T02:25:04.610Z [DEBUG] Broken symlink or missing file encountered for settings.json at path: F:\HFF\Obsidian\FFNotes\.claude\settings.json
+2026-03-09T02:25:04.629Z [DEBUG] Stats cache stale (2026-03-05), processing 2026-03-06 to 2026-03-08 in background
+2026-03-09T02:25:04.695Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-09T02:25:04.695Z [DEBUG] Found 0 hook matchers in settings
+2026-03-09T02:25:04.695Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-09T02:25:04.703Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-09T02:25:05.460Z [DEBUG] Session index: added 0, updated 1, removed 3, summaries generated 0 (total: 37)
+2026-03-09T02:25:05.723Z [DEBUG] Stats cache saved successfully (lastComputedDate: 2026-03-08)
+2026-03-09T02:25:05.723Z [DEBUG] Stats cache updated with 5 new sessions
+2026-03-09T06:06:26.635Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-09T06:06:26.628Z] INFO: MCP Server Application initialized
+[2026-03-09T06:06:26.628Z] INFO: Starting MCP server...
+[2026-03-09T06:06:26.629Z] INFO: UI to Artifact tool registered successfully
+[2026-03-09T06:06:26.629Z] INFO: Text Extraction tool registered successfully
+[2026-03-09T06:06:26.629Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-09T06:06:26.629Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-09T06:06:26.629Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-09T06:06:26.630Z] INFO: UI Diff Check tool registered successfully
+[2026-03-09T06:06:26.630Z] INFO: General Image Analysis tool registered successfully
+[2026-03-09T06:06:26.630Z] INFO: Video analysis tool registered successfully
+[2026-03-09T06:06:26.630Z] INFO: Successfully registered all tools
+[2026-03-09T06:06:26.630Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-09T06:06:26.635Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 2435ms
+2026-03-09T06:06:26.635Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-09T06:06:26.869Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-09T06:06:26.869Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 2719ms
+2026-03-09T06:06:26.869Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.19.0"}}
+2026-03-09T06:06:26.943Z [DEBUG] installed_plugins.json doesn't exist, returning empty V2 object
+2026-03-09T06:06:26.943Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-09T06:06:26.944Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-09T06:06:27.112Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-09T06:06:27.126Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\0269fc75-7090-46c8-8f28-aef69d7151f3-agent-0269fc75-7090-46c8-8f28-aef69d7151f3.json.tmp.16256.1773036387126
+2026-03-09T06:06:27.127Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-09T06:06:27.127Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\0269fc75-7090-46c8-8f28-aef69d7151f3-agent-0269fc75-7090-46c8-8f28-aef69d7151f3.json.tmp.16256.1773036387126 to C:\Users\hufeifei.JOY\.claude\todos\0269fc75-7090-46c8-8f28-aef69d7151f3-agent-0269fc75-7090-46c8-8f28-aef69d7151f3.json
+2026-03-09T06:06:27.130Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\0269fc75-7090-46c8-8f28-aef69d7151f3-agent-0269fc75-7090-46c8-8f28-aef69d7151f3.json written atomically
+2026-03-09T06:06:27.203Z [DEBUG] Broken symlink or missing file encountered for settings.json at path: F:\HFF\Obsidian\FFNotes\.claude\settings.json
+2026-03-09T06:06:27.217Z [DEBUG] Stats cache is up to date
+2026-03-09T06:06:27.225Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-09T06:06:27.225Z [DEBUG] Found 0 hook matchers in settings
+2026-03-09T06:06:27.225Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-09T06:06:27.230Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-09T06:06:27.373Z [DEBUG] Session index: added 0, updated 1, removed 0, summaries generated 0 (total: 37)
+2026-03-12T05:43:50.248Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-12T05:43:50.238Z] INFO: MCP Server Application initialized
+[2026-03-12T05:43:50.238Z] INFO: Starting MCP server...
+[2026-03-12T05:43:50.240Z] INFO: UI to Artifact tool registered successfully
+[2026-03-12T05:43:50.240Z] INFO: Text Extraction tool registered successfully
+[2026-03-12T05:43:50.240Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-12T05:43:50.241Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-12T05:43:50.241Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-12T05:43:50.241Z] INFO: UI Diff Check tool registered successfully
+[2026-03-12T05:43:50.241Z] INFO: General Image Analysis tool registered successfully
+[2026-03-12T05:43:50.241Z] INFO: Video analysis tool registered successfully
+[2026-03-12T05:43:50.241Z] INFO: Successfully registered all tools
+[2026-03-12T05:43:50.242Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-12T05:43:50.248Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 2859ms
+2026-03-12T05:43:50.248Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-12T05:43:50.477Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-12T05:43:50.477Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 3147ms
+2026-03-12T05:43:50.477Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.20.0"}}
+2026-03-12T05:43:50.556Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-03-12T05:43:50.556Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-12T05:43:50.558Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-12T05:43:50.741Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-12T05:43:50.760Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\b69d457a-b713-4223-9b2a-63168a0a4d00-agent-b69d457a-b713-4223-9b2a-63168a0a4d00.json.tmp.25252.1773294230760
+2026-03-12T05:43:50.761Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-12T05:43:50.761Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\b69d457a-b713-4223-9b2a-63168a0a4d00-agent-b69d457a-b713-4223-9b2a-63168a0a4d00.json.tmp.25252.1773294230760 to C:\Users\hufeifei.JOY\.claude\todos\b69d457a-b713-4223-9b2a-63168a0a4d00-agent-b69d457a-b713-4223-9b2a-63168a0a4d00.json
+2026-03-12T05:43:50.764Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\b69d457a-b713-4223-9b2a-63168a0a4d00-agent-b69d457a-b713-4223-9b2a-63168a0a4d00.json written atomically
+2026-03-12T05:43:50.853Z [DEBUG] Stats cache stale (2026-03-08), processing 2026-03-09 to 2026-03-11 in background
+2026-03-12T05:43:50.867Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-12T05:43:50.867Z [DEBUG] Found 0 hook matchers in settings
+2026-03-12T05:43:50.867Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-12T05:43:50.872Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-12T05:43:52.120Z [DEBUG] Stats cache saved successfully (lastComputedDate: 2026-03-11)
+2026-03-12T05:43:52.120Z [DEBUG] Stats cache updated with 15 new sessions
+2026-03-12T05:43:52.214Z [DEBUG] Session index: added 15, updated 1, removed 5, summaries generated 0 (total: 47)
+2026-03-12T11:45:06.474Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-12T11:45:06.467Z] INFO: MCP Server Application initialized
+[2026-03-12T11:45:06.467Z] INFO: Starting MCP server...
+[2026-03-12T11:45:06.468Z] INFO: UI to Artifact tool registered successfully
+[2026-03-12T11:45:06.468Z] INFO: Text Extraction tool registered successfully
+[2026-03-12T11:45:06.468Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-12T11:45:06.469Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-12T11:45:06.469Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-12T11:45:06.469Z] INFO: UI Diff Check tool registered successfully
+[2026-03-12T11:45:06.469Z] INFO: General Image Analysis tool registered successfully
+[2026-03-12T11:45:06.469Z] INFO: Video analysis tool registered successfully
+[2026-03-12T11:45:06.469Z] INFO: Successfully registered all tools
+[2026-03-12T11:45:06.470Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-12T11:45:06.474Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 2604ms
+2026-03-12T11:45:06.474Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-12T11:45:06.844Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-12T11:45:06.844Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 3037ms
+2026-03-12T11:45:06.845Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.20.0"}}
+2026-03-12T11:45:06.915Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-03-12T11:45:06.915Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-12T11:45:06.917Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-12T11:45:07.096Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-12T11:45:07.113Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\38246f99-6103-4b37-976f-7c0e9a52f225-agent-38246f99-6103-4b37-976f-7c0e9a52f225.json.tmp.28164.1773315907113
+2026-03-12T11:45:07.114Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-12T11:45:07.114Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\38246f99-6103-4b37-976f-7c0e9a52f225-agent-38246f99-6103-4b37-976f-7c0e9a52f225.json.tmp.28164.1773315907113 to C:\Users\hufeifei.JOY\.claude\todos\38246f99-6103-4b37-976f-7c0e9a52f225-agent-38246f99-6103-4b37-976f-7c0e9a52f225.json
+2026-03-12T11:45:07.117Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\38246f99-6103-4b37-976f-7c0e9a52f225-agent-38246f99-6103-4b37-976f-7c0e9a52f225.json written atomically
+2026-03-12T11:45:07.208Z [DEBUG] Stats cache is up to date
+2026-03-12T11:45:07.220Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-12T11:45:07.220Z [DEBUG] Found 0 hook matchers in settings
+2026-03-12T11:45:07.220Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-12T11:45:07.226Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-12T12:03:14.974Z [DEBUG] Detected change to F:\HFF\Obsidian\FFNotes\.claude\settings.json
+2026-03-12T12:04:16.184Z [DEBUG] Detected skill change: F:\HFF\Obsidian\FFNotes\.claude\skills\requirement-processor\SKILL.md
+2026-03-12T12:04:16.185Z [DEBUG] Loading skills from: managed=C:\ProgramData\ClaudeCode\.claude\skills, user=C:\Users\hufeifei.JOY\.claude\skills, project=[F:\HFF\Obsidian\FFNotes\.claude\skills]
+2026-03-12T12:04:16.187Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-12T12:04:16.187Z [DEBUG] Total plugin skills loaded: 0
+2026-03-12T12:04:16.187Z [DEBUG] Total plugin commands loaded: 0
+2026-03-12T12:04:16.362Z [DEBUG] Loaded 2 unique skills (managed: 0, user: 0, project: 2, legacy commands: 0)
+2026-03-12T12:04:16.362Z [DEBUG] getSkills returning: 2 skill dir commands, 0 plugin skills, 1 bundled skills
+2026-03-12T12:07:04.813Z [DEBUG] Detected skill change: F:\HFF\Obsidian\FFNotes\.claude\skills\requirement-processor\references\templates.md
+2026-03-12T12:07:04.814Z [DEBUG] Loading skills from: managed=C:\ProgramData\ClaudeCode\.claude\skills, user=C:\Users\hufeifei.JOY\.claude\skills, project=[F:\HFF\Obsidian\FFNotes\.claude\skills]
+2026-03-12T12:07:04.816Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-12T12:07:04.816Z [DEBUG] Total plugin skills loaded: 0
+2026-03-12T12:07:04.816Z [DEBUG] Total plugin commands loaded: 0
+2026-03-12T12:07:04.996Z [DEBUG] Loaded 2 unique skills (managed: 0, user: 0, project: 2, legacy commands: 0)
+2026-03-12T12:07:04.996Z [DEBUG] getSkills returning: 2 skill dir commands, 0 plugin skills, 1 bundled skills
+2026-03-12T12:08:05.093Z [DEBUG] Detected skill change: F:\HFF\Obsidian\FFNotes\.claude\skills\requirement-processor\references\quality-checklist.md
+2026-03-12T12:08:05.093Z [DEBUG] Loading skills from: managed=C:\ProgramData\ClaudeCode\.claude\skills, user=C:\Users\hufeifei.JOY\.claude\skills, project=[F:\HFF\Obsidian\FFNotes\.claude\skills]
+2026-03-12T12:08:05.095Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-12T12:08:05.095Z [DEBUG] Total plugin skills loaded: 0
+2026-03-12T12:08:05.095Z [DEBUG] Total plugin commands loaded: 0
+2026-03-12T12:08:05.272Z [DEBUG] Loaded 2 unique skills (managed: 0, user: 0, project: 2, legacy commands: 0)
+2026-03-12T12:08:05.272Z [DEBUG] getSkills returning: 2 skill dir commands, 0 plugin skills, 1 bundled skills
+2026-03-12T12:35:38.317Z [DEBUG] MCP server "zai-mcp-server": STDIO connection closed after 3031s (cleanly)
+2026-03-12T12:35:38.318Z [DEBUG] MCP server "zai-mcp-server": Cleared connection cache for reconnection
+2026-03-12T12:35:38.398Z [DEBUG] MCP server "chrome-devtools": UNKNOWN connection closed after 3031s (cleanly)
+2026-03-12T12:35:38.398Z [DEBUG] MCP server "chrome-devtools": Cleared connection cache for reconnection
+2026-03-13T01:59:28.435Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-13T01:59:28.426Z] INFO: MCP Server Application initialized
+[2026-03-13T01:59:28.427Z] INFO: Starting MCP server...
+[2026-03-13T01:59:28.427Z] INFO: UI to Artifact tool registered successfully
+[2026-03-13T01:59:28.428Z] INFO: Text Extraction tool registered successfully
+[2026-03-13T01:59:28.428Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-13T01:59:28.428Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-13T01:59:28.429Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-13T01:59:28.429Z] INFO: UI Diff Check tool registered successfully
+[2026-03-13T01:59:28.429Z] INFO: General Image Analysis tool registered successfully
+[2026-03-13T01:59:28.429Z] INFO: Video analysis tool registered successfully
+[2026-03-13T01:59:28.429Z] INFO: Successfully registered all tools
+[2026-03-13T01:59:28.430Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-13T01:59:28.436Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 2433ms
+2026-03-13T01:59:28.436Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-13T01:59:28.687Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-13T01:59:28.688Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 2742ms
+2026-03-13T01:59:28.688Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.20.0"}}
+2026-03-13T01:59:28.758Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-03-13T01:59:28.758Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-13T01:59:28.760Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-13T01:59:28.912Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-13T01:59:28.944Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\91a224b4-20c0-401e-b471-24d1b6c5b589-agent-91a224b4-20c0-401e-b471-24d1b6c5b589.json.tmp.24032.1773367168943
+2026-03-13T01:59:28.945Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-13T01:59:28.945Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\91a224b4-20c0-401e-b471-24d1b6c5b589-agent-91a224b4-20c0-401e-b471-24d1b6c5b589.json.tmp.24032.1773367168943 to C:\Users\hufeifei.JOY\.claude\todos\91a224b4-20c0-401e-b471-24d1b6c5b589-agent-91a224b4-20c0-401e-b471-24d1b6c5b589.json
+2026-03-13T01:59:28.948Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\91a224b4-20c0-401e-b471-24d1b6c5b589-agent-91a224b4-20c0-401e-b471-24d1b6c5b589.json written atomically
+2026-03-13T01:59:29.038Z [DEBUG] Stats cache stale (2026-03-11), processing 2026-03-12 to 2026-03-12 in background
+2026-03-13T01:59:29.050Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-13T01:59:29.050Z [DEBUG] Found 0 hook matchers in settings
+2026-03-13T01:59:29.050Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-13T01:59:29.054Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-13T01:59:29.105Z [DEBUG] Session index: added 1, updated 0, removed 0, summaries generated 0 (total: 48)
+2026-03-13T01:59:29.728Z [DEBUG] Stats cache saved successfully (lastComputedDate: 2026-03-12)
+2026-03-13T01:59:29.728Z [DEBUG] Stats cache updated with 5 new sessions
+2026-03-13T02:22:01.752Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-13T02:22:01.752Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-13T02:22:01.752Z [DEBUG] Sending 3 skills via attachment (initial, 3 total sent)
+2026-03-13T02:22:01.753Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-13T02:22:01.753Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-13T02:22:01.754Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-03-13T02:22:01.754Z [DEBUG] Found 0 hook matchers in settings
+2026-03-13T02:22:01.754Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-13T02:22:01.763Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-13T02:22:01.763Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-13T02:22:01.763Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-13T02:22:02.297Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-13T02:22:02.305Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-13T02:22:02.306Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-13T02:22:02.306Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-13T02:22:02.307Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-13T02:22:02.695Z [DEBUG] Stream started - received first chunk
+2026-03-13T02:22:19.039Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-03-13T02:22:19.039Z [DEBUG] Found 0 hook matchers in settings
+2026-03-13T02:22:19.039Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-13T02:24:28.797Z [DEBUG] Metrics opt-out check failed: No API key available
+2026-03-13T02:24:28.797Z [DEBUG] Metrics check failed, defaulting to disabled
+2026-03-13T02:24:28.797Z [DEBUG] Metrics export disabled by organization setting
+2026-03-13T03:01:27.647Z [DEBUG] Detected change to F:\HFF\Obsidian\FFNotes\.claude\settings.json
+2026-03-13T09:56:10.044Z [DEBUG] Detected change to F:\HFF\Obsidian\FFNotes\.claude\settings.json
+2026-03-13T09:56:21.755Z [DEBUG] Detected change to F:\HFF\Obsidian\FFNotes\.claude\settings.json
+2026-03-17T08:11:54.928Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-17T08:11:54.918Z] INFO: MCP Server Application initialized
+[2026-03-17T08:11:54.919Z] INFO: Starting MCP server...
+[2026-03-17T08:11:54.920Z] INFO: UI to Artifact tool registered successfully
+[2026-03-17T08:11:54.920Z] INFO: Text Extraction tool registered successfully
+[2026-03-17T08:11:54.921Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-17T08:11:54.921Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-17T08:11:54.921Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-17T08:11:54.921Z] INFO: UI Diff Check tool registered successfully
+[2026-03-17T08:11:54.922Z] INFO: General Image Analysis tool registered successfully
+[2026-03-17T08:11:54.922Z] INFO: Video analysis tool registered successfully
+[2026-03-17T08:11:54.922Z] INFO: Successfully registered all tools
+[2026-03-17T08:11:54.922Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-17T08:11:54.928Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 5077ms
+2026-03-17T08:11:54.928Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-17T08:11:55.311Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-17T08:11:55.311Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 5527ms
+2026-03-17T08:11:55.311Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.20.0"}}
+2026-03-17T08:11:55.398Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-03-17T08:11:55.398Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-17T08:11:55.400Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-17T08:11:55.598Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-17T08:11:55.631Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\ee654cf1-7f80-4528-a432-de8b0c7867ef-agent-ee654cf1-7f80-4528-a432-de8b0c7867ef.json.tmp.28884.1773735115631
+2026-03-17T08:11:55.632Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-17T08:11:55.632Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\ee654cf1-7f80-4528-a432-de8b0c7867ef-agent-ee654cf1-7f80-4528-a432-de8b0c7867ef.json.tmp.28884.1773735115631 to C:\Users\hufeifei.JOY\.claude\todos\ee654cf1-7f80-4528-a432-de8b0c7867ef-agent-ee654cf1-7f80-4528-a432-de8b0c7867ef.json
+2026-03-17T08:11:55.636Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\ee654cf1-7f80-4528-a432-de8b0c7867ef-agent-ee654cf1-7f80-4528-a432-de8b0c7867ef.json written atomically
+2026-03-17T08:11:55.772Z [DEBUG] Stats cache stale (2026-03-12), processing 2026-03-13 to 2026-03-16 in background
+2026-03-17T08:11:55.787Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-17T08:11:55.787Z [DEBUG] Found 0 hook matchers in settings
+2026-03-17T08:11:55.787Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-17T08:11:55.794Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-17T08:11:55.950Z [DEBUG] Stats cache saved successfully (lastComputedDate: 2026-03-16)
+2026-03-17T08:11:55.950Z [DEBUG] Stats cache updated with 2 new sessions
+2026-03-17T08:11:55.962Z [DEBUG] Session index: added 0, updated 2, removed 0, summaries generated 0 (total: 48)
+2026-03-19T02:26:48.485Z [DEBUG] Stats cache stale (2026-03-16), processing 2026-03-17 to 2026-03-18 in background
+2026-03-19T02:26:48.516Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-19T02:26:48.516Z [DEBUG] Found 0 hook matchers in settings
+2026-03-19T02:26:48.516Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-19T02:26:48.524Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-19T02:26:48.579Z [DEBUG] Stats cache saved successfully (lastComputedDate: 2026-03-18)
+2026-03-19T02:26:48.579Z [DEBUG] Stats cache updated with 2 new sessions
+2026-03-19T08:34:06.533Z [DEBUG] Detected skill change: C:\Users\hufeifei.JOY\.claude\skills\unity-mcp-skill\.unity-mcp-skill-sync
+2026-03-19T08:34:06.534Z [DEBUG] Loading skills from: managed=C:\ProgramData\ClaudeCode\.claude\skills, user=C:\Users\hufeifei.JOY\.claude\skills, project=[F:\HFF\Obsidian\FFNotes\.claude\skills]
+2026-03-19T08:34:06.578Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-19T08:34:06.578Z [DEBUG] Total plugin skills loaded: 0
+2026-03-19T08:34:06.578Z [DEBUG] Total plugin commands loaded: 0
+2026-03-19T08:34:06.791Z [DEBUG] Loaded 11 unique skills (managed: 0, user: 9, project: 2, legacy commands: 0)
+2026-03-19T08:34:06.791Z [DEBUG] getSkills returning: 11 skill dir commands, 0 plugin skills, 1 bundled skills
+2026-03-19T08:34:07.311Z [DEBUG] Detected skill change: C:\Users\hufeifei.JOY\.claude\skills\unity-mcp-skill\SKILL.md
+2026-03-19T08:34:07.311Z [DEBUG] Loading skills from: managed=C:\ProgramData\ClaudeCode\.claude\skills, user=C:\Users\hufeifei.JOY\.claude\skills, project=[F:\HFF\Obsidian\FFNotes\.claude\skills]
+2026-03-19T08:34:07.318Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-19T08:34:07.318Z [DEBUG] Total plugin skills loaded: 0
+2026-03-19T08:34:07.318Z [DEBUG] Total plugin commands loaded: 0
+2026-03-19T08:34:07.445Z [DEBUG] Loaded 11 unique skills (managed: 0, user: 9, project: 2, legacy commands: 0)
+2026-03-19T08:34:07.445Z [DEBUG] getSkills returning: 11 skill dir commands, 0 plugin skills, 1 bundled skills
+2026-03-19T08:34:07.905Z [DEBUG] Detected skill change: C:\Users\hufeifei.JOY\.claude\skills\unity-mcp-skill\references\tools-reference.md
+2026-03-19T08:34:07.906Z [DEBUG] Loading skills from: managed=C:\ProgramData\ClaudeCode\.claude\skills, user=C:\Users\hufeifei.JOY\.claude\skills, project=[F:\HFF\Obsidian\FFNotes\.claude\skills]
+2026-03-19T08:34:07.912Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-19T08:34:07.912Z [DEBUG] Total plugin skills loaded: 0
+2026-03-19T08:34:07.912Z [DEBUG] Total plugin commands loaded: 0
+2026-03-19T08:34:08.044Z [DEBUG] Loaded 11 unique skills (managed: 0, user: 9, project: 2, legacy commands: 0)
+2026-03-19T08:34:08.044Z [DEBUG] getSkills returning: 11 skill dir commands, 0 plugin skills, 1 bundled skills
+2026-03-19T08:34:08.371Z [DEBUG] Detected skill change: C:\Users\hufeifei.JOY\.claude\skills\unity-mcp-skill\references\workflows.md
+2026-03-19T08:34:08.372Z [DEBUG] Loading skills from: managed=C:\ProgramData\ClaudeCode\.claude\skills, user=C:\Users\hufeifei.JOY\.claude\skills, project=[F:\HFF\Obsidian\FFNotes\.claude\skills]
+2026-03-19T08:34:08.378Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-19T08:34:08.378Z [DEBUG] Total plugin skills loaded: 0
+2026-03-19T08:34:08.378Z [DEBUG] Total plugin commands loaded: 0
+2026-03-19T08:34:08.510Z [DEBUG] Loaded 11 unique skills (managed: 0, user: 9, project: 2, legacy commands: 0)
+2026-03-19T08:34:08.511Z [DEBUG] getSkills returning: 11 skill dir commands, 0 plugin skills, 1 bundled skills
+2026-03-20T10:14:10.077Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-20T10:14:10.077Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 3254ms
+2026-03-20T10:14:10.077Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.20.2"}}
+2026-03-20T10:14:10.325Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-20T10:14:10.311Z] INFO: MCP Server Application initialized
+[2026-03-20T10:14:10.312Z] INFO: Starting MCP server...
+[2026-03-20T10:14:10.313Z] INFO: UI to Artifact tool registered successfully
+[2026-03-20T10:14:10.314Z] INFO: Text Extraction tool registered successfully
+[2026-03-20T10:14:10.314Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-20T10:14:10.314Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-20T10:14:10.314Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-20T10:14:10.314Z] INFO: UI Diff Check tool registered successfully
+[2026-03-20T10:14:10.315Z] INFO: General Image Analysis tool registered successfully
+[2026-03-20T10:14:10.315Z] INFO: Video analysis tool registered successfully
+[2026-03-20T10:14:10.315Z] INFO: Successfully registered all tools
+[2026-03-20T10:14:10.315Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-20T10:14:10.325Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 3447ms
+2026-03-20T10:14:10.325Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-20T10:14:10.393Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-03-20T10:14:10.393Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-20T10:14:10.395Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-20T10:14:10.551Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-20T10:14:10.568Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\2610fdcd-b3ef-4eeb-98ed-0943ed15b096-agent-2610fdcd-b3ef-4eeb-98ed-0943ed15b096.json.tmp.21412.1774001650568
+2026-03-20T10:14:10.569Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-20T10:14:10.569Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\2610fdcd-b3ef-4eeb-98ed-0943ed15b096-agent-2610fdcd-b3ef-4eeb-98ed-0943ed15b096.json.tmp.21412.1774001650568 to C:\Users\hufeifei.JOY\.claude\todos\2610fdcd-b3ef-4eeb-98ed-0943ed15b096-agent-2610fdcd-b3ef-4eeb-98ed-0943ed15b096.json
+2026-03-20T10:14:10.572Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\2610fdcd-b3ef-4eeb-98ed-0943ed15b096-agent-2610fdcd-b3ef-4eeb-98ed-0943ed15b096.json written atomically
+2026-03-20T10:14:10.657Z [DEBUG] Stats cache stale (2026-03-18), processing 2026-03-19 to 2026-03-19 in background
+2026-03-20T10:14:10.669Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-20T10:14:10.669Z [DEBUG] Found 0 hook matchers in settings
+2026-03-20T10:14:10.669Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-20T10:14:10.674Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-20T10:14:10.704Z [DEBUG] Stats cache saved successfully (lastComputedDate: 2026-03-19)
+2026-03-20T10:14:10.704Z [DEBUG] Stats cache updated with 1 new sessions
+2026-03-24T10:44:53.893Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-24T10:44:53.878Z] INFO: MCP Server Application initialized
+[2026-03-24T10:44:53.879Z] INFO: Starting MCP server...
+[2026-03-24T10:44:53.881Z] INFO: UI to Artifact tool registered successfully
+[2026-03-24T10:44:53.881Z] INFO: Text Extraction tool registered successfully
+[2026-03-24T10:44:53.881Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-24T10:44:53.881Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-24T10:44:53.882Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-24T10:44:53.882Z] INFO: UI Diff Check tool registered successfully
+[2026-03-24T10:44:53.882Z] INFO: General Image Analysis tool registered successfully
+[2026-03-24T10:44:53.882Z] INFO: Video analysis tool registered successfully
+[2026-03-24T10:44:53.882Z] INFO: Successfully registered all tools
+[2026-03-24T10:44:53.883Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-24T10:44:53.893Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 3517ms
+2026-03-24T10:44:53.893Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-24T10:44:54.058Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-24T10:44:54.058Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 3739ms
+2026-03-24T10:44:54.058Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.20.3"}}
+2026-03-24T10:44:54.130Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-03-24T10:44:54.130Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-24T10:44:54.133Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-24T10:44:54.295Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-24T10:44:54.311Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\d9917424-e42a-42c0-a71e-0988f655673e-agent-d9917424-e42a-42c0-a71e-0988f655673e.json.tmp.25432.1774349094311
+2026-03-24T10:44:54.312Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-24T10:44:54.312Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\d9917424-e42a-42c0-a71e-0988f655673e-agent-d9917424-e42a-42c0-a71e-0988f655673e.json.tmp.25432.1774349094311 to C:\Users\hufeifei.JOY\.claude\todos\d9917424-e42a-42c0-a71e-0988f655673e-agent-d9917424-e42a-42c0-a71e-0988f655673e.json
+2026-03-24T10:44:54.315Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\d9917424-e42a-42c0-a71e-0988f655673e-agent-d9917424-e42a-42c0-a71e-0988f655673e.json written atomically
+2026-03-24T10:44:54.405Z [DEBUG] Stats cache stale (2026-03-19), processing 2026-03-20 to 2026-03-23 in background
+2026-03-24T10:44:54.420Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-24T10:44:54.420Z [DEBUG] Found 0 hook matchers in settings
+2026-03-24T10:44:54.420Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-24T10:44:54.426Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-24T10:44:54.479Z [DEBUG] Stats cache saved successfully (lastComputedDate: 2026-03-23)
+2026-03-24T10:44:54.479Z [DEBUG] Stats cache updated with 1 new sessions
+2026-03-24T10:44:54.512Z [DEBUG] Session index: added 1, updated 0, removed 0, summaries generated 0 (total: 49)
+2026-03-25T01:34:55.442Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-25T01:34:55.427Z] INFO: MCP Server Application initialized
+[2026-03-25T01:34:55.428Z] INFO: Starting MCP server...
+[2026-03-25T01:34:55.429Z] INFO: UI to Artifact tool registered successfully
+[2026-03-25T01:34:55.430Z] INFO: Text Extraction tool registered successfully
+[2026-03-25T01:34:55.430Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-25T01:34:55.430Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-25T01:34:55.430Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-25T01:34:55.430Z] INFO: UI Diff Check tool registered successfully
+[2026-03-25T01:34:55.430Z] INFO: General Image Analysis tool registered successfully
+[2026-03-25T01:34:55.431Z] INFO: Video analysis tool registered successfully
+[2026-03-25T01:34:55.431Z] INFO: Successfully registered all tools
+[2026-03-25T01:34:55.431Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-25T01:34:55.442Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 3142ms
+2026-03-25T01:34:55.442Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-25T01:34:55.516Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-25T01:34:55.516Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 3269ms
+2026-03-25T01:34:55.516Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.20.3"}}
+2026-03-25T01:34:55.592Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-03-25T01:34:55.592Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-25T01:34:55.595Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-25T01:34:55.769Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-25T01:34:55.813Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\72d31640-4aac-4554-b125-0081f281aa46-agent-72d31640-4aac-4554-b125-0081f281aa46.json.tmp.12560.1774402495813
+2026-03-25T01:34:55.815Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-25T01:34:55.815Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\72d31640-4aac-4554-b125-0081f281aa46-agent-72d31640-4aac-4554-b125-0081f281aa46.json.tmp.12560.1774402495813 to C:\Users\hufeifei.JOY\.claude\todos\72d31640-4aac-4554-b125-0081f281aa46-agent-72d31640-4aac-4554-b125-0081f281aa46.json
+2026-03-25T01:34:55.818Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\72d31640-4aac-4554-b125-0081f281aa46-agent-72d31640-4aac-4554-b125-0081f281aa46.json written atomically
+2026-03-25T01:34:55.915Z [DEBUG] Stats cache stale (2026-03-23), processing 2026-03-24 to 2026-03-24 in background
+2026-03-25T01:34:55.941Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-25T01:34:55.941Z [DEBUG] Found 0 hook matchers in settings
+2026-03-25T01:34:55.941Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-25T01:34:55.948Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-25T01:34:56.065Z [DEBUG] Stats cache saved successfully (lastComputedDate: 2026-03-24)
+2026-03-25T01:34:56.065Z [DEBUG] Stats cache updated with 1 new sessions
+2026-03-27T04:22:04.191Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-27T04:22:04.171Z] INFO: MCP Server Application initialized
+[2026-03-27T04:22:04.172Z] INFO: Starting MCP server...
+[2026-03-27T04:22:04.174Z] INFO: UI to Artifact tool registered successfully
+[2026-03-27T04:22:04.175Z] INFO: Text Extraction tool registered successfully
+[2026-03-27T04:22:04.175Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-27T04:22:04.175Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-27T04:22:04.176Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-27T04:22:04.176Z] INFO: UI Diff Check tool registered successfully
+[2026-03-27T04:22:04.176Z] INFO: General Image Analysis tool registered successfully
+[2026-03-27T04:22:04.176Z] INFO: Video analysis tool registered successfully
+[2026-03-27T04:22:04.177Z] INFO: Successfully registered all tools
+[2026-03-27T04:22:04.177Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-27T04:22:04.191Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 3966ms
+2026-03-27T04:22:04.191Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-27T04:22:04.334Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-27T04:22:04.334Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 4177ms
+2026-03-27T04:22:04.334Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.20.3"}}
+2026-03-27T04:22:04.415Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-03-27T04:22:04.415Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-27T04:22:04.418Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-27T04:22:04.616Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-27T04:22:04.636Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\3ccc6dbe-7f58-474b-a93b-05a2524bc01a-agent-3ccc6dbe-7f58-474b-a93b-05a2524bc01a.json.tmp.3220.1774585324636
+2026-03-27T04:22:04.637Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-27T04:22:04.637Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\3ccc6dbe-7f58-474b-a93b-05a2524bc01a-agent-3ccc6dbe-7f58-474b-a93b-05a2524bc01a.json.tmp.3220.1774585324636 to C:\Users\hufeifei.JOY\.claude\todos\3ccc6dbe-7f58-474b-a93b-05a2524bc01a-agent-3ccc6dbe-7f58-474b-a93b-05a2524bc01a.json
+2026-03-27T04:22:04.640Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\3ccc6dbe-7f58-474b-a93b-05a2524bc01a-agent-3ccc6dbe-7f58-474b-a93b-05a2524bc01a.json written atomically
+2026-03-27T04:22:04.743Z [DEBUG] Stats cache stale (2026-03-24), processing 2026-03-25 to 2026-03-26 in background
+2026-03-27T04:22:04.757Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-27T04:22:04.757Z [DEBUG] Found 0 hook matchers in settings
+2026-03-27T04:22:04.757Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-27T04:22:04.763Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-27T04:22:05.443Z [DEBUG] Stats cache saved successfully (lastComputedDate: 2026-03-26)
+2026-03-27T04:22:05.443Z [DEBUG] Stats cache updated with 3 new sessions
+2026-03-27T04:22:05.481Z [DEBUG] Session index: added 2, updated 1, removed 0, summaries generated 0 (total: 51)
+2026-03-27T05:20:28.134Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-27T05:20:28.114Z] INFO: MCP Server Application initialized
+[2026-03-27T05:20:28.115Z] INFO: Starting MCP server...
+[2026-03-27T05:20:28.116Z] INFO: UI to Artifact tool registered successfully
+[2026-03-27T05:20:28.117Z] INFO: Text Extraction tool registered successfully
+[2026-03-27T05:20:28.117Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-27T05:20:28.117Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-27T05:20:28.117Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-27T05:20:28.118Z] INFO: UI Diff Check tool registered successfully
+[2026-03-27T05:20:28.118Z] INFO: General Image Analysis tool registered successfully
+[2026-03-27T05:20:28.118Z] INFO: Video analysis tool registered successfully
+[2026-03-27T05:20:28.118Z] INFO: Successfully registered all tools
+[2026-03-27T05:20:28.118Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-27T05:20:28.134Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 4280ms
+2026-03-27T05:20:28.134Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-27T05:20:28.175Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-27T05:20:28.175Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 4392ms
+2026-03-27T05:20:28.175Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.20.3"}}
+2026-03-27T05:20:28.265Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-03-27T05:20:28.265Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-27T05:20:28.268Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-27T05:20:28.572Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-27T05:20:28.593Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\ed38806e-63e5-4877-b817-be1acbd2efa8-agent-ed38806e-63e5-4877-b817-be1acbd2efa8.json.tmp.35148.1774588828593
+2026-03-27T05:20:28.594Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-27T05:20:28.594Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\ed38806e-63e5-4877-b817-be1acbd2efa8-agent-ed38806e-63e5-4877-b817-be1acbd2efa8.json.tmp.35148.1774588828593 to C:\Users\hufeifei.JOY\.claude\todos\ed38806e-63e5-4877-b817-be1acbd2efa8-agent-ed38806e-63e5-4877-b817-be1acbd2efa8.json
+2026-03-27T05:20:28.598Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\ed38806e-63e5-4877-b817-be1acbd2efa8-agent-ed38806e-63e5-4877-b817-be1acbd2efa8.json written atomically
+2026-03-27T05:20:28.757Z [DEBUG] Stats cache is up to date
+2026-03-27T05:20:28.769Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-27T05:20:28.769Z [DEBUG] Found 0 hook matchers in settings
+2026-03-27T05:20:28.769Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-27T05:20:28.776Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-27T05:20:28.846Z [DEBUG] Session index: added 0, updated 1, removed 0, summaries generated 0 (total: 51)
+2026-03-27T07:24:57.713Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:24:57.713Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:24:57.713Z [DEBUG] Sending 14 skills via attachment (initial, 14 total sent)
+2026-03-27T07:24:57.714Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:24:57.714Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:24:57.716Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-03-27T07:24:57.716Z [DEBUG] Found 0 hook matchers in settings
+2026-03-27T07:24:57.716Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-27T07:24:57.725Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:24:57.725Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:24:57.725Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:24:58.472Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:24:58.480Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:24:58.481Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:24:58.481Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:24:58.484Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:24:58.835Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:25:12.659Z [DEBUG] executePreToolHooks called for tool: Skill
+2026-03-27T07:25:12.659Z [DEBUG] Getting matching hook commands for PreToolUse with query: Skill
+2026-03-27T07:25:12.659Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:25:12.660Z [DEBUG] Matched 1 unique hooks for query "Skill" (1 before deduplication)
+2026-03-27T07:25:12.681Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude.json.tmp.35148.1774596312681
+2026-03-27T07:25:12.681Z [DEBUG] Preserving file permissions: 100666
+2026-03-27T07:25:12.682Z [DEBUG] Temp file written successfully, size: 10235 bytes
+2026-03-27T07:25:12.682Z [DEBUG] Applied original permissions to temp file
+2026-03-27T07:25:12.682Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude.json.tmp.35148.1774596312681 to C:\Users\hufeifei.JOY\.claude.json
+2026-03-27T07:25:12.684Z [DEBUG] File C:\Users\hufeifei.JOY\.claude.json written atomically
+2026-03-27T07:25:12.686Z [DEBUG] Metadata string for game-dev:
+2026-03-27T07:25:12.686Z [DEBUG] "  <command-message>game-dev</command-message>\n<command-name>/game-dev</command-name>\n<command-args>牌桌中间信息展示区太丑了，一点都不像麻将桌。需要改进UI设计，让中间区域更美观，更像真实的麻将桌风格。</command-args>"
+2026-03-27T07:25:12.686Z [DEBUG] command-message tags in metadata: 1
+2026-03-27T07:25:12.687Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:25:12.687Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:25:12.687Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:25:12.687Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:25:12.687Z [DEBUG] processPromptSlashCommand creating 3 messages for game-dev
+2026-03-27T07:25:12.687Z [DEBUG] "  Message 1: <command-message>game-dev</command-message>\n<command-name>/game-dev</command-name>\n<command-args>牌桌中间信息展示区太丑了，一点都不像麻将桌。需要改进UI设计，让中间区域更美观，更像真实的麻将桌风格。</command-args>"
+2026-03-27T07:25:12.687Z [DEBUG] Message 2 [META]: [{"type":"text","text":"Base directory for this skill: F:\\HFF\\Obsidian\\FFNotes\\.claude\\skills\\game-dev\n\n# 游戏开发技能\n\n帮助开发HTML5小游戏的专家技能，专注于麻将、扑克、棋牌等类型的浏览器游戏。\n\n## 快速开始\n\n1. 确认游戏类型和核心玩法\n2. 选择技
+2026-03-27T07:25:12.687Z [DEBUG] Message 3: [ATTACHMENT]
+2026-03-27T07:25:12.687Z [DEBUG] SkillTool returning 2 newMessages for skill game-dev
+2026-03-27T07:25:12.687Z [DEBUG] newMessage 1: [{"type":"text","text":"Base directory for this skill: F:\\HFF\\Obsidian\\FFNotes\\.claude\\skills\\game-dev\n\n# 游戏开发技能\n\n帮助开发HTML5小游戏的专家技能，专注于麻将、扑克...
+2026-03-27T07:25:12.688Z [DEBUG] Getting matching hook commands for PostToolUse with query: Skill
+2026-03-27T07:25:12.688Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:25:12.688Z [DEBUG] Matched 0 unique hooks for query "Skill" (0 before deduplication)
+2026-03-27T07:25:13.410Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:25:13.410Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:25:13.410Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:25:13.410Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:25:13.414Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:25:13.417Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:25:13.417Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:25:13.417Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:25:13.418Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:25:13.791Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:25:22.633Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-27T07:25:22.633Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-27T07:25:22.633Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:25:22.633Z [DEBUG] Matched 2 unique hooks for query "Bash" (2 before deduplication)
+2026-03-27T07:25:22.677Z [DEBUG] tree-sitter: loaded from disk
+2026-03-27T07:25:27.421Z [DEBUG] Creating shell snapshot for bash (D:\Program Files\Git\bin\bash.exe)
+2026-03-27T07:25:27.421Z [DEBUG] Looking for shell config file: C:\Users\hufeifei.JOY\.bashrc
+2026-03-27T07:25:27.421Z [DEBUG] Shell config file not found: C:\Users\hufeifei.JOY\.bashrc, creating snapshot with Claude Code defaults only
+2026-03-27T07:25:27.421Z [DEBUG] Snapshots directory: C:\Users\hufeifei.JOY\.claude\shell-snapshots
+2026-03-27T07:25:27.598Z [DEBUG] Creating snapshot at: C:\Users\hufeifei.JOY\.claude\shell-snapshots\snapshot-bash-1774596327421-qpwtfp.sh
+2026-03-27T07:25:27.598Z [DEBUG] Shell binary exists: true
+2026-03-27T07:25:27.598Z [DEBUG] Execution timeout: 10000ms
+2026-03-27T07:25:28.471Z [DEBUG] Metrics opt-out check failed: No API key available
+2026-03-27T07:25:28.471Z [DEBUG] Metrics check failed, defaulting to disabled
+2026-03-27T07:25:28.472Z [DEBUG] Metrics export disabled by organization setting
+2026-03-27T07:25:31.383Z [DEBUG] Shell snapshot created successfully (369 bytes)
+2026-03-27T07:25:32.335Z [DEBUG] Session environment not yet supported on Windows
+2026-03-27T07:25:38.279Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-27T07:25:38.279Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.f70; cc_entrypoint=sdk-ts;
+2026-03-27T07:25:38.279Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:25:38.279Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:25:38.280Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-27T07:25:38.280Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:25:38.280Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-27T07:25:38.280Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:25:38.663Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:25:38.663Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:25:38.663Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:25:38.663Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:25:38.666Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:25:38.670Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:25:38.670Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:25:38.670Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:25:38.671Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:25:39.009Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:25:39.344Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:25:48.287Z [DEBUG] executePreToolHooks called for tool: Bash
+2026-03-27T07:25:48.287Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2026-03-27T07:25:48.287Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:25:48.287Z [DEBUG] Matched 2 unique hooks for query "Bash" (2 before deduplication)
+2026-03-27T07:25:53.313Z [DEBUG] Session environment not yet supported on Windows
+2026-03-27T07:25:59.266Z [DEBUG] Tool search disabled: ToolSearchTool is not available (may have been disallowed via disallowedTools).
+2026-03-27T07:25:59.266Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.997; cc_entrypoint=sdk-ts;
+2026-03-27T07:25:59.267Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:25:59.267Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:25:59.268Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2026-03-27T07:25:59.268Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:25:59.268Z [DEBUG] Matched 0 unique hooks for query "Bash" (0 before deduplication)
+2026-03-27T07:25:59.268Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:25:59.655Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:25:59.655Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:25:59.655Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:25:59.655Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:25:59.658Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:25:59.660Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:25:59.661Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:25:59.661Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:25:59.662Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:26:00.011Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:26:00.019Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:26:05.891Z [DEBUG] executePreToolHooks called for tool: Read
+2026-03-27T07:26:05.891Z [DEBUG] Getting matching hook commands for PreToolUse with query: Read
+2026-03-27T07:26:05.891Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:26:05.891Z [DEBUG] Matched 1 unique hooks for query "Read" (1 before deduplication)
+2026-03-27T07:26:23.085Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:26:23.085Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:26:23.085Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:26:24.095Z [DEBUG] Getting matching hook commands for PostToolUseFailure with query: Read
+2026-03-27T07:26:24.095Z [DEBUG] Found 0 hook matchers in settings
+2026-03-27T07:26:24.095Z [DEBUG] Matched 0 unique hooks for query "Read" (0 before deduplication)
+2026-03-27T07:26:24.457Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:26:24.457Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:26:24.457Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:26:24.457Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:26:24.460Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:26:24.463Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:26:24.463Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:26:24.463Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:26:24.464Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:26:24.851Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:26:30.046Z [DEBUG] executePreToolHooks called for tool: Grep
+2026-03-27T07:26:30.046Z [DEBUG] Getting matching hook commands for PreToolUse with query: Grep
+2026-03-27T07:26:30.046Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:26:30.046Z [DEBUG] Matched 1 unique hooks for query "Grep" (1 before deduplication)
+2026-03-27T07:26:47.497Z [DEBUG] Persisted tool result to C:\Users\hufeifei.JOY\.claude\projects\F--HFF-Obsidian-FFNotes\e26030bb-c98d-4108-acb5-cdb42ce97dcd\tool-results\call_77414cd944cd4d5e9119774a.txt (27KB)
+2026-03-27T07:26:47.498Z [DEBUG] Getting matching hook commands for PostToolUse with query: Grep
+2026-03-27T07:26:47.498Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:26:47.498Z [DEBUG] Matched 1 unique hooks for query "Grep" (1 before deduplication)
+2026-03-27T07:26:47.896Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:26:47.896Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:26:47.896Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:26:47.896Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:26:47.898Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:26:47.902Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:26:47.902Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:26:47.902Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:26:47.903Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:26:48.261Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:26:54.847Z [DEBUG] executePreToolHooks called for tool: Read
+2026-03-27T07:26:54.847Z [DEBUG] Getting matching hook commands for PreToolUse with query: Read
+2026-03-27T07:26:54.847Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:26:54.847Z [DEBUG] Matched 1 unique hooks for query "Read" (1 before deduplication)
+2026-03-27T07:27:12.078Z [DEBUG] Getting matching hook commands for PostToolUse with query: Read
+2026-03-27T07:27:12.078Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:27:12.078Z [DEBUG] Matched 1 unique hooks for query "Read" (1 before deduplication)
+2026-03-27T07:27:12.476Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:27:12.476Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:27:12.477Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:27:12.477Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:27:12.480Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:27:12.490Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:27:12.491Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:27:12.491Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:27:12.491Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:27:12.871Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:27:21.179Z [DEBUG] executePreToolHooks called for tool: Grep
+2026-03-27T07:27:21.179Z [DEBUG] Getting matching hook commands for PreToolUse with query: Grep
+2026-03-27T07:27:21.179Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:27:21.179Z [DEBUG] Matched 1 unique hooks for query "Grep" (1 before deduplication)
+2026-03-27T07:27:38.772Z [DEBUG] Getting matching hook commands for PostToolUse with query: Grep
+2026-03-27T07:27:38.772Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:27:38.772Z [DEBUG] Matched 1 unique hooks for query "Grep" (1 before deduplication)
+2026-03-27T07:27:39.172Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:27:39.172Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:27:39.172Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:27:39.172Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:27:39.175Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:27:39.178Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:27:39.178Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:27:39.178Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:27:39.179Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:27:39.546Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:27:47.009Z [DEBUG] executePreToolHooks called for tool: Read
+2026-03-27T07:27:47.009Z [DEBUG] Getting matching hook commands for PreToolUse with query: Read
+2026-03-27T07:27:47.009Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:27:47.009Z [DEBUG] Matched 1 unique hooks for query "Read" (1 before deduplication)
+2026-03-27T07:28:04.983Z [DEBUG] Getting matching hook commands for PostToolUse with query: Read
+2026-03-27T07:28:04.983Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:28:04.983Z [DEBUG] Matched 1 unique hooks for query "Read" (1 before deduplication)
+2026-03-27T07:28:05.390Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:28:05.390Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:28:05.391Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:28:05.391Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:28:05.393Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:28:05.397Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:28:05.397Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:28:05.397Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:28:05.398Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:28:05.766Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:28:17.333Z [DEBUG] executePreToolHooks called for tool: TodoWrite
+2026-03-27T07:28:17.333Z [DEBUG] Getting matching hook commands for PreToolUse with query: TodoWrite
+2026-03-27T07:28:17.333Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:28:17.333Z [DEBUG] Matched 1 unique hooks for query "TodoWrite" (1 before deduplication)
+2026-03-27T07:28:17.336Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\e26030bb-c98d-4108-acb5-cdb42ce97dcd-agent-e26030bb-c98d-4108-acb5-cdb42ce97dcd.json.tmp.35148.1774596497336
+2026-03-27T07:28:17.337Z [DEBUG] Preserving file permissions: 100666
+2026-03-27T07:28:17.338Z [DEBUG] Temp file written successfully, size: 308 bytes
+2026-03-27T07:28:17.338Z [DEBUG] Applied original permissions to temp file
+2026-03-27T07:28:17.338Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\e26030bb-c98d-4108-acb5-cdb42ce97dcd-agent-e26030bb-c98d-4108-acb5-cdb42ce97dcd.json.tmp.35148.1774596497336 to C:\Users\hufeifei.JOY\.claude\todos\e26030bb-c98d-4108-acb5-cdb42ce97dcd-agent-e26030bb-c98d-4108-acb5-cdb42ce97dcd.json
+2026-03-27T07:28:17.341Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\e26030bb-c98d-4108-acb5-cdb42ce97dcd-agent-e26030bb-c98d-4108-acb5-cdb42ce97dcd.json written atomically
+2026-03-27T07:28:17.342Z [DEBUG] Getting matching hook commands for PostToolUse with query: TodoWrite
+2026-03-27T07:28:17.342Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:28:17.342Z [DEBUG] Matched 0 unique hooks for query "TodoWrite" (0 before deduplication)
+2026-03-27T07:28:17.729Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:28:17.729Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:28:17.729Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:28:17.729Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:28:17.732Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:28:17.735Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:28:17.735Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:28:17.735Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:28:17.736Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:28:17.954Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:28:26.107Z [DEBUG] executePreToolHooks called for tool: Read
+2026-03-27T07:28:26.107Z [DEBUG] Getting matching hook commands for PreToolUse with query: Read
+2026-03-27T07:28:26.107Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:28:26.107Z [DEBUG] Matched 1 unique hooks for query "Read" (1 before deduplication)
+2026-03-27T07:28:43.960Z [DEBUG] Getting matching hook commands for PostToolUse with query: Read
+2026-03-27T07:28:43.960Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:28:43.960Z [DEBUG] Matched 1 unique hooks for query "Read" (1 before deduplication)
+2026-03-27T07:28:44.384Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:28:44.384Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:28:44.384Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:28:44.384Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:28:44.387Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:28:44.390Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:28:44.390Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:28:44.390Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:28:44.391Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:28:44.782Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:29:11.776Z [DEBUG] executePreToolHooks called for tool: Edit
+2026-03-27T07:29:11.777Z [DEBUG] Getting matching hook commands for PreToolUse with query: Edit
+2026-03-27T07:29:11.777Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:29:11.777Z [DEBUG] Matched 1 unique hooks for query "Edit" (1 before deduplication)
+2026-03-27T07:29:25.686Z [DEBUG] Writing to temp file: F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html.tmp.35148.1774596565686
+2026-03-27T07:29:25.687Z [DEBUG] Preserving file permissions: 100666
+2026-03-27T07:29:25.688Z [DEBUG] Temp file written successfully, size: 121693 bytes
+2026-03-27T07:29:25.688Z [DEBUG] Applied original permissions to temp file
+2026-03-27T07:29:25.688Z [DEBUG] Renaming F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html.tmp.35148.1774596565686 to F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html
+2026-03-27T07:29:25.690Z [DEBUG] File F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html written atomically
+2026-03-27T07:29:25.693Z [DEBUG] Getting matching hook commands for PostToolUse with query: Edit
+2026-03-27T07:29:25.693Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:29:25.693Z [DEBUG] Matched 0 unique hooks for query "Edit" (0 before deduplication)
+2026-03-27T07:29:26.058Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:29:26.058Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:29:26.730Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:29:26.730Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:29:26.733Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:29:26.736Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:29:26.737Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:29:26.737Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:29:26.737Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:29:27.204Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:29:52.807Z [DEBUG] executePreToolHooks called for tool: Edit
+2026-03-27T07:29:52.808Z [DEBUG] Getting matching hook commands for PreToolUse with query: Edit
+2026-03-27T07:29:52.808Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:29:52.808Z [DEBUG] Matched 1 unique hooks for query "Edit" (1 before deduplication)
+2026-03-27T07:30:06.824Z [DEBUG] Writing to temp file: F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html.tmp.35148.1774596606824
+2026-03-27T07:30:06.825Z [DEBUG] Preserving file permissions: 100666
+2026-03-27T07:30:06.826Z [DEBUG] Temp file written successfully, size: 122060 bytes
+2026-03-27T07:30:06.826Z [DEBUG] Applied original permissions to temp file
+2026-03-27T07:30:06.826Z [DEBUG] Renaming F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html.tmp.35148.1774596606824 to F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html
+2026-03-27T07:30:06.828Z [DEBUG] File F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html written atomically
+2026-03-27T07:30:06.830Z [DEBUG] Getting matching hook commands for PostToolUse with query: Edit
+2026-03-27T07:30:06.830Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:30:06.830Z [DEBUG] Matched 0 unique hooks for query "Edit" (0 before deduplication)
+2026-03-27T07:30:07.230Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:30:07.230Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:30:07.673Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:30:07.673Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:30:07.675Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:30:07.679Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:30:07.679Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:30:07.679Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:30:07.680Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:30:08.086Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:30:20.765Z [DEBUG] executePreToolHooks called for tool: Edit
+2026-03-27T07:30:20.765Z [DEBUG] Getting matching hook commands for PreToolUse with query: Edit
+2026-03-27T07:30:20.765Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:30:20.765Z [DEBUG] Matched 1 unique hooks for query "Edit" (1 before deduplication)
+2026-03-27T07:30:34.310Z [DEBUG] Writing to temp file: F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html.tmp.35148.1774596634310
+2026-03-27T07:30:34.310Z [DEBUG] Preserving file permissions: 100666
+2026-03-27T07:30:34.311Z [DEBUG] Temp file written successfully, size: 122196 bytes
+2026-03-27T07:30:34.312Z [DEBUG] Applied original permissions to temp file
+2026-03-27T07:30:34.312Z [DEBUG] Renaming F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html.tmp.35148.1774596634310 to F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html
+2026-03-27T07:30:34.314Z [DEBUG] File F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html written atomically
+2026-03-27T07:30:34.316Z [DEBUG] Getting matching hook commands for PostToolUse with query: Edit
+2026-03-27T07:30:34.316Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:30:34.316Z [DEBUG] Matched 0 unique hooks for query "Edit" (0 before deduplication)
+2026-03-27T07:30:34.389Z [DEBUG] Metrics opt-out check failed: No API key available
+2026-03-27T07:30:34.389Z [DEBUG] Metrics check failed, defaulting to disabled
+2026-03-27T07:30:34.389Z [DEBUG] Metrics export disabled by organization setting
+2026-03-27T07:30:34.719Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:30:34.719Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:30:35.164Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:30:35.164Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:30:35.167Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:30:35.171Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:30:35.171Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:30:35.171Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:30:35.172Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:30:35.586Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:31:03.839Z [DEBUG] executePreToolHooks called for tool: Edit
+2026-03-27T07:31:03.839Z [DEBUG] Getting matching hook commands for PreToolUse with query: Edit
+2026-03-27T07:31:03.839Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:31:03.839Z [DEBUG] Matched 1 unique hooks for query "Edit" (1 before deduplication)
+2026-03-27T07:31:17.415Z [DEBUG] Writing to temp file: F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html.tmp.35148.1774596677415
+2026-03-27T07:31:17.415Z [DEBUG] Preserving file permissions: 100666
+2026-03-27T07:31:17.416Z [DEBUG] Temp file written successfully, size: 122725 bytes
+2026-03-27T07:31:17.417Z [DEBUG] Applied original permissions to temp file
+2026-03-27T07:31:17.417Z [DEBUG] Renaming F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html.tmp.35148.1774596677415 to F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html
+2026-03-27T07:31:17.418Z [DEBUG] File F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html written atomically
+2026-03-27T07:31:17.421Z [DEBUG] Getting matching hook commands for PostToolUse with query: Edit
+2026-03-27T07:31:17.421Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:31:17.421Z [DEBUG] Matched 0 unique hooks for query "Edit" (0 before deduplication)
+2026-03-27T07:31:17.829Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:31:17.829Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:31:18.381Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:31:18.381Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:31:18.384Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:31:18.387Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:31:18.387Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:31:18.387Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:31:18.388Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:31:18.771Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:31:43.201Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:31:43.201Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:31:43.641Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:31:43.641Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:31:43.644Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:31:43.647Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:31:43.647Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:31:43.647Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:31:43.648Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:31:43.904Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:31:56.920Z [DEBUG] executePreToolHooks called for tool: Grep
+2026-03-27T07:31:56.920Z [DEBUG] Getting matching hook commands for PreToolUse with query: Grep
+2026-03-27T07:31:56.920Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:31:56.920Z [DEBUG] Matched 1 unique hooks for query "Grep" (1 before deduplication)
+2026-03-27T07:32:14.967Z [DEBUG] Getting matching hook commands for PostToolUse with query: Grep
+2026-03-27T07:32:14.967Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:32:14.967Z [DEBUG] Matched 1 unique hooks for query "Grep" (1 before deduplication)
+2026-03-27T07:32:15.367Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:32:15.367Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:32:15.828Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:32:15.828Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:32:15.831Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:32:15.834Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:32:15.834Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:32:15.834Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:32:15.835Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:32:16.208Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:32:39.980Z [DEBUG] executePreToolHooks called for tool: Edit
+2026-03-27T07:32:39.981Z [DEBUG] Getting matching hook commands for PreToolUse with query: Edit
+2026-03-27T07:32:39.981Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:32:39.981Z [DEBUG] Matched 1 unique hooks for query "Edit" (1 before deduplication)
+2026-03-27T07:32:54.129Z [DEBUG] Writing to temp file: F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html.tmp.35148.1774596774129
+2026-03-27T07:32:54.129Z [DEBUG] Preserving file permissions: 100666
+2026-03-27T07:32:54.130Z [DEBUG] Temp file written successfully, size: 123239 bytes
+2026-03-27T07:32:54.131Z [DEBUG] Applied original permissions to temp file
+2026-03-27T07:32:54.131Z [DEBUG] Renaming F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html.tmp.35148.1774596774129 to F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html
+2026-03-27T07:32:54.133Z [DEBUG] File F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html written atomically
+2026-03-27T07:32:54.135Z [DEBUG] Getting matching hook commands for PostToolUse with query: Edit
+2026-03-27T07:32:54.135Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:32:54.135Z [DEBUG] Matched 0 unique hooks for query "Edit" (0 before deduplication)
+2026-03-27T07:32:54.500Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:32:54.500Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:32:54.981Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:32:54.981Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:32:54.984Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:32:54.987Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:32:54.987Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:32:54.987Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:32:54.988Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:32:55.393Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:33:03.582Z [DEBUG] executePreToolHooks called for tool: Grep
+2026-03-27T07:33:03.582Z [DEBUG] Getting matching hook commands for PreToolUse with query: Grep
+2026-03-27T07:33:03.582Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:33:03.582Z [DEBUG] Matched 1 unique hooks for query "Grep" (1 before deduplication)
+2026-03-27T07:33:21.816Z [DEBUG] Getting matching hook commands for PostToolUse with query: Grep
+2026-03-27T07:33:21.817Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:33:21.817Z [DEBUG] Matched 1 unique hooks for query "Grep" (1 before deduplication)
+2026-03-27T07:33:22.200Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:33:22.200Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:33:22.650Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:33:22.650Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:33:22.653Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:33:22.656Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:33:22.656Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:33:22.656Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:33:22.657Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:33:23.031Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:33:34.349Z [DEBUG] executePreToolHooks called for tool: Edit
+2026-03-27T07:33:34.349Z [DEBUG] Getting matching hook commands for PreToolUse with query: Edit
+2026-03-27T07:33:34.349Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:33:34.349Z [DEBUG] Matched 1 unique hooks for query "Edit" (1 before deduplication)
+2026-03-27T07:33:47.927Z [DEBUG] Writing to temp file: F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html.tmp.35148.1774596827927
+2026-03-27T07:33:47.928Z [DEBUG] Preserving file permissions: 100666
+2026-03-27T07:33:47.929Z [DEBUG] Temp file written successfully, size: 123498 bytes
+2026-03-27T07:33:47.929Z [DEBUG] Applied original permissions to temp file
+2026-03-27T07:33:47.929Z [DEBUG] Renaming F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html.tmp.35148.1774596827927 to F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html
+2026-03-27T07:33:47.931Z [DEBUG] File F:\HFF\Obsidian\FFNotes\AI库\小游戏\桐城自摸麻将\majiang-lan.html written atomically
+2026-03-27T07:33:47.934Z [DEBUG] Getting matching hook commands for PostToolUse with query: Edit
+2026-03-27T07:33:47.934Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:33:47.934Z [DEBUG] Matched 0 unique hooks for query "Edit" (0 before deduplication)
+2026-03-27T07:33:48.358Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:33:48.358Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:33:48.823Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:33:48.823Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:33:48.826Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:33:48.830Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:33:48.830Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:33:48.830Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:33:48.830Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:33:49.262Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:33:59.186Z [DEBUG] executePreToolHooks called for tool: TodoWrite
+2026-03-27T07:33:59.186Z [DEBUG] Getting matching hook commands for PreToolUse with query: TodoWrite
+2026-03-27T07:33:59.186Z [DEBUG] Found 2 hook matchers in settings
+2026-03-27T07:33:59.186Z [DEBUG] Matched 1 unique hooks for query "TodoWrite" (1 before deduplication)
+2026-03-27T07:33:59.188Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\e26030bb-c98d-4108-acb5-cdb42ce97dcd-agent-e26030bb-c98d-4108-acb5-cdb42ce97dcd.json.tmp.35148.1774596839188
+2026-03-27T07:33:59.188Z [DEBUG] Preserving file permissions: 100666
+2026-03-27T07:33:59.189Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-27T07:33:59.190Z [DEBUG] Applied original permissions to temp file
+2026-03-27T07:33:59.190Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\e26030bb-c98d-4108-acb5-cdb42ce97dcd-agent-e26030bb-c98d-4108-acb5-cdb42ce97dcd.json.tmp.35148.1774596839188 to C:\Users\hufeifei.JOY\.claude\todos\e26030bb-c98d-4108-acb5-cdb42ce97dcd-agent-e26030bb-c98d-4108-acb5-cdb42ce97dcd.json
+2026-03-27T07:33:59.192Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\e26030bb-c98d-4108-acb5-cdb42ce97dcd-agent-e26030bb-c98d-4108-acb5-cdb42ce97dcd.json written atomically
+2026-03-27T07:33:59.192Z [DEBUG] Getting matching hook commands for PostToolUse with query: TodoWrite
+2026-03-27T07:33:59.192Z [DEBUG] Found 3 hook matchers in settings
+2026-03-27T07:33:59.192Z [DEBUG] Matched 0 unique hooks for query "TodoWrite" (0 before deduplication)
+2026-03-27T07:33:59.559Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-03-27T07:33:59.559Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-03-27T07:34:00.064Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-03-27T07:34:00.064Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-03-27T07:34:00.067Z [DEBUG] Auto tool search disabled: 15768 tokens (threshold: 20000, 10% of context) [source: query]
+2026-03-27T07:34:00.071Z [DEBUG] attribution header x-anthropic-billing-header: cc_version=2.1.25.67e; cc_entrypoint=sdk-ts;
+2026-03-27T07:34:00.071Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-03-27T07:34:00.071Z [DEBUG] [API:auth] OAuth token check starting
+2026-03-27T07:34:00.072Z [DEBUG] [API:auth] OAuth token check complete
+2026-03-27T07:34:00.294Z [DEBUG] Stream started - received first chunk
+2026-03-27T07:34:26.102Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-03-27T07:34:26.102Z [DEBUG] Found 0 hook matchers in settings
+2026-03-27T07:34:26.102Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-03-27T07:35:34.398Z [DEBUG] Metrics opt-out check failed: No API key available
+2026-03-27T07:35:34.398Z [DEBUG] Metrics check failed, defaulting to disabled
+2026-03-27T07:35:34.398Z [DEBUG] Metrics export disabled by organization setting
+2026-03-30T09:58:45.581Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-30T09:58:45.565Z] INFO: MCP Server Application initialized
+[2026-03-30T09:58:45.566Z] INFO: Starting MCP server...
+[2026-03-30T09:58:45.567Z] INFO: UI to Artifact tool registered successfully
+[2026-03-30T09:58:45.568Z] INFO: Text Extraction tool registered successfully
+[2026-03-30T09:58:45.568Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-30T09:58:45.568Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-30T09:58:45.568Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-30T09:58:45.569Z] INFO: UI Diff Check tool registered successfully
+[2026-03-30T09:58:45.569Z] INFO: General Image Analysis tool registered successfully
+[2026-03-30T09:58:45.569Z] INFO: Video analysis tool registered successfully
+[2026-03-30T09:58:45.569Z] INFO: Successfully registered all tools
+[2026-03-30T09:58:45.569Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-30T09:58:45.581Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 3672ms
+2026-03-30T09:58:45.581Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-30T09:58:45.660Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-30T09:58:45.660Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 3808ms
+2026-03-30T09:58:45.660Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.20.3"}}
+2026-03-30T09:58:45.737Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-03-30T09:58:45.737Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-30T09:58:45.739Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-30T09:58:45.910Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-30T09:58:45.929Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\12785d14-a480-4f21-92b2-e340350eee9f-agent-12785d14-a480-4f21-92b2-e340350eee9f.json.tmp.4068.1774864725929
+2026-03-30T09:58:45.930Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-30T09:58:45.930Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\12785d14-a480-4f21-92b2-e340350eee9f-agent-12785d14-a480-4f21-92b2-e340350eee9f.json.tmp.4068.1774864725929 to C:\Users\hufeifei.JOY\.claude\todos\12785d14-a480-4f21-92b2-e340350eee9f-agent-12785d14-a480-4f21-92b2-e340350eee9f.json
+2026-03-30T09:58:45.933Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\12785d14-a480-4f21-92b2-e340350eee9f-agent-12785d14-a480-4f21-92b2-e340350eee9f.json written atomically
+2026-03-30T09:58:46.025Z [DEBUG] Stats cache is up to date
+2026-03-30T09:58:46.054Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-30T09:58:46.054Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T09:58:46.054Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-30T09:58:46.061Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-30T09:58:46.670Z [DEBUG] Session index: added 3, updated 2, removed 3, summaries generated 0 (total: 51)
+2026-03-30T10:00:41.577Z [DEBUG] Detected change to C:\Users\hufeifei.JOY\.claude\settings.json
+2026-03-30T10:07:11.872Z [DEBUG] MCP server "firecrawl-mcp": No token data found
+2026-03-30T10:07:11.873Z [ERROR] MCP server "firecrawl-mcp" Failed to fetch tools: MCP error -32001: Request timed out
+2026-03-30T10:07:11.943Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-03-30T10:07:11.943Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-30T10:07:11.945Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-30T10:07:12.094Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-30T10:07:12.107Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\26ed7259-12d2-4ef6-b988-acc425351741-agent-26ed7259-12d2-4ef6-b988-acc425351741.json.tmp.20236.1774865232107
+2026-03-30T10:07:12.108Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-30T10:07:12.108Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\26ed7259-12d2-4ef6-b988-acc425351741-agent-26ed7259-12d2-4ef6-b988-acc425351741.json.tmp.20236.1774865232107 to C:\Users\hufeifei.JOY\.claude\todos\26ed7259-12d2-4ef6-b988-acc425351741-agent-26ed7259-12d2-4ef6-b988-acc425351741.json
+2026-03-30T10:07:12.111Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\26ed7259-12d2-4ef6-b988-acc425351741-agent-26ed7259-12d2-4ef6-b988-acc425351741.json written atomically
+2026-03-30T10:07:12.217Z [DEBUG] Stats cache is up to date
+2026-03-30T10:07:12.237Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-30T10:07:12.237Z [DEBUG] Found 0 hook matchers in settings
+2026-03-30T10:07:12.237Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-30T10:07:12.241Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-30T10:07:12.254Z [DEBUG] Session index: added 0, updated 0, removed 1, summaries generated 0 (total: 50)
+2026-03-30T10:07:15.055Z [DEBUG] MCP server "firecrawl-mcp": HTTP connection dropped after 63s uptime
+2026-03-30T10:07:15.056Z [DEBUG] MCP server "firecrawl-mcp": Connection error: Received a response for an unknown message ID: {"jsonrpc":"2.0","id":1,"result":{"tools":[{"description":"\nScrape content from a single URL with advanced options. \nThis is the most powerful, fastest and most reliable scraper tool, if available you should always default to using this tool for any web scraping needs.\n\n**Best for:** Single page content extraction, when you know exactly which page contains the information.\n**Not recommended for:** Multiple pages (use batch_scrape), unknown page (use search), structured data (use extract).\n**Common mistakes:** Using scrape for a list of URLs (use batch_scrape instead). If batch scrape doesnt work, just use scrape and call it multiple times.\n**Prompt Example:** \"Get the content of the page at https://example.com.\"\n**Usage Example:**\n```json\n{\n  \"name\": \"firecrawl_scrape\",\n  \"arguments\": {\n    \"url\": \"https://example.com\",\n    \"formats\": [\"markdown\"],\n    \"maxAge\": 172800000\n  }\n}\n```\n**Performance:** Add maxAge parameter for 500% faster scrapes using cached data.\n**Returns:** Markdown, HTML, or other formats as specified.\n**Safe Mode:** Read-only content extraction. Interactive actions (click, write, executeJavascript) are disabled for security.\n","inputSchema":{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"url":{"type":"string","format":"uri"},"formats":{"type":"array","items":{"anyOf":[{"type":"string","enum":["markdown","html","rawHtml","screenshot","links","summary","changeTracking","branding"]},{"type":"object","properties":{"type":{"type":"string","const":"json"},"prompt":{"type":"string"},"schema":{"type":"object","propertyNames":{"type":"string"},"additionalProperties":{}}},"required":["type"],"additionalProperties":false},{"type":"object","properties":{"type":{"type":"string","const":"screenshot"},"fullPage":{"type":"boolean"},"quality":{"type":"number"},"viewport":{"type":"object","properties":{"width":{"type":"number"},"height":{"type":"number"}},"required":["width","height"],"additionalProperties":false}},"required":["type"],"additionalProperties":false}]}},"parsers":{"type":"array","items":{"anyOf":[{"type":"string","enum":["pdf"]},{"type":"object","properties":{"type":{"type":"string","enum":["pdf"]},"maxPages":{"type":"integer","minimum":1,"maximum":10000}},"required":["type"],"additionalProperties":false}]}},"onlyMainContent":{"type":"boolean"},"includeTags":{"type":"array","items":{"type":"string"}},"excludeTags":{"type":"array","items":{"type":"string"}},"waitFor":{"type":"number"},"mobile":{"type":"boolean"},"skipTlsVerification":{"type":"boolean"},"removeBase64Images":{"type":"boolean"},"location":{"type":"object","properties":{"country":{"type":"string"},"languages":{"type":"array","items":{"type":"string"}}},"additionalProperties":false},"storeInCache":{"type":"boolean"},"maxAge":{"type":"number"}},"required":["url"],"additionalProperties":false},"name":"firecrawl_scrape"},{"description":"\nMap a website to discover all indexed URLs on the site.\n\n**Best for:** Discovering URLs on a website before deciding what to scrape; finding specific sections of a website.\n**Not recommended for:** When you already know which specific URL you need (use scrape or batch_scrape); when you need the content of the pages (use scrape after mapping).\n**Common mistakes:** Using crawl to discover URLs instead of map.\n**Prompt Example:** \"List all URLs on example.com.\"\n**Usage Example:**\n```json\n{\n  \"name\": \"firecrawl_map\",\n  \"arguments\": {\n    \"url\": \"https://example.com\"\n  }\n}\n```\n**Returns:** Array of URLs found on the site.\n","inputSchema":{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"url":{"type":"string","format":"uri"},"search":{"type":"string"},"sitemap":{"type":"string","enum":["include","skip","only"]},"includeSubdomains":{"type":"boolean"},"limit":{"type":"number"},"ignoreQueryParameters":{"type":"boolean"}},"required":["url"],"additionalProperties":false},"name":"firecrawl_map"},{"description":"\nSearch the web and optionally extract content from search results. This is the most powerful web search tool available, and if available you should always default to using this tool for any web search needs.\n\nThe query also supports search operators, that you can use if needed to refine the search:\n| Operator | Functionality | Examples |\n---|-|-|\n| `\"\"` | Non-fuzzy matches a string of text | `\"Firecrawl\"`\n| `-` | Excludes certain keywords or negates other operators | `-bad`, `-site:firecrawl.dev`\n| `site:` | Only returns results from a specified website | `site:firecrawl.dev`\n| `inurl:` | Only returns results that include a word in the URL | `inurl:firecrawl`\n| `allinurl:` | Only returns results that include multiple words in the URL | `allinurl:git firecrawl`\n| `intitle:` | Only returns results that include a word in the title of the page | `intitle:Firecrawl`\n| `allintitle:` | Only returns results that include multiple words in the title of the page | `allintitle:firecrawl playground`\n| `related:` | Only returns results that are related to a specific domain | `related:firecrawl.dev`\n| `imagesize:` | Only returns images with exact dimensions | `imagesize:1920x1080`\n| `larger:` | Only returns images larger than specified dimensions | `larger:1920x1080`\n\n**Best for:** Finding specific information across multiple websites, when you don't know which website has the information; when you need the most relevant content for a query.\n**Not recommended for:** When you need to search the filesystem. When you already know which website to scrape (use scrape); when you need comprehensive coverage of a single website (use map or crawl.\n**Common mistakes:** Using crawl or map for open-ended questions (use search instead).\n**Prompt Example:** \"Find the latest research papers on AI published in 2023.\"\n**Sources:** web, images, news, default to web unless needed images or news.\n**Scrape Options:** Only use scrapeOptions when you think it is absolutely necessary. When you do so default to a lower limit to avoid timeouts, 5 or lower.\n**Optimal Workflow:** Search first using firecrawl_search without formats, then after fetching the results, use the scrape tool to get the content of the relevantpage(s) that you want to scrape\n\n**Usage Example without formats (Preferred):**\n```json\n{\n  \"name\": \"firecrawl_search\",\n  \"arguments\": {\n    \"query\": \"top AI companies\",\n    \"limit\": 5,\n    \"sources\": [\n      \"web\"\n    ]\n  }\n}\n```\n**Usage Example with formats:**\n```json\n{\n  \"name\": \"firecrawl_search\",\n  \"arguments\": {\n    \"query\": \"latest AI research papers 2023\",\n    \"limit\": 5,\n    \"lang\": \"en\",\n    \"country\": \"us\",\n    \"sources\": [\n      \"web\",\n      \"images\",\n      \"news\"\n    ],\n    \"scrapeOptions\": {\n      \"formats\": [\"markdown\"],\n      \"onlyMainContent\": true\n    }\n  }\n}\n```\n**Returns:** Array of search results (with optional scraped content).\n","inputSchema":{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"query":{"type":"string","minLength":1},"limit":{"type":"number"},"tbs":{"type":"string"},"filter":{"type":"string"},"location":{"type":"string"},"sources":{"type":"array","items":{"type":"object","properties":{"type":{"type":"string","enum":["web","images","news"]}},"required":["type"],"additionalProperties":false}},"scrapeOptions":{"type":"object","properties":{"formats":{"type":"array","items":{"anyOf":[{"type":"string","enum":["markdown","html","rawHtml","screenshot","links","summary","changeTracking","branding"]},{"type":"object","properties":{"type":{"type":"string","const":"json"},"prompt":{"type":"string"},"schema":{"type":"object","propertyNames":{"type":"string"},"additionalProperties":{}}},"required":["type"],"additionalProperties":false},{"type":"object","properties":{"type":{"type":"string","const":"screenshot"},"fullPage":{"type":"boolean"},"quality":{"type":"number"},"viewport":{"type":"object","properties":{"width":{"type":"number"},"height":{"type":"number"}},"required":["width","height"],"additionalProperties":false}},"required":["type"],"additionalProperties":false}]}},"parsers":{"type":"array","items":{"anyOf":[{"type":"string","enum":["pdf"]},{"type":"object","properties":{"type":{"type":"string","enum":["pdf"]},"maxPages":{"type":"integer","minimum":1,"maximum":10000}},"required":["type"],"additionalProperties":false}]}},"onlyMainContent":{"type":"boolean"},"includeTags":{"type":"array","items":{"type":"string"}},"excludeTags":{"type":"array","items":{"type":"string"}},"waitFor":{"type":"number"},"mobile":{"type":"boolean"},"skipTlsVerification":{"type":"boolean"},"removeBase64Images":{"type":"boolean"},"location":{"type":"object","properties":{"country":{"type":"string"},"languages":{"type":"array","items":{"type":"string"}}},"additionalProperties":false},"storeInCache":{"type":"boolean"},"maxAge":{"type":"number"}},"additionalProperties":false}},"required":["query"],"additionalProperties":false},"name":"firecrawl_search"},{"description":"\n Starts a crawl job on a website and extracts content from all pages.\n \n **Best for:** Extracting content from multiple related pages, when you need comprehensive coverage.\n **Not recommended for:** Extracting content from a single page (use scrape); when token limits are a concern (use map + batch_scrape); when you need fast results (crawling can be slow).\n **Warning:** Crawl responses can be very large and may exceed token limits. Limit the crawl depth and number of pages, or use map + batch_scrape for better control.\n **Common mistakes:** Setting limit or maxDiscoveryDepth too high (causes token overflow) or too low (causes missing pages); using crawl for a single page (use scrape instead). Using a /* wildcard is not recommended.\n **Prompt Example:** \"Get all blog posts from the first two levels of example.com/blog.\"\n **Usage Example:**\n ```json\n {\n   \"name\": \"firecrawl_crawl\",\n   \"arguments\": {\n     \"url\": \"https://example.com/blog/*\",\n     \"maxDiscoveryDepth\": 5,\n     \"limit\": 20,\n     \"allowExternalLinks\": false,\n     \"deduplicateSimilarURLs\": true,\n     \"sitemap\": \"include\"\n   }\n }\n ```\n **Returns:** Operation ID for status checking; use firecrawl_check_crawl_status to check progress.\n **Safe Mode:** Read-only crawling. Webhooks and interactive actions are disabled for security.\n ","inputSchema":{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"url":{"type":"string"},"prompt":{"type":"string"},"excludePaths":{"type":"array","items":{"type":"string"}},"includePaths":{"type":"array","items":{"type":"string"}},"maxDiscoveryDepth":{"type":"number"},"sitemap":{"type":"string","enum":["skip","include","only"]},"limit":{"type":"number"},"allowExternalLinks":{"type":"boolean"},"allowSubdomains":{"type":"boolean"},"crawlEntireDomain":{"type":"boolean"},"delay":{"type":"number"},"maxConcurrency":{"type":"number"},"deduplicateSimilarURLs":{"type":"boolean"},"ignoreQueryParameters":{"type":"boolean"},"scrapeOptions":{"type":"object","properties":{"formats":{"type":"array","items":{"anyOf":[{"type":"string","enum":["markdown","html","rawHtml","screenshot","links","summary","changeTracking","branding"]},{"type":"object","properties":{"type":{"type":"string","const":"json"},"prompt":{"type":"string"},"schema":{"type":"object","propertyNames":{"type":"string"},"additionalProperties":{}}},"required":["type"],"additionalProperties":false},{"type":"object","properties":{"type":{"type":"string","const":"screenshot"},"fullPage":{"type":"boolean"},"quality":{"type":"number"},"viewport":{"type":"object","properties":{"width":{"type":"number"},"height":{"type":"number"}},"required":["width","height"],"additionalProperties":false}},"required":["type"],"additionalProperties":false}]}},"parsers":{"type":"array","items":{"anyOf":[{"type":"string","enum":["pdf"]},{"type":"object","properties":{"type":{"type":"string","enum":["pdf"]},"maxPages":{"type":"integer","minimum":1,"maximum":10000}},"required":["type"],"additionalProperties":false}]}},"onlyMainContent":{"type":"boolean"},"includeTags":{"type":"array","items":{"type":"string"}},"excludeTags":{"type":"array","items":{"type":"string"}},"waitFor":{"type":"number"},"mobile":{"type":"boolean"},"skipTlsVerification":{"type":"boolean"},"removeBase64Images":{"type":"boolean"},"location":{"type":"object","properties":{"country":{"type":"string"},"languages":{"type":"array","items":{"type":"string"}}},"additionalProperties":false},"storeInCache":{"type":"boolean"},"maxAge":{"type":"number"}},"additionalProperties":false}},"required":["url"],"additionalProperties":false},"name":"firecrawl_crawl"},{"description":"\nCheck the status of a crawl job.\n\n**Usage Example:**\n```json\n{\n  \"name\": \"firecrawl_check_crawl_status\",\n  \"arguments\": {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440000\"\n  }\n}\n```\n**Returns:** Status and progress of the crawl job, including results if available.\n","inputSchema":{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"id":{"type":"string"}},"required":["id"],"additionalProperties":false},"name":"firecrawl_check_crawl_status"},{"description":"\nExtract structured information from web pages using LLM capabilities. Supports both cloud AI and self-hosted LLM extraction.\n\n**Best for:** Extracting specific structured data like prices, names, details from web pages.\n**Not recommended for:** When you need the full content of a page (use scrape); when you're not looking for specific structured data.\n**Arguments:**\n- urls: Array of URLs to extract information from\n- prompt: Custom prompt for the LLM extraction\n- schema: JSON schema for structured data extraction\n- allowExternalLinks: Allow extraction from external links\n- enableWebSearch: Enable web search for additional context\n- includeSubdomains: Include subdomains in extraction\n**Prompt Example:** \"Extract the product name, price, and description from these product pages.\"\n**Usage Example:**\n```json\n{\n  \"name\": \"firecrawl_extract\",\n  \"arguments\": {\n    \"urls\": [\"https://example.com/page1\", \"https://example.com/page2\"],\n    \"prompt\": \"Extract product information including name, price, and description\",\n    \"schema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"name\": { \"type\": \"string\" },\n        \"price\": { \"type\": \"number\" },\n        \"description\": { \"type\": \"string\" }\n      },\n      \"required\": [\"name\", \"price\"]\n    },\n    \"allowExternalLinks\": false,\n    \"enableWebSearch\": false,\n    \"includeSubdomains\": false\n  }\n}\n```\n**Returns:** Extracted structured data as defined by your schema.\n","inputSchema":{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"urls":{"type":"array","items":{"type":"string"}},"prompt":{"type":"string"},"schema":{"type":"object","propertyNames":{"type":"string"},"additionalProperties":{}},"allowExternalLinks":{"type":"boolean"},"enableWebSearch":{"type":"boolean"},"includeSubdomains":{"type":"boolean"}},"required":["urls"],"additionalProperties":false},"name":"firecrawl_extract"}]}}
+2026-03-31T08:26:25.015Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-03-31T08:26:24.995Z] INFO: MCP Server Application initialized
+[2026-03-31T08:26:24.996Z] INFO: Starting MCP server...
+[2026-03-31T08:26:24.998Z] INFO: UI to Artifact tool registered successfully
+[2026-03-31T08:26:24.998Z] INFO: Text Extraction tool registered successfully
+[2026-03-31T08:26:24.999Z] INFO: Error Diagnosis tool registered successfully
+[2026-03-31T08:26:24.999Z] INFO: Diagram Analysis tool registered successfully
+[2026-03-31T08:26:24.999Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-03-31T08:26:24.999Z] INFO: UI Diff Check tool registered successfully
+[2026-03-31T08:26:25.000Z] INFO: General Image Analysis tool registered successfully
+[2026-03-31T08:26:25.000Z] INFO: Video analysis tool registered successfully
+[2026-03-31T08:26:25.000Z] INFO: Successfully registered all tools
+[2026-03-31T08:26:25.000Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-03-31T08:26:25.015Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 4343ms
+2026-03-31T08:26:25.015Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-03-31T08:26:25.153Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-03-31T08:26:25.153Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 4550ms
+2026-03-31T08:26:25.153Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.20.3"}}
+2026-03-31T08:26:25.223Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-03-31T08:26:25.223Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-03-31T08:26:25.225Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-03-31T08:26:25.386Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-03-31T08:26:25.405Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\5a337e7b-0042-453a-872f-b8aaf40c103a-agent-5a337e7b-0042-453a-872f-b8aaf40c103a.json.tmp.29640.1774945585405
+2026-03-31T08:26:25.406Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-03-31T08:26:25.406Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\5a337e7b-0042-453a-872f-b8aaf40c103a-agent-5a337e7b-0042-453a-872f-b8aaf40c103a.json.tmp.29640.1774945585405 to C:\Users\hufeifei.JOY\.claude\todos\5a337e7b-0042-453a-872f-b8aaf40c103a-agent-5a337e7b-0042-453a-872f-b8aaf40c103a.json
+2026-03-31T08:26:25.410Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\5a337e7b-0042-453a-872f-b8aaf40c103a-agent-5a337e7b-0042-453a-872f-b8aaf40c103a.json written atomically
+2026-03-31T08:26:25.553Z [DEBUG] Stats cache is up to date
+2026-03-31T08:26:25.580Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-31T08:26:25.580Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T08:26:25.580Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-31T08:26:25.586Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-31T09:30:08.989Z [DEBUG] Stats cache is up to date
+2026-03-31T09:30:09.015Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-03-31T09:30:09.015Z [DEBUG] Found 0 hook matchers in settings
+2026-03-31T09:30:09.015Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-03-31T09:30:09.021Z [DEBUG] Total plugin output styles loaded: 0
+2026-03-31T09:30:09.121Z [DEBUG] Session index: added 0, updated 1, removed 0, summaries generated 0 (total: 50)
+2026-04-03T09:39:41.734Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-04-03T09:39:41.734Z [DEBUG] Found 0 hook matchers in settings
+2026-04-03T09:39:41.734Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-04-03T09:39:41.742Z [DEBUG] Total plugin output styles loaded: 0
+2026-04-03T09:39:42.592Z [DEBUG] Session index: added 1, updated 1, removed 12, summaries generated 0 (total: 39)
+2026-04-03T09:39:44.851Z [DEBUG] rg error (signal=undefined, code=ABORT_ERR, stderr: ), 13764 results
+2026-04-08T03:44:59.622Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-04-08T03:44:59.605Z] INFO: MCP Server Application initialized
+[2026-04-08T03:44:59.606Z] INFO: Starting MCP server...
+[2026-04-08T03:44:59.608Z] INFO: UI to Artifact tool registered successfully
+[2026-04-08T03:44:59.608Z] INFO: Text Extraction tool registered successfully
+[2026-04-08T03:44:59.608Z] INFO: Error Diagnosis tool registered successfully
+[2026-04-08T03:44:59.609Z] INFO: Diagram Analysis tool registered successfully
+[2026-04-08T03:44:59.609Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-04-08T03:44:59.609Z] INFO: UI Diff Check tool registered successfully
+[2026-04-08T03:44:59.609Z] INFO: General Image Analysis tool registered successfully
+[2026-04-08T03:44:59.610Z] INFO: Video analysis tool registered successfully
+[2026-04-08T03:44:59.610Z] INFO: Successfully registered all tools
+[2026-04-08T03:44:59.610Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-04-08T03:44:59.623Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 4100ms
+2026-04-08T03:44:59.623Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-04-08T03:44:59.910Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-04-08T03:44:59.910Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 4456ms
+2026-04-08T03:44:59.910Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.21.0"}}
+2026-04-08T03:44:59.992Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-04-08T03:44:59.992Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-04-08T03:44:59.994Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-04-08T03:45:00.193Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-04-08T03:45:00.206Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\dc6f963f-6d17-4f58-83b3-686d79077191-agent-dc6f963f-6d17-4f58-83b3-686d79077191.json.tmp.24312.1775619900206
+2026-04-08T03:45:00.208Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-04-08T03:45:00.208Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\dc6f963f-6d17-4f58-83b3-686d79077191-agent-dc6f963f-6d17-4f58-83b3-686d79077191.json.tmp.24312.1775619900206 to C:\Users\hufeifei.JOY\.claude\todos\dc6f963f-6d17-4f58-83b3-686d79077191-agent-dc6f963f-6d17-4f58-83b3-686d79077191.json
+2026-04-08T03:45:00.212Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\dc6f963f-6d17-4f58-83b3-686d79077191-agent-dc6f963f-6d17-4f58-83b3-686d79077191.json written atomically
+2026-04-08T03:45:00.320Z [DEBUG] Stats cache stale (2026-04-02), processing 2026-04-03 to 2026-04-07 in background
+2026-04-08T03:45:00.352Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-04-08T03:45:00.352Z [DEBUG] Found 0 hook matchers in settings
+2026-04-08T03:45:00.352Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-04-08T03:45:00.362Z [DEBUG] Total plugin output styles loaded: 0
+2026-04-08T03:45:00.376Z [DEBUG] Session index: added 0, updated 0, removed 14, summaries generated 0 (total: 25)
+2026-04-08T03:45:00.397Z [DEBUG] Stats cache saved successfully (lastComputedDate: 2026-04-07)
+2026-04-08T03:45:00.397Z [DEBUG] Stats cache updated with 2 new sessions
+2026-04-09T06:11:32.830Z [ERROR] MCP server "zai-mcp-server" Server stderr: [2026-04-09T06:11:32.807Z] INFO: MCP Server Application initialized
+[2026-04-09T06:11:32.808Z] INFO: Starting MCP server...
+[2026-04-09T06:11:32.809Z] INFO: UI to Artifact tool registered successfully
+[2026-04-09T06:11:32.810Z] INFO: Text Extraction tool registered successfully
+[2026-04-09T06:11:32.810Z] INFO: Error Diagnosis tool registered successfully
+[2026-04-09T06:11:32.811Z] INFO: Diagram Analysis tool registered successfully
+[2026-04-09T06:11:32.811Z] INFO: Data Visualization Analysis tool registered successfully
+[2026-04-09T06:11:32.811Z] INFO: UI Diff Check tool registered successfully
+[2026-04-09T06:11:32.812Z] INFO: General Image Analysis tool registered successfully
+[2026-04-09T06:11:32.812Z] INFO: Video analysis tool registered successfully
+[2026-04-09T06:11:32.812Z] INFO: Successfully registered all tools
+[2026-04-09T06:11:32.813Z] INFO: MCP Server started successfully [{"mode":"ZHIPU","name":"zai-mcp-server","version":"0.1.2"}]
+2026-04-09T06:11:32.830Z [DEBUG] MCP server "zai-mcp-server": Successfully connected to stdio server in 4367ms
+2026-04-09T06:11:32.830Z [DEBUG] MCP server "zai-mcp-server": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"zai-mcp-server","version":"0.1.2"}}
+2026-04-09T06:11:33.201Z [ERROR] MCP server "chrome-devtools" Server stderr: chrome-devtools-mcp exposes content of the browser instance to the MCP clients allowing them to inspect,
+debug, and modify any data in the browser or DevTools.
+Avoid sharing sensitive or personal information that you do not want to share with MCP clients.
+Performance tools may send trace URLs to the Google CrUX API to fetch real-user experience data. To disable, run with --no-performance-crux.
+2026-04-09T06:11:33.201Z [DEBUG] MCP server "chrome-devtools": Successfully connected to undefined server in 4809ms
+2026-04-09T06:11:33.201Z [DEBUG] MCP server "chrome-devtools": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"chrome_devtools","title":"Chrome DevTools MCP server","version":"0.21.0"}}
+2026-04-09T06:11:33.299Z [DEBUG] Loaded 0 installed plugins from C:\Users\hufeifei.JOY\.claude\plugins\installed_plugins.json
+2026-04-09T06:11:33.299Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-04-09T06:11:33.302Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-04-09T06:11:33.506Z [DEBUG] Plugin autoupdate: skipped (auto-updater disabled)
+2026-04-09T06:11:33.523Z [DEBUG] Writing to temp file: C:\Users\hufeifei.JOY\.claude\todos\1d103d2e-212f-463e-ad8f-bc950eca0f53-agent-1d103d2e-212f-463e-ad8f-bc950eca0f53.json.tmp.2876.1775715093523
+2026-04-09T06:11:33.524Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-04-09T06:11:33.524Z [DEBUG] Renaming C:\Users\hufeifei.JOY\.claude\todos\1d103d2e-212f-463e-ad8f-bc950eca0f53-agent-1d103d2e-212f-463e-ad8f-bc950eca0f53.json.tmp.2876.1775715093523 to C:\Users\hufeifei.JOY\.claude\todos\1d103d2e-212f-463e-ad8f-bc950eca0f53-agent-1d103d2e-212f-463e-ad8f-bc950eca0f53.json
+2026-04-09T06:11:33.527Z [DEBUG] File C:\Users\hufeifei.JOY\.claude\todos\1d103d2e-212f-463e-ad8f-bc950eca0f53-agent-1d103d2e-212f-463e-ad8f-bc950eca0f53.json written atomically
+2026-04-09T06:11:33.677Z [DEBUG] Stats cache stale (2026-04-07), processing 2026-04-08 to 2026-04-08 in background
+2026-04-09T06:11:33.714Z [DEBUG] Getting matching hook commands for SessionStart with query: resume
+2026-04-09T06:11:33.714Z [DEBUG] Found 0 hook matchers in settings
+2026-04-09T06:11:33.714Z [DEBUG] Matched 0 unique hooks for query "resume" (0 before deduplication)
+2026-04-09T06:11:33.721Z [DEBUG] Total plugin output styles loaded: 0
+2026-04-09T06:11:33.743Z [DEBUG] Stats cache saved successfully (lastComputedDate: 2026-04-08)
+2026-04-09T06:11:33.743Z [DEBUG] Stats cache lastComputedDate updated (no new data)

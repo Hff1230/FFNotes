@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">桐城自摸麻将</string>
+    <string name="server_btn">创建房间</string>
+    <string name="client_btn">加入房间</string>
+    <string name="server_title">桐城自摸麻将</string>
+    <string name="server_status">房间已创建，等待其他人加入...</string>
+    <string name="server_ip">局域网地址:</string>
+    <string name="server_port">端口: 8081</string>
+    <string name="client_title">加入房间</string>
+    <string name="client_ip_hint">请输入服务器IP地址</string>
+    <string name="client_connect">连接</string>
+</resources>

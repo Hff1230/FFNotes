@@ -1,0 +1,850 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Unity JSON 文件合规性审查工具
+
+功能:
+- 基础格式验证：JSON 语法、编码格式、缩进规范
+- Unity 特定规范：GUID 格式、fileID、引用路径验证
+
+使用方法:
+    python unity_json_validator.py                    # 弹出文件夹选择对话框
+    python unity_json_validator.py <path>             # 直接指定路径
+    python unity_json_validator.py --cli <path>       # 命令行模式
+
+示例:
+    python unity_json_validator.py
+    python unity_json_validator.py /path/to/unity/project
+    python unity_json_validator.py --cli /path/to/project --report report.json
+"""
+
+import os
+import sys
+import re
+import json
+import argparse
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple, Any
+from dataclasses import dataclass, field
+from enum import Enum
+import hashlib
+
+# 尝试导入 tkinter（用于文件夹选择对话框）
+try:
+    import tkinter as tk
+    from tkinter import filedialog, ttk, messagebox
+    HAS_TKINTER = True
+except ImportError:
+    HAS_TKINTER = False
+
+
+class Severity(Enum):
+    """问题严重级别"""
+    ERROR = "ERROR"
+    WARNING = "WARNING"
+    INFO = "INFO"
+
+
+@dataclass
+class ValidationIssue:
+    """验证问题"""
+    file_path: str
+    line: int
+    column: int
+    severity: Severity
+    rule_id: str
+    message: str
+    suggestion: Optional[str] = None
+
+
+@dataclass
+class ValidationResult:
+    """验证结果"""
+    file_path: str
+    is_valid: bool
+    issues: List[ValidationIssue] = field(default_factory=list)
+
+    def add_issue(self, issue: ValidationIssue):
+        self.issues.append(issue)
+        if issue.severity == Severity.ERROR:
+            self.is_valid = False
+
+
+class UnityPatterns:
+    """Unity 相关正则模式"""
+    # GUID 格式: 32位十六进制字符
+    GUID_PATTERN = re.compile(r'^[a-fA-F0-9]{32}$')
+
+    # fileID 格式: 通常是数字，常见值如 -4216859308096315815
+    FILE_ID_PATTERN = re.compile(r'^-?\d+$')
+
+    # Unity 版本格式
+    VERSION_PATTERN = re.compile(r'^\d{4}\.\d+\.\d+(f\d+|a\d+|b\d+)?$')
+
+    # 常见 Unity 配置文件
+    CONFIG_FILES = {
+        'ProjectSettings.asset': 'ProjectSettings',
+        'EditorSettings.asset': 'EditorSettings',
+        'PackageManagerSettings.json': 'PackageManager',
+        'manifest.json': 'PackageManager',
+        'packages-lock.json': 'PackageManager',
+    }
+
+    # 常见必填字段
+    REQUIRED_FIELDS = {
+        'ProjectSettings.asset': ['m_EditorVersion', 'm_EditorVersionRevision'],
+        'manifest.json': ['dependencies'],
+    }
+
+
+class BasicFormatValidator:
+    """基础格式验证器"""
+
+    def validate(self, file_path: str, content: str) -> List[ValidationIssue]:
+        """验证基础格式"""
+        issues = []
+
+        # 检查 BOM
+        issues.extend(self._check_bom(file_path, content))
+
+        # 检查 JSON 语法
+        issues.extend(self._check_json_syntax(file_path, content))
+
+        # 检查缩进
+        issues.extend(self._check_indentation(file_path, content))
+
+        # 检查尾随空白
+        issues.extend(self._check_trailing_whitespace(file_path, content))
+
+        # 检查文件末尾换行
+        issues.extend(self._check_final_newline(file_path, content))
+
+        return issues
+
+    def _check_bom(self, file_path: str, content: str) -> List[ValidationIssue]:
+        """检查 BOM 标记"""
+        issues = []
+        if content.startswith('\ufeff'):
+            issues.append(ValidationIssue(
+                file_path=file_path,
+                line=1,
+                column=1,
+                severity=Severity.WARNING,
+                rule_id="FORMAT001",
+                message="文件包含 BOM 标记，Unity 推荐使用无 BOM 的 UTF-8 编码",
+                suggestion="移除 BOM 标记，使用 UTF-8 without BOM 编码保存"
+            ))
+        return issues
+
+    def _check_json_syntax(self, file_path: str, content: str) -> List[ValidationIssue]:
+        """检查 JSON 语法"""
+        issues = []
+        try:
+            json.loads(content)
+        except json.JSONDecodeError as e:
+            issues.append(ValidationIssue(
+                file_path=file_path,
+                line=e.lineno or 1,
+                column=e.colno or 1,
+                severity=Severity.ERROR,
+                rule_id="FORMAT002",
+                message=f"JSON 语法错误: {e.msg}",
+                suggestion="修复 JSON 语法错误"
+            ))
+        return issues
+
+    def _check_indentation(self, file_path: str, content: str) -> List[ValidationIssue]:
+        """检查缩进规范"""
+        issues = []
+        lines = content.split('\n')
+
+        for i, line in enumerate(lines, 1):
+            if not line.strip():
+                continue
+
+            # 检查是否使用空格缩进
+            leading = line[:len(line) - len(line.lstrip())]
+            if '\t' in leading:
+                issues.append(ValidationIssue(
+                    file_path=file_path,
+                    line=i,
+                    column=1,
+                    severity=Severity.WARNING,
+                    rule_id="FORMAT003",
+                    message="使用 Tab 缩进，Unity 推荐使用 2 空格缩进",
+                    suggestion="将 Tab 替换为 2 空格"
+                ))
+            elif leading and len(leading) % 2 != 0:
+                issues.append(ValidationIssue(
+                    file_path=file_path,
+                    line=i,
+                    column=1,
+                    severity=Severity.INFO,
+                    rule_id="FORMAT004",
+                    message="缩进不是 2 的倍数，Unity 通常使用 2 空格缩进",
+                    suggestion="调整缩进为 2 空格的倍数"
+                ))
+
+        return issues
+
+    def _check_trailing_whitespace(self, file_path: str, content: str) -> List[ValidationIssue]:
+        """检查尾随空白"""
+        issues = []
+        lines = content.split('\n')
+
+        for i, line in enumerate(lines, 1):
+            if line.rstrip() != line:
+                issues.append(ValidationIssue(
+                    file_path=file_path,
+                    line=i,
+                    column=len(line.rstrip()) + 1,
+                    severity=Severity.INFO,
+                    rule_id="FORMAT005",
+                    message="行尾存在空白字符",
+                    suggestion="移除行尾空白字符"
+                ))
+
+        return issues
+
+    def _check_final_newline(self, file_path: str, content: str) -> List[ValidationIssue]:
+        """检查文件末尾换行 - 已禁用"""
+        # 忽略此检查
+        return []
+
+
+class UnitySpecificationValidator:
+    """Unity 特定规范验证器"""
+
+    def __init__(self, project_root: Optional[str] = None):
+        self.project_root = Path(project_root) if project_root else None
+
+    def validate(self, file_path: str, content: str, data: Any) -> List[ValidationIssue]:
+        """验证 Unity 特定规范"""
+        issues = []
+
+        # 检查必填字段
+        issues.extend(self._check_required_fields(file_path, data))
+
+        # 检查 GUID 格式
+        issues.extend(self._check_guid_format(file_path, data))
+
+        # 检查 fileID 格式
+        issues.extend(self._check_file_id_format(file_path, data))
+
+        # 检查版本格式
+        issues.extend(self._check_version_format(file_path, data))
+
+        # 检查引用路径
+        if self.project_root:
+            issues.extend(self._check_references(file_path, data))
+
+        return issues
+
+    def _check_required_fields(self, file_path: str, data: Any) -> List[ValidationIssue]:
+        """检查必填字段"""
+        issues = []
+        file_name = os.path.basename(file_path)
+
+        if file_name in UnityPatterns.REQUIRED_FIELDS and isinstance(data, dict):
+            required = UnityPatterns.REQUIRED_FIELDS[file_name]
+            for field in required:
+                if field not in data:
+                    issues.append(ValidationIssue(
+                        file_path=file_path,
+                        line=1,
+                        column=1,
+                        severity=Severity.WARNING,
+                        rule_id="UNITY001",
+                        message=f"缺少推荐字段: {field}",
+                        suggestion=f"添加 {field} 字段"
+                    ))
+
+        return issues
+
+    def _check_guid_format(self, file_path: str, data: Any, path: str = "") -> List[ValidationIssue]:
+        """检查 GUID 格式"""
+        issues = []
+
+        if isinstance(data, dict):
+            for key, value in data.items():
+                current_path = f"{path}.{key}" if path else key
+
+                # 检查常见的 GUID 字段
+                if key.lower() in ('guid', 'm_guid', 'assetguid'):
+                    if isinstance(value, str) and not UnityPatterns.GUID_PATTERN.match(value):
+                        issues.append(ValidationIssue(
+                            file_path=file_path,
+                            line=1,
+                            column=1,
+                            severity=Severity.ERROR,
+                            rule_id="UNITY002",
+                            message=f"无效的 GUID 格式: {value} (路径: {current_path})",
+                            suggestion="GUID 应为 32 位十六进制字符"
+                        ))
+
+                # 递归检查
+                issues.extend(self._check_guid_format(file_path, value, current_path))
+
+        elif isinstance(data, list):
+            for i, item in enumerate(data):
+                issues.extend(self._check_guid_format(file_path, item, f"{path}[{i}]"))
+
+        return issues
+
+    def _check_file_id_format(self, file_path: str, data: Any, path: str = "") -> List[ValidationIssue]:
+        """检查 fileID 格式"""
+        issues = []
+
+        if isinstance(data, dict):
+            for key, value in data.items():
+                current_path = f"{path}.{key}" if path else key
+
+                # 检查常见的 fileID 字段
+                if key.lower() in ('fileid', 'm_fileid', 'fileidtorecycle'):
+                    if isinstance(value, (str, int)):
+                        value_str = str(value)
+                        if not UnityPatterns.FILE_ID_PATTERN.match(value_str):
+                            issues.append(ValidationIssue(
+                                file_path=file_path,
+                                line=1,
+                                column=1,
+                                severity=Severity.WARNING,
+                                rule_id="UNITY003",
+                                message=f"无效的 fileID 格式: {value} (路径: {current_path})",
+                                suggestion="fileID 应为数字"
+                            ))
+
+                # 递归检查
+                issues.extend(self._check_file_id_format(file_path, value, current_path))
+
+        elif isinstance(data, list):
+            for i, item in enumerate(data):
+                issues.extend(self._check_file_id_format(file_path, item, f"{path}[{i}]"))
+
+        return issues
+
+    def _check_version_format(self, file_path: str, data: Any) -> List[ValidationIssue]:
+        """检查 Unity 版本格式 - 已禁用"""
+        # 忽略此检查
+        return []
+
+    def _check_references(self, file_path: str, data: Any) -> List[ValidationIssue]:
+        """检查引用路径是否存在"""
+        issues = []
+
+        if not self.project_root:
+            return issues
+
+        def check_ref(obj: Any, path: str = ""):
+            if isinstance(obj, dict):
+                for key, value in obj.items():
+                    current_path = f"{path}.{key}" if path else key
+
+                    # 检查路径引用
+                    if key.lower() in ('path', 'm_path', 'assetpath'):
+                        if isinstance(value, str) and value:
+                            full_path = self.project_root / value
+                            if not full_path.exists():
+                                issues.append(ValidationIssue(
+                                    file_path=file_path,
+                                    line=1,
+                                    column=1,
+                                    severity=Severity.WARNING,
+                                    rule_id="UNITY005",
+                                    message=f"引用路径不存在: {value} (路径: {current_path})",
+                                    suggestion="检查路径是否正确或资源是否已被删除"
+                                ))
+
+                    check_ref(value, current_path)
+
+            elif isinstance(obj, list):
+                for i, item in enumerate(obj):
+                    check_ref(item, f"{path}[{i}]")
+
+        check_ref(data)
+        return issues
+
+
+class UnityJsonValidator:
+    """Unity JSON 文件验证器主类"""
+
+    def __init__(self, project_root: Optional[str] = None):
+        self.basic_validator = BasicFormatValidator()
+        self.unity_validator = UnitySpecificationValidator(project_root)
+
+    def validate_file(self, file_path: str) -> ValidationResult:
+        """验证单个文件"""
+        result = ValidationResult(file_path=file_path, is_valid=True)
+
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+        except UnicodeDecodeError:
+            try:
+                with open(file_path, 'r', encoding='utf-8-sig') as f:
+                    content = f.read()
+            except Exception as e:
+                result.add_issue(ValidationIssue(
+                    file_path=file_path,
+                    line=1,
+                    column=1,
+                    severity=Severity.ERROR,
+                    rule_id="IO001",
+                    message=f"无法读取文件: {str(e)}"
+                ))
+                return result
+        except Exception as e:
+            result.add_issue(ValidationIssue(
+                file_path=file_path,
+                line=1,
+                column=1,
+                severity=Severity.ERROR,
+                rule_id="IO001",
+                message=f"无法读取文件: {str(e)}"
+            ))
+            return result
+
+        # 基础格式验证
+        basic_issues = self.basic_validator.validate(file_path, content)
+        for issue in basic_issues:
+            result.add_issue(issue)
+
+        # 尝试解析 JSON
+        try:
+            data = json.loads(content)
+        except json.JSONDecodeError:
+            # 语法错误已经在基础验证中报告
+            return result
+
+        # Unity 特定规范验证
+        unity_issues = self.unity_validator.validate(file_path, content, data)
+        for issue in unity_issues:
+            result.add_issue(issue)
+
+        return result
+
+    def validate_directory(self, dir_path: str,
+                          extensions: Tuple[str, ...] = ('.json', '.asset')) -> List[ValidationResult]:
+        """验证目录中的所有 JSON 文件"""
+        results = []
+        dir_path = Path(dir_path)
+
+        # 查找所有 JSON 和相关配置文件
+        for ext in extensions:
+            for file_path in dir_path.rglob(f'*{ext}'):
+                results.append(self.validate_file(str(file_path)))
+
+        return results
+
+    def validate_path(self, path: str) -> List[ValidationResult]:
+        """自动判断路径类型并验证"""
+        path = Path(path)
+
+        if path.is_file():
+            return [self.validate_file(str(path))]
+        elif path.is_dir():
+            return self.validate_directory(str(path))
+        else:
+            result = ValidationResult(file_path=str(path), is_valid=False)
+            result.add_issue(ValidationIssue(
+                file_path=str(path),
+                line=1,
+                column=1,
+                severity=Severity.ERROR,
+                rule_id="IO002",
+                message=f"路径不存在: {path}"
+            ))
+            return [result]
+
+
+class ReportGenerator:
+    """报告生成器"""
+
+    @staticmethod
+    def generate_console_report(results: List[ValidationResult]) -> str:
+        """生成控制台报告"""
+        lines = []
+        lines.append("=" * 60)
+        lines.append("Unity JSON 文件合规性审查报告")
+        lines.append("=" * 60)
+
+        total_issues = 0
+        error_count = 0
+        warning_count = 0
+        info_count = 0
+
+        for result in results:
+            if result.issues:
+                lines.append(f"\n文件: {result.file_path}")
+                lines.append("-" * 60)
+
+                for issue in result.issues:
+                    total_issues += 1
+                    if issue.severity == Severity.ERROR:
+                        error_count += 1
+                        icon = "❌"
+                    elif issue.severity == Severity.WARNING:
+                        warning_count += 1
+                        icon = "⚠️"
+                    else:
+                        info_count += 1
+                        icon = "ℹ️"
+
+                    lines.append(f"  {icon} [{issue.severity.value}] {issue.rule_id}")
+                    lines.append(f"     位置: 行 {issue.line}, 列 {issue.column}")
+                    lines.append(f"     {issue.message}")
+                    if issue.suggestion:
+                        lines.append(f"     建议: {issue.suggestion}")
+
+        # 汇总
+        lines.append("\n" + "=" * 60)
+        lines.append("汇总")
+        lines.append("=" * 60)
+        lines.append(f"检查文件数: {len(results)}")
+        lines.append(f"总问题数: {total_issues}")
+        lines.append(f"  - 错误: {error_count}")
+        lines.append(f"  - 警告: {warning_count}")
+        lines.append(f"  - 信息: {info_count}")
+
+        valid_files = sum(1 for r in results if r.is_valid)
+        lines.append(f"合规文件数: {valid_files}/{len(results)}")
+
+        return "\n".join(lines)
+
+    @staticmethod
+    def generate_json_report(results: List[ValidationResult]) -> Dict:
+        """生成 JSON 报告"""
+        report = {
+            "summary": {
+                "total_files": len(results),
+                "valid_files": sum(1 for r in results if r.is_valid),
+                "total_issues": sum(len(r.issues) for r in results),
+                "errors": sum(1 for r in results for i in r.issues if i.severity == Severity.ERROR),
+                "warnings": sum(1 for r in results for i in r.issues if i.severity == Severity.WARNING),
+                "info": sum(1 for r in results for i in r.issues if i.severity == Severity.INFO)
+            },
+            "files": []
+        }
+
+        for result in results:
+            file_report = {
+                "path": result.file_path,
+                "is_valid": result.is_valid,
+                "issues": [
+                    {
+                        "line": issue.line,
+                        "column": issue.column,
+                        "severity": issue.severity.value,
+                        "rule_id": issue.rule_id,
+                        "message": issue.message,
+                        "suggestion": issue.suggestion
+                    }
+                    for issue in result.issues
+                ]
+            }
+            report["files"].append(file_report)
+
+        return report
+
+
+def select_folder_dialog(title: str = "选择要审查的文件夹") -> Optional[str]:
+    """
+    弹出文件夹选择对话框
+
+    Args:
+        title: 对话框标题
+
+    Returns:
+        选择的文件夹路径，如果取消则返回 None
+    """
+    if not HAS_TKINTER:
+        print("错误: 未安装 tkinter，无法显示文件夹选择对话框")
+        print("请使用命令行模式: python unity_json_validator.py --cli <路径>")
+        return None
+
+    # 创建隐藏的主窗口
+    root = tk.Tk()
+    root.withdraw()  # 隐藏主窗口
+
+    # 设置对话框在所有窗口之上
+    root.attributes('-topmost', True)
+
+    # 打开文件夹选择对话框
+    folder_path = filedialog.askdirectory(
+        title=title,
+        initialdir=os.getcwd()
+    )
+
+    root.destroy()
+
+    return folder_path if folder_path else None
+
+
+def select_file_dialog(title: str = "选择要审查的 JSON 文件",
+                       filetypes: List[Tuple[str, str]] = None) -> Optional[str]:
+    """
+    弹出文件选择对话框
+
+    Args:
+        title: 对话框标题
+        filetypes: 文件类型过滤器
+
+    Returns:
+        选择的文件路径，如果取消则返回 None
+    """
+    if not HAS_TKINTER:
+        print("错误: 未安装 tkinter，无法显示文件选择对话框")
+        print("请使用命令行模式: python unity_json_validator.py --cli <路径>")
+        return None
+
+    if filetypes is None:
+        filetypes = [
+            ("JSON 文件", "*.json"),
+            ("Asset 文件", "*.asset"),
+            ("所有文件", "*.*")
+        ]
+
+    # 创建隐藏的主窗口
+    root = tk.Tk()
+    root.withdraw()
+    root.attributes('-topmost', True)
+
+    # 打开文件选择对话框
+    file_path = filedialog.askopenfilename(
+        title=title,
+        filetypes=filetypes,
+        initialdir=os.getcwd()
+    )
+
+    root.destroy()
+
+    return file_path if file_path else None
+
+
+def show_mode_selection_dialog() -> Optional[str]:
+    """
+    显示模式选择对话框（文件夹或文件）
+
+    Returns:
+        选择的路径，如果取消则返回 None
+    """
+    if not HAS_TKINTER:
+        return select_folder_dialog()
+
+    # 创建选择窗口
+    root = tk.Tk()
+    root.title("Unity JSON 审查工具")
+    root.geometry("400x200")
+    root.resizable(False, False)
+
+    # 居中显示
+    root.update_idletasks()
+    width = root.winfo_width()
+    height = root.winfo_height()
+    x = (root.winfo_screenwidth() // 2) - (width // 2)
+    y = (root.winfo_screenheight() // 2) - (height // 2)
+    root.geometry(f'{width}x{height}+{x}+{y}')
+
+    result = {"path": None}
+
+    # 标题
+    title_label = tk.Label(
+        root,
+        text="Unity JSON 文件合规性审查工具",
+        font=("Arial", 14, "bold")
+    )
+    title_label.pack(pady=20)
+
+    # 说明文字
+    info_label = tk.Label(
+        root,
+        text="请选择要审查的目标类型：",
+        font=("Arial", 10)
+    )
+    info_label.pack(pady=10)
+
+    # 按钮框架
+    button_frame = tk.Frame(root)
+    button_frame.pack(pady=20)
+
+    def on_select_folder():
+        root.destroy()
+        result["path"] = select_folder_dialog()
+
+    def on_select_file():
+        root.destroy()
+        result["path"] = select_file_dialog()
+
+    def on_cancel():
+        root.destroy()
+
+    # 文件夹按钮
+    folder_btn = tk.Button(
+        button_frame,
+        text="📁 选择文件夹",
+        font=("Arial", 11),
+        width=15,
+        height=2,
+        command=on_select_folder
+    )
+    folder_btn.pack(side=tk.LEFT, padx=10)
+
+    # 文件按钮
+    file_btn = tk.Button(
+        button_frame,
+        text="📄 选择文件",
+        font=("Arial", 11),
+        width=15,
+        height=2,
+        command=on_select_file
+    )
+    file_btn.pack(side=tk.LEFT, padx=10)
+
+    # 取消按钮
+    cancel_btn = tk.Button(
+        root,
+        text="取消",
+        font=("Arial", 10),
+        width=10,
+        command=on_cancel
+    )
+    cancel_btn.pack(pady=10)
+
+    root.mainloop()
+
+    return result["path"]
+
+
+def run_with_gui():
+    """使用图形界面运行"""
+    # 显示模式选择对话框
+    selected_path = show_mode_selection_dialog()
+
+    if not selected_path:
+        print("已取消选择")
+        return
+
+    print(f"\n已选择路径: {selected_path}")
+    print("正在扫描 JSON 文件...\n")
+
+    # 创建验证器
+    validator = UnityJsonValidator(selected_path)
+
+    # 执行验证
+    if Path(selected_path).is_file():
+        results = [validator.validate_file(selected_path)]
+    else:
+        results = validator.validate_directory(selected_path)
+
+    # 输出控制台报告
+    print(ReportGenerator.generate_console_report(results))
+
+    # 询问是否保存报告
+    if HAS_TKINTER and results:
+        root = tk.Tk()
+        root.withdraw()
+        root.attributes('-topmost', True)
+
+        save_report = tk.messagebox.askyesno(
+            "保存报告",
+            "是否将审查报告保存为 JSON 文件？"
+        )
+
+        if save_report:
+            report_path = filedialog.asksaveasfilename(
+                title="保存审查报告",
+                defaultextension=".json",
+                filetypes=[("JSON 文件", "*.json")],
+                initialfile="validation_report.json"
+            )
+
+            if report_path:
+                json_report = ReportGenerator.generate_json_report(results)
+                with open(report_path, 'w', encoding='utf-8') as f:
+                    json.dump(json_report, f, ensure_ascii=False, indent=2)
+                print(f"\nJSON 报告已保存到: {report_path}")
+
+        root.destroy()
+
+    # 返回退出码
+    has_errors = any(not r.is_valid for r in results)
+    sys.exit(1 if has_errors else 0)
+
+
+def run_with_cli(args):
+    """使用命令行模式运行"""
+    # 创建验证器
+    validator = UnityJsonValidator(args.project_root or args.path)
+
+    # 执行验证
+    if Path(args.path).is_file():
+        results = [validator.validate_file(args.path)]
+    else:
+        results = validator.validate_directory(args.path, tuple(args.extensions))
+
+    # 输出控制台报告
+    print(ReportGenerator.generate_console_report(results))
+
+    # 生成 JSON 报告
+    if args.report:
+        json_report = ReportGenerator.generate_json_report(results)
+        with open(args.report, 'w', encoding='utf-8') as f:
+            json.dump(json_report, f, ensure_ascii=False, indent=2)
+        print(f"\nJSON 报告已保存到: {args.report}")
+
+    # 返回退出码
+    has_errors = any(not r.is_valid for r in results)
+    sys.exit(1 if has_errors else 0)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='Unity JSON 文件合规性审查工具',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+使用模式:
+  1. 图形界面模式 (默认):
+     python unity_json_validator.py
+
+  2. 命令行模式:
+     python unity_json_validator.py --cli <路径>
+     python unity_json_validator.py --cli /path/to/project --report report.json
+
+示例:
+  %(prog)s                              # 弹出文件夹选择对话框
+  %(prog)s --cli /path/to/project       # 命令行模式审查目录
+  %(prog)s --cli /path/to/file.json     # 命令行模式审查单个文件
+
+规则说明:
+  FORMAT001-006: 基础格式验证
+  UNITY001-005: Unity 特定规范
+  IO001-002: 文件读写错误
+        """
+    )
+
+    parser.add_argument('path', nargs='?', help='要验证的文件或目录路径')
+    parser.add_argument('--cli', action='store_true',
+                       help='使用命令行模式（不弹出选择对话框）')
+    parser.add_argument('--report', '-r', help='生成 JSON 报告到指定文件')
+    parser.add_argument('--extensions', '-e', nargs='+',
+                       default=['.json', '.asset'],
+                       help='要检查的文件扩展名 (默认: .json .asset)')
+    parser.add_argument('--project-root', '-p',
+                       help='Unity 项目根目录 (用于检查引用路径)')
+
+    args = parser.parse_args()
+
+    # 如果指定了 --cli 模式或提供了路径参数，使用命令行模式
+    if args.cli or args.path:
+        if not args.path:
+            print("错误: 命令行模式需要指定路径")
+            print("用法: python unity_json_validator.py --cli <路径>")
+            sys.exit(1)
+        run_with_cli(args)
+    else:
+        # 默认使用图形界面模式
+        run_with_gui()
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,233 @@
+using FairyGUI;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace DayZ
+{
+    /// <summary>
+    /// 英雄列表界面控制器 - 处理界面逻辑和数据交互
+    /// 生命周期: Awake → OnEnable → Init → Open → Start
+    /// </summary>
+    public class HeroListController : PopupBaseView
+    {
+        #region Constants
+        private const string PACKAGE_NAME = "601_NewHero";
+        private const string COMPONENT_NAME = "HeroList";
+        private const string DEFAULT_TITLE = "英雄列表";
+        #endregion
+
+        #region Serialized Fields
+        [Header("UI Settings")]
+        [SerializeField] private string _packageName = PACKAGE_NAME;
+        [SerializeField] private string _componentName = COMPONENT_NAME;
+        [SerializeField] private bool _showLegionButton = false;
+        #endregion
+
+        #region Private Fields
+        private HeroListBinder _binder;
+        private readonly List<HeroListData> _heroDataCache = new List<HeroListData>();
+        private bool _isInitialized = false;
+        #endregion
+
+        #region Properties
+        public HeroListBinder Binder => _binder;
+        #endregion
+
+        #region Events
+        public event System.Action<HeroListData> OnHeroSelected;
+        public event System.Action OnRecruitClicked;
+        public event System.Action OnLegionClicked;
+        #endregion
+
+        #region Lifecycle - Override PopupBaseView
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+        }
+
+        /// <summary>
+        /// 获取FairyGUI组件和注册监听事件
+        /// 在Start中调用，不要在Awake或OnEnable中调用
+        /// </summary>
+        public override void InitializeFairyComponents()
+        {
+            base.InitializeFairyComponents();
+
+            if (_mainView == null) return;
+
+            // 获取绑定器
+            _binder = _mainView as HeroListBinder;
+            if (_binder == null)
+            {
+                Debug.LogWarning("[HeroListController] HeroListBinder not found");
+            }
+
+            BindEvents();
+            InitializeButtonStates();
+        }
+
+        /// <summary>
+        /// 解析外部传进来的参数
+        /// </summary>
+        public override void Init(params object[] data)
+        {
+            base.Init(data);
+
+            // 解析参数
+            if (data != null && data.Length > 0)
+            {
+                // 示例：接收标题参数
+                if (data[0] is string title)
+                {
+                    setTitleName(title);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 界面打开时的逻辑
+        /// </summary>
+        public override void Open()
+        {
+            base.Open();
+
+            // 刷新数据
+            RequestHeroList();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            _isInitialized = true;
+        }
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// 刷新英雄列表
+        /// </summary>
+        public void RefreshHeroList(List<HeroListData> heroList)
+        {
+            if (_binder == null) return;
+
+            _heroDataCache.Clear();
+            if (heroList != null)
+            {
+                _heroDataCache.AddRange(heroList);
+            }
+
+            _binder.RefreshHeroList(_heroDataCache);
+        }
+
+        /// <summary>
+        /// 选中指定英雄
+        /// </summary>
+        public void SelectHero(long heroId)
+        {
+            _binder?.SelectHero(heroId);
+        }
+
+        /// <summary>
+        /// 更新单个英雄数据
+        /// </summary>
+        public void UpdateHero(HeroListData heroData)
+        {
+            _binder?.UpdateHero(heroData);
+        }
+
+        /// <summary>
+        /// 设置招募按钮可见性
+        /// </summary>
+        public void SetRecruitButtonVisible(bool visible)
+        {
+            _binder?.SetRecruitButtonVisible(visible);
+        }
+
+        /// <summary>
+        /// 设置军团按钮可见性
+        /// </summary>
+        public void SetLegionButtonVisible(bool visible)
+        {
+            _binder?.SetLegionButtonVisible(visible);
+        }
+        #endregion
+
+        #region Private Methods
+        private void BindEvents()
+        {
+            if (_binder == null) return;
+
+            _binder.OnHeroItemSelected += HandleHeroSelected;
+            _binder.OnRecruitButtonClick += HandleRecruitClick;
+            _binder.OnLegionButtonClick += HandleLegionClick;
+        }
+
+        private void UnbindEvents()
+        {
+            if (_binder == null) return;
+
+            _binder.OnHeroItemSelected -= HandleHeroSelected;
+            _binder.OnRecruitButtonClick -= HandleRecruitClick;
+            _binder.OnLegionButtonClick -= HandleLegionClick;
+        }
+
+        private void InitializeButtonStates()
+        {
+            if (_binder != null)
+            {
+                _binder.SetLegionButtonVisible(_showLegionButton);
+            }
+        }
+
+        /// <summary>
+        /// 请求英雄列表数据
+        /// </summary>
+        private void RequestHeroList()
+        {
+            // TODO: 调用数据层获取英雄列表
+            // 示例：HeroDataManager.Instance.GetHeroList(OnHeroListReceived);
+        }
+        #endregion
+
+        #region Event Handlers
+        private void HandleHeroSelected(HeroListData heroData)
+        {
+            if (heroData == null) return;
+            OnHeroSelected?.Invoke(heroData);
+        }
+
+        private void HandleRecruitClick()
+        {
+            OnRecruitClicked?.Invoke();
+        }
+
+        private void HandleLegionClick()
+        {
+            OnLegionClicked?.Invoke();
+        }
+        #endregion
+
+        #region Static Factory Methods
+        /// <summary>
+        /// 创建英雄列表界面实例
+        /// 通过 PopupViewController 创建
+        /// </summary>
+        public static HeroListController Create()
+        {
+            var go = new GameObject("HeroListController");
+            var controller = go.AddComponent<HeroListController>();
+            return controller;
+        }
+        #endregion
+    }
+}
