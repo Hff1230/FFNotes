@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/Shader学习/Unity ShaderGraph 使用指南.md",
+                "file": "JoyMeng Note/日记 2026-08-28.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "Unity ShaderGraph 使用指南"
+              "title": "日记 2026-08-28"
             }
           }
         ]
@@ -178,8 +178,9 @@
   },
   "active": "07fdc19340405d49",
   "lastOpenFiles": [
-    "Unity/Shader学习/Shader收藏/yingzi_shadow.md",
     "Unity/Shader学习/Unity ShaderGraph 使用指南.md",
+    "JoyMeng Note/日记 2026-08-28.md",
+    "Unity/Shader学习/Shader收藏/yingzi_shadow.md",
     "Unity/Shader学习/Unity提供的内置文件和变量.md",
     "Unity/Shader学习/Cg中的矢量和矩阵类型.md",
     "Unity/Shader学习/Unity内置的摄像机和屏幕参数.md",
@@ -206,7 +207,6 @@
     "JoyMeng Note/日记 2026-06-05.md",
     "Unity/帝国、红警2/RedAlert/异常账号修复.md",
     "附件仓库/杂项仓库/Pasted image 20260608101228.png",
-    "Unity/A开发笔记/帝国及红警2相关配置说明.md",
     "AI Cube/分数变小数H5展示.html",
     "AI Cube/池塘修路问题H5展示.html",
     "AI Cube/小学栅栏问题H5展示.html",
