@@ -182,5 +182,6 @@
   "Claude": "IcAFolder",
   "Claude/settings.json.md": "IcAFile",
   "AI库/DeepSeek": "IcAFolder",
-  "AI库/DeepSeek/Harness安装.md": "IcAFile"
+  "AI库/DeepSeek/Harness安装.md": "IcAFile",
+  "AI库/Skill": "IcAFolder"
 }
