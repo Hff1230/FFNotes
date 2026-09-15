@@ -36,15 +36,15 @@
         "useFilePath": true
       },
       {
-        "rule": "File",
-        "icon": "FabAFile",
-        "for": "everything",
+        "rule": ".",
+        "icon": "IcAFile",
+        "for": "files",
         "order": 3
       },
       {
-        "rule": "Folder",
-        "icon": "FabAFolder",
-        "for": "everything",
+        "rule": ".",
+        "icon": "IcAFolder",
+        "for": "folders",
         "order": 4
       }
     ],

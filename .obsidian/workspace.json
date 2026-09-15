@@ -4,22 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "7c7af366fc24c1e7",
+        "id": "16e2d496bda30727",
         "type": "tabs",
         "children": [
           {
-            "id": "8e65011be5aa96db",
+            "id": "3f630a9bd7f4e0dc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Unity/帝国、红警2/RedAlert/RedAlert 资源审计 - 模型与材质优化建议.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "RedAlert 资源审计 - 模型与材质优化建议"
+              "title": "新标签页"
             }
           }
         ]
@@ -176,11 +171,14 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "8e65011be5aa96db",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
+    "Unity/帝国、红警2/RedAlert/ZZ新建测试文件夹/里面的笔记.md",
+    "Unity/帝国、红警2/RedAlert/ZZ新建测试文件夹",
+    "Unity/帝国、红警2/RedAlert/ZZ新建测试笔记.md",
+    "Unity/帝国、红警2/RedAlert/RedAlert 资源审计 - 模型与材质优化建议.md",
     "Unity/帝国、红警2/RedAlert/RedAlert 减面优先级与材质合批建议.md",
     "Unity/A开发笔记/SLG 项目性能优化.md",
-    "Unity/帝国、红警2/RedAlert/RedAlert 资源审计 - 模型与材质优化建议.md",
     "Unity/A开发笔记/未命名.md",
     "Unity/A开发笔记/未命名 1.md",
     "JoyMeng Note/日记 2026-09-11.md",
@@ -210,12 +208,9 @@
     "AI库/DeepSeek",
     "JoyMeng Note/日记 2026-08-07.md",
     "JoyMeng Note/日记 2026-07-31.md",
-    "JoyMeng Note/日记 2026-07-24.md",
-    "JoyMeng Note/日记 2026-07-17.md",
     "附件仓库/杂项仓库/Pasted image 20260608101228.png",
     "AI Cube/分数变小数H5展示.html",
     "AI Cube/池塘修路问题H5展示.html",
-    "AI Cube/小学栅栏问题H5展示.html",
     "Unity/帝国、红警2/RedAlert/0画布.canvas",
     "AI库/小游戏/桐城自摸麻将/麻将大图.jpg",
     "AI库/小游戏/桐城自摸麻将/Images/tiao8.png",
