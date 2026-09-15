@@ -159,7 +159,6 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "iconic:打开规则书": false,
       "bases:新建数据库": false,
       "obsidian-git:Open Git source control": false,
       "switcher:打开快速切换": false,
@@ -171,8 +170,11 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "a15cc7476493b87c",
+  "active": "3f630a9bd7f4e0dc",
   "lastOpenFiles": [
+    "Unity/帝国、红警2/RedAlert/ZZURI测试A.md",
+    "Unity/帝国、红警2/RedAlert/ZZURI测试文件夹",
+    "ZZURI测试笔记.md",
     "Unity/帝国、红警2/RedAlert/ZZ新建测试文件夹/里面的笔记.md",
     "Unity/帝国、红警2/RedAlert/ZZ新建测试文件夹",
     "Unity/帝国、红警2/RedAlert/ZZ新建测试笔记.md",
@@ -204,13 +206,9 @@
     "分享/research-report-2026-01-05 (2).md",
     "分享/research-report-2026-01-05 (1).md",
     "SKILL.md",
-    "JoyMeng Note/日记 2026-08-14.md",
     "AI库/DeepSeek",
-    "JoyMeng Note/日记 2026-08-07.md",
-    "JoyMeng Note/日记 2026-07-31.md",
     "附件仓库/杂项仓库/Pasted image 20260608101228.png",
     "AI Cube/分数变小数H5展示.html",
-    "AI Cube/池塘修路问题H5展示.html",
     "Unity/帝国、红警2/RedAlert/0画布.canvas",
     "AI库/小游戏/桐城自摸麻将/麻将大图.jpg",
     "AI库/小游戏/桐城自摸麻将/Images/tiao8.png",
