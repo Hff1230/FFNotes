@@ -88,10 +88,10 @@
 
 **· 2.6 动画导入设置不统一**
 
-| 设置 | 分布 |
-|---|---|
-| `animationCompression` | Optimal(3) 1 128 / **Keyframe Reduction(1) 698** / Off 2 |
-| `animationType` | Humanoid(3) 1 063 / Generic(2) 490 / None(0) 264 / Legacy(1) 11 |
+| 设置                     | 分布                                                              |
+| ---------------------- | --------------------------------------------------------------- |
+| `animationCompression` | Optimal(3) 1 128 / **Keyframe Reduction(1) 698** / Off 2        |
+| `animationType`        | Humanoid(3) 1 063 / Generic(2) 490 / None(0) 264 / Legacy(1) 11 |
 
 **建议**：① 全部提到 **Optimal**；② 纯动作 FBX（`Standby/Death/Run/Skill/Atk_*`）绝大多数不需要 Humanoid 重定向，改 **Generic** 可省 Avatar 构建与采样开销——**需先在真机确认没有依赖 Humanoid 重定向的复用**（例如同一套动画喂不同模型）。
 

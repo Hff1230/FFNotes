@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/帝国、红警2/RedAlert/RedAlert 减面优先级与材质合批建议.md",
+                "file": "Unity/帝国、红警2/RedAlert/RedAlert 资源审计 - 模型与材质优化建议.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "RedAlert 减面优先级与材质合批建议"
+              "title": "RedAlert 资源审计 - 模型与材质优化建议"
             }
           }
         ]
@@ -178,8 +178,8 @@
   },
   "active": "8e65011be5aa96db",
   "lastOpenFiles": [
-    "Unity/A开发笔记/SLG 项目性能优化.md",
     "Unity/帝国、红警2/RedAlert/RedAlert 减面优先级与材质合批建议.md",
+    "Unity/A开发笔记/SLG 项目性能优化.md",
     "Unity/帝国、红警2/RedAlert/RedAlert 资源审计 - 模型与材质优化建议.md",
     "Unity/A开发笔记/未命名.md",
     "Unity/A开发笔记/未命名 1.md",
