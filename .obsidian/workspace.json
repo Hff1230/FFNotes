@@ -4,22 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "16e2d496bda30727",
+        "id": "f0119e9bea467143",
         "type": "tabs",
         "children": [
           {
-            "id": "3f630a9bd7f4e0dc",
+            "id": "1786ea3a94465623",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/帝国、红警2/RedAlert/指引模块.md",
+                "file": "Unity/帝国、红警2/RedAlert/活动模块.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "指引模块"
+              "title": "活动模块"
             }
           }
         ]
@@ -175,10 +175,16 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "3f630a9bd7f4e0dc",
+  "active": "1786ea3a94465623",
   "lastOpenFiles": [
-    "Unity/帝国、红警2/RedAlert/异常账号修复.md",
     "Unity/帝国、红警2/RedAlert/指引模块.md",
+    "Unity/帝国、红警2/RedAlert/商城计费模块.md",
+    "Unity/帝国、红警2/RedAlert/活动模块.md",
+    "Unity/帝国、红警2/RedAlert/异常账号修复.md",
+    "Unity/帝国、红警2/RedAlert/日常记录.md",
+    "Unity/帝国、红警2/RedAlert/主城.md",
+    "Unity/帝国、红警2/RedAlert/大地图.md",
+    "Unity/帝国、红警2/RedAlert/0画布.canvas",
     "Unity/A开发笔记/SLG 项目性能优化.md",
     "Unity/帝国、红警2/RedAlert/ZZURI测试A.md",
     "Unity/帝国、红警2/RedAlert/ZZURI测试文件夹",
@@ -206,16 +212,10 @@
     "Unity/Shader学习/Unity ShaderGraph 使用指南.md",
     "Unity/Shader学习/Shader收藏/yingzi_shadow.md",
     "Unity/Shader学习/Unity提供的内置文件和变量.md",
-    "Unity/Shader学习/Cg中的矢量和矩阵类型.md",
-    "Unity/Shader学习/Unity内置的摄像机和屏幕参数.md",
-    "Unity/Shader学习/Unity内置的变换矩阵.md",
     "未命名.canvas",
-    "分享/research-report-2026-01-05 (2).md",
-    "分享/research-report-2026-01-05 (1).md",
     "AI库/DeepSeek",
     "附件仓库/杂项仓库/Pasted image 20260608101228.png",
     "AI Cube/分数变小数H5展示.html",
-    "Unity/帝国、红警2/RedAlert/0画布.canvas",
     "AI库/小游戏/桐城自摸麻将/麻将大图.jpg",
     "AI库/小游戏/桐城自摸麻将/Images/tiao8.png",
     "AI库/工具与环境/Claude工具安装流程by雷神/添加代理商-Qwen3.5.png",
