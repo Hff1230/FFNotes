@@ -11,10 +11,15 @@
             "id": "3f630a9bd7f4e0dc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Unity/A开发笔记/SLG 项目性能优化.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "SLG 项目性能优化"
             }
           }
         ]
@@ -170,7 +175,7 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "3f630a9bd7f4e0dc",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
     "Unity/帝国、红警2/RedAlert/ZZURI测试A.md",
     "Unity/帝国、红警2/RedAlert/ZZURI测试文件夹",
