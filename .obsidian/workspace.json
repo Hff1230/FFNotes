@@ -98,8 +98,8 @@
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
               },
-              "icon": "links-coming-in",
-              "title": "反向链接"
+              "icon": "lucide-ghost",
+              "title": "backlink"
             }
           },
           {
