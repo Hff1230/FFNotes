@@ -4,22 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "f0119e9bea467143",
+        "id": "28c4e93f04800eb7",
         "type": "tabs",
         "children": [
           {
-            "id": "1786ea3a94465623",
+            "id": "befe274500d29f10",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Unity/帝国、红警2/RedAlert/活动模块.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "活动模块"
+              "title": "新标签页"
             }
           }
         ]
@@ -42,9 +37,7 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "byModifiedTime",
-                "autoReveal": false,
-                "showSearch": false,
-                "searchQuery": ""
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -81,7 +74,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 347.5
+    "width": 300
   },
   "right": {
     "id": "b38a42c2768a463b",
@@ -91,6 +84,24 @@
         "id": "2eeda92704bcd6b3",
         "type": "tabs",
         "children": [
+          {
+            "id": "529f9b6f15ff7a63",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "反向链接"
+            }
+          },
           {
             "id": "83d975617de6e366",
             "type": "leaf",
@@ -125,13 +136,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "AI库/DeepSeek/Harness安装.md",
+                "file": "AI库/小游戏/坦克1999/坦克大战1999策划案.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大纲"
+              "title": "坦克大战1999策划案 的大纲"
             }
           },
           {
@@ -143,93 +154,82 @@
               "icon": "git-pull-request",
               "title": "Source Control"
             }
-          },
-          {
-            "id": "c1b75725ceeb7d18",
-            "type": "leaf",
-            "state": {
-              "type": "claudian-view",
-              "state": {},
-              "icon": "bot",
-              "title": "Claudian"
-            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 275.5,
+    "width": 200,
     "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
       "bases:新建数据库": false,
-      "obsidian-git:Open Git source control": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
       "canvas:新建白板": false,
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
-      "claudian:Open Claudian": false
+      "obsidian-git:Open Git source control": false
     }
   },
-  "active": "1786ea3a94465623",
+  "active": "a15cc7476493b87c",
   "lastOpenFiles": [
-    "Unity/帝国、红警2/RedAlert/指引模块.md",
-    "Unity/帝国、红警2/RedAlert/商城计费模块.md",
+    "附件仓库/杂项仓库/Pasted image 20260608101228.png",
+    "迷你传奇/������Ϸ.bat",
+    "迷你传奇/������.exe",
+    "迷你传奇/abbe.bak",
+    "Unity/资料/AssetRipper.GUI.Premium.zip",
+    "Unity/资料",
     "Unity/帝国、红警2/RedAlert/活动模块.md",
+    "Unity/帝国、红警2/RedAlert/指引模块.md",
     "Unity/帝国、红警2/RedAlert/异常账号修复.md",
-    "Unity/帝国、红警2/RedAlert/日常记录.md",
-    "Unity/帝国、红警2/RedAlert/主城.md",
-    "Unity/帝国、红警2/RedAlert/大地图.md",
-    "Unity/帝国、红警2/RedAlert/0画布.canvas",
-    "Unity/A开发笔记/SLG 项目性能优化.md",
-    "Unity/帝国、红警2/RedAlert/ZZURI测试A.md",
-    "Unity/帝国、红警2/RedAlert/ZZURI测试文件夹",
-    "ZZURI测试笔记.md",
-    "Unity/帝国、红警2/RedAlert/ZZ新建测试文件夹/里面的笔记.md",
-    "Unity/帝国、红警2/RedAlert/ZZ新建测试文件夹",
-    "Unity/帝国、红警2/RedAlert/ZZ新建测试笔记.md",
+    "Unity/帝国、红警2/RedAlert/商城计费模块.md",
     "Unity/帝国、红警2/RedAlert/RedAlert 资源审计 - 模型与材质优化建议.md",
     "Unity/帝国、红警2/RedAlert/RedAlert 减面优先级与材质合批建议.md",
-    "Unity/A开发笔记/未命名.md",
-    "Unity/A开发笔记/未命名 1.md",
-    "JoyMeng Note/日记 2026-09-11.md",
-    "JoyMeng Note/日记 2026-09-04.md",
-    "AI库/DeepSeek/Harness安装.md",
-    "AI库/key.md",
-    "AI库/Skill/code-analyze.zip",
-    "AI库/Skill/skills.zip",
-    "AI库/Skill/xsearch.zip",
-    "AI库/Skill/Skills/reademe.md",
-    "AI库/Skill/Skills/link.cmd",
-    "AI库/Skill/Skills/link-skill-dir.bat",
-    "AI库/Skill/Skills",
-    "JoyMeng Note/日记 2026-08-28.md",
-    "JoyMeng Note/日记 2026-08-21.md",
     "Unity/Shader学习/Unity ShaderGraph 使用指南.md",
-    "Unity/Shader学习/Shader收藏/yingzi_shadow.md",
-    "Unity/Shader学习/Unity提供的内置文件和变量.md",
+    "Unity/A开发笔记/张启凡交接文件/Kingshot/shop/商店交接文档.md",
+    "Unity/A开发笔记/张启凡交接文件/Kingshot/Workbench/Workbench系统交接文档.md",
+    "Unity/A开发笔记/张启凡交接文件/Kingshot/BlackMarket/架构概览.md",
+    "Unity/A开发笔记/张启凡交接文件/Kingshot/BlackMarket/BlackMarket交接文档.md",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/场景烘焙.md",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/粒子渲染顺序设置.md",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/伤害字体.md",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/Pasted image 20260324111413.png",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/Pasted image 20260323160447.png",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/Pasted image 20260323160301.png",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/Pasted image 20260323160015.png",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/Pasted image 20260323155448.png",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/Pasted image 20260323155324.png",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/Pasted image 20260323154741.png",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/Pasted image 20260323154629.png",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/Pasted image 20260323154345.png",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/Pasted image 20260323154247.png",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/LastWar交接文档.md",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar/GPUAnimation交接文档.md",
+    "Unity/A开发笔记/张启凡交接文件/Kingshot/Workbench",
+    "Unity/A开发笔记/张启凡交接文件/Kingshot/shop",
+    "Unity/A开发笔记/张启凡交接文件/Kingshot/BlackMarket",
+    "Unity/A开发笔记/张启凡交接文件/Lastwar",
+    "Unity/A开发笔记/张启凡交接文件/Kingshot",
+    "AI库/小游戏/桐城自摸麻将/node_modules/ws/README.md",
+    "AI库/小游戏/桐城自摸麻将/node_modules/undefsafe/README.md",
+    "AI库/小游戏/桐城自摸麻将/node_modules/touch/README.md",
+    "AI库/小游戏/桐城自摸麻将/node_modules/to-regex-range/README.md",
+    "AI库/小游戏/桐城自摸麻将/node_modules/supports-color/readme.md",
+    "AI库/小游戏/桐城自摸麻将/node_modules/simple-update-notifier/README.md",
+    "AI库/小游戏/桐城自摸麻将/node_modules/semver/README.md",
+    "AI库/小游戏/桐城自摸麻将/node_modules/readdirp/README.md",
+    "AI库/小游戏/桐城自摸麻将/node_modules/pstree.remy/README.md",
     "未命名.canvas",
-    "AI库/DeepSeek",
-    "附件仓库/杂项仓库/Pasted image 20260608101228.png",
-    "AI Cube/分数变小数H5展示.html",
-    "AI库/小游戏/桐城自摸麻将/麻将大图.jpg",
-    "AI库/小游戏/桐城自摸麻将/Images/tiao8.png",
-    "AI库/工具与环境/Claude工具安装流程by雷神/添加代理商-Qwen3.5.png",
-    "AI库/工具与环境/Claude工具安装流程by雷神/添加代理商-GLM5.0.png",
-    "AI库/工具与环境/Claude工具安装流程by雷神/添加环境变量.png",
-    "AI库/工具与环境/Claude工具安装流程by雷神/git/1.png",
-    "AI库/工具与环境/Claude工具安装流程by雷神/git/3.png",
-    "AI库/工具与环境/Claude工具安装流程by雷神/git/0.png",
-    "AI库/工具与环境/Claude工具安装流程by雷神/git/7.png",
     "未命名 4.canvas",
     "未命名 5.canvas",
     "未命名 3.canvas",
     "未命名 2.canvas",
     "未命名 1.canvas",
+    "Unity/帝国、红警2/RedAlert/0画布.canvas",
     "Unity/A开发笔记/张老师文档交接/交接文档.canvas",
     "Unity/未命名.canvas",
     "附件仓库/Untitled.canvas"
