@@ -64,17 +64,36 @@ def fm_tags(fm):
     return tags
 
 
+def _iter_skill_mds():
+    """遍历 SKILLS_DIR 下所有 SKILL.md。
+
+    ⚠ 不能用 Path.rglob —— 本机 skills/ 下的分类目录可能是**符号链接/junction**
+    （实测 `tools -> C:\\ai\\Skills\\tools`），而 rglob 不跟进链接，
+    导致 tools/ 下 14 个技能**一个都扫不到**（--list 缺项、--add 报「本机没有技能」）。
+    os.walk 默认跟随，且能正确列出链接指向的内容。
+    """
+    for dirpath, _dirnames, filenames in os.walk(SKILLS_DIR, followlinks=True):
+        if "SKILL.md" in filenames:
+            yield Path(dirpath) / "SKILL.md"
+
+
 def find_skill(name):
-    hits = [p for p in SKILLS_DIR.rglob("SKILL.md") if p.parent.name == name]
-    return hits[0] if hits else None
+    for p in _iter_skill_mds():
+        if p.parent.name == name:
+            return p
+    return None
 
 
 def all_skills():
     out = []
-    for p in SKILLS_DIR.rglob("SKILL.md"):
+    for p in _iter_skill_mds():
         if p.parent.name in ("skills",):
             continue
-        out.append((p.parent.name, str(p.relative_to(SKILLS_DIR))))
+        try:
+            rel = str(p.relative_to(SKILLS_DIR))
+        except ValueError:
+            rel = str(p)
+        out.append((p.parent.name, rel))
     return sorted(out)
 
 

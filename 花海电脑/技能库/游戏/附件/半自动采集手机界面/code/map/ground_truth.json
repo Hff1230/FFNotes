@@ -1,0 +1,67 @@
+{
+ "scenes": {
+  "hud": [
+   "hud_final2.png",
+   "hud_final.png",
+   "hud_now.png",
+   "hud_ref2.png",
+   "now2.png",
+   "after_bag_close.png",
+   "after_quest_close.png",
+   "after_team_close.png",
+   "after_market_close.png",
+   "after_order_close.png",
+   "S13_cargo.png",
+   "S15_quest_cargo.png",
+   "S16_quest2.png",
+   "S16b.png",
+   "S11_afk.png"
+  ],
+  "panel_banner": [
+   "hud_00_a.png",
+   "hud_00_b.png",
+   "hud_01_nopopup.png"
+  ],
+  "panel_lianjie": [
+   "hud_02_now.png"
+  ],
+  "panel_activity": [
+   "S12_activity.png"
+  ],
+  "panel_quest": [
+   "S17.png",
+   "S18_daily.png",
+   "S19_guild.png",
+   "S8_quest.png"
+  ],
+  "panel_bag": [
+   "S7_bag.png"
+  ],
+  "panel_team": [
+   "S9_team.png"
+  ],
+  "panel_market": [
+   "S10_market.png"
+  ],
+  "panel_order": [
+   "S14_order.png",
+   "S14b_order.png"
+  ],
+  "dialog_exit": [
+   "cancel_1s.png",
+   "cancel_3s.png",
+   "cancel_6s.png",
+   "real_01_after_cancel.png",
+   "bright_A_orig.png",
+   "bright_B_dark.png",
+   "bright_C_max.png"
+  ],
+  "panel_serverlist": [
+   "burst_0_serverlist.png"
+  ]
+ },
+ "screen_size": [
+  1600,
+  720
+ ]
+}
