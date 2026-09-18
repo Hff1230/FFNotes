@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Unity/帝国、红警2/RedAlert/活动模块.md",
+                "file": "Unity/帝国、红警2/RedAlert/指引模块.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "活动模块"
+              "title": "指引模块"
             }
           }
         ]
@@ -177,9 +177,9 @@
   },
   "active": "1786ea3a94465623",
   "lastOpenFiles": [
+    "Unity/帝国、红警2/RedAlert/活动模块.md",
     "Unity/帝国、红警2/RedAlert/指引模块.md",
     "Unity/帝国、红警2/RedAlert/商城计费模块.md",
-    "Unity/帝国、红警2/RedAlert/活动模块.md",
     "Unity/帝国、红警2/RedAlert/异常账号修复.md",
     "Unity/帝国、红警2/RedAlert/日常记录.md",
     "Unity/帝国、红警2/RedAlert/主城.md",

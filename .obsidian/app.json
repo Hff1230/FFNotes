@@ -4,5 +4,6 @@
   "newLinkFormat": "shortest",
   "promptDelete": false,
   "attachmentFolderPath": "附件仓库/杂项仓库",
-  "alwaysUpdateLinks": true
+  "alwaysUpdateLinks": true,
+  "readableLineLength": false
 }
