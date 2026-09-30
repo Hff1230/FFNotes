@@ -1,4 +1,4 @@
-[linux man手册](https://man7.org/linux/man-pages/man5/proc.5.html#NAME)
+[linux man手册](https://man7.org/linux/man-pages/man5/proc.5.html＃NAME)
 
 查看内存
 查看当前进程：
@@ -34,7 +34,7 @@ Dalvik Pss内存 = 私有内存Private Dirty + （共享内存Shared Dirty / 共
 TOTAL：上面全部条目的累加值，全局的展示了你的进程占用的内存情况。
 ViewRootImpl：应用进程里的活动窗口视图个数，可以用来监测对话框或者其他窗口的内存泄露。
 AppContexts及Activities：应用进程里Context和Activity的对象个数，可以用来监测Activity的内存泄露。
-[官方文档](https://developer.android.com/studio/command-line/dumpsys#ViewingAllocations)
+[官方文档](https://developer.android.com/studio/command-line/dumpsys＃ViewingAllocations)
 
 adb shell run-as 包名 cat /proc/pid/maps
 查看so虚拟内存大小

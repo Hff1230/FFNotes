@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 using DayZ.RedTip;
 
-  
-
 namespace DayZ
 
 {
@@ -20,8 +18,6 @@ namespace DayZ
         Number
 
     }
-
-  
 
     public enum RedTipRecordType
 
@@ -45,8 +41,6 @@ namespace DayZ
 
         private HashSet<string> LoginRecordKeys = new HashSet<string>();
 
-  
-
         public void Clear()
 
         {
@@ -55,17 +49,13 @@ namespace DayZ
 
         }
 
-  
-
-#if ROE_DEV
+＃if ROE_DEV
 
         public string DebugInfo()
 
         {
 
             var builder = new System.Text.StringBuilder();
-
-  
 
             foreach (var item in RedTipTreeNodes.Values)
 
@@ -77,15 +67,11 @@ namespace DayZ
 
             }
 
-  
-
             return builder.ToString();
 
         }
 
-#endif
-
-  
+＃endif
 
         public void Subscribe(string key, Action<int, RedTipStrategy> callback)
 
@@ -113,8 +99,6 @@ namespace DayZ
 
         }
 
-  
-
         public void Unsubscribe(string key, Action<int, RedTipStrategy> callback)
 
         {
@@ -131,8 +115,6 @@ namespace DayZ
 
         }
 
-  
-
         public void ParseData(CCDictionary dict)
 
         {
@@ -140,8 +122,6 @@ namespace DayZ
             if (dict == null)
 
                 return;
-
-  
 
             foreach (var item in dict)
 
@@ -152,8 +132,6 @@ namespace DayZ
             }
 
         }
-
-  
 
         public void ClearData(string key)
 
@@ -189,13 +167,11 @@ namespace DayZ
 
         }
 
-  
-
         public void ParseData(string key, int value)
 
         {
 
-#if UNITY_EDITOR || UNITY_IOS
+＃if UNITY_EDITOR || UNITY_IOS
 
             if (AccountSystemManager.Instance.LoginInfo.replaceInnerBuild)
 
@@ -205,7 +181,7 @@ namespace DayZ
 
             }
 
-#endif
+＃endif
 
             RedTipTreeNode node;
 
@@ -241,8 +217,6 @@ namespace DayZ
 
         }
 
-  
-
         public void ReadRecord(string key)
 
         {
@@ -275,8 +249,6 @@ namespace DayZ
 
         }
 
-  
-
         private void RecordKey(string key)
 
         {
@@ -286,8 +258,6 @@ namespace DayZ
                 Global.gGameTime.getElapseDays());
 
         }
-
-  
 
         public bool CheckKeyRecord(string key)
 
@@ -299,8 +269,6 @@ namespace DayZ
 
         }
 
-  
-
         public void OnUpdate()
 
         {
@@ -308,8 +276,6 @@ namespace DayZ
             DFS(rootNode);
 
         }
-
-  
 
         private void DFS(RedTipTreeNode node)
 
@@ -331,8 +297,6 @@ namespace DayZ
 
         }
 
-  
-
         protected override void Initialize()
 
         {
@@ -342,8 +306,6 @@ namespace DayZ
             this.CreateRedTipTree();
 
         }
-
-  
 
         private void CreateRedTipTree()
 
@@ -399,8 +361,6 @@ namespace DayZ
 
         }
 
-  
-
         private void BindParentChild(RedTipTreeNode parent, RedTipTreeNode child)
 
         {
@@ -418,8 +378,6 @@ namespace DayZ
             parent.Children.Add(child);
 
         }
-
-  
 
         public RedTipTreeNode GetRootNode()
 

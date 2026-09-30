@@ -1,12 +1,10 @@
 ![Unity中Animator Override的性能问题](https://pic1.zhimg.com/70/v2-14f9c19a9b85bfde68d0e2e591004987_1440w.image?source=172ae18b&biz_tag=Post)
 
-# Unity中Animator Override的性能问题
-
-
+**■ Unity中Animator Override的性能问题**
 
 学习是一个发现自己有多无知的过程
 
-## 前言
+**■ 前言**
 
 本文内容来自于Unity官方的**高川老师**的分享，视频内容链接如下（空降42:30即可）：
 
@@ -32,9 +30,7 @@
 
 不，不需要这么愚蠢的做法，AnimatorOverrideController可以帮助我们。
 
-  
-
-## AnimatorOverrideController
+**■ AnimatorOverrideController**
 
 官方文档：
 
@@ -52,9 +48,7 @@ AnimatorOverrideController
 
 也就是说AnimatorOverrideController可以在不改变AnimatorController里State，Layer，Transition和一些参数的情况下，更改State里的AnimatorClip。类似于类的继承，从Override这个词就能看出。
 
-  
-
-## 动态修改State里的AnimatorClip
+**■ 动态修改State里的AnimatorClip**
 
 AnimatorController是不支持我们在运行时修改State里的AnimatorClip的，但是利用AnimatorOverrideController的话，我们也可以实现运行时修改。
 
@@ -76,9 +70,7 @@ animator.runtimeAnimatorController = overrideController;
 
 如果我们项目里使用了Animator方案，那么一定会对Override的性能有一个深刻的了解。尤其是当State或者是Animatorclip的附加程度非常非常复杂的时候，例如一些动作游戏有上千个State，那么Override一定会成为一个性能优化上的热点。
 
-  
-
-## Demo
+**■ Demo**
 
 我们通过一个Demo来看下Override的问题，如下图我们场景中有一个角色：
 
@@ -134,8 +126,6 @@ public class NewBehaviourScript : MonoBehaviour
 
 ![动图封面](https://pic2.zhimg.com/v2-6d87ce5c13462543fdd3e6fcc5fa5b59_b.jpg)
 
-  
-
 可以发现，我们在代码里加了一个[Profiling.Profiler.BeginSample](https://link.zhihu.com/?target=https%3A//docs.unity3d.com/2020.2/Documentation/ScriptReference/Profiling.Profiler.BeginSample.html)和EndSample的方法，它们可以帮助我们**在Profiler里面打一个Tag**，更好的观察代码所消耗的性能。
 
 我们来看下Overrider这步一共花了多久，在Profiler里找到我们打的名为OverrideAnimator的Tag，如下图：
@@ -154,9 +144,7 @@ Face层复制黏贴State
 
 此时会发现，耗时从1ms变成了1.5ms。也就是说**在做Override操作的时候，消耗的性能会随着AnimatorController里State数量的增加而增加，即是我们并不去使用它们。这个问题就是Override存在的性能热点。**
 
-  
-
-## 问题的本质
+**■ 问题的本质**
 
 在Profiler里的Override下我们可以发现一个相当长的时间，但是无法看见更详细的信息，只能在后面看见一个SetupControllerDataSet的信息。如下图：
 
@@ -164,9 +152,7 @@ Face层复制黏贴State
 
 这里，高川老师在分享里，为我们揭开了它的神秘面纱。即在这些时间里**Unity会尝试把AnimatorController里所有的State合并到一个名为 Animationset 的数据结构中**。这意味着所有的AnimationClip再乘上所有Clip里所用的曲线都要经过一系列的运算。因此我们的State和AnimationClip越多越复杂，这个运算的耗时也会增加，导致性能问题。
 
-  
-
-## AnimationClip's Curve
+**■ AnimationClip's Curve**
 
 前面提到了AnimationClip的曲线，这是啥呢？我们来随便挑一个AnimationClip看一看它的Inspector界面，如下图：
 
@@ -180,9 +166,7 @@ Face层复制黏贴State
 
 总结来说，曲线数和Override时的耗能大致上是一个**线性关系**，即运算越多，消耗越多。当我们的State越多，曲线越复杂，不管是否参与到运行时的最终表现中，它都是会在Override的时候产生性能消耗，并且每次Override的时候都会重复一次**CreateAnimationSet**操作。
 
-  
-
-## 优化
+**■ 优化**
 
 1.尽量**减少基础状态机（要被继承的AnimatorController）的复杂程度**，尽量少的在基础状态机里使用很复杂的动画，可以在里面尽量多的使用空AnimationClip（前面的dummy动画），因为反正它们是要被继承重写的。
 
@@ -201,4 +185,3 @@ Face层复制黏贴State
 3.使用**Timeline**系统。Animator设计上把整个Controller看做是一个整体，在运行时所有的操作，例如任何一次Override，任何一次修改，都是对整体数据集的修改，非常的庞大。Unity在做Timeline的时候避免了这个问题，它是基于每个Clip去修改的，因此Timeline整体的性能消耗会更平缓一些，是更加灵活更加好的选择。
 
 4.花钱消灾，官方定制方案。利用到了JobSystem多线程等。
-

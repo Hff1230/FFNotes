@@ -20,7 +20,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-VAULT = Path(os.environ.get("FFNOTES_VAULT", r"C:\FFH\FFNotes"))
+VAULT = Path(os.environ.get("FFNOTES_VAULT", r"F:\HFF\Obsidian\FFNotes"))
 ROOT = Path(os.environ.get("FFNOTES_SKILLROOT", VAULT / "花海电脑"))
 LIB = ROOT / "技能库"
 TOOLS = ROOT / "_工具"
@@ -31,6 +31,50 @@ INDEX = ROOT / "00-技能库索引.md"
 
 # 分类目录固定名单：新技能归到这几类里，避免文件夹越建越乱
 CATEGORIES = ["游戏", "办公文档", "设计创作", "自动化运维", "开发编码", "研究学习", "其他"]
+
+# ---- 去 # 处理（库规矩：# 会占用 Obsidian 的快捷键，笔记里一律不留半角 #）----
+HEADING_RE = re.compile(r"^\s{0,3}(#{1,6})\s+(.*?)\s*$")
+TABLE_NUM_RE = re.compile(r"^\|(\s*)#(\s*)\|")
+FENCE_RE = re.compile(r"^\s*(```+|~~~+)")
+FULL_HASH = "\uff03"                      # 全角 ＃
+HEAD_PREFIX = {1: "■ ", 2: "■ ", 3: "▍ ", 4: "· ", 5: "· ", 6: "· "}
+
+
+def sanitize_md(text):
+    """消掉所有半角 #（含正文/表格/行内代码/代码块）：
+       行首标题  ->  **■ 文本**／**▍ 文本**／**· 文本**
+       表头 | # | ->  | 序 |
+       其余 #    ->  全角 ＃
+    已是合规文本时幂等（跑第二遍结果不变）。"""
+    out = []
+    in_code = False
+    for ln in text.replace("\r\n", "\n").split("\n"):
+        if FENCE_RE.match(ln):
+            in_code = not in_code
+            out.append(ln)
+            continue
+        if in_code:
+            out.append(ln.replace("#", FULL_HASH))
+            continue
+        m = HEADING_RE.match(ln)
+        if m:
+            # 标题正文里也可能带 #（如「C# 结构体与类的区别」）→ 整行一起换
+            new = ("**%s%s**" % (HEAD_PREFIX[len(m.group(1))], m.group(2))).replace("#", FULL_HASH)
+            if out and out[-1].strip():
+                out.append("")
+            out.append(new)
+            out.append("")
+            continue
+        m = TABLE_NUM_RE.match(ln)
+        if m:
+            ln = ln[:m.start()] + "|%s序%s|" % (m.group(1), m.group(2)) + ln[m.end():]
+        out.append(ln.replace("#", FULL_HASH))
+    merged = []
+    for ln in out:
+        if not ln.strip() and merged and not merged[-1].strip():
+            continue
+        merged.append(ln)
+    return "\n".join(merged)
 
 
 def now():
@@ -149,7 +193,7 @@ tags: [{tag_line}]
 {desc}
 
 """
-    new = head + body.rstrip() + "\n"
+    new = sanitize_md(head + body.rstrip()) + "\n"
     if check_only:
         old = outfile.read_text(encoding="utf-8") if outfile.exists() else ""
         state = "一致" if old == new else "有差异（需重新导出）"
@@ -166,7 +210,7 @@ tags: [{tag_line}]
     for p in extras:
         dst = outdir / "附件" / name / p.relative_to(src.parent)
         dst.parent.mkdir(parents=True, exist_ok=True)
-        dst.write_text(p.read_text(encoding="utf-8"), encoding="utf-8")
+        dst.write_text(sanitize_md(p.read_text(encoding="utf-8")), encoding="utf-8")
         print(f"    + 附件 {dst.relative_to(ROOT)}")
     return entry
 
@@ -195,18 +239,18 @@ tags: [技能库, 索引, 花海电脑]
 更新时间: {now()}
 ---
 
-# 花海电脑 · 技能库索引
+**■ 花海电脑 · 技能库索引**
 
 本机（花海电脑）Hermes 技能的 Obsidian 镜像库。笔记是**只读副本**，真源永远是 Hermes 技能目录
-`C:\\Users\\Administrator\\AppData\\Local\\hermes\\skills\\`；要改内容就改源文件，然后重跑导出。
+`{SKILLS_DIR}`；要改内容就改源文件，然后重跑导出。
 
-## 一、技能清单（{len(entries)} 个）
+**■ 一、技能清单（{len(entries)} 个）**
 
 | 分类 | 笔记 | 技能名 | 说明 | 同步时间 |
 |---|---|---|---|---|
 {chr(10).join(rows) if rows else "| - | - | - | 还没有归档技能 | - |"}
 
-## 二、文件夹管理规范
+**■ 二、文件夹管理规范**
 
 ```
 花海电脑/
@@ -229,18 +273,18 @@ tags: [技能库, 索引, 花海电脑]
 - 每条笔记必须在 `技能清单.json` 里有一条记录（技能名 / 分类 / 标题 / 说明）。
 - 笔记一律以 YAML frontmatter 开头，`tags` 至少含 `技能库` 和分类名，便于 Obsidian 检索。
 
-## 三、怎么加新技能
+**■ 三、怎么加新技能**
 
 1. 看有哪些技能可归档：`python 花海电脑/_工具/sync_skills.py --list`
 2. 加进清单：`python 花海电脑/_工具/sync_skills.py --add <技能名> --cat 游戏 --title "中文标题" --desc "一句话说明"`
 3. 重跑导出（会同时刷新本索引）：`python 花海电脑/_工具/sync_skills.py`
 
-## 四、相关
+**■ 四、相关**
 
-- 电脑上的实物资料：[[花海电脑]] 所在仓库根目录 `C:\\FFH\\FFNotes`
+- 电脑上的实物资料：[[花海电脑]] 所在仓库根目录 `{VAULT}`
 - 标书资料库在 `E:\\标书制作`（不在本仓库）
 """
-    INDEX.write_text(body, encoding="utf-8")
+    INDEX.write_text(sanitize_md(body), encoding="utf-8")
     print(f"~ 重建 {INDEX.relative_to(VAULT)}（{len(entries)} 条）")
 
 

@@ -1,10 +1,11 @@
-# Unity ShaderGraph 使用指南
+**■ Unity ShaderGraph 使用指南**
 
-## 一、ShaderGraph 概述
+**■ 一、ShaderGraph 概述**
 
 ShaderGraph 是 Unity 内置的**可视化节点编辑器**，用于通过连线而非编写代码来创建着色器（Shader）。它适用于所有渲染管线（Built-in、URP、HDRP），是 Unity 实现"无代码着色器创作"的核心工具。
 
-### 核心优势
+**▍ 核心优势**
+
 - **可视化创作**：拖拽、连线完成着色器逻辑，无需手动编写 HLSL/HLSL
 - **跨管线兼容**：同一套节点逻辑可导出为 URP 或 HDRP Shader
 - **实时预览**：节点编辑时即时查看效果
@@ -12,9 +13,9 @@ ShaderGraph 是 Unity 内置的**可视化节点编辑器**，用于通过连线
 
 ---
 
-## 二、环境与安装
+**■ 二、环境与安装**
 
-### 2.1 安装要求
+**▍ 2.1 安装要求**
 
 | 项目 | 要求 |
 |------|------|
@@ -22,7 +23,7 @@ ShaderGraph 是 Unity 内置的**可视化节点编辑器**，用于通过连线
 | 渲染管线包 | Universal Render Pipeline / High Definition Render Pipeline |
 | 图形 API | DirectX 11/12、OpenGL Core、Vulkan、Metal |
 
-### 2.2 安装步骤
+**▍ 2.2 安装步骤**
 
 1. **打开 Package Manager**：菜单 `Window > Package Manager`
 2. **搜索**：`Universal Render Pipeline` 或 `High Definition Render Pipeline`
@@ -32,7 +33,7 @@ ShaderGraph 是 Unity 内置的**可视化节点编辑器**，用于通过连线
    - HDRP：菜单 `Render > Render Pipeline > High Definition Render Pipeline > Install or Migrate`
 5. **验证**：项目根目录应出现 `Packages/` 文件夹，内含 `com.unity.render-pipelines.universal` 或 `com.unity.render-pipelines.high-definition`
 
-### 2.3 打开 ShaderGraph 编辑器
+**▍ 2.3 打开 ShaderGraph 编辑器**
 
 ```
 方法一：右键 Project 窗口 → Create → Rendering → Shader → [Universal Render Graph / PBR Shader / Unlit Shader]
@@ -44,9 +45,9 @@ ShaderGraph 是 Unity 内置的**可视化节点编辑器**，用于通过连线
 
 ---
 
-## 三、核心概念
+**■ 三、核心概念**
 
-### 3.1 Graph 与 Shader 的关系
+**▍ 3.1 Graph 与 Shader 的关系**
 
 ```
 .shadergraph（节点图）
@@ -56,7 +57,7 @@ ShaderGraph 是 Unity 内置的**可视化节点编辑器**，用于通过连线
 Material（材质实例）
 ```
 
-### 3.2 节点（Node）类型
+**▍ 3.2 节点（Node）类型**
 
 | 类别 | 说明 | 示例 |
 |------|------|------|
@@ -68,7 +69,7 @@ Material（材质实例）
 | **几何节点** | 顶点/面操作 | Position, Normal, Tangent, UV |
 | **输出节点** | 定义渲染结果 | PBR, Unlit, Motion Vectors, Face Forward |
 
-### 3.3 端口颜色编码
+**▍ 3.3 端口颜色编码**
 
 | 颜色 | 数据类型 |
 |------|----------|
@@ -80,7 +81,7 @@ Material（材质实例）
 | ⚪ 白色 | 纹理 (Texture) |
 | 🟤 棕色 | 枚举 (Enum) |
 
-### 3.4 引脚（Pin）连接规则
+**▍ 3.4 引脚（Pin）连接规则**
 
 - **同一颜色类型可互相连接**
 - **隐式转换**：标量 → 向量（标量广播到各通道）；向量 → 标量（需取某个通道如 R/X）
@@ -88,9 +89,9 @@ Material（材质实例）
 
 ---
 
-## 四、常用节点详解
+**■ 四、常用节点详解**
 
-### 4.1 PBR Shader（标准金属-粗糙度工作流）
+**▍ 4.1 PBR Shader（标准金属-粗糙度工作流）**
 
 这是最常用的 ShaderGraph 模板。核心输出节点：
 
@@ -105,7 +106,8 @@ PBR 输出节点
 └── Alpha（透明度）       → 不透明度（Alpha Mode 设为 Transparent 时生效）
 ```
 
-#### 金属-粗糙度工作流要点
+**· 金属-粗糙度工作流要点**
+
 - **金属度（Metallic）**：控制材质是否像金属
   - 非金属（塑料、木材）：Metallic=0，Base Color 决定颜色
   - 金属（铜、铁、金）：Metallic=1，Base Color 决定金属色调
@@ -113,7 +115,7 @@ PBR 输出节点
   - 光滑 = 高反射 = 清晰的倒影
   - 粗糙 = 低反射 = 漫反射为主
 
-### 4.2 Unlit Shader（无光照着色器）
+**▍ 4.2 Unlit Shader（无光照着色器）**
 
 适合 UI、粒子、卡通风格。核心输出：
 
@@ -123,7 +125,7 @@ Unlit 输出节点
 └── Alpha（透明度）
 ```
 
-### 4.3 常用数学节点
+**▍ 4.3 常用数学节点**
 
 ```
 Add (+)          加法
@@ -146,9 +148,9 @@ Smoothstep       平滑阶跃
 
 ---
 
-## 五、标准工作流程
+**■ 五、标准工作流程**
 
-### 5.1 创建第一个 ShaderGraph
+**▍ 5.1 创建第一个 ShaderGraph**
 
 **步骤 1**：创建 Graph
 ```
@@ -196,7 +198,7 @@ Smoothstep       平滑阶跃
 4. 将材质拖拽到场景物体上
 ```
 
-### 5.2 完整示例：创建渐变背景
+**▍ 5.2 完整示例：创建渐变背景**
 
 ```
 目标：创建一个从底部蓝色渐变到顶部白色的材质
@@ -217,9 +219,9 @@ Smoothstep       平滑阶跃
 
 ---
 
-## 六、高级功能
+**■ 六、高级功能**
 
-### 6.1 自定义函数（Custom Function）
+**▍ 6.1 自定义函数（Custom Function）**
 
 当 ShaderGraph 没有内置节点时：
 
@@ -238,7 +240,7 @@ float SimpleNoise(float2 uv) {
 }
 ```
 
-### 6.2 Graph Component（图组件）
+**▍ 6.2 Graph Component（图组件）**
 
 用于将多个 Graph 模块组合复用：
 
@@ -249,7 +251,7 @@ float SimpleNoise(float2 uv) {
 4. 实现模块化设计，便于团队协作
 ```
 
-### 6.3 Surface State（表面状态）
+**▍ 6.3 Surface State（表面状态）**
 
 控制渲染行为的关键设置：
 
@@ -273,7 +275,7 @@ Depth Write（深度写入）：关闭后物体不写入深度（常用于透明
 Alpha Clipping（Alpha 裁剪）：启用后低于阈值的像素完全剔除
 ```
 
-### 6.4 Vertex Displacement（顶点位移）
+**▍ 6.4 Vertex Displacement（顶点位移）**
 
 ```
 1. Surface State → Surface Type 设为 Opaque
@@ -283,7 +285,7 @@ Alpha Clipping（Alpha 裁剪）：启用后低于阈值的像素完全剔除
 5. 启用 Tesselation（细分）以获得平滑的顶点位移效果
 ```
 
-### 6.5 Shader Feature 条件编译
+**▍ 6.5 Shader Feature 条件编译**
 
 ```
 1. 右键 → Shader Feature
@@ -293,7 +295,7 @@ Alpha Clipping（Alpha 裁剪）：启用后低于阈值的像素完全剔除
 5. 减小最终 Shader 的体积和 Draw Call 数量
 ```
 
-### 6.6 数据通道（Data Channel）
+**▍ 6.6 数据通道（Data Channel）**
 
 ```
 在 Surface State 中可启用：
@@ -303,7 +305,7 @@ Alpha Clipping（Alpha 裁剪）：启用后低于阈值的像素完全剔除
 - Material Depth：输出深度值
 ```
 
-### 6.7 宏定义与变量
+**▍ 6.7 宏定义与变量**
 
 ```
 在 Graph 顶部可设置：
@@ -314,9 +316,9 @@ Alpha Clipping（Alpha 裁剪）：启用后低于阈值的像素完全剔除
 
 ---
 
-## 七、调试技巧
+**■ 七、调试技巧**
 
-### 7.1 可视化调试
+**▍ 7.1 可视化调试**
 
 ```
 方法一：将任意标量/向量值连接到 Emission 引脚
@@ -330,7 +332,7 @@ Alpha Clipping（Alpha 裁剪）：启用后低于阈值的像素完全剔除
        → 确认每个阶段的数值是否正确
 ```
 
-### 7.2 常见错误排查
+**▍ 7.2 常见错误排查**
 
 | 错误现象 | 可能原因 | 解决方法 |
 |---------|---------|---------|
@@ -342,7 +344,7 @@ Alpha Clipping（Alpha 裁剪）：启用后低于阈值的像素完全剔除
 | 性能差 | 过于复杂的节点链 | 简化逻辑，减少节点数量 |
 | 透明物体闪烁 | Z-Fighting | 调整 Render Queue 或开启 Depth Write |
 
-### 7.3 Shader Graph Profiler
+**▍ 7.3 Shader Graph Profiler**
 
 ```
 Unity 2021+ 内置 Shader Graph Profiler：
@@ -354,9 +356,9 @@ Unity 2021+ 内置 Shader Graph Profiler：
 
 ---
 
-## 八、最佳实践
+**■ 八、最佳实践**
 
-### 8.1 命名规范
+**▍ 8.1 命名规范**
 
 ```
 - 节点命名：使用有意义的名称（如 "WaveFrequency" 而非 "Node 12"）
@@ -364,7 +366,7 @@ Unity 2021+ 内置 Shader Graph Profiler：
 - 分组命名：使用 Folder 节点对相关节点进行分组
 ```
 
-### 8.2 性能优化
+**▍ 8.2 性能优化**
 
 ```
 优先级从高到低：
@@ -379,7 +381,7 @@ Unity 2021+ 内置 Shader Graph Profiler：
 8. 减少 Surface Type 的复杂性（Opaque 比 Transparent 快）
 ```
 
-### 8.3 版本控制
+**▍ 8.3 版本控制**
 
 ```
 - .shadergraph 文件是 YAML 格式，可被 Git 追踪
@@ -388,7 +390,7 @@ Unity 2021+ 内置 Shader Graph Profiler：
 - 团队项目建议统一 Unity 版本和渲染管线版本
 ```
 
-### 8.4 模块化设计
+**▍ 8.4 模块化设计**
 
 ```
 - 将通用效果封装为 Graph Component
@@ -399,7 +401,7 @@ Unity 2021+ 内置 Shader Graph Profiler：
 
 ---
 
-## 九、URP vs HDRP ShaderGraph 差异
+**■ 九、URP vs HDRP ShaderGraph 差异**
 
 | 特性 | URP ShaderGraph | HDRP ShaderGraph |
 |------|----------------|-----------------|
@@ -414,13 +416,15 @@ Unity 2021+ 内置 Shader Graph Profiler：
 
 ---
 
-## 十、常用资源与学习路径
+**■ 十、常用资源与学习路径**
 
-### 10.1 官方文档
+**▍ 10.1 官方文档**
+
 - Unity ShaderGraph Manual: https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html
 - ShaderGraph 节点参考: https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/api/UnityEngine.Rendering.Universal.ShaderGraph.html
 
-### 10.2 学习建议
+**▍ 10.2 学习建议**
+
 1. **从模板开始**：使用默认的 PBR Shader 模板，理解每个节点的作用
 2. **逐步实验**：每次只修改一个变量，观察效果变化
 3. **理解光照模型**：学习 PBR 原理（金属度/粗糙度/法线/自发光）
@@ -428,9 +432,10 @@ Unity 2021+ 内置 Shader Graph Profiler：
 5. **尝试组合**：将多个简单效果组合成复杂效果
 6. **阅读社区作品**：查看 ShaderGraph Gallery 中的作品
 
-### 10.3 实用节点组合
+**▍ 10.3 实用节点组合**
 
-#### 边缘发光（Rim Light）
+**· 边缘发光（Rim Light）**
+
 ```
 Position 节点（World Space） → Normal 节点
 → Dot 节点（法线与视角点积）
@@ -438,7 +443,8 @@ Position 节点（World Space） → Normal 节点
 → 颜色 × 强度 → Emission
 ```
 
-#### 扫描线效果
+**· 扫描线效果**
+
 ```
 Time 节点 → Fraction → 乘以速度
 Sin 节点 → 乘以颜色
@@ -446,7 +452,8 @@ Sample Texture 2D 的 Alpha 作为遮罩
 → Lerp 到 Base Color
 ```
 
-#### 水波纹效果
+**· 水波纹效果**
+
 ```
 Time 节点 → 乘以频率
 Position 节点 → Distance 到中心点
@@ -458,7 +465,7 @@ Sin 节点（距离 - 时间）
 
 ---
 
-## 十一、常见问题 FAQ
+**■ 十一、常见问题 FAQ**
 
 **Q1: ShaderGraph 和 HLSL 编辑器有什么区别？**
 A: ShaderGraph 是可视化节点编辑器，HLSL 编辑器是代码编辑器。ShaderGraph 生成的底层代码与手写 HLSL 等效。ShaderGraph 适合快速原型和艺术家协作；HLSL 适合需要精细控制和优化的场景。

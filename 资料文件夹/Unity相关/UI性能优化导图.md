@@ -16,10 +16,10 @@
 - 优化、简化prefab及其挂载着的component
 - ScrollView类型的列表，勾上分帧实例化item的选项
 
-- 其他GC（C#、Lua的界面逻辑代码中）
+- 其他GC（C＃、Lua的界面逻辑代码中）
 
 - string拼接
-- Boxing (C#与Lua传递未优化的struct)
+- Boxing (C＃与Lua传递未优化的struct)
 - lambda, closure
 - SetActive, GetComponent
 - 打log

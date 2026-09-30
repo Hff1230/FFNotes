@@ -1,8 +1,9 @@
-在 Unity C# 开发中，`using` 关键字有三种核心用途，分别涉及**命名空间导入**、**资源自动释放**和**别名定义**。以下是具体解析及实践示例：
+在 Unity C＃ 开发中，`using` 关键字有三种核心用途，分别涉及**命名空间导入**、**资源自动释放**和**别名定义**。以下是具体解析及实践示例：
 
 ---
 
-### 📦 一、命名空间导入（最常见用途）
+**▍ 📦 一、命名空间导入（最常见用途）**
+
 **作用**：引入命名空间，简化代码中对类型的调用（无需写完整命名空间路径）。  
 **语法**：  
 ```csharp
@@ -45,7 +46,7 @@ using (FileStream fs = new FileStream("data.txt", FileMode.Open))
 3. **数据库连接**：  
    如使用 SQLite 时确保连接关闭。  
 
-**C# 8.0+ 简化写法**（Unity 2019.3+ 支持）：  
+**C＃ 8.0+ 简化写法**（Unity 2019.3+ 支持）：  
 ```csharp
 using var fs = new FileStream("data.txt", FileMode.Open); 
 // 作用域结束时自动释放
@@ -53,7 +54,8 @@ using var fs = new FileStream("data.txt", FileMode.Open);
 
 ---
 
-### 🏷️ 三、别名定义（解决冲突）
+**▍ 🏷️ 三、别名定义（解决冲突）**
+
 **作用**：为复杂命名空间或冲突类型创建短别名。  
 **语法**：  
 ```csharp
@@ -95,8 +97,8 @@ public class Player : MonoBehaviour
    }
    ```  
 4. **Unity 版本兼容性**：  
-    - `using static`（静态成员导入）需 Unity 2017+（C# 6+）。  
-    - `using` 声明（无括号写法）需 Unity 2019.3+（C# 8.0+）。
+    - `using static`（静态成员导入）需 Unity 2017+（C＃ 6+）。  
+    - `using` 声明（无括号写法）需 Unity 2019.3+（C＃ 8.0+）。
 
 ---
 
@@ -114,6 +116,5 @@ public class Player : MonoBehaviour
   通过 Unity Profiler 检查 `GC Alloc`，若托管堆分配过高，检查是否漏用 `using`。
 
 ---
-
 
 由小艺AI生成<xiaoyi.huawei.com>
