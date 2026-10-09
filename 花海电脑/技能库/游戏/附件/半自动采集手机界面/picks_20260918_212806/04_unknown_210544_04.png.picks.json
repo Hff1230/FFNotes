@@ -1,0 +1,65 @@
+{
+ "src": "E:/AiDemos/QnyhAuto/evidence/annot/04_unknown_210544_04.png",
+ "screen": "主界面",
+ "tag": "point",
+ "k": 11,
+ "scale": 1.0,
+ "picks": [
+  {
+   "n": 1,
+   "x": 279,
+   "y": 710,
+   "rgb": [
+    8,
+    247,
+    8
+   ],
+   "std": 88.75,
+   "grade": "★",
+   "tag": "point",
+   "name": ""
+  },
+  {
+   "n": 2,
+   "x": 267,
+   "y": 707,
+   "rgb": [
+    49,
+    49,
+    58
+   ],
+   "std": 74.75,
+   "grade": "★",
+   "tag": "point",
+   "name": ""
+  },
+  {
+   "n": 3,
+   "x": 245,
+   "y": 711,
+   "rgb": [
+    58,
+    57,
+    66
+   ],
+   "std": 75.4,
+   "grade": "★",
+   "tag": "point",
+   "name": ""
+  },
+  {
+   "n": 4,
+   "x": 128,
+   "y": 702,
+   "rgb": [
+    41,
+    45,
+    58
+   ],
+   "std": 50.78,
+   "grade": "★",
+   "tag": "point",
+   "name": ""
+  }
+ ]
+}

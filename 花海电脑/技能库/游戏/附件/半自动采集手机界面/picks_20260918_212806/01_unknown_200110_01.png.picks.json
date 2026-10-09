@@ -1,0 +1,23 @@
+{
+ "src": "E:/AiDemos/QnyhAuto/evidence/annot/01_unknown_200110_01.png",
+ "screen": "包裹/背包",
+ "tag": "point",
+ "k": 11,
+ "scale": 1.0,
+ "picks": [
+  {
+   "n": 1,
+   "x": 115,
+   "y": 30,
+   "rgb": [
+    58,
+    65,
+    66
+   ],
+   "std": 78.75,
+   "grade": "★",
+   "tag": "point",
+   "name": ""
+  }
+ ]
+}
