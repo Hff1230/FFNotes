@@ -1,10 +1,11 @@
-# Workbench（制作台）系统交接文档
+**■ Workbench（制作台）系统交接文档**
 
-## 一、系统概述
+**■ 一、系统概述**
 
 Workbench（制作台）系统是游戏中的装备制造系统，玩家可以通过解锁蓝图、消耗材料来制造各类装备（武器、防具、弹药、配件等）。
 
-### 核心特性
+**▍ 核心特性**
+
 - **蓝图系统**：蓝图是解锁的配方，解锁后只要资源足够可以无限生产
 - **多槽位并行**：同一个蓝图可以同时有多个生产任务（只要槽位够且资源够）
 - **实时进度**：生产任务实时更新，支持进度条显示
@@ -13,33 +14,34 @@ Workbench（制作台）系统是游戏中的装备制造系统，玩家可以�
 
 ---
 
-## 二、文件结构
+**■ 二、文件结构**
 
-### 代码目录
+**▍ 代码目录**
+
 ```
 Assets/KShootCode/
-├── Game/KingShot/Game/Workbench/           # 核心逻辑
-│   ├── KSWorkbenchManager.cs               # 核心管理器（单例）
-│   ├── KSBlueprint.cs                      # 蓝图数据类
-│   ├── KSManufacturingTask.cs              # 生产任务类
-│   └── KSBlueprintMaterial.cs              # 材料需求类
+├── Game/KingShot/Game/Workbench/           ＃ 核心逻辑
+│   ├── KSWorkbenchManager.cs               ＃ 核心管理器（单例）
+│   ├── KSBlueprint.cs                      ＃ 蓝图数据类
+│   ├── KSManufacturingTask.cs              ＃ 生产任务类
+│   └── KSBlueprintMaterial.cs              ＃ 材料需求类
 │
-├── Game/KingShot/Game/UI/                  # UI视图
-│   └── KSWorkbenchView.cs                  # 工作台主视图
+├── Game/KingShot/Game/UI/                  ＃ UI视图
+│   └── KSWorkbenchView.cs                  ＃ 工作台主视图
 │
-├── Game/KingShot/Game/UI/Component/WorkBenchDetail/  # UI组件
-│   ├── WorkBenchEquipChooseComponent.cs    # 装备选择组件（左侧）
-│   ├── WorbenchMadePreviewComponent.cs     # 制造预览组件（中间）
-│   ├── MakeListItem.cs                     # 制造列表项（右侧）
-│   └── WorkBenchInfoItem.cs                # 蓝图列表项
+├── Game/KingShot/Game/UI/Component/WorkBenchDetail/  ＃ UI组件
+│   ├── WorkBenchEquipChooseComponent.cs    ＃ 装备选择组件（左侧）
+│   ├── WorbenchMadePreviewComponent.cs     ＃ 制造预览组件（中间）
+│   ├── MakeListItem.cs                     ＃ 制造列表项（右侧）
+│   └── WorkBenchInfoItem.cs                ＃ 蓝图列表项
 │
-└── IF/DayZClasses/Net/command/KingShot/    # 网络通信
-    └── KSWorkbenchCommand.cs               # 工作台网络命令
+└── IF/DayZClasses/Net/command/KingShot/    ＃ 网络通信
+    └── KSWorkbenchCommand.cs               ＃ 工作台网络命令
 ```
 
 ---
 
-## 三、类关系图
+**■ 三、类关系图**
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -76,9 +78,9 @@ Assets/KShootCode/
 
 ---
 
-## 四、核心类详解
+**■ 四、核心类详解**
 
-### 4.1 KSWorkbenchManager（核心管理器）
+**▍ 4.1 KSWorkbenchManager（核心管理器）**
 
 **文件路径**：`KShootCode/Game/KingShot/Game/Workbench/KSWorkbenchManager.cs`
 
@@ -86,7 +88,8 @@ Assets/KShootCode/
 
 **职责**：管理工作台的所有状态和蓝图系统
 
-#### 主要数据成员
+**· 主要数据成员**
+
 | 成员名 | 类型 | 说明 |
 |--------|------|------|
 | `blueprints` | `Dictionary<string, KSBlueprint>` | 所有已解锁的蓝图列表 |
@@ -94,7 +97,8 @@ Assets/KShootCode/
 | `maxSlotCount` | `int` | 已解锁的最大生产槽位数量 |
 | `allSlotCount` | `int` | 所有生产槽位数量 |
 
-#### 主要方法
+**· 主要方法**
+
 | 方法名                                                | 参数                     | 返回值                         | 说明                  |
 | -------------------------------------------------- | ---------------------- | --------------------------- | ------------------- |
 | `Initialize()`                                     | -                      | void                        | 初始化，启动更新协程，监听建筑升级事件 |
@@ -111,19 +115,21 @@ Assets/KShootCode/
 | `OpenWorkBenchView()`                              | -                      | void                        | 打开工作台UI             |
 | `GetWorkbenchInfo(UnityAction)`                    | successAction          | void                        | 从服务器获取所有工作台信息       |
 
-#### 事件监听
+**· 事件监听**
+
 - `Global.BUILD_STATE_UPGRADE_END`：建筑升级完成事件
 - `KSScienceEvent.OnResearchCompleted`：科技研究完成事件
 
 ---
 
-### 4.2 KSBlueprint（蓝图类）
+**▍ 4.2 KSBlueprint（蓝图类）**
 
 **文件路径**：`KShootCode/Game/KingShot/Game/Workbench/KSBlueprint.cs`
 
 **职责**：管理单个蓝图的配置和材料需求
 
-#### 主要属性
+**· 主要属性**
+
 | 属性名 | 类型 | 说明 |
 |--------|------|------|
 | `ID` | `string` | 蓝图ID |
@@ -133,31 +139,35 @@ Assets/KShootCode/
 | `GoodType` | `KSGoodType` | 产出物品的类型 |
 | `Materials` | `KSBlueprintMaterial[]` | 材料需求列表 |
 
-#### 主要方法
+**· 主要方法**
+
 | 方法名 | 返回值 | 说明 |
 |--------|--------|------|
 | `HasAllMaterials()` | bool | 检查是否拥有所有所需材料 |
 | `GetInsufficientMaterials()` | `List<KSBlueprintMaterial>` | 获取材料不足的列表 |
 
-#### 配置数据来源
+**· 配置数据来源**
+
 - 配置表：`KSBlueprintConfig`
 - 通过 `DataAtlasManager.Instance.GetDataWithTypeById<KSBlueprintConfig>(blueprintId)` 获取
 
 ---
 
-### 4.3 KSManufacturingTask（生产任务类）
+**▍ 4.3 KSManufacturingTask（生产任务类）**
 
 **文件路径**：`KShootCode/Game/KingShot/Game/Workbench/KSManufacturingTask.cs`
 
 **职责**：每个生产任务独立管理自己的状态和进度
 
-#### 状态枚举 `KSManufacturingState`
+**· 状态枚举 `KSManufacturingState`**
+
 | 值 | 说明 |
 |----|------|
 | `Manufacturing` | 生产中 |
 | `Completed` | 已完成（待领取） |
 
-#### 主要属性
+**· 主要属性**
+
 | 属性名 | 类型 | 说明 |
 |--------|------|------|
 | `TaskId` | `string` | 任务唯一ID（GUID） |
@@ -166,7 +176,8 @@ Assets/KShootCode/
 | `RemainingTime` | `float` | 剩余生产时间（秒） |
 | `Progress` | `float` | 生产进度（0-1） |
 
-#### 主要方法
+**· 主要方法**
+
 | 方法名 | 参数 | 返回值 | 说明 |
 |--------|------|--------|------|
 | `Update()` | - | void | 更新生产状态（每帧调用） |
@@ -178,19 +189,21 @@ Assets/KShootCode/
 
 ---
 
-### 4.4 KSBlueprintMaterial（材料需求类）
+**▍ 4.4 KSBlueprintMaterial（材料需求类）**
 
 **文件路径**：`KShootCode/Game/KingShot/Game/Workbench/KSBlueprintMaterial.cs`
 
 **职责**：表示生产所需的一种材料及其数量
 
-#### 资源类型枚举 `BlueResourceType`
+**· 资源类型枚举 `BlueResourceType`**
+
 | 值 | 说明 |
 |----|------|
 | `Item` | 物品类型（背包/仓库中的物品） |
 | `Resource` | 资源类型（游戏基础资源） |
 
-#### 主要属性
+**· 主要属性**
+
 | 属性名 | 类型 | 说明 |
 |--------|------|------|
 | `MaterialID` | `string` | 材料道具ID |
@@ -198,14 +211,16 @@ Assets/KShootCode/
 | `BlueResourceType` | `BlueResourceType` | 资源类型 |
 | `Name` | `string` | 材料名称 |
 
-#### 主要方法
+**· 主要方法**
+
 | 方法名 | 返回值 | 说明 |
 |--------|--------|------|
 | `ParseFromConfig(string, BlueResourceType)` | `KSBlueprintMaterial[]` | 从配置字符串解析材料需求 |
 | `HasEnoughMaterial()` | bool | 检查玩家是否拥有足够的该材料 |
 | `GetCurrentCount()` | int | 获取玩家当前拥有的材料数量 |
 
-#### 配置格式
+**· 配置格式**
+
 ```
 格式：道具ID,数量;道具ID,数量
 示例："1001,5;1002,10" 表示需要ID为1001的道具5个，ID为1002的道具10个
@@ -213,9 +228,9 @@ Assets/KShootCode/
 
 ---
 
-## 五、UI类详解
+**■ 五、UI类详解**
 
-### 5.1 KSWorkbenchView（主视图）
+**▍ 5.1 KSWorkbenchView（主视图）**
 
 **文件路径**：`KShootCode/Game/KingShot/Game/UI/KSWorkbenchView.cs`
 
@@ -223,7 +238,8 @@ Assets/KShootCode/
 
 **职责**：工作台主视图，协调各个子组件
 
-#### 布局结构
+**· 布局结构**
+
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │                     KSWorkbenchView                          │
@@ -234,7 +250,8 @@ Assets/KShootCode/
 └────────────────┴─────────────────────────┴──────────────────┘
 ```
 
-#### 组件说明
+**· 组件说明**
+
 | 组件 | 类型 | 说明 |
 |------|------|------|
 | `workBenchEquipChooseComponent` | `WorkBenchEquipChooseComponent` | 装备选择组件（左侧） |
@@ -243,12 +260,14 @@ Assets/KShootCode/
 | `makeList` | `GList` | 制造队列列表 |
 | `moneyCom` | `GComponent` | 钞票显示组件 |
 
-#### 通知事件
+**· 通知事件**
+
 ```csharp
 public static readonly string REFRESH_KSWorkbenchView = "REFRESH_KSWorkbenchView";
 ```
 
-#### 主要方法
+**· 主要方法**
+
 | 方法名 | 说明 |
 |--------|------|
 | `Create()` | 静态创建方法 |
@@ -259,7 +278,7 @@ public static readonly string REFRESH_KSWorkbenchView = "REFRESH_KSWorkbenchView
 
 ---
 
-### 5.2 WorkBenchEquipChooseComponent（装备选择组件）
+**▍ 5.2 WorkBenchEquipChooseComponent（装备选择组件）**
 
 **文件路径**：`KShootCode/Game/KingShot/Game/UI/Component/WorkBenchDetail/WorkBenchEquipChooseComponent.cs`
 
@@ -267,7 +286,8 @@ public static readonly string REFRESH_KSWorkbenchView = "REFRESH_KSWorkbenchView
 
 **职责**：显示和筛选蓝图列表
 
-#### 支持的物品类型筛选
+**· 支持的物品类型筛选**
+
 | 类型 | 枚举值 | 显示名称 |
 |------|--------|----------|
 | 全部 | `ALL_TYPE = -1` | 全部 |
@@ -279,14 +299,16 @@ public static readonly string REFRESH_KSWorkbenchView = "REFRESH_KSWorkbenchView
 | 配件 | `KSGoodType.Attachment` | ?配件 |
 | 子弹 | `KSGoodType.Bullet` | ?子弹 |
 
-#### 主要属性
+**· 主要属性**
+
 | 属性名 | 类型 | 说明 |
 |--------|------|------|
 | `CurrentSelectedType` | `KSGoodType` | 当前选中的物品类型 |
 | `IsSelectedAll` | `bool` | 是否选中了"全部" |
 | `SelectedBlueprint` | `KSBlueprint` | 当前选中的蓝图 |
 
-#### 主要方法
+**· 主要方法**
+
 | 方法名 | 说明 |
 |--------|------|
 | `FilterBlueprintsByType(KSGoodType?)` | 根据物品类型筛选蓝图 |
@@ -296,7 +318,7 @@ public static readonly string REFRESH_KSWorkbenchView = "REFRESH_KSWorkbenchView
 
 ---
 
-### 5.3 WorbenchMadePreviewComponent（制造预览组件）
+**▍ 5.3 WorbenchMadePreviewComponent（制造预览组件）**
 
 **文件路径**：`KShootCode/Game/KingShot/Game/UI/Component/WorkBenchDetail/WorbenchMadePreviewComponent.cs`
 
@@ -304,7 +326,8 @@ public static readonly string REFRESH_KSWorkbenchView = "REFRESH_KSWorkbenchView
 
 **职责**：显示选中蓝图的详细信息和制造按钮
 
-#### 主要组件
+**· 主要组件**
+
 | 组件 | 类型 | 说明 |
 |------|------|------|
 | `madeBtn` | `GButton` | 开始制造按钮 |
@@ -313,7 +336,8 @@ public static readonly string REFRESH_KSWorkbenchView = "REFRESH_KSWorkbenchView
 | `equipTagList` | `GList` | 装备状态标签 |
 | `weaponInfoComponent` | `GComponent` | 装备信息界面 |
 
-#### 属性显示映射 `attrMap`
+**· 属性显示映射 `attrMap`**
+
 ```csharp
 public static Dictionary<KS_Attr_type, AttDisplayInfo> attrMap = new Dictionary<KS_Attr_type, AttDisplayInfo>()
 {
@@ -326,7 +350,8 @@ public static Dictionary<KS_Attr_type, AttDisplayInfo> attrMap = new Dictionary<
 };
 ```
 
-#### 主要方法
+**· 主要方法**
+
 | 方法名 | 说明 |
 |--------|------|
 | `SetData(KSBlueprint)` | 设置蓝图数据 |
@@ -334,7 +359,8 @@ public static Dictionary<KS_Attr_type, AttDisplayInfo> attrMap = new Dictionary<
 | `SetAttrDataList()` | 设置属性列表数据 |
 | `GenAttrDataList()` | 根据物品类型生成属性列表 |
 
-#### 制造按钮点击处理
+**· 制造按钮点击处理**
+
 ```csharp
 private void MadeOnClick(EventContext context)
 {
@@ -347,7 +373,7 @@ private void MadeOnClick(EventContext context)
 
 ---
 
-### 5.4 MakeListItem（制造列表项）
+**▍ 5.4 MakeListItem（制造列表项）**
 
 **文件路径**：`KShootCode/Game/KingShot/Game/UI/Component/WorkBenchDetail/MakeListItem.cs`
 
@@ -355,7 +381,8 @@ private void MadeOnClick(EventContext context)
 
 **职责**：显示单个生产槽位的状态
 
-#### 状态枚举 `MakeListItemState`
+**· 状态枚举 `MakeListItemState`**
+
 | 值 | 索引 | 说明 |
 |----|------|------|
 | `Locked` | 0 | 未解锁 |
@@ -363,7 +390,8 @@ private void MadeOnClick(EventContext context)
 | `Manufacturing` | 2 | 制造中 |
 | `Completed` | 3 | 完成 |
 
-#### 主要组件
+**· 主要组件**
+
 | 组件 | 类型 | 说明 |
 |------|------|------|
 | `controller` | `Controller` | 状态控制器 |
@@ -372,7 +400,8 @@ private void MadeOnClick(EventContext context)
 | `itemIcon` | `GLoader` | 物品图标 |
 | `speedBtn` | `GButton` | 加速按钮（当前版本隐藏） |
 
-#### 主要方法
+**· 主要方法**
+
 | 方法名 | 说明 |
 |--------|------|
 | `SetData(int)` | 设置槽位数据 |
@@ -380,7 +409,8 @@ private void MadeOnClick(EventContext context)
 | `ReceiveReward(KSManufacturingTask)` | 领取生产奖励 |
 | `SetState(MakeListItemState)` | 设置制造状态 |
 
-#### 定时更新
+**· 定时更新**
+
 ```csharp
 // 每0.1秒更新一次进度条
 Scheduler.Instance.schedule(OnTimerUpdate, this, 0.1f, false);
@@ -388,7 +418,7 @@ Scheduler.Instance.schedule(OnTimerUpdate, this, 0.1f, false);
 
 ---
 
-### 5.5 WorkBenchInfoItem（蓝图列表项）
+**▍ 5.5 WorkBenchInfoItem（蓝图列表项）**
 
 **文件路径**：`KShootCode/Game/KingShot/Game/UI/Component/WorkBenchDetail/WorkBenchInfoItem.cs`
 
@@ -396,7 +426,8 @@ Scheduler.Instance.schedule(OnTimerUpdate, this, 0.1f, false);
 
 **职责**：显示单个蓝图的基本信息
 
-#### 主要组件
+**· 主要组件**
+
 | 组件 | 类型 | 说明 |
 |------|------|------|
 | `nameText` | `GTextField` | 名称文本 |
@@ -406,9 +437,9 @@ Scheduler.Instance.schedule(OnTimerUpdate, this, 0.1f, false);
 
 ---
 
-## 六、网络通信
+**■ 六、网络通信**
 
-### 6.1 KSWorkbenchCommand（网络命令类）
+**▍ 6.1 KSWorkbenchCommand（网络命令类）**
 
 **文件路径**：`KShootCode/IF/DayZClasses/Net/command/KingShot/KSWorkbenchCommand.cs`
 
@@ -416,7 +447,8 @@ Scheduler.Instance.schedule(OnTimerUpdate, this, 0.1f, false);
 
 **协议地址**：`kingshoot.workbench.operate`
 
-#### 操作类型枚举 `KSWorkbenchOperate`
+**· 操作类型枚举 `KSWorkbenchOperate`**
+
 | 值 | 说明 |
 |----|------|
 | `None` | 无操作 |
@@ -427,7 +459,8 @@ Scheduler.Instance.schedule(OnTimerUpdate, this, 0.1f, false);
 | `Finish` | 领取奖励 |
 | `Upgrade` | 升级槽位 |
 
-#### 构造方法重载
+**· 构造方法重载**
+
 ```csharp
 // 1. 升级卡槽数量
 public KSWorkbenchCommand(KSWorkbenchOperate kSBlackMarketOperate)
@@ -445,7 +478,8 @@ public KSWorkbenchCommand(KSWorkbenchOperate oderOperator, string buleprintID)
 public KSWorkbenchCommand()
 ```
 
-#### 协议参数说明
+**· 协议参数说明**
+
 | 操作类型 | 参数 | 说明 |
 |----------|------|------|
 | `Info` | `operateType` | 获取所有制造信息 |
@@ -455,7 +489,8 @@ public KSWorkbenchCommand()
 | `Finish` | `operateType`, `pos` | 领取指定位置的奖励 |
 | `Upgrade` | `operateType` | 升级槽位 |
 
-#### 服务器返回数据结构
+**· 服务器返回数据结构**
+
 | 字段 | 类型 | 说明 |
 |------|------|------|
 | `bluePrints` | `CCArray` | 已解锁的蓝图ID列表 |
@@ -467,9 +502,10 @@ public KSWorkbenchCommand()
 
 ---
 
-## 七、核心工作流程
+**■ 七、核心工作流程**
 
-### 7.1 打开工作台流程
+**▍ 7.1 打开工作台流程**
+
 ```
 1. FunBuildPart.OnHand()
    ↓
@@ -484,7 +520,8 @@ public KSWorkbenchCommand()
 6. KSWorkbenchView.Create() → 创建UI视图
 ```
 
-### 7.2 开始生产流程
+**▍ 7.2 开始生产流程**
+
 ```
 1. 选择蓝图 → WorkBenchEquipChooseComponent.SelectBlueprint()
    ↓
@@ -504,7 +541,8 @@ public KSWorkbenchCommand()
 7. 发送通知刷新UI → REFRESH_KSWorkbenchView
 ```
 
-### 7.3 生产更新流程
+**▍ 7.3 生产更新流程**
+
 ```
 1. KSWorkbenchManager.OnUpdate() 每0.1秒执行
    ↓
@@ -523,7 +561,8 @@ public KSWorkbenchCommand()
 7. 触发 onTaskCompleted 回调
 ```
 
-### 7.4 领取奖励流程
+**▍ 7.4 领取奖励流程**
+
 ```
 1. 点击领取按钮 → MakeListItem.ReceiveOnClick()
    ↓
@@ -543,9 +582,10 @@ public KSWorkbenchCommand()
 
 ---
 
-## 八、配置表依赖
+**■ 八、配置表依赖**
 
-### 8.1 KSBlueprintConfig（蓝图配置表）
+**▍ 8.1 KSBlueprintConfig（蓝图配置表）**
+
 | 字段 | 类型 | 说明 |
 |------|------|------|
 | `id` | `string` | 蓝图ID |
@@ -555,7 +595,8 @@ public KSWorkbenchCommand()
 | `material_goods` | `string` | 物品材料需求（格式：ID,数量;ID,数量） |
 | `material_resource` | `string` | 资源材料需求（格式：ID,数量;ID,数量） |
 
-### 8.2 KSGoodsConfig（物品配置表）
+**▍ 8.2 KSGoodsConfig（物品配置表）**
+
 通过 `KSGoodsConfigInfo` 类访问，包含：
 - `baseInfo`：基础信息（名称、图标、品质等）
 - `extensionInfo`：扩展信息（重量、标签等）
@@ -563,7 +604,7 @@ public KSWorkbenchCommand()
 
 ---
 
-## 九、调试快捷键
+**■ 九、调试快捷键**
 
 在 `GameRoot.cs` 中定义的调试快捷键：
 
@@ -575,9 +616,10 @@ public KSWorkbenchCommand()
 
 ---
 
-## 十、待完成/TODO项
+**■ 十、待完成/TODO项**
 
-### 10.1 KSWorkbenchManager.cs
+**▍ 10.1 KSWorkbenchManager.cs**
+
 ```csharp
 // TODO: 这里应该从服务器返回的数据中获取实际的生产任务信息
 if (dict.TryGetValue("queues", out object queues))
@@ -589,7 +631,8 @@ if (dict.TryGetValue("queues", out object queues))
 float remainingTime = 0;
 ```
 
-### 10.2 KSManufacturingTask.cs
+**▍ 10.2 KSManufacturingTask.cs**
+
 ```csharp
 // TODO: 这里需要向服务器请求取消生产并返还材料
 public void CancelManufacturing(UnityAction<bool> callback)
@@ -598,7 +641,8 @@ public void CancelManufacturing(UnityAction<bool> callback)
 }
 ```
 
-### 10.3 MakeListItem.cs
+**▍ 10.3 MakeListItem.cs**
+
 ```csharp
 // 策划说这版本先不做加速，按钮隐藏
 speedBtn.visible = false;
@@ -606,7 +650,7 @@ speedBtn.visible = false;
 
 ---
 
-## 十一、注意事项
+**■ 十一、注意事项**
 
 1. **材料检查**：`KSBlueprint.HasAllMaterials()` 会检查背包和仓库中的物品，以及玩家资源
 2. **槽位管理**：`maxSlotCount` 是已解锁的槽位，`allSlotCount` 是总槽位，超过 `maxSlotCount` 的槽位显示为锁定状态
@@ -616,7 +660,7 @@ speedBtn.visible = false;
 
 ---
 
-## 十二、扩展阅读
+**■ 十二、扩展阅读**
 
 相关系统文档：
 - 物品系统：`KSGoodsController`、`KSGoodsConfigInfo`

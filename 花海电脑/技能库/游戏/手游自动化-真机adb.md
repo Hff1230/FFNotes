@@ -3,20 +3,20 @@ title: 手游自动化-真机adb
 分类: 游戏
 来源技能: mobile-game-automation
 来源路径: C:\Users\hufeifei.JOY\AppData\Local\hermes\skills\tools\mobile-game-automation\SKILL.md
-同步时间: 2026-09-18 18:08
+同步时间: 2026-09-29 09:01
 tags: [技能库, 游戏, adb, android, game-automation, anti-detection, 拟人输入]
 ---
 
 > [!info] 由 Hermes 技能自动导出（只读镜像）
 > 源文件：`C:\Users\hufeifei.JOY\AppData\Local\hermes\skills\tools\mobile-game-automation\SKILL.md`
-> 最后同步：2026-09-18 18:08　|　导出工具：`花海电脑/_工具/sync_skills.py`
+> 最后同步：2026-09-29 09:01　|　导出工具：`花海电脑/_工具/sync_skills.py`
 > 改笔记不会改技能；要改内容请改源 SKILL.md 后重跑导出。
 
-## 技能说明
+**■ 技能说明**
 
 PC 端 adb 驱动手游日常与挂机：拟人输入、横屏坐标、防检测、抢怪档节奏
 
-# mobile-game-automation
+**■ mobile-game-automation**
 
 把「在用户手机上跑手游日常」这类任务做成受控流程：**先定安全边界 → 再校准坐标 → 然后截图驱动 + 拟人输入逐步推进**。
 
@@ -33,7 +33,7 @@ PC 端 adb 驱动手游日常与挂机：拟人输入、横屏坐标、防检测
 > `Skill ... not found in active profile`），`write_file`/`patch` 也必须用
 > **绝对路径** `C:/Users/hufeifei.JOY/AppData/Local/hermes/skills/tools/mobile-game-automation/...` 才生效。
 
-## When to Use
+**■ When to Use**
 
 - 用户要求「帮我在手机（真机/模拟器）上把某个手游的日常/签到/挂机/任务做完」
 - 需要长时间在真机上模拟真人点击/滑动（挂机、自动寻路、循环领奖、重复刷本）
@@ -41,14 +41,14 @@ PC 端 adb 驱动手游日常与挂机：拟人输入、横屏坐标、防检测
 
 不适用：项目内游戏开发调试（Unity/Godot 见对应引擎技能）、纯 adb 系统操作（见 adb-device-control）。
 
-## 用户硬性偏好（默认遵守，不必再问）
+**■ 用户硬性偏好（默认遵守，不必再问）**
 
 - **必须拟人**。用户会明确追加「注意模拟真人操作」。固定坐标、恒定间隔、`input tap` 式瞬时点击都属易识别的机器特征 → 一律走附录 A 的输入层。
 - **进度必须主动报**。长耗时环节（下载/挂机/跑图）要报「在等什么、已等多久、还剩多少、下一步」，给实测数字（MB/s、剩余 MB、预计分钟）。闷着轮询后突然冒结果不可接受。
 - **证据说话**：结论附截图/日志/数字，不用形容词。
 - **阻塞在用户身上立刻说**：「需要你自己输密码」「请把游戏保持前台」——不要让流程静默卡住。
 
-## 安全红线（不可越界）
+**■ 安全红线（不可越界）**
 
 1. **永不代填账号 / 密码 / 短信验证码**。到登录界面一律停手，请用户自己输入；用户回「填好了」后再接管点「登录」。
 2. **白名单按钮**：日常 / 任务 / 自动寻路 / 自动战斗 / 领取 / 确定 / 继续 / 关闭 / 返回 / 背包查看。
@@ -76,7 +76,7 @@ PC 端 adb 驱动手游日常与挂机：拟人输入、横屏坐标、防检测
     - **AI 视觉只在两种情况下用**：① 新界面**首次**语义定性（这屏是干什么的，只用一次）
       ② OCR 完全读不出时（如纯图标面板）。**绝不用它反复量坐标。**
 
-## Procedure
+**■ Procedure**
 
 0. **定范围**：确认游戏名/包名、要做哪些日常；把无法全自动的部分（组队、限时活动、真人对抗）提前说明。
 1. **设备发现**：`adbctl.py env` / `devices`（**多设备在线必须 `--serial`**）；记下 model、系统版本、是否手机在前台。华为机 `ro.product.model` 是内部型号（WLZ-AL10），市场名在 `ro.product.marketname`。
@@ -87,7 +87,7 @@ PC 端 adb 驱动手游日常与挂机：拟人输入、横屏坐标、防检测
 6. **长挂机/自动战斗**：优先用游戏内置的自动寻路/自动战斗，脚本只负责点「自动/继续/确定」并定期确认没被弹窗卡住。巡检间隔 30~60s，别高频截图（占带宽、也像机器）。
 7. **收尾**：关自动战斗、恢复改过的设置（`svc power stayon false`、超时、免打扰），汇报「完成了哪些、哪些没做、为什么」。
 
-## Pitfalls
+**■ Pitfalls**
 
 1. **坐标空间 = 当前旋转，不是 Physical**。华为/多数机 `wm size` 输出 `Physical size: 1080x2400` + `Override size: 720x1600`；游戏横屏后 `dumpsys window displays` 是 `cur=1600x720`，`screencap` 出的 PNG 也是 1600x720（IHDR 实测），uiautomator dump 的 `root rotation=1`。三者同一空间 → **截图像素直接当点击坐标**；按 Physical 缩放会整体偏移。判断旋转：`adb shell dumpsys input | grep SurfaceOrientation`（1/3=横屏，0/2=竖屏）。注意刘海侧 app bounds 可能从 x=90 起，但游戏常整屏绘制 —— 以截图像素为准。
 2. **首启是「两段下载」，且登录框会先弹出来**。倩女幽魂实测：先客户端更新（约 1.5GB）→ 完成后进登录界面，同时底部继续「正在下载重要资源…(x MB / 1388.3MB) 4.9M/s」。别把「一直没进游戏」当卡死：读进度条数字、算 ETA、报给用户；下载与点击互不干扰，可以先登录再等下载。
@@ -161,7 +161,7 @@ PC 端 adb 驱动手游日常与挂机：拟人输入、横屏坐标、防检测
    - 判定挂机是否生效：**读屏幕中央的「挂机中」**（比色/OCR 均可），不要只读按钮标签。
    - 相关坐标：挂机按钮 **(1468,333)**；队伍面板「取消跟随」≈ **(1200,644)**、「召唤跟随」≈ (1030,644)。
 
-## 视觉层算法选型（2026-09-18 实测，脚本 `QnyhAuto/scripts/bench_tolerance.py`）
+**■ 视觉层算法选型（2026-09-18 实测，脚本 `QnyhAuto/scripts/bench_tolerance.py`）**
 
 **结论：用 cv2 `TM_CCOEFF_NORMED` + 信息量门限；不要引入大漠插件。**
 
@@ -182,7 +182,7 @@ PC 端 adb 驱动手游日常与挂机：拟人输入、横屏坐标、防检测
 - **大漠换不掉检测面**：它是 PC 侧视觉工具，点击仍走 adb。`getSource()=SOURCE_UNKNOWN`、
   `getDeviceId()=0`、`pressure=1.0` 等通道特征与视觉工具无关，游戏无需权限即可读。
 
-## 建图（真实截图 → screens.json）
+**■ 建图（真实截图 → screens.json）**
 
 - **素材筛选**：只有 1600×720 全屏原生截图能建图；裁剪/放大图（`crop_*`/`*_3x`/`ocr_*`）尺寸不符须剔除。
 - **全量 OCR 索引是地基**：`scripts/ocr_all.py` 对全部全屏图跑本地 OCR（~1.7s/张，149 张 137s，**零 token**），
@@ -216,25 +216,25 @@ PC 端 adb 驱动手游日常与挂机：拟人输入、横屏坐标、防检测
    - **结论**：该面板无可用 ✕。**不要用「模板匹配硬找 ✕」这类方法关它** —— 高亮的充值入口
      会稳定拿到最高分，必然误点。宁可停下来问用户。
 
-## Verification
+**■ Verification**
 
 ```bash
 CTL=C:/Users/<user>/AppData/Local/hermes/skills/tools/adb-device-control/scripts/adbctl.py
-python "$CTL" env                                 # adb 版本 + 在线设备
-python "$CTL" --serial <S> devices                # state=device
-python scripts/human_input.py check               # 坐标空间 vs 截图尺寸（必须 OK）
-python scripts/human_input.py shot D:/tmp/x.png   # 再用视觉读图判读界面
+python "$CTL" env                                 ＃ adb 版本 + 在线设备
+python "$CTL" --serial <S> devices                ＃ state=device
+python scripts/human_input.py check               ＃ 坐标空间 vs 截图尺寸（必须 OK）
+python scripts/human_input.py shot D:/tmp/x.png   ＃ 再用视觉读图判读界面
 ```
 
 操作闭环：操作 → 截图 → 确认界面变化 → 再下一步。若 `check` 报不一致，先别点：以截图尺寸为准，并在一个**可逆的开关类 UI**（如展开/收起面板）上做一次探针点击确认落点，再继续。
 
-## 附录 A — `scripts/human_input.py`（拟人输入层，零第三方依赖）
+**■ 附录 A — `scripts/human_input.py`（拟人输入层，零第三方依赖）**
 
 存成 `<skill_dir>/scripts/human_input.py` 后即可 `python human_input.py check|size|tap|tapn|swipe|hold|key|shot|pause`。环境变量 `PHONE`=目标 serial（多设备必填）、`ADB`=adb 路径（默认自动解析到 adb-device-control 捆绑的 adb.exe）。
 
 ```python
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+＃!/usr/bin/env python3
+＃ -*- coding: utf-8 -*-
 """拟人化 adb 输入层 —— 以接近真人的方式驱动游戏。
 
 为什么不用 `adb shell input tap`：
@@ -246,7 +246,6 @@ import math, os, random, re, struct, subprocess, sys, tempfile, time
 
 BUNDLED = os.path.join(os.path.expanduser("~"), "AppData", "Local", "hermes", "skills",
                        "tools", "adb-device-control", "scripts", "tools", "adb.exe")
-
 
 def _resolve_adb():
     for c in (os.environ.get("ADB"), BUNDLED, "adb"):
@@ -260,7 +259,6 @@ def _resolve_adb():
                 continue
     raise SystemExit("[human_input] 找不到可用 adb：设 $ADB 或确认 adb-device-control 技能已装")
 
-
 def _resolve_serial():
     s = os.environ.get("PHONE")
     if s:
@@ -272,21 +270,16 @@ def _resolve_serial():
         return ds[0]
     raise SystemExit("[human_input] 在线设备 %d 台，请用 PHONE=<serial> 指定" % len(ds))
 
-
 ADB = _resolve_adb()
 S = _resolve_serial()
-
 
 def _run(args, timeout=60):
     return subprocess.run([ADB, "-s", S] + args, capture_output=True, timeout=timeout)
 
-
 def _txt(args, timeout=60):
     return _run(args, timeout).stdout.decode("utf-8", "ignore")
 
-
 _SCREEN = None
-
 
 def probe(refresh=False):
     """返回 (W, H, rotation)：坐标空间 = 当前旋转后的显示尺寸。
@@ -312,14 +305,12 @@ def probe(refresh=False):
     _SCREEN = (w, h, rot)
     return _SCREEN
 
-
 def _png_size(path):
     with open(path, "rb") as f:
         d = f.read(33)
     if d[:8] != b"\x89PNG\r\n\x1a\n":
         raise SystemExit("[human_input] %s 不是合法 PNG（息屏或截图中断？）" % path)
     return struct.unpack(">II", d[16:24])
-
 
 def check():
     """核心自检：坐标空间 (W,H) 必须 == 截图 PNG 尺寸，否则点击会整体偏移。"""
@@ -334,11 +325,9 @@ def check():
              else "不一致！以截图 %dx%d 为准，勿按 wm size 的 Physical 缩放" % (sw, sh)))
     return 0 if ok else 1
 
-
 def _lognorm(lo, hi, mu):
     x = random.lognormvariate(math.log(mu), 0.55)
     return max(lo, min(hi, x))
-
 
 def human_gap(extra=0.0):
     """两次动作之间的自然间隔；偶发「走神」长停顿，避免恒定节拍。"""
@@ -349,10 +338,8 @@ def human_gap(extra=0.0):
     time.sleep(t)
     return t
 
-
 def _clamp(v, hi):
     return max(2, min(hi - 2, int(round(v))))
-
 
 def tap(x, y, dur=None, jit=9, gap=True):
     """拟人点击：坐标抖动 + 随机按住 45~130ms（零距离 swipe 制造真实 DOWN→UP）。"""
@@ -365,7 +352,6 @@ def tap(x, y, dur=None, jit=9, gap=True):
         human_gap()
     return x, y, d
 
-
 def tapn(x, y, n=2, jit=11, gap=True):
     out = []
     for i in range(n):
@@ -374,12 +360,10 @@ def tapn(x, y, n=2, jit=11, gap=True):
             human_gap(extra=random.uniform(0.15, 0.6))
     return out
 
-
 def _ease(i, n):
     """变速权重：首段慢、中段快、尾段略慢（接近人手）。"""
     t = i / max(1, n - 1)
     return 0.55 + 0.9 * math.sin(math.pi * t) ** 0.7
-
 
 def swipe(x1, y1, x2, y2, dur=None, seg=4, jit=6, gap=True):
     """拟人滑动：拆多段、带轻微侧向弧度、分段变速 —— 不描完美直线。"""
@@ -405,7 +389,6 @@ def swipe(x1, y1, x2, y2, dur=None, seg=4, jit=6, gap=True):
         human_gap()
     return pts
 
-
 def hold(x, y, ms=800, jit=6, gap=True):
     w, h, _ = probe()
     x = _clamp(x + random.uniform(-jit, jit), w)
@@ -415,12 +398,10 @@ def hold(x, y, ms=800, jit=6, gap=True):
         human_gap()
     return x, y
 
-
 def key(k, gap=True):
     _run(["shell", "input", "keyevent", k])
     if gap:
         human_gap()
-
 
 def shot(out, gap=False):
     """截图：先落 /sdcard 再 pull（二进制安全，避免 shell 通道 LF→CRLF 损坏 PNG）。"""
@@ -434,7 +415,6 @@ def shot(out, gap=False):
     if gap:
         human_gap()
     return out
-
 
 if __name__ == "__main__":
     a = sys.argv[1:]
@@ -465,7 +445,7 @@ if __name__ == "__main__":
         print(__doc__)
 ```
 
-## 附录 B — 倩女幽魂手游（`com.netease.l10`）实测记录（目标文件名 `references/netease-l10-qiannvyouhun.md`）
+**■ 附录 B — 倩女幽魂手游（`com.netease.l10`）实测记录（目标文件名 `references/netease-l10-qiannvyouhun.md`）**
 
 只记录**真正验证过**的部分，未验证的列在末尾。
 

@@ -10,9 +10,9 @@ public delegate TResult Func<in T1, in T2, out TResult>(T1 arg1, T2 arg2);
 
 例如，此委托封装了一个具有两个参数并返回参数指定类型的值的方法`TResult`。
 
-## C# Func 简单示例
+＃＃ C＃ Func 简单示例
 
-以下示例是 C#`Func`委托的简单演示。
+以下示例是 C＃`Func`委托的简单演示。
 
 ```csharp
 string GetMessage()
@@ -52,7 +52,7 @@ $ dotnet run
 你好！
 ```
 
-## 以下示例用于`Func`添加值。
+＃＃ 以下示例用于`Func`添加值。
 
 ```csharp
 int Sum(int x, int y) 
@@ -120,9 +120,9 @@ delegate int Add(int x, int y);
 
 `Sum`在此示例中，我们通过自定义委托类型 引用方法。
 
-## 带有 lambda 表达式的 C# Func
+＃＃ 带有 lambda 表达式的 C＃ Func
 
-C# lambda 表达式简化了 C# 的创建`Funcs`。Lambda 表达式是使用`=>`lambda 声明运算符创建的。
+C＃ lambda 表达式简化了 C＃ 的创建`Funcs`。Lambda 表达式是使用`=>`lambda 声明运算符创建的。
 
 程序.cs
 
@@ -133,7 +133,7 @@ Console.WriteLine(randInt(1, 100));
 
 在示例中，我们创建了一个返回随机整数的函数。委托接受随机范围的下限和上限的两个值。
 
-## C# Func Linq 在哪里
+＃＃ C＃ Func Linq 在哪里
 
 许多 Linq 方法将`Func`委托作为参数。例如，该`Where`方法根据谓词过滤一系列值。
 
@@ -178,7 +178,7 @@ bow
 arc
 ```
 
-## C# Func 委托列表
+＃＃ C＃ Func 委托列表
 
 `Func`代表可以放入容器中。
 
@@ -213,7 +213,7 @@ $ dotnet 运行
 1、8、27、64、125
 ```
 
-## C# Func 过滤器数组
+＃＃ C＃ Func 过滤器数组
 
 在示例中，我们使用`Func`过滤用户数组。
 
@@ -266,7 +266,7 @@ User { id = 6 , Name = Albert , City = Bratislava , DateOfBirth = 1940 - 12 - 11
 User { id = 8，姓名 = 罗伯特，城市 = 布拉迪斯拉发，出生日期 = 1935-05-15 }
 ```
 
-## C# Func 按年龄过滤
+＃＃ C＃ Func 按年龄过滤
 
 我们将按年龄过滤列表。
 
@@ -334,7 +334,7 @@ User { id = 6 , Name = Albert , City = Bratislava , DateOfBirth = 1940 - 12 - 11
 User { id = 8，姓名 = 罗伯特，城市 = 布拉迪斯拉发，出生日期 = 1935-05-15 }
 ```
 
-## C# 谓词
+＃＃ C＃ 谓词
 
 `Predicate`是 的一个专业`Func`。可以`Predicate`用`Func`.
 
@@ -404,7 +404,7 @@ User { id = 6 , Name = Albert , City = Bratislava , DateOfBirth = 1940 - 12 - 11
 User { id = 8，姓名 = 罗伯特，城市 = 布拉迪斯拉发，出生日期 = 1935-05-15 }
 ```
 
-## C# 将 Func 作为参数传递
+＃＃ C＃ 将 Func 作为参数传递
 
 在下一个示例中，我们将`Func`委托传递给一个方法。
 
@@ -448,7 +448,7 @@ Lucia Smith，老师
 Thomas Neuwirth，老师
 ```
 
-## C# Func 组合
+＃＃ C＃ Func 组合
 
 我们可以`Funcs`通过链式组合。
 

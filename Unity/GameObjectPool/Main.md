@@ -1,13 +1,10 @@
 ```
 
-
 using System;
 
 using System.Collections.Generic;
 
 using UnityEngine;
-
-  
 
 namespace DayZ
 
@@ -53,8 +50,6 @@ namespace DayZ
 
         }
 
-  
-
         private void ContainerRegister()
 
         {
@@ -63,10 +58,7 @@ namespace DayZ
 
             DayZ.Container.Instance.Register<IPowerManager, PowerManager>();
 
-
         }
-
-  
 
         private void GameHandlerRegister()
 
@@ -78,19 +70,17 @@ namespace DayZ
 
         }
 
-  
-
         private IEnumerator<float> CreateSpriteAndNodes()
 
         {
 
             this.RegisterUIExtensions();
 
-#if GS_TOOL
+＃if GS_TOOL
 
             GSTool.createInstance();
 
-#endif
+＃endif
 
             yield return 1;
 

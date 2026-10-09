@@ -19,8 +19,6 @@ Shader "Unlit/FunnyGPUInstance"
 
         LOD 100
 
-  
-
         //ZWrite Off
 
         Pass
@@ -31,23 +29,17 @@ Shader "Unlit/FunnyGPUInstance"
 
             //第一步： sharder 增加变体使用shader可以支持instance
 
-            #pragma multi_compile_instancing
+            ＃pragma multi_compile_instancing
 
-  
+            ＃pragma vertex vert
 
-            #pragma vertex vert
-
-            #pragma fragment frag
+            ＃pragma fragment frag
 
             // make fog work
 
-            #pragma multi_compile_fog
-
-  
+            ＃pragma multi_compile_fog
 
             include "UnityCG.cginc"
-
-  
 
             UNITY_INSTANCING_BUFFER_START(Props)
 
@@ -57,8 +49,6 @@ Shader "Unlit/FunnyGPUInstance"
 
             UNITY_INSTANCING_BUFFER_END(Props)
 
-  
-
             struct appdata
 
             {
@@ -67,15 +57,11 @@ Shader "Unlit/FunnyGPUInstance"
 
                 float2 uv : TEXCOORD0;
 
-  
-
                 //第二步：instancID 加入顶点着色器输入结构
 
                 UNITY_VERTEX_INPUT_INSTANCE_ID
 
             };
-
-  
 
             struct v2f
 
@@ -93,13 +79,9 @@ Shader "Unlit/FunnyGPUInstance"
 
             };
 
-  
-
             sampler2D _MainTex;
 
             float4 _MainTex_ST;
-
-  
 
             v2f vert (appdata v)
 
@@ -115,13 +97,9 @@ Shader "Unlit/FunnyGPUInstance"
 
                 UNITY_TRANSFER_INSTANCE_ID(v, o);
 
-  
-
                 float phi = UNITY_ACCESS_INSTANCED_PROP(Props, _Phi);
 
                 v.vertex = v.vertex + sin(_Time.y + phi);
-
-  
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
 
@@ -129,13 +107,9 @@ Shader "Unlit/FunnyGPUInstance"
 
                 UNITY_TRANSFER_FOG(o,o.vertex);
 
-  
-
                 return o;
 
             }
-
-  
 
             fixed4 frag (v2f i) : SV_Target
 
@@ -144,8 +118,6 @@ Shader "Unlit/FunnyGPUInstance"
                 //第六步：instanceid在片元的相关设置
 
                 UNITY_SETUP_INSTANCE_ID(i);
-
-  
 
                 //得到由CPU设置的颜色
 

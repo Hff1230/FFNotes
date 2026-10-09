@@ -1,10 +1,10 @@
-# GPUAnimation 模块交接文档
+**■ GPUAnimation 模块交接文档**
 
-## 1. 模块概述
+**■ 1. 模块概述**
 
 GPUAnimation 是一个 Unity GPU 动画系统，通过将蒙皮网格动画烘焙到纹理中，在 GPU 上进行顶点动画播放，避免 CPU 骨骼计算开销。
 
-### 1.1 技术优势
+**▍ 1.1 技术优势**
 
 | 特性 | 说明 |
 |------|------|
@@ -13,7 +13,7 @@ GPUAnimation 是一个 Unity GPU 动画系统，通过将蒙皮网格动画烘�
 | **低 DrawCall** | 相同模型可批处理渲染 |
 | **适用场景** | RTS 游戏、大量同质单位（如小兵、怪物） |
 
-### 1.2 技术原理
+**▍ 1.2 技术原理**
 
 ```
 传统骨骼动画流程:
@@ -26,32 +26,32 @@ GPU动画流程:
 
 ---
 
-## 2. 目录结构
+**■ 2. 目录结构**
 
 ```
 Assets/DevCodeFM/GpuAnimation/
 ├── Editor/
-│   └── BakeBatchEditor.cs          # 动画烘焙编辑器窗口
+│   └── BakeBatchEditor.cs          ＃ 动画烘焙编辑器窗口
 ├── Resources/
 │   └── Shaders/
-│       ├── GPUInstance.shader       # 基础实例化Shader
-│       └── Unlit_GPUAnimation.shader # GPU动画专用Shader
+│       ├── GPUInstance.shader       ＃ 基础实例化Shader
+│       └── Unlit_GPUAnimation.shader ＃ GPU动画专用Shader
 └── Scripts/
-    ├── BakeAniData.cs               # 烘焙数据ScriptableObject
-    └── GPUAnimationPlayer.cs        # 运行时动画播放器
+    ├── BakeAniData.cs               ＃ 烘焙数据ScriptableObject
+    └── GPUAnimationPlayer.cs        ＃ 运行时动画播放器
 ```
 
 ---
 
-## 3. 快速上手
+**■ 3. 快速上手**
 
-### 3.1 烘焙动画（图文教程）
+**▍ 3.1 烘焙动画（图文教程）**
 
-#### 步骤1：打开烘焙窗口
+**· 步骤1：打开烘焙窗口**
 
 打开菜单 `GPUAnimation -> BakeAniData`
 
-#### 步骤2：配置烘焙参数
+**· 步骤2：配置烘焙参数**
 
 ![[Pasted image 20260323151751.png]]
 
@@ -61,7 +61,7 @@ Assets/DevCodeFM/GpuAnimation/
 | **Clips** | 拖拽对应的动画文件进去 |
 | **Renders** | 用于多网格模型（如士兵模型和武器是两个网格），需要把Prefab下所有SkinnedMeshRenderer都拖进去 |
 
-#### 步骤3：模型导入设置
+**· 步骤3：模型导入设置**
 
 ![[Pasted image 20260323152125.png]]
 ![[Pasted image 20260323152146.png]]
@@ -70,7 +70,7 @@ Assets/DevCodeFM/GpuAnimation/
 
 ![[Pasted image 20260323152216.png]]
 
-#### 步骤4：生成资源
+**· 步骤4：生成资源**
 
 点击"创建"按钮，烘焙完成后会在以下目录生成资源：
 
@@ -82,15 +82,15 @@ Assets/DevCodeFM/GpuAnimation/
 | 材质 | `Assets/Art/GpuAnimation/Materials/{ModelName}/{MeshName}.mat` | GPU动画材质 |
 | 预制件 | `Assets/Art/GpuAnimation/Prefabs/{ModelName}.prefab` | 完整预制件 |
 
-### 3.2 使用预制件
+**▍ 3.2 使用预制件**
 
 烘焙完成后，在 `Assets/Art/GpuAnimation/Prefabs/` 下找到生成的预制件，直接拖入场景使用即可。
 
 ---
 
-## 4. 核心类详解
+**■ 4. 核心类详解**
 
-### 4.1 BakeAniData.cs - 烘焙数据容器
+**▍ 4.1 BakeAniData.cs - 烘焙数据容器**
 
 **路径**: `Scripts/BakeAniData.cs`
 
@@ -98,7 +98,7 @@ Assets/DevCodeFM/GpuAnimation/
 
 **功能**: 存储烘焙后的 GPU 动画数据
 
-#### 数据结构
+**· 数据结构**
 
 ```csharp
 public class BakeAniData : ScriptableObject
@@ -114,7 +114,7 @@ public class BakeAniData : ScriptableObject
 }
 ```
 
-#### GpuSkinningAnimClip - 动画剪辑信息
+**· GpuSkinningAnimClip - 动画剪辑信息**
 
 ```csharp
 [Serializable]
@@ -132,7 +132,7 @@ public class GpuSkinningAnimClip
 }
 ```
 
-#### GpuMeshRenderAnimClip - MeshRenderer动画信息
+**· GpuMeshRenderAnimClip - MeshRenderer动画信息**
 
 ```csharp
 [Serializable]
@@ -146,7 +146,7 @@ public class GpuMeshRenderAnimClip
 
 ---
 
-### 4.2 GPUAnimationPlayer.cs - 动画播放器
+**▍ 4.2 GPUAnimationPlayer.cs - 动画播放器**
 
 **路径**: `Scripts/GPUAnimationPlayer.cs`
 
@@ -154,7 +154,7 @@ public class GpuMeshRenderAnimClip
 
 **功能**: 运行时控制 GPU 动画播放
 
-#### 核心属性
+**· 核心属性**
 
 ```csharp
 public class GPUAnimationPlayer : MonoBehaviour
@@ -180,7 +180,7 @@ public class GPUAnimationPlayer : MonoBehaviour
 }
 ```
 
-#### 核心方法
+**· 核心方法**
 
 | 方法 | 参数 | 说明 |
 |------|------|------|
@@ -190,7 +190,7 @@ public class GPUAnimationPlayer : MonoBehaviour
 | `SetColor` | `Color color` | 设置颜色（实例化变色） |
 | `ContainAnimation` | `string aniName` | 检查是否包含动画 |
 
-#### 关键帧事件系统
+**· 关键帧事件系统**
 
 ```csharp
 [System.Serializable]
@@ -209,13 +209,13 @@ player.OnAniKeyFrameEvent.AddListener((p, eventData) => {
 });
 ```
 
-#### 编辑器调试
+**· 编辑器调试**
 
 在 Unity 编辑器中，按数字键 0-9 可快速切换播放对应索引的动画。
 
 ---
 
-### 4.3 BakeBatchEditor.cs - 烘焙编辑器
+**▍ 4.3 BakeBatchEditor.cs - 烘焙编辑器**
 
 **路径**: `Editor/BakeBatchEditor.cs`
 
@@ -225,7 +225,7 @@ player.OnAniKeyFrameEvent.AddListener((p, eventData) => {
 
 **功能**: 将 Animator 动画烘焙为 GPU 动画数据
 
-#### 烘焙参数
+**· 烘焙参数**
 
 | 参数 | 类型 | 说明 |
 |------|------|------|
@@ -234,7 +234,7 @@ player.OnAniKeyFrameEvent.AddListener((p, eventData) => {
 | `renders` | SkinnedMeshRenderer[] | 要烘焙的蒙皮网格渲染器 |
 | `sampleCount` | int | 每个动画的采样帧数（默认100） |
 
-#### 烘焙流程
+**· 烘焙流程**
 
 ```
 1. 遍历所有动画帧，采样 SkinnedMeshRenderer
@@ -246,7 +246,7 @@ player.OnAniKeyFrameEvent.AddListener((p, eventData) => {
 7. 创建预制件包含 MeshRenderer + GPUAnimationPlayer
 ```
 
-#### 纹理格式
+**· 纹理格式**
 
 | 属性 | 值 |
 |------|-----|
@@ -257,15 +257,15 @@ player.OnAniKeyFrameEvent.AddListener((p, eventData) => {
 
 ---
 
-## 5. Shader 详解
+**■ 5. Shader 详解**
 
-### 5.1 Unlit_GPUAnimation.shader
+**▍ 5.1 Unlit_GPUAnimation.shader**
 
 **路径**: `Resources/Shaders/Unlit_GPUAnimation.shader`
 
 **渲染类型**: Unlit（无光照）/ 简单光照
 
-#### Shader 属性
+**· Shader 属性**
 
 ```hlsl
 Properties
@@ -283,7 +283,7 @@ Properties
 }
 ```
 
-#### 实例化属性
+**· 实例化属性**
 
 ```hlsl
 UNITY_INSTANCING_BUFFER_START(Props)
@@ -292,7 +292,7 @@ UNITY_INSTANCING_BUFFER_START(Props)
 UNITY_INSTANCING_BUFFER_END(Props)
 ```
 
-#### 核心顶点着色器逻辑
+**· 核心顶点着色器逻辑**
 
 ```hlsl
 v2f vert(appdata v, uint vid : SV_VertexID)
@@ -304,11 +304,11 @@ v2f vert(appdata v, uint vid : SV_VertexID)
     float y = UNITY_ACCESS_INSTANCED_PROP(Props, _TimeOffset); // 时间偏移作为Y坐标
 
     // 从纹理采样顶点位置
-    #if defined(UNITY_COLORSPACE_GAMMA)
+    ＃if defined(UNITY_COLORSPACE_GAMMA)
         float3 pro = tex2Dlod(_PosTex, float4(x / _VertexCount, y, 0, 0)).xyz;
-    #else
+    ＃else
         float3 pro = pow(tex2Dlod(_PosTex, float4(x / _VertexCount, y, 0, 0)).xyz, 1/2.2f);
-    #endif
+    ＃endif
 
     // 反归一化顶点位置
     v.vertex.xyz = pro * _MaxMeasure.xyz + _MinPos.xyz;
@@ -324,7 +324,7 @@ v2f vert(appdata v, uint vid : SV_VertexID)
 }
 ```
 
-#### 片段着色器光照
+**· 片段着色器光照**
 
 ```hlsl
 fixed4 frag(v2f i) : SV_Target
@@ -339,11 +339,11 @@ fixed4 frag(v2f i) : SV_Target
 }
 ```
 
-#### ShadowCaster Pass
+**· ShadowCaster Pass**
 
 包含阴影投射 Pass，支持实时阴影渲染。
 
-### 5.2 GPUInstance.shader
+**▍ 5.2 GPUInstance.shader**
 
 **路径**: `Resources/Shaders/GPUInstance.shader`
 
@@ -353,9 +353,9 @@ fixed4 frag(v2f i) : SV_Target
 
 ---
 
-## 6. 代码示例
+**■ 6. 代码示例**
 
-### 6.1 基础播放
+**▍ 6.1 基础播放**
 
 ```csharp
 public class Enemy : MonoBehaviour
@@ -381,7 +381,7 @@ public class Enemy : MonoBehaviour
 }
 ```
 
-### 6.2 监听动画事件
+**▍ 6.2 监听动画事件**
 
 ```csharp
 void Start()
@@ -416,13 +416,13 @@ void OnKeyFrame(GPUAnimationPlayer player, GPUAnimationPlayer.AnimEventData even
 }
 ```
 
-### 6.3 配置关键帧事件
+**▍ 6.3 配置关键帧事件**
 
 在 Inspector 中配置 `AnimEventDatas` 列表：
 - AnimName: 动画名称
 - EventFrame: 触发帧数
 
-### 6.4 实例化变色
+**▍ 6.4 实例化变色**
 
 ```csharp
 // 设置颜色（用于区分不同阵营或状态）
@@ -432,7 +432,7 @@ animPlayer.SetColor(new Color(1f, 0.5f, 0.5f, 1f)); // 红色（受伤）
 animPlayer.color = new Vector4(0.5f, 1f, 0.5f, 1f); // 绿色
 ```
 
-### 6.5 GPU 实例化批量生成
+**▍ 6.5 GPU 实例化批量生成**
 
 ```csharp
 using UnityEngine;
@@ -466,7 +466,7 @@ public class UnitSpawner : MonoBehaviour
 }
 ```
 
-### 6.6 检查动画是否存在
+**▍ 6.6 检查动画是否存在**
 
 ```csharp
 if (animPlayer.ContainAnimation("Jump"))
@@ -481,16 +481,16 @@ else
 
 ---
 
-## 7. 性能优化建议
+**■ 7. 性能优化建议**
 
-### 7.1 纹理优化
+**▍ 7.1 纹理优化**
 
 | 建议项  | 说明                                                     |
 | ---- | ------------------------------------------------------ |
 | 纹理大小 | 顶点数 × 总帧数，注意不要超过2048限制，如果真超了看手机性能了，现在好像是4096在手机上也可以带的动 |
 | 压缩格式 | **禁止压缩**，必须使用无压缩格式（RGBA32）                             |
 
-### 7.2 渲染优化
+**▍ 7.2 渲染优化**
 
 | 建议项 | 说明 |
 |--------|------|
@@ -499,13 +499,13 @@ else
 
 ---
 
-## 8. 相关文件清单
+**■ 8. 相关文件清单**
 
 | 文件路径 | 类型 | 说明 |
 |----------|------|------|
-| `Scripts/BakeAniData.cs` | C# Script | 烘焙数据 ScriptableObject |
-| `Scripts/GPUAnimationPlayer.cs` | C# Script | 运行时动画播放器 |
-| `Editor/BakeBatchEditor.cs` | C# Editor | 烘焙编辑器窗口 |
+| `Scripts/BakeAniData.cs` | C＃ Script | 烘焙数据 ScriptableObject |
+| `Scripts/GPUAnimationPlayer.cs` | C＃ Script | 运行时动画播放器 |
+| `Editor/BakeBatchEditor.cs` | C＃ Editor | 烘焙编辑器窗口 |
 | `Resources/Shaders/Unlit_GPUAnimation.shader` | Shader | GPU 动画渲染 Shader |
 | `Resources/Shaders/GPUInstance.shader` | Shader | 基础实例化示例 Shader |
 

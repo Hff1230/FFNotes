@@ -1,6 +1,7 @@
-# LastWar 模块交接文档
+**■ LastWar 模块交接文档**
 
-### 1.2 关卡类型 (ELevelType)
+**▍ 1.2 关卡类型 (ELevelType)**
+
 | 类型 | 说明 |
 |------|------|
 | `Soldier` | 小兵关卡 |
@@ -13,42 +14,43 @@
 
 ---
 
-## 2. 目录结构
+**■ 2. 目录结构**
 
 ```
 Scripts/
-├── Audio/                    # 音频系统
-├── Editor/                   # Unity编辑器扩展
-├── Game/                    # 游戏核心逻辑
-│   ├── Animation/           # 动画系统
-│   ├── Base/                # 基础类
-│   ├── Buff/                # Buff系统
-│   │   ├── BarrelBuff/      # 桶类Buff
-│   │   └── SkillBuff/        # 技能Buff
-│   ├── Interface/            # 接口定义
-│   ├── Monster/              # 怪物系统
-│   │   ├── MonsterSkill/     # 怪物技能
-│   │   │   ├── Skill/        # 具体技能实现
-│   │   │   └── SkillEffect/  # 技能效果
-│   ├── Player/               # 玩家系统
-│   │   ├── Fly/              # 飞行单位
-│   │   ├── Hero/             # 英雄实现（25个英雄）
-│   │   ├── Skill/            # 玩家技能
-│   │   └── Stat/             # 玩家属性
-│   └── Tools/                # 工具类
-│       └── QuadTreeNode/     # 四叉树结构
-├── Scene/                   # 场景管理
-└── UI/                      # 用户界面
-    └── Component/            # UI组件
+├── Audio/                    ＃ 音频系统
+├── Editor/                   ＃ Unity编辑器扩展
+├── Game/                    ＃ 游戏核心逻辑
+│   ├── Animation/           ＃ 动画系统
+│   ├── Base/                ＃ 基础类
+│   ├── Buff/                ＃ Buff系统
+│   │   ├── BarrelBuff/      ＃ 桶类Buff
+│   │   └── SkillBuff/        ＃ 技能Buff
+│   ├── Interface/            ＃ 接口定义
+│   ├── Monster/              ＃ 怪物系统
+│   │   ├── MonsterSkill/     ＃ 怪物技能
+│   │   │   ├── Skill/        ＃ 具体技能实现
+│   │   │   └── SkillEffect/  ＃ 技能效果
+│   ├── Player/               ＃ 玩家系统
+│   │   ├── Fly/              ＃ 飞行单位
+│   │   ├── Hero/             ＃ 英雄实现（25个英雄）
+│   │   ├── Skill/            ＃ 玩家技能
+│   │   └── Stat/             ＃ 玩家属性
+│   └── Tools/                ＃ 工具类
+│       └── QuadTreeNode/     ＃ 四叉树结构
+├── Scene/                   ＃ 场景管理
+└── UI/                      ＃ 用户界面
+    └── Component/            ＃ UI组件
 ```
 
 ---
 
-## 3. 核心类详解
+**■ 3. 核心类详解**
 
-### 3.1 基础类 (Base)
+**▍ 3.1 基础类 (Base)**
 
-#### Unit.cs - 单位基类
+**· Unit.cs - 单位基类**
+
 **路径**: `Scripts/Game/Base/Unit.cs`
 
 **继承关系**: `Unit` -> `NoDisableMono` -> `IDestroy`
@@ -113,7 +115,8 @@ public enum UnitType {
 
 ---
 
-#### UnitStat.cs - 单位属性
+**· UnitStat.cs - 单位属性**
+
 **路径**: `Scripts/Game/Base/UnitStat.cs`
 管理单位的属性（HP、攻击力、防御力、暴击等）。
 里面有三个调试方法
@@ -124,9 +127,10 @@ CauseDamageLog                      这个添加了伤害日志显示
 
 ---
 
-### 3.2 玩家系统 (Player)
+**▍ 3.2 玩家系统 (Player)**
 
-#### Player.cs - 玩家基类
+**· Player.cs - 玩家基类**
+
 **路径**: `Scripts/Game/Player/Player.cs`
 
 **继承关系**: `Player` -> `Unit`
@@ -162,14 +166,16 @@ protected SkillBuff specialEquipSkill; // 专武技能
 
 ---
 
-#### Hero.cs - 英雄基类
+**· Hero.cs - 英雄基类**
+
 **路径**: `Scripts/Game/Player/Hero/Hero.cs`
 
 **继承关系**: `Hero` -> `Player` -> `Unit`
 
 ---
 
-#### ShootPlayer.cs - 射击玩家（小兵）
+**· ShootPlayer.cs - 射击玩家（小兵）**
+
 **路径**: `Scripts/Game/Player/ShootPlayer.cs`
 
 **继承关系**: `ShootPlayer` -> `Player` -> `Unit`
@@ -179,9 +185,10 @@ protected SkillBuff specialEquipSkill; // 专武技能
 ![[Pasted image 20260324111413.png]]
 ---
 
-### 3.3 怪物系统 (Monster)
+**▍ 3.3 怪物系统 (Monster)**
 
-#### Monster.cs - 怪物基类
+**· Monster.cs - 怪物基类**
+
 **路径**: `Scripts/Game/Monster/Monster.cs`
 
 **继承关系**: `Monster` -> `Unit`
@@ -217,9 +224,10 @@ protected SkillBuff specialEquipSkill; // 专武技能
 
 ---
 
-### 3.4 技能系统 (Skill)
+**▍ 3.4 技能系统 (Skill)**
 
-#### SkillBuff.cs - 技能Buff
+**· SkillBuff.cs - 技能Buff**
+
 **路径**: `Scripts/Game/Buff/SkillBuff/SkillBuff.cs`
 
 **继承关系**: `SkillBuff` -> `BuffBase`
@@ -245,7 +253,8 @@ protected SkillBuff specialEquipSkill; // 专武技能
 
 ---
 
-#### LastWarSkillGenteror.cs - 技能生成器
+**· LastWarSkillGenteror.cs - 技能生成器**
+
 **路径**: `Scripts/Game/Player/Skill/LastWarSkillGenteror.cs`
 
 **核心功能**:
@@ -266,9 +275,10 @@ protected SkillBuff specialEquipSkill; // 专武技能
 
 ---
 
-### 3.5 管理器类 (Manager)
+**▍ 3.5 管理器类 (Manager)**
 
-#### GameManager.cs - 游戏管理器
+**· GameManager.cs - 游戏管理器**
+
 **路径**: `Scripts/Scene/GameManager.cs`
 
 **继承关系**: `GameManager` -> `SingletonMono<GameManager>`
@@ -309,7 +319,8 @@ protected SkillBuff specialEquipSkill; // 专武技能
 
 ---
 
-#### PlayerManager.cs - 玩家管理器
+**· PlayerManager.cs - 玩家管理器**
+
 **路径**: `Scripts/Scene/PlayerManager.cs`
 
 **继承关系**: `PlayerManager` -> `SingletonMono<PlayerManager>`
@@ -343,7 +354,8 @@ protected SkillBuff specialEquipSkill; // 专武技能
 
 ---
 
-#### MonsterManager.cs - 怪物管理器
+**· MonsterManager.cs - 怪物管理器**
+
 **路径**: `Scripts/Scene/MonsterManager.cs`
 
 **继承关系**: `MonsterManager` -> `SingletonMono<MonsterManager>`
@@ -370,7 +382,8 @@ protected SkillBuff specialEquipSkill; // 专武技能
 
 ---
 
-#### LevelManager.cs - 关卡管理器
+**· LevelManager.cs - 关卡管理器**
+
 **路径**: `Scripts/Scene/LevelManager.cs`
 
 **继承关系**: `LevelManager` -> `SingletonMono<LevelManager>`
@@ -389,9 +402,10 @@ protected SkillBuff specialEquipSkill; // 专武技能
 
 ---
 
-### 3.6 UI系统
+**▍ 3.6 UI系统**
 
-#### LastWarMainView.cs - 主界面
+**· LastWarMainView.cs - 主界面**
+
 **路径**: `Scripts/UI/LastWarMainView.cs`
 
 **核心功能**:
@@ -419,9 +433,9 @@ protected SkillBuff specialEquipSkill; // 专武技能
 
 ---
 
-## 4. 消息系统
+**■ 4. 消息系统**
 
-### 4.1 消息常量 (LastWarHelper.cs)
+**▍ 4.1 消息常量 (LastWarHelper.cs)**
 
 ```csharp
 // 伤害和血量相关
@@ -449,7 +463,7 @@ LASTWAR_MSG_HERO_DROP_DOWN    // 英雄下阵
 LASTWAR_MSG_HERO_ENTERFREEBOSSAREA  // 进入自由Boss区域
 ```
 
-### 4.2 消息使用示例
+**▍ 4.2 消息使用示例**
 
 ```csharp
 // 发送消息
@@ -461,9 +475,9 @@ Global.addNotifyObserver(this, OnDamageHandler, LastWarHelper.LASTWAR_MSG_REDUCE
 
 ---
 
-## 5. 对象池系统
+**■ 5. 对象池系统**
 
-### 5.1 获取对象
+**▍ 5.1 获取对象**
 
 ```csharp
 // 获取对象（会禁用后再启用）
@@ -473,7 +487,7 @@ GameObject obj = LastWarHelper.GetGameObject(path, position, rotation);
 GameObject obj = LastWarHelper.GetGameObjectNoDisable(path, position, rotation);
 ```
 
-### 5.2 回收对象
+**▍ 5.2 回收对象**
 
 ```csharp
 // 回收对象（会禁用）
@@ -483,7 +497,7 @@ LastWarHelper.RecycleGameObject(obj, path);
 LastWarHelper.RecycleGameObjectNoDisable(obj, path);
 ```
 
-### 5.3 预加载
+**▍ 5.3 预加载**
 
 ```csharp
 // 协程预加载
@@ -492,9 +506,9 @@ StartCoroutine(LastWarHelper.IEPreLoadGameObjectNoDisable(path, count, frameNums
 
 ---
 
-## 6. 配置表依赖
+**■ 6. 配置表依赖**
 
-### 6.1 核心配置表
+**▍ 6.1 核心配置表**
 
 | 配置表类 | 说明 |
 |----------|------|
@@ -504,7 +518,7 @@ StartCoroutine(LastWarHelper.IEPreLoadGameObjectNoDisable(path, count, frameNums
 | `Lastwar_skill` | 技能配置 |
 | `Lastwar_buff` | Buff配置 |
 
-### 6.2 获取配置数据
+**▍ 6.2 获取配置数据**
 
 ```csharp
 // 通过ID获取配置
@@ -513,9 +527,10 @@ Lastwar_hero config = LastWarHelper.GetDataWithTypeById<Lastwar_hero>(heroId);
 
 ---
 
-## 7. 工具类
+**■ 7. 工具类**
 
-### 7.1 Tools.cs
+**▍ 7.1 Tools.cs**
+
 **路径**: `Scripts/Game/Tools/Tools.cs`
 
 提供各种静态工具方法：
@@ -523,36 +538,37 @@ Lastwar_hero config = LastWarHelper.GetDataWithTypeById<Lastwar_hero>(heroId);
 - 士兵位置计算
 - 怪物位置偏移计算
 
-### 7.2 QuadTreeManager.cs
+**▍ 7.2 QuadTreeManager.cs**
+
 **路径**: `Scripts/Game/Tools/QuadTreeNode/QuadTreeManager.cs`
 
 四叉树空间索引，用于快速查找范围内的怪物。
 
 ---
 
-## 8. 扩展指南
+**■ 8. 扩展指南**
 
-### 8.1 添加新英雄
+**▍ 8.1 添加新英雄**
 
 1. 在 `Scripts/Game/Player/Hero/` 下创建新英雄类，继承 `Hero` 或 `Player`
 2. 重写需要自定义的方法
 3. 创建对应的预制体，挂载脚本
 4. 配置 `Lastwar_hero` 表
 
-### 8.2 添加新怪物
+**▍ 8.2 添加新怪物**
 
 1. 在 `Scripts/Game/Monster/` 下创建新怪物类，继承 `Monster`
 2. 重写移动、攻击等方法
 3. 创建对应的预制体，挂载脚本
 4. 配置 `Lastwar_monster` 表
 
-### 8.3 添加新技能
+**▍ 8.3 添加新技能**
 
 1. 配置 `Lastwar_skill` 表
 2. 创建技能特效预制体，挂载 `LastWarFlySkill` 组件
 3. 配置技能移动类型和伤害类型
 
-### 8.4 添加新关卡
+**▍ 8.4 添加新关卡**
 
 1. 配置 `Lastwar_scene` 表
 2. 设置关卡类型 (`levelType`)
@@ -561,9 +577,9 @@ Lastwar_hero config = LastWarHelper.GetDataWithTypeById<Lastwar_hero>(heroId);
 
 ---
 
-## 9. 注意事项
+**■ 9. 注意事项**
 
-### 9.1 性能优化
+**▍ 9.1 性能优化**
 
 1. **分帧加载**: 大量对象创建时使用分帧加载
    ```csharp
@@ -575,7 +591,6 @@ Lastwar_hero config = LastWarHelper.GetDataWithTypeById<Lastwar_hero>(heroId);
 3. **四叉树**: 怪物查找使用四叉树优化
 
 4. **视野剔除**: 怪物渲染根据距离相机位置动态开关
-
 
 路径
 ![[Pasted image 20260323153848.png]]
