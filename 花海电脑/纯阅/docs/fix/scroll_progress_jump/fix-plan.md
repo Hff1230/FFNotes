@@ -292,10 +292,12 @@ FIX-000 取证（独占，阻断闸）
 **□ FIX-002b 索引稳定化 + 同源块高度量（2026-10-14 复核新增 · A/C 的共同前提）**
 
 - 任务ID：FIX-002b　级别：**P0**　影响模块：列表/目录数据源、块高计算　依赖：**FIX-000**　风险：低
-- **问题描述**（依据 `docs/review/2026-10-14-口径复核与处置.md` §二，均为真源码核实）：
-  ① 正文/目录 `LazyForEach` **未写 `keyGenerator`**（默认 index 作 key）⇒ 补章/换源导致块增减时**索引系统性错位**，而 FIX-002 的整条映射链建立在"项索引"上；
-  ② 工程内**没有任何与渲染同源的块高计算**（`childrenMainSize` 0 处）⇒ FIX-003 的"精确尺寸"前提不成立。
-- **修复方案**：① 给 `LazyForEach` 显式 `keyGenerator`（键含「章号 + 块序号」，**禁 `stringify`**）；② 用 `@kit.ArkGraphics2D` 的 `Paragraph.layout()` + `getLineMetrics()` 实现与渲染同源的块高度量（改字号/行距时同步更新）。
+- **问题描述**（依据 `docs/review/2026-10-14-口径复核与处置.md` §二；**① 已于 2026-10-14 更正**）：
+  ① ~~正文/目录 `LazyForEach` 未写 `keyGenerator`~~ → **更正：两个 LazyForEach 都已有显式 key**（目录 `ch_${item.index}`、正文块 `${winKey}_${i}`），代码注释明确「**一律不动**：改 key 会重建 item、位置会漂」；首次复核是误报（只 grep 了 `keyGenerator` 字样）。
+  ② 工程内**没有任何与渲染同源的块高计算**（`childrenMainSize` 0 处），块高走 `Paginator.linesOf(...) × 行高` 的估算 ⇒ FIX-003 的"精确尺寸"前提不成立。
+- **修复方案**：① **保持 key 不动**（仅此一条，别改）；② 用 `@kit.ArkGraphics2D` 的 `Paragraph.layout()` + `getLineMetrics()` 实现与渲染同源的块高度量（改字号/行距时同步更新）。
+- **✅ 已完成（2026-10-14 虾米）**：目录行抽成 `CatalogRow`（@Reusable）、目录 `cachedCount` 2→5；正文块**刻意不加** @Reusable（听书高亮三段 Span + @Prop 传数组深拷贝、复用可能残留高亮；key 又被固定，收益小风险大）。模拟器已验证目录 1385 行渲染正常、无空白/残留行。
+- **剩余（未做）**：② 同源块高度量。**先评估再动**——当前估算与真实排版实测只差 ~1%（`place fix` 日志的 ratio ≈0.99），而块高直接喂给位置换算（落位/自校准），收益小、红线风险实在。
 - **输出**：修改后的 `Reader.ets` / `ChapterDataSource.ets`（或新增块高模块）+ 说明。
 - **验收标准（不含测试）**：
   - [ ] `keyGenerator` 显式且键稳定（同样数据两次渲染键一致）
