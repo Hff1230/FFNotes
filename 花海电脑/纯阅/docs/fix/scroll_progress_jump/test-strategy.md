@@ -1,9 +1,11 @@
 ---
 title: 纯阅 · 验证测试策略初稿（滚动进度跳动修复）
 项目: 纯阅（HuaweiReader）
-类型: 测试策略初稿（用于后续详细测试文档）
+类型: 专项修复
+所有者: 桌面会话（试用新版纯阅）
+更新: 2026-10-14
+状态: ⬜ 未实施（判据以 04 为准）
 问题ID: ISSUE-READER-PROGRESS-JUMP
-生成时间: 2026-10-14
 关联修复方案: docs/fix/scroll_progress_jump/fix-plan.md
 ---
 
