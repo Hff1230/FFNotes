@@ -106,16 +106,42 @@ function validatePlay(cards) {
         }
         if (valid && pairValues.length >= 3) {
             pairValues.sort((a, b) => a - b);
-            let isSequence = true;
-            for (let i = 1; i < pairValues.length; i++) {
-                if (pairValues[i] - pairValues[i - 1] !== 1) {
-                    isSequence = false;
-                    break;
+            const isConsecutive = (vals) => {
+                for (let i = 1; i < vals.length; i++) {
+                    if (vals[i] - vals[i - 1] !== 1) return false;
                 }
-            }
-            if (isSequence) {
+                return true;
+            };
+            if (isConsecutive(pairValues)) {
                 return { valid: true, type: 'pairStraight', value: pairValues[pairValues.length - 1], length: pairValues.length };
             }
+            // FIX-011(A作1)：AA2233 = 1,2,3（与服务端 pairPatterns 补 [14,2,3] 同源）
+            if (pairValues.indexOf(14) !== -1 && pairValues.indexOf(14) === pairValues.lastIndexOf(14)) {
+                const asOne = pairValues.map(v => (v === 14 ? 1 : v)).sort((a, b) => a - b);
+                if (isConsecutive(asOne)) {
+                    return { valid: true, type: 'pairStraight', value: asOne[asOne.length - 1], length: pairValues.length };
+                }
+            }
+        }
+    }
+
+    // 飞机：2组连续三张（A可作1：AAA222 即 [14,2]，与服务端 planePatterns 同源）
+    if (cards.length === 6) {
+        const counts = {};
+        cards.forEach(c => counts[c.value] = (counts[c.value] || 0) + 1);
+        const tripleVals = Object.keys(counts).filter(k => counts[k] >= 3).map(Number).sort((a, b) => a - b);
+        const isRun = (vals) => {
+            for (let i = 1; i < vals.length; i++) {
+                if (vals[i] - vals[i - 1] !== 1) return false;
+            }
+            return true;
+        };
+        if (tripleVals.length === 2 && isRun(tripleVals)) {
+            return { valid: true, type: 'plane', value: tripleVals[1], length: 2 };
+        }
+        // A(14) 作 1：AAA222 三元组为 {2,14}，视为连续 {1,2}
+        if (tripleVals.length === 2 && tripleVals[0] === 2 && tripleVals[1] === 14) {
+            return { valid: true, type: 'plane', value: 2, length: 2 };
         }
     }
 

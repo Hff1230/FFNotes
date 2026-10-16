@@ -8,6 +8,57 @@ const WebSocket = require('ws');
 
 const PORT = 8081;
 
+// ==================== FIX-002: 连接与消息硬上限（可调常量） ====================
+// ws 的 maxPayload 默认 100MiB（ws 文档默认 104857600）——局域网小游戏不需要这么大。
+// OWASP WebSocket Cheat Sheet 的建议值是 64KB；但观战/重连会下发含「全部手牌」的大帧，
+// 上限过小会把正常大广播踢成 1009 关闭，所以先取 256KB 留余量。
+//   ▶ 先量后定（离线构造的真实形状量测，2026-10-16）：
+//       全场状态+全手牌(4 家 x 27 张, 观战/重连最坏帧) = 11.1 KB
+//       roundEnd 结算广播 = 0.3 KB；仅 4 家手牌数组 = 9.7 KB
+//       → 最大单帧 ≈11 KB，256KB 上限余量 ≈23x；64KB（OWASP 值）余量也有 ≈5.7x。
+//   ▶ 收紧到 64KB 的判据与做法（需实机复测运行峰值，别只看离线值）：
+//       a) 在 wss.on('connection') 的 message 入口临时打印 msg.length；或
+//       b) 在 broadcast() 里统计 JSON.stringify 后的字节数峰值（含观战/重连下发）；
+//       c) 实机峰值若仍 < 32KB，即可把 MAX_WS_PAYLOAD_BYTES 收紧到 64 * 1024（OWASP 建议值）。
+const MAX_WS_PAYLOAD_BYTES = 256 * 1024;   // 单帧硬上限（先 256KB，实测后可收紧到 64KB）
+const MAX_ROOMS = 200;                     // 房间数上限（rooms 是单进程内存态 Map）
+const MAX_CONNECTIONS = 200;               // 同时在线连接数上限（含观战连接）
+const MSG_RATE_PER_MINUTE = 100;           // 每连接消息频率上限（OWASP 起点：100 条/分钟）
+const MSG_RATE_BURST = 60;                 // 令牌桶突发容量（够一局内正常出牌/聊天连发）
+const MSG_RATE_REFILL_PER_SEC = MSG_RATE_PER_MINUTE / 60; // 令牌补充速率 ≈1.667 个/秒
+
+// ==================== FIX-009: 用户输入清洗 / 转义 ====================
+// 昵称、聊天等一切「用户可控文本」在**入口**统一清洗：限长 + 去控制字符（NUL/CR/LF、
+// 零宽字符、双向控制符等），避免超长串打爆广播帧、控制字符污染终端日志与前端布局。
+const MAX_NAME_LEN = 16;   // 昵称上限
+const MAX_CHAT_LEN = 200;  // 聊天单条上限
+
+function sanitizeText(text, maxLen = MAX_NAME_LEN) {
+    if (text === null || text === undefined) return '';
+    let s = String(text);
+    // ① 换行/制表等「空白类」控制字符折成单个空格（避免把两个词粘成一个）
+    s = s.replace(/[\r\n\t\v\f\u0085\u2028\u2029]+/g, ' ');
+    // ② 其余控制字符（C0/C1）与零宽/双向控制符直接删除（保留可打印字符与 emoji）
+    s = s.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F\u200B-\u200F\u202A-\u202E\u2066-\u2069\uFEFF]/g, '');
+    // ③ 折叠连续空格 → trim → 限长
+    s = s.replace(/ {2,}/g, ' ').trim();
+    if (s.length > maxLen) s = s.slice(0, maxLen);
+    return s;
+}
+
+// HTML 转义：作用在**出线那一层**（见 chat 广播）。转义后线路上就是 HTML 失活文本，
+// 任何消费者（含不许改的老页面 / 非本客户端）拿到都不会执行 —— 与客户端的 textContent
+// 构成两层防护（客户端只对自己的渲染负责，服务端对这串字节负责）。
+function escapeHtml(text) {
+    if (text === null || text === undefined) return '';
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 // ==================== HTTP服务器 ====================
 const server = http.createServer((req, res) => {
     console.log(`HTTP请求: ${req.url}`);
@@ -36,12 +87,492 @@ const server = http.createServer((req, res) => {
 });
 
 // ==================== WebSocket服务器 ====================
-const wss = new WebSocket.Server({ server });
+// FIX-006: 改 noServer —— 握手鉴权必须自持 server.on('upgrade')（ws 官方推荐，verifyClient 已弃用）。
+// maxPayload 上限（FIX-002）与 clientTracking 等行为不变，只是握手改由下方 upgradeAuth 把关。
+// FIX-012b: wss 的构造与事件挂载抽成 createWebSocketServer() —— 同进程原地重启必须
+// 「关掉旧 wss → 重新 new 一个」（WebSocket.Server 一旦 close 就不能再复用），
+// 所以这里改为 let，并把连接处理器写成具名函数 onWsConnection（函数声明提升，下方定义）。
+let wss = createWebSocketServer();
+
+function createWebSocketServer() {
+    const s = new WebSocket.Server({ noServer: true, maxPayload: MAX_WS_PAYLOAD_BYTES });
+    s.on('connection', onWsConnection);
+    // 心跳定时器随 wss 生命周期收口：wss 关闭即停表（原地重启时会重新挂一张新表）
+    s.on('close', () => {
+        if (heartbeatTimer) { clearInterval(heartbeatTimer); heartbeatTimer = null; }
+    });
+    return s;
+}
+
+// ==================== FIX-006: 握手(upgrade)阶段鉴权与绑定 ====================
+// ws 官方明确不推荐已弃用的 verifyClient，推荐在 server.on('upgrade') 里做鉴权（方案 A）。
+// 浏览器 WebSocket 构造函数**不能自定义请求头**，所以令牌只能放在握手 URL 的查询串里。
+// 决策（完整结论见台账「协议变更说明」）：
+//   ① 无 token          → 放行。过渡窗口：首次 createRoom/joinRoom 之前本来就没有令牌。
+//   ② token 格式非法     → 401 + socket.destroy()（伪造令牌的硬拒绝路径）。
+//   ③ 格式合法但未登记   → 放行并标记 stale。原因：本工程 nodemon 每次保存源码都重启，内存态
+//      令牌必然全部失效；若此处也硬 401，客户端会陷入「连不上 → 自动重连 → 又 401」的死循环，
+//      页面永远回不来。真正的拒绝发生在 reconnect（AUTH_FAILED，且不下发任何手牌）与动作鉴权。
+//   ④ Origin            → 只记录、不拒绝（Origin 不是安全边界且可伪造；file:// 页面本就连不上
+//      ws://（构造函数同步抛错、客户端已弹红条拦截）；局域网 IP 访问的 Origin 需枚举本机全部 IP，
+//      白名单极易误杀正常用户。真正的门禁是令牌 + ws↔身份绑定）。
+function upgradeAuth(req) {
+    const origin = (req.headers && req.headers.origin) ? req.headers.origin : null;
+    let q = {};
+    try {
+        const u = new URL(req.url || '/', 'http://localhost');
+        q = Object.fromEntries(u.searchParams.entries());
+    } catch (e) { q = {}; }
+    const token = (typeof q.token === 'string' && q.token) ? q.token : null;
+    if (!token) return { ok: true, mode: 'anon', origin, token: null, ident: null };
+    if (!UUID_RE.test(token)) {
+        return { ok: false, code: 'BAD_TOKEN_FORMAT', message: '令牌格式非法', origin, token };
+    }
+    const ent = sessionTokens.get(token);
+    if (!ent) return { ok: true, mode: 'stale-token', origin, token, ident: null };
+    return {
+        ok: true, mode: 'token', origin, token,
+        ident: { type: ent.type, id: ent.id, roomId: ent.roomId }
+    };
+}
+
+server.on('upgrade', (req, socket, head) => {
+    const gate = upgradeAuth(req);
+    if (!gate.ok) {
+        console.log(`⛔ 握手被拒(${gate.code}): url=${req.url} origin=${gate.origin || 'null'}`);
+        try {
+            socket.write('HTTP/1.1 401 Unauthorized\r\nConnection: close\r\nContent-Length: 0\r\n\r\n');
+        } catch (e) { /* socket 可能已断 */ }
+        socket.destroy();
+        return;
+    }
+    if (gate.mode === 'token') {
+        console.log(`✅ 握手鉴权通过: ${gate.ident.type} ${gate.ident.id} @ ${gate.ident.roomId} origin=${gate.origin || 'null'}`);
+    } else if (gate.mode === 'stale-token') {
+        console.log(`⚠️ 握手放行(令牌未登记/已过期，将在 reconnect 阶段拒绝): origin=${gate.origin || 'null'}`);
+    }
+    wss.handleUpgrade(req, socket, head, (ws) => {
+        ws.__upgradeAuth = gate;
+        wss.emit('connection', ws, req);
+    });
+});
+
+
 
 // 游戏房间管理
 const rooms = new Map();
 const playerToRoom = new Map();
 let roomCounter = 0; // 房间计数器
+
+// ==================== FIX-004: 房间/连接生命周期基座 ====================
+// 包间号池：自定义号与自增号共用同一集合，保证任意时刻 tableNumber 全局唯一。
+// （原实现里自增计数器 roomCounter 与自定义号互不知情，会出现两个同号房间。）
+const usedTableNumbers = new Set();
+const HEARTBEAT_INTERVAL_MS = 30000; // 心跳周期（ws 官方 FAQ 推荐 30s）
+
+// 房间级定时器登记表：任何绑定到房间的 setInterval/setTimeout 都必须经此登记，
+// 以便 destroyRoom 一次性全部清理（避免定时器在房间已销毁后继续广播）。
+function registerTimer(room, kind, fn, ms, repeat = false) {
+    const handle = repeat ? setInterval(fn, ms) : setTimeout(fn, ms);
+    if (room) {
+        if (!room.timers) room.timers = new Set();
+        if (!room.timersByKind) room.timersByKind = { turn: null, deal: null, takeover: null };
+        room.timers.add(handle);
+        if (kind) room.timersByKind[kind] = handle;
+    }
+    return handle;
+}
+
+// 注销单个已登记句柄（clearTimeout/clearInterval 在 Node 中可互换使用）
+function unregisterTimer(room, handle) {
+    if (!handle) return;
+    clearTimeout(handle);
+    clearInterval(handle);
+    if (room) {
+        if (room.timers) room.timers.delete(handle);
+        if (room.timersByKind) {
+            for (const k of Object.keys(room.timersByKind)) {
+                if (room.timersByKind[k] === handle) room.timersByKind[k] = null;
+            }
+        }
+    }
+}
+
+// 清空房间上登记的全部定时器（销毁房间的第一步）
+function clearRoomTimers(room) {
+    if (!room) return;
+    if (room.timers) {
+        for (const h of Array.from(room.timers)) {
+            clearTimeout(h);
+            clearInterval(h);
+        }
+        room.timers.clear();
+    }
+    if (room.timersByKind) {
+        room.timersByKind.turn = null;
+        room.timersByKind.deal = null;
+        room.timersByKind.takeover = null;
+    }
+    room.turnTimer = null;
+}
+
+// 包间号是否已被占用（号池 + 现存房间双查，防两表漂移）
+function isTableNumberTaken(n) {
+    if (n === null || n === undefined) return false;
+    if (usedTableNumbers.has(n)) return true;
+    for (const room of rooms.values()) {
+        if (room.tableNumber === n) return true;
+    }
+    return false;
+}
+
+// 唯一包间号分配入口：自定义号直接入池；自动号跳过所有已占号（含自定义号与空洞号）
+function allocTableNumber(customTableNumber = null) {
+    if (customTableNumber) {
+        usedTableNumbers.add(customTableNumber);
+        if (customTableNumber > roomCounter) roomCounter = customTableNumber;
+        return customTableNumber;
+    }
+    let n = roomCounter;
+    do { n += 1; } while (isTableNumberTaken(n));
+    roomCounter = n;
+    usedTableNumbers.add(n);
+    return n;
+}
+
+// 释放包间号（房间销毁时调用）
+function releaseTableNumber(n) {
+    if (n) usedTableNumbers.delete(n);
+}
+
+// FIX-004: 统一解散判据 —— 「无在线真人玩家 ∧ 无在线观战者」。
+// 注意：allPlayersAreAI() 只表示「AI 是否接管完毕」，不再单独决定解散
+//（原实现用它判解散 → 有在线观战者时房间被静默销毁）。
+function isRoomDisposable(room) {
+    if (!room) return true;
+    const hasLiveHuman = Array.from(room.players.values())
+        .some(p => !p.isAI && p.ws && p.ws.readyState === WebSocket.OPEN);
+    if (hasLiveHuman) return false;
+    const hasLiveSpectator = Array.from(room.spectators.values())
+        .some(s => s.ws && s.ws.readyState === WebSocket.OPEN);
+    if (hasLiveSpectator) return false;
+    return true;
+}
+
+// FIX-005(2): 局面是否处于「对局中且未结算」。
+// 优先用显式 phase（FIX-008 引入后自动接管），否则用 gameState 派生：
+//   started=true（对局中）∧ 未结算（roundWinner/levelUp 均未写入）。
+// 接管回调据此避免在结算/新局期产生 AI 接管副作用（修 A-17）。
+function isRoomInPlay(room) {
+    if (!room) return false;
+    if (typeof room.phase === 'string') return room.phase === 'playing';
+    const gs = room.gameState;
+    if (!gs || !gs.started) return false;
+    if (gs.roundWinner || gs.levelUp) return false; // 已结算（roundEnd）
+    return true;
+}
+
+// FIX-005: 断线等待重连的宽限期 —— 超过该时间仍未回连就不再视为「房间必须保留」，
+// 防止「断线后房间永久滞留」（FIX-004 台账已预留此改法给 FIX-005）。
+const RECONNECT_GRACE_MS = 60000;
+
+// 房间是否还挂着「等待重连的真人」：这类房间在线真人为 0，但不该被解散。
+function hasPendingReconnect(room) {
+    if (!room) return false;
+    const now = Date.now();
+    const withinGrace = (p) => !p.disconnectTime || now - p.disconnectTime < RECONNECT_GRACE_MS;
+    return Array.from(room.players.values()).some(p =>
+        // ①（原口径）真人已断线、本人尚未回来（还没到 30 秒接管点）。
+        (!p.isAI && p.disconnected && !p.ws && withinGrace(p)) ||
+        // ② FIX-B8-1(F1): 原本是真人、已被 AI 接管（wasHuman）—— 「被接管」不等于「人不要了」。
+        //    只要仍在同一个 60 秒宽限窗口内（以本人断线时刻 disconnectTime 起算），房间就必须保留，
+        //    原主人才能凭 token 认领回原座位与手牌。超出宽限后本项自动失效 → 房可被正常回收
+        //    （不会治出僵尸房）。原实现的 ① 在接管瞬间就为假（isAI 已置 true）→ 宽限守卫失效。
+        (p.isAI && p.wasHuman === true && !p.ws && !!p.disconnectTime &&
+            now - p.disconnectTime < RECONNECT_GRACE_MS));
+}
+
+// 唯一的房间销毁函数（收口）：清定时器 → 清 playerToRoom 全部匹配 → 释放包间号
+// → rooms.delete → 广播 roomList。
+function destroyRoom(roomId, reason = '') {
+    const room = rooms.get(roomId);
+    const hadRoom = !!room;
+    if (room) {
+        clearRoomTimers(room);
+        releaseTableNumber(room.tableNumber);
+    }
+    // 即便房间已不在，也要清掉可能残留的身份映射（保底，防内存泄漏）
+    for (const [pid, rid] of Array.from(playerToRoom.entries())) {
+        if (rid === roomId) playerToRoom.delete(pid);
+    }
+    // FIX-006: 房间销毁 → 该房间下发的全部会话令牌一并吊销（令牌不跨房间存活）
+    const revokedTokens = revokeRoomTokens(roomId);
+    if (revokedTokens) console.log(`🔑 已吊销房间 ${roomId} 的 ${revokedTokens} 个会话令牌`);
+    if (hadRoom) {
+        rooms.delete(roomId);
+        broadcastRoomList();
+        console.log(`🧹 房间销毁: 包间${room.tableNumber}(${roomId})${reason ? ' - ' + reason : ''}`);
+    }
+    return hadRoom;
+}
+// 兼容 fix-plan 中的命名（disposeRoom 与 destroyRoom 是同一实现）
+const disposeRoom = destroyRoom;
+
+// 解散判据的带守卫版本：满足 isRoomDisposable 且无「等待重连的真人」时才真正销毁。
+// (a) close 之后、(b) 回合/对局结束时、(c) 撞号回收 —— 三处统一走这里。
+function maybeDestroyRoom(roomId, reason = '') {
+    const room = rooms.get(roomId);
+    if (!room) return false;
+    if (!isRoomDisposable(room)) return false;
+    if (hasPendingReconnect(room)) return false;
+    return destroyRoom(roomId, reason);
+}
+
+// FIX-004: 单身份约束 —— 同一 ws 再次 createRoom/joinRoom/spectateRoom 前先解绑它
+// 此前挂载的身份，绝不让一个连接同时挂在多个房间的 players/playerToRoom 上。
+// 返回受影响的房间 id 集合（调用方决定是否回收因此变空的房间）。
+function detachWsIdentity(ws) {
+    const affected = new Set();
+    for (const [pid, rid] of Array.from(playerToRoom.entries())) {
+        const room = rooms.get(rid);
+        if (!room) { playerToRoom.delete(pid); continue; }
+        const p = room.players.get(pid);
+        const s = room.spectators.get(pid);
+        if (p && p.ws === ws) {
+            room.players.delete(pid);
+            playerToRoom.delete(pid);
+            affected.add(rid);
+            // FIX-006: 座位被解绑 → 该座位的会话令牌一并吊销
+            revokeSessionToken(pid, rid);
+            console.log(`🔀 单身份约束：解绑旧玩家身份 ${p.name} @ ${rid}`);
+        } else if (s && s.ws === ws) {
+            room.spectators.delete(pid);
+            playerToRoom.delete(pid);
+            affected.add(rid);
+            // FIX-006: 座位被解绑 → 该座位的会话令牌一并吊销
+            revokeSessionToken(pid, rid);
+            console.log(`🔀 单身份约束：解绑旧观战身份 ${s.name} @ ${rid}`);
+        }
+    }
+    for (const rid of affected) {
+        const room = rooms.get(rid);
+        if (room) room.broadcastPlayerList();
+    }
+    // FIX-006: 真的解绑过身份 → 清掉该连接上的旧绑定（调用方随后会重新 bind）
+    if (affected.size) ws.__identity = null;
+    return affected;
+}
+
+// FIX-005: 「断线 → 30 秒 AI 接管」的唯一挂载入口。
+// 句柄同时登记到 room.timers（房间销毁即取消）与 player.takeoverTimer（可按座位单独取消，
+// 解决 FIX-004 单槽 timersByKind.takeover 在多人同时断线时互相覆盖、无法精确取消的问题）。
+// 回调执行前**二次复查**（三重复查）：① 房间仍在 ② 局面仍在对局中且未结算 ③ 该玩家仍未回连；
+// 任一不满足即放弃接管（修 A-17：回合已结束/房间已删仍把真人永久改 AI）。
+function armTakeoverTimer(room, playerId, ms = 30000) {
+    if (!room) return null;
+    const player = room.players.get(playerId);
+    if (!player || player.isAI) return null;
+    if (player.takeoverTimer) return player.takeoverTimer; // 已在等待，不重复挂
+    player.takeoverTimer = registerTimer(room, 'takeover', () => {
+        player.takeoverTimer = null;
+        // ① 房间仍在（未被销毁）
+        if (rooms.get(room.id) !== room) return;
+        // ② 局面仍在对局中且未结算
+        if (!isRoomInPlay(room)) return;
+        // ③ 该玩家仍未回连
+        const p = room.players.get(playerId);
+        if (!p || p.isAI || !p.disconnected || p.ws) return;
+
+        const baseName = p.name.replace('🤖 ', '');
+        console.log(`${baseName} 超时未重连，由AI接管`);
+        p.isAI = true;
+        p.wasHuman = true;       // 标记「原真人座位」→ 本人日后回连可认领（见 findReconnectSeat）
+        p.disconnected = false;
+        // FIX-B8-1(F1): 不再清空 disconnectTime —— 宽限期以「本人断线时刻」起算，
+        // 30 秒接管之后仍要保留该时间戳，hasPendingReconnect 的 ② 项才能算出剩余宽限，
+        // 房间才会继续保留到断线后第 60 秒（原实现清空 → 接管瞬间宽限守卫失效 → 房被立刻回收，
+        // 35 秒回连得到「房间不存在」）。takeoverAt 仅作排查用。
+        p.takeoverAt = Date.now();
+        p.name = '🤖 ' + baseName;
+        p.ready = true;
+
+        room.broadcast({
+            type: 'playerReplacedByAI',
+            playerId,
+            playerName: p.name,
+            message: `${baseName} 超时未重连，由AI接管`
+        });
+        room.broadcastPlayerList();
+
+        // 统一判据 —— 无在线真人 ∧ 无在线观战者才解散
+        if (!maybeDestroyRoom(room.id, '玩家全部离线')) {
+            const ids = room.getSortedPlayerIds();
+            if (ids[room.gameState.currentPlayer] === playerId) {
+                registerTimer(room, 'deal', () => room.aiPlayCards(playerId), room.getAIRandomDelay());
+            }
+        }
+    }, ms);
+    return player.takeoverTimer;
+}
+
+// FIX-005: 取消某座位待接管定时器（玩家回连时调用；幂等）。返回是否真的取消了一个待接管。
+function cancelTakeoverTimer(room, playerId) {
+    if (!room) return false;
+    const player = room.players.get(playerId);
+    if (!player || !player.takeoverTimer) return false;
+    unregisterTimer(room, player.takeoverTimer); // 内部会同步清 room.timers 与 timersByKind
+    player.takeoverTimer = null;
+    return true;
+}
+
+// FIX-005: 重连座位查找的【唯一入口】。
+// 只认两种座位，避免「张冠李戴」与「误占真 AI 座位」（修 A-16 的同名风险面）：
+//   ① 真人已断线、正在等待重连的座位；
+//   ② 曾被 AI 接管、原主人回来认领的座位（凭 wasHuman 标记）。
+function findReconnectSeat(room, playerName) {
+    if (!room || !playerName) return null;
+    for (const [pid, p] of room.players.entries()) {
+        if (p.name !== playerName && p.name.replace('🤖 ', '') !== playerName) continue;
+        if (!p.isAI && p.disconnected === true) return { pid, player: p };
+        if (p.isAI && p.wasHuman === true && !p.ws) return { pid, player: p };
+    }
+    return null;
+}
+
+// FIX-007b: 管理类消息（addAI / testWin / newRound）的【房主判据唯一入口】。
+// 判据：① 房间登记的房主座位仍是在线真人 → 只有该座位本人算房主；
+//       ② 房主座位不在场（已离开 / 断线被 AI 接管后一直没回来）→ 顺位给「座位号最小的在线真人」，
+//          避免出现「房主一走，房内再没人能点新局/加 AI」的死局。
+// 注意：本函数只回答「是不是房主」；阶段门禁（未开局 / 对局中 / 结算期）由各 handler 另判。
+function isRoomHost(room, ident) {
+    if (!room || !ident || ident.type !== 'player') return false;
+    const hostSeat = room.players.get(room.hostId);
+    const hostIsLiveHuman = !!hostSeat && !hostSeat.isAI && !!hostSeat.ws && hostSeat.ws.readyState === WebSocket.OPEN;
+    if (hostIsLiveHuman) return room.hostId === ident.id;
+    const fallback = room.getSortedPlayerIds()
+        .map(pid => room.players.get(pid))
+        .find(p => p && !p.isAI && p.ws && p.ws.readyState === WebSocket.OPEN);
+    return !!fallback && fallback.id === ident.id;
+}
+
+// B6-1（收尾小修）: 供客户端 UI 使用的「当前有效房主座位 id」。
+// 判据与 isRoomHost **完全同源**（① 登记的房主座位是在线真人 → 就是本人；
+// ② 房主不在场 → 座位号最小的在线真人；③ 都没有 → null），
+// 因此客户端据此灰按钮与服务端鉴权结论一致（例如房主断线期间顺位房主的按钮会自己亮起来）。
+// 仅用于下发展示，不参与任何鉴权判定 —— 权威判据仍然是 isRoomHost()。
+function getEffectiveHostId(room) {
+    if (!room) return null;
+    const hostSeat = room.players.get(room.hostId);
+    const hostIsLiveHuman = !!hostSeat && !hostSeat.isAI && !!hostSeat.ws && hostSeat.ws.readyState === WebSocket.OPEN;
+    if (hostIsLiveHuman) return room.hostId;
+    const fallback = room.getSortedPlayerIds()
+        .map(pid => room.players.get(pid))
+        .find(p => p && !p.isAI && p.ws && p.ws.readyState === WebSocket.OPEN);
+    return fallback ? fallback.id : null;
+}
+
+// ==================== FIX-006: 身份绑定与令牌下发（P0 核心） ====================
+// 漏洞（改动前）：服务端只信任消息体里的 data.playerId，而 broadcastPlayerList 把含 AI 在内的
+// 全员 id 广播给所有人 → 任意连接都能用别人的 id 发 play/pass/ready/setAutoPlay/newRound/
+// returnTribute/chat，替他人出牌、冒名发言；无 token 即可用他人名字 reconnect 顶座看牌。
+// 本批建立「连接 → 身份」权威映射：所有动作类消息一律按【连接身份】鉴权，data.playerId 只做
+// 一致性校验（不再具备任何鉴权效力）。令牌用 crypto.randomUUID()，随 roomCreated/roomJoined/
+// reconnected/spectatorJoined 下发，客户端存 localStorage 并在后续每条消息里带回。
+// 令牌登记在 sessionTokens 里而**不**挂在 player 对象上 —— 避免被 getPlayerGameState 的
+// `...player` 展开（myInfo）把令牌泄漏给本人/他人（该项与 fix-plan §2.4 的 A-21 同源）。
+const crypto = require('crypto');
+const sessionTokens = new Map();   // token -> { type:'player'|'spectator', id, roomId }
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+// 下发一个座位级 session token（同一座位重新下发时自动作废旧 token）
+function issueSessionToken(type, id, roomId) {
+    for (const [tok, ent] of Array.from(sessionTokens.entries())) {
+        if (ent.id === id && ent.roomId === roomId) sessionTokens.delete(tok);
+    }
+    const token = crypto.randomUUID();
+    sessionTokens.set(token, { type, id, roomId });
+    return token;
+}
+
+// 吊销某个身份的令牌（座位被移除时调用）。roomId 省略则吊销该 id 的全部令牌。
+function revokeSessionToken(id, roomId) {
+    let n = 0;
+    for (const [tok, ent] of Array.from(sessionTokens.entries())) {
+        if (ent.id === id && (roomId === undefined || ent.roomId === roomId)) {
+            sessionTokens.delete(tok);
+            n += 1;
+        }
+    }
+    return n;
+}
+
+// 吊销整个房间的令牌（destroyRoom 收口时调用；令牌不跨房间存活）
+function revokeRoomTokens(roomId) {
+    let n = 0;
+    for (const [tok, ent] of Array.from(sessionTokens.entries())) {
+        if (ent.roomId === roomId) {
+            sessionTokens.delete(tok);
+            n += 1;
+        }
+    }
+    return n;
+}
+
+// token 是否已登记且与 (id, roomId) 匹配
+function tokenMatches(token, id, roomId) {
+    if (!token || typeof token !== 'string') return false;
+    const ent = sessionTokens.get(token);
+    if (!ent) return false;
+    if (id !== undefined && id !== null && ent.id !== id) return false;
+    if (roomId !== undefined && roomId !== null && ent.roomId !== roomId) return false;
+    return true;
+}
+
+// ws → 身份 绑定的唯一写入入口
+function bindWsIdentity(ws, type, id, roomId, token) {
+    ws.__identity = { type, id, roomId, token: token || null };
+    return ws.__identity;
+}
+// 读取 ws 上的绑定身份（未绑定返回 null）
+function getWsIdentity(ws) {
+    return (ws && ws.__identity) ? ws.__identity : null;
+}
+
+// 动作类消息的【统一鉴权入口】。返回 { ok:true, ident } 或 { ok:false, code, message }。
+// 规则：
+//   ① 未绑定身份                     → NOT_BOUND
+//   ② data.playerId 与绑定身份不符   → IDENTITY_MISMATCH（P0 漏洞正落在这里）
+//   ③ data.roomId   与绑定房间不符   → ROOM_MISMATCH
+//   ④ data.token    与绑定令牌不符   → TOKEN_MISMATCH
+//   ⑤ 玩家身份的动作消息必须携带令牌 → TOKEN_REQUIRED（旧标签页在此被拒，提示刷新）
+function authorizeAction(ws, data, opts) {
+    const o = opts || {};
+    const ident = getWsIdentity(ws);
+    if (!ident) {
+        return { ok: false, code: 'NOT_BOUND', message: '当前连接尚未绑定身份，请先创建或加入房间' };
+    }
+    if (data && data.playerId && data.playerId !== ident.id) {
+        return { ok: false, code: 'IDENTITY_MISMATCH', message: '身份校验失败：消息中的 playerId 与当前连接身份不一致' };
+    }
+    if (data && data.roomId && ident.roomId && data.roomId !== ident.roomId) {
+        return { ok: false, code: 'ROOM_MISMATCH', message: '房间校验失败：只能操作自己所在的房间' };
+    }
+    if (data && data.token && data.token !== ident.token) {
+        return { ok: false, code: 'TOKEN_MISMATCH', message: '令牌校验失败：会话令牌与当前连接不符，请按 F5 刷新页面后重试' };
+    }
+    if (ident.type === 'player' && o.requireToken !== false && !(data && data.token)) {
+        return { ok: false, code: 'TOKEN_REQUIRED', message: '缺少会话令牌：请按 F5 刷新页面后重新加入房间' };
+    }
+    return { ok: true, ident };
+}
+
+// 统一回【可读错误】（带明确 code），绝不静默丢弃
+function sendAuthError(ws, res) {
+    try {
+        ws.send(JSON.stringify({ type: 'error', code: res.code, message: res.message }));
+    } catch (e) { /* 连接可能已关闭 */ }
+    return false;
+}
 
 // 牌面常量
 const SUITS = ['♠', '♥', '♦', '♣'];
@@ -65,11 +596,29 @@ class GameRoom {
         this.tableNumber = tableNumber; // 桌号
         this.mode = mode; // 'fast' 或 'normal'
         this.allowSpectator = allowSpectator; // 是否允许观战
+        // FIX-008: 显式局面状态机（房间级、唯一权威）。
+        //   waiting   房内待开局（可 ready 触发 startGame）
+        //   dealing   首次发牌动画中
+        //   tribute   进贡/还贡阶段
+        //   newRound  新一局发牌动画中
+        //   playing   对局进行中（isRoomInPlay 只认这一个）
+        //   settling  本局已结算、等待新局
+        // 三个收口点：① isRoomInPlay 只认 playing（封死结算/新局期被 AI 接管，修 A-17）
+        //             ② checkStartGame 只允许 waiting 开局（封死局间过渡期重复 startGame，修 A-8）
+        //             ③ newRound 只允许 settling（封死过渡期打断对局，修 A-9）
+        // 注意：gameState.started 按兼容口径原样保留（对局期间含发牌/进贡），仅作展示与旧链路兼容；
+        //       新增门禁一律以 phase 为准。
+        this.phase = 'waiting';
+        // FIX-007b: 房主（管理类消息门禁的判据来源）—— createRoom 时写入创建者座位 id
+        this.hostId = null;
         this.players = new Map();
         this.spectators = new Map(); // 观战者
         this.maxPlayers = 4;
         this.turnTimeout = mode === 'fast' ? 15 : 30; // 出牌时间
         this.turnTimer = null;
+        // FIX-004: 房间级定时器登记表（所有 setTimeout/setInterval 都要登记到此）
+        this.timers = new Set();
+        this.timersByKind = { turn: null, deal: null, takeover: null };
         this.gameState = {
             started: false,
             currentPlayer: 0,
@@ -82,11 +631,23 @@ class GameRoom {
             hands: {},
             roundWinner: null,
             levelUp: 0,
+            // FIX-008: 本局结算写入值快照（startNewRound 的通关判定只读它，避免读到陈值/残留值）
+            lastSettle: null,
             turnTimeLeft: this.turnTimeout
         };
     }
 
-    // 获取按playerNum排序的玩家ID数组（与客户端保持一致）
+    // FIX-008: phase 的唯一写入入口（顺带按兼容口径同步 started，避免两处各写一半）。
+    setPhase(p) {
+        this.phase = p;
+        if (p === 'playing') this.gameState.started = true;
+        return this.phase;
+    }
+
+    // FIX-005: 座位/上下游/进贡顺序的【唯一入口】。
+    // 按 playerNum（座位号）升序排列 —— 与客户端各处 playerList.sort((a,b)=>a.playerNum-b.playerNum) 完全一致。
+    // 所有位置语义（currentPlayer 索引、接风对家、进贡/还贡顺序、"是否轮到本人"）都必须经由本函数取序，
+    // 禁止再用 players Map 的插入序（Array.from(players.keys())）——修 A-18。
     getSortedPlayerIds() {
         return Array.from(this.players.entries())
             .sort((a, b) => a[1].playerNum - b[1].playerNum)
@@ -171,9 +732,11 @@ class GameRoom {
     }
 
     // 添加观战者
-    addSpectator(ws, spectatorId, spectatorName) {
+    // FIX-007a: 初始 viewPlayerId 同样做范围校验 —— 非本房玩家 id 一律不写入（回落默认视角）。
+    addSpectator(ws, spectatorId, spectatorName, viewPlayerId = null) {
         this.spectators.set(spectatorId, {
-            ws, id: spectatorId, name: spectatorName
+            ws, id: spectatorId, name: spectatorName,
+            viewPlayerId: (viewPlayerId && this.players.has(viewPlayerId)) ? viewPlayerId : null
         });
         return true;
     }
@@ -185,15 +748,23 @@ class GameRoom {
     }
 
     // 获取观战者视角的游戏状态（只能看到一个玩家的手牌）
+    // FIX-007a: 范围校验【兜底层】—— viewPlayerId 必须落在本房玩家集合内，否则一律不采信
+    //（不回显、不返回其手牌），回落默认视角（当前出牌玩家）。即使调用方漏判也拿不到房外手牌。
     getSpectatorGameState(viewPlayerId = null) {
         const playerIds = this.getSortedPlayerIds();
         const allHands = {};
         const playerInfo = {};
 
+        // 范围校验：只认本房玩家；越界/伪造 id 一律丢弃
+        const safeViewId = (viewPlayerId && playerIds.includes(viewPlayerId)) ? viewPlayerId : null;
+        if (viewPlayerId && !safeViewId) {
+            console.log(`⚠️ 观战视角越界被夹回默认视角: viewPlayerId=${viewPlayerId} 不在本房玩家集合内`);
+        }
+
         // 如果没有指定观看的玩家，默认观看当前出牌玩家
-        let targetPid = viewPlayerId;
+        let targetPid = safeViewId;
         if (!targetPid && playerIds.length > 0) {
-            targetPid = playerIds[this.gameState.currentPlayer];
+            targetPid = playerIds[this.gameState.currentPlayer] || playerIds[0];
         }
 
         for (let i = 0; i < 4; i++) {
@@ -249,7 +820,10 @@ class GameRoom {
 
     checkStartGame() {
         const allReady = Array.from(this.players.values()).every(p => p.ready);
-        if (allReady && this.players.size === 4 && !this.gameState.started) {
+        // FIX-008: 开局只允许从 waiting 出发。
+        // 原判据只看 !gameState.started —— 局间过渡期（结算后/新局发牌中）再点一次「准备」
+        // 就会二次 startGame()，把 teamLevels 抹回 {1:2,2:2} 并重发牌，抹掉升级进度（修 A-8）。
+        if (allReady && this.players.size === 4 && this.phase === 'waiting') {
             this.startGame();
         }
     }
@@ -328,6 +902,9 @@ class GameRoom {
 
     startGame() {
         this.gameState.started = true;
+        // FIX-008: 进入「首次发牌」状态；发牌动画结束（animateDealCards）再转 playing。
+        this.setPhase('dealing');
+        this.gameState.lastSettle = null; // FIX-008: 全新一局，清掉上一局结算快照
         this.gameState.teamLevels = { 1: 2, 2: 2 };
         this.gameState.currentLevelTeam = 1;
         this.gameState.hands = this.dealCards();
@@ -375,7 +952,7 @@ class GameRoom {
         }
 
         let cardIndex = 0;
-        const dealInterval = setInterval(() => {
+        const dealInterval = registerTimer(this, 'deal', () => {
             if (cardIndex < allCards.length) {
                 const { playerIndex, card } = allCards[cardIndex];
                 this.broadcast({
@@ -385,7 +962,9 @@ class GameRoom {
                 });
                 cardIndex++;
             } else {
-                clearInterval(dealInterval);
+                unregisterTimer(this, dealInterval);
+                // FIX-008: 首次发牌动画结束 = 真正进入对局中（isRoomInPlay 只认 playing）
+                this.setPhase('playing');
                 // 发牌完成，广播游戏开始
                 this.broadcast({ type: 'gameStart', gameState: this.getPublicGameState() });
 
@@ -394,10 +973,10 @@ class GameRoom {
                 const currentPlayer = this.players.get(currentPlayerId);
                 if (currentPlayer && currentPlayer.isAI) {
                     const delay = 1000 + Math.random() * 1000; // 随机1-2秒
-                    setTimeout(() => this.aiPlayCards(currentPlayerId), delay);
+                    registerTimer(this, 'deal', () => this.aiPlayCards(currentPlayerId), delay);
                 }
             }
-        }, 30); // 每30ms发一张牌
+        }, 30, true); // 每30ms发一张牌
     }
 
     // 获取AI出牌随机延迟（1-2秒）
@@ -669,9 +1248,10 @@ class GameRoom {
                 valueCounts[v] = (valueCounts[v] || 0) + 1;
             });
 
-            // 尝试所有可能的连续3对：AA223到QKAA(无效)，实际是223344到QQKKAA
-            // 连对的值范围：2-2-3, 3-3-4, ..., Q-K-A（但A只能当14，不能当1）
+            // 尝试所有可能的连续3对：AA2233(A当1) 到 QQKKAA
+            // 连对的值范围：AA2233(A当1), 223344, 334455, ..., QQKKAA（A可当14，也可当1）
             const pairPatterns = [
+                [14, 2, 3],
                 [2, 3, 4],
                 [3, 4, 5],
                 [4, 5, 6],
@@ -706,8 +1286,9 @@ class GameRoom {
                 valueCounts[v] = (valueCounts[v] || 0) + 1;
             });
 
-            // 尝试所有可能的连续2组三张：2233到KKAA
+            // 尝试所有可能的连续2组三张：AAA222(A当1) 到 KKAAA
             const planePatterns = [
+                [14, 2],
                 [2, 3],
                 [3, 4],
                 [4, 5],
@@ -783,11 +1364,16 @@ class GameRoom {
         // 从服务端手牌中获取实际的牌（确保value正确）
         const hand = this.gameState.hands[playerId];
         const actualCards = [];
+        const usedIndexes = new Set(); // FIX-001：已占用的手牌下标，同一张牌不能重复提交
         for (const card of cards) {
-            const idx = hand.findIndex(c => c.suit === card.suit && c.rank === card.rank);
+            // FIX-001：findIndex 跳过已被占用的下标，实现"按手牌下标占用"去重
+            const idx = hand.findIndex((c, i) => !usedIndexes.has(i) && c.suit === card.suit && c.rank === card.rank);
             if (idx === -1) return { success: false, message: '你没有这张牌' };
+            usedIndexes.add(idx);
             actualCards.push(hand[idx]);
         }
+        // FIX-001：去重后张数必须严格等于提交张数（重复提交同一张牌不再成立）
+        if (actualCards.length !== cards.length) return { success: false, message: '你没有这张牌' };
 
         const result = this.validatePlay(actualCards);
         if (!result.valid) return { success: false, message: '无效的牌型' };
@@ -796,9 +1382,11 @@ class GameRoom {
             if (!this.comparePlay(result, this.gameState.lastPlay)) return { success: false, message: '牌不够大' };
         }
 
-        // 从手牌中移除
-        for (const card of actualCards) {
-            const idx = hand.findIndex(c => c.suit === card.suit && c.rank === card.rank);
+        // 从手牌中移除（FIX-001：按已确定的下标集合一次性删除；任一非法下标则拒绝）
+        for (const idx of usedIndexes) {
+            if (idx === -1 || idx >= hand.length) return { success: false, message: '你没有这张牌' };
+        }
+        for (const idx of [...usedIndexes].sort((a, b) => b - a)) {
             hand.splice(idx, 1);
         }
 
@@ -925,7 +1513,7 @@ class GameRoom {
         this.gameState.turnTimeLeft = customTimeout !== null ? customTimeout : this.turnTimeout;
 
         // 每秒更新倒计时
-        this.turnTimer = setInterval(() => {
+        this.turnTimer = registerTimer(this, 'turn', () => {
             this.gameState.turnTimeLeft--;
             this.broadcast({ type: 'turnTimeUpdate', timeLeft: this.gameState.turnTimeLeft });
 
@@ -933,7 +1521,7 @@ class GameRoom {
                 this.clearTurnTimer();
                 this.handleTurnTimeout(playerId);
             }
-        }, 1000);
+        }, 1000, true);
 
         // 立即广播初始时间
         this.broadcast({ type: 'turnTimeUpdate', timeLeft: this.gameState.turnTimeLeft });
@@ -942,7 +1530,7 @@ class GameRoom {
     // 清除回合计时器
     clearTurnTimer() {
         if (this.turnTimer) {
-            clearInterval(this.turnTimer);
+            unregisterTimer(this, this.turnTimer);
             this.turnTimer = null;
         }
     }
@@ -1489,6 +2077,13 @@ class GameRoom {
 
     // 双赢结束这一局
     endRoundWithDoubleWin() {
+        // FIX-008: 结算幂等（同 endRound）
+        if (this.phase === 'settling') {
+            console.log(`⚠️ 房间 ${this.id} 重复结算被忽略（phase 已是 settling）`);
+            return;
+        }
+        // FIX-008: 进入结算期
+        this.setPhase('settling');
         // 确定输的一方
         const t1 = Array.from(this.players.values()).filter(p => p.team === 1);
         const t2 = Array.from(this.players.values()).filter(p => p.team === 2);
@@ -1510,12 +2105,26 @@ class GameRoom {
         this.gameState.roundWinner = winner;
         this.gameState.levelUp = 3; // 双赢升3级
 
+        // FIX-003: 与 endRound 同口径——结算先行复位，再统一写入本局结果。
+        // （双赢路径原本就会无条件写，这里显式复位只为让「每局结算先复位」的不变式在两条结算入口上完全一致。）
+        this.gameState.previousLevel = null;
+        this.gameState.previousLevelTeam = null;
+
         // 在进贡阶段前更新级牌（赢的队伍升级）
         const currentLevel = this.gameState.teamLevels[winner];
-        // 保存升级前的级别（用于判断是否是打A时的双赢）
+        // 保存本局结算前的级别（用于判断是否是打A时的双赢）
         this.gameState.previousLevel = currentLevel;
-        // 保存双赢前的级牌队伍（用于判断是否是打自己的级牌）
+        // 保存本局结算前的级牌队伍（用于判断是否是打自己的级牌）
         this.gameState.previousLevelTeam = this.gameState.currentLevelTeam;
+
+        // FIX-008: 记录本局结算写入值快照（与 endRound 同口径）
+        this.gameState.lastSettle = {
+            winner, levelUp: 3,
+            previousLevel: this.gameState.previousLevel,
+            previousLevelTeam: this.gameState.previousLevelTeam,
+            teamLevels: { ...this.gameState.teamLevels },
+            at: Date.now()
+        };
 
         // 检查是否满足通关条件（在发送消息前判断）
         // 1. 升级前就是A（14级）
@@ -1538,6 +2147,15 @@ class GameRoom {
                 p.ready = p.isAI ? true : false;
             }
             this.broadcastPlayerList();
+            // FIX-008: 通关分支完整清态 + 回 waiting（修 A-20）
+            // 清 roundWinner/levelUp/previousLevel*/lastSettle —— 否则下一局的通关判定会读到上一局残留值；
+            // phase 回 waiting 后，全员准备即可重新开局（checkStartGame 只认 waiting）。
+            this.gameState.roundWinner = null;
+            this.gameState.levelUp = 0;
+            this.gameState.previousLevel = null;
+            this.gameState.previousLevelTeam = null;
+            this.gameState.lastSettle = null;
+            this.setPhase('waiting');
             console.log(`房间 ${this.id} 通关！队伍${winner}双赢通关A！`);
             return;
         }
@@ -1577,9 +2195,20 @@ class GameRoom {
 
         // 广播状态更新
         this.broadcastGameState();
+
+        // FIX-004(b): 对局结束时按统一判据检查是否该解散
+        maybeDestroyRoom(this.id, '对局结束');
     }
 
     endRound() {
+        // FIX-008: 结算幂等 —— 已处于结算态就忽略重复调用，保证「每局只广播一次 roundEnd /
+        // 通关只广播一次 gameOver、只升级一次」（原实现无任何保护）。
+        if (this.phase === 'settling') {
+            console.log(`⚠️ 房间 ${this.id} 重复结算被忽略（phase 已是 settling）`);
+            return;
+        }
+        // FIX-008: 进入结算期 —— 此后 isRoomInPlay=false，断线不再触发 AI 接管（修 A-17 毫秒窗口）
+        this.setPhase('settling');
         // 给未出完牌的玩家分配第4名
         for (let player of this.players.values()) {
             if (!player.finished) {
@@ -1642,13 +2271,24 @@ class GameRoom {
         this.gameState.roundWinner = winner;
         this.gameState.levelUp = levelUp;
 
+        // FIX-003: 每局结算**先行复位**通关判定用的两个字段，再统一写入本局结果（所有分支都写）。
+        // 原实现只在 winner && levelUp > 0 时写 → levelUp=0（失败局）会留着上一局的旧值，
+        // 下一局的 startNewRound 通关判定读到陈值（previousLevel===14 且 levelUp===3）就可能误判通关。
+        this.gameState.previousLevel = null;
+        this.gameState.previousLevelTeam = null;
+
         // 在进贡阶段前更新级牌（赢的队伍升级）
+        if (winner) {
+            const currentLevel = this.gameState.teamLevels[winner];
+            // 保存本局结算前的级别（用于判断是否是打A时的双赢）
+            this.gameState.previousLevel = currentLevel;
+            // 保存本局结算前的级牌队伍（用于判断是否是打自己的级牌）
+            this.gameState.previousLevelTeam = this.gameState.currentLevelTeam;
+        }
+
+        // 仅升级局才改动级牌与级牌队伍（失败局 levelUp=0 保持原状，维持原有行为不变）
         if (winner && levelUp > 0) {
             const currentLevel = this.gameState.teamLevels[winner];
-            // 保存升级前的级别（用于判断是否是打A时的双赢）
-            this.gameState.previousLevel = currentLevel;
-            // 保存双赢前的级牌队伍（用于判断是否是打自己的级牌）
-            this.gameState.previousLevelTeam = this.gameState.currentLevelTeam;
             if (currentLevel < 14) {
                 let newLevel = currentLevel + levelUp;
                 if (newLevel > 14) {
@@ -1659,6 +2299,16 @@ class GameRoom {
             // 更新当前级牌队伍为赢家队伍
             this.gameState.currentLevelTeam = winner;
         }
+
+        // FIX-008: 记录【本局结算写入的值】快照 —— startNewRound 的通关判定只读这份快照，
+        // 保证读到的一定是本局结算写入的 winner/levelUp/previousLevel/previousLevelTeam。
+        this.gameState.lastSettle = {
+            winner, levelUp,
+            previousLevel: this.gameState.previousLevel,
+            previousLevelTeam: this.gameState.previousLevelTeam,
+            teamLevels: { ...this.gameState.teamLevels },
+            at: Date.now()
+        };
 
         // 发送回合结束消息
         this.broadcast({
@@ -1671,6 +2321,9 @@ class GameRoom {
 
         const resultText = levelUp === 3 ? '双赢' : levelUp === 2 ? '中赢' : levelUp === 1 ? '小赢' : '失败';
         console.log(`房间 ${this.id} 回合结束，队伍${winner}${resultText}，升级${levelUp}级`);
+
+        // FIX-004(b): 回合结束时按统一判据检查是否该解散
+        maybeDestroyRoom(this.id, '回合结束');
     }
 
     // 新局发牌动画（带进贡标记）
@@ -1699,7 +2352,7 @@ class GameRoom {
         }
 
         let cardIndex = 0;
-        const dealInterval = setInterval(() => {
+        const dealInterval = registerTimer(this, 'deal', () => {
             if (cardIndex < allCards.length) {
                 const { playerIndex, card } = allCards[cardIndex];
                 const cardKey = `${playerIndex}-${card.suit}-${card.rank}`;
@@ -1712,13 +2365,13 @@ class GameRoom {
                 });
                 cardIndex++;
             } else {
-                clearInterval(dealInterval);
+                unregisterTimer(this, dealInterval);
                 // 发牌完成，2秒后进入进贡阶段
-                setTimeout(() => {
+                registerTimer(this, 'deal', () => {
                     this.processTributePhase(playerIds, lastRanks, isDoubleWin, lastLevelUp);
                 }, 2000);
             }
-        }, 30); // 每30ms发一张牌
+        }, 30, true); // 每30ms发一张牌
     }
 
     // 计算需要进贡的玩家
@@ -1814,6 +2467,8 @@ class GameRoom {
 
     // 进贡阶段处理
     processTributePhase(playerIds, lastRanks, isDoubleWin, lastLevelUp) {
+        // FIX-008: 进贡/还贡是显式状态（该阶段不得被 AI 接管、不得开局）
+        this.setPhase('tribute');
         const player1 = lastRanks.find(p => p.rank === 1);
         const player2 = lastRanks.find(p => p.rank === 2);
         const player3 = lastRanks.find(p => p.rank === 3);
@@ -2203,6 +2858,14 @@ class GameRoom {
     // 开始出牌阶段（进贡/还贡完成后）
     startPlayPhase() {
         this.gameState.started = true;
+        // FIX-008: 进贡结束 = 正式对局中（此后 isRoomInPlay 放行，下面补挂的接管才有效）
+        this.setPhase('playing');
+
+        // FIX-005: 新一局进入对局中时，为仍处于断线状态的真人座位补挂 30 秒接管
+        //（结算期挂的接管会被 isRoomInPlay 复查放弃，故在真正开打时补挂，避免断线座位永久卡住）。
+        for (const [pid, p] of this.players.entries()) {
+            if (!p.isAI && p.disconnected && !p.ws) armTakeoverTimer(this, pid, 30000);
+        }
 
         const playerIds = this.getSortedPlayerIds();
 
@@ -2311,15 +2974,23 @@ class GameRoom {
     }
 
     startNewRound() {
-        const winner = this.gameState.roundWinner;
-        const levelUp = this.gameState.levelUp;
+        // FIX-008: 通关判定只读【本局结算写入的快照】(lastSettle)，不再读会被中间步骤改写/残留的
+        // gameState.roundWinner / previousLevel 等字段。原实现用 `|| 2` / `|| winner` 兜底，
+        // 恰好会把「并没有结算过」的场合伪造成一个合法局面 → 可能误判通关（修 A-20）。
+        const settle = this.gameState.lastSettle;
+        if (!settle) {
+            console.log(`⚠️ 房间 ${this.id} 新局被拒：缺少本局结算快照（lastSettle 为空）`);
+            return;
+        }
+        const winner = settle.winner;
+        const levelUp = settle.levelUp;
 
         // A级别通关条件：
         // 1. 升级前就是A（14级）
         // 2. 双赢（levelUp === 3）
         // 3. 是打自己的级牌（双赢前的 currentLevelTeam === winner）
-        const previousLevel = this.gameState.previousLevel || 2;
-        const previousLevelTeam = this.gameState.previousLevelTeam || winner;
+        const previousLevel = settle.previousLevel;
+        const previousLevelTeam = settle.previousLevelTeam;
         const isPlayingOwnLevel = previousLevelTeam === winner;
 
         console.log(`房间 ${this.id} 通关检查: winner=${winner}, previousLevel=${previousLevel}, levelUp=${levelUp}, previousLevelTeam=${previousLevelTeam}, isPlayingOwnLevel=${isPlayingOwnLevel}`);
@@ -2337,6 +3008,13 @@ class GameRoom {
                 p.ready = p.isAI ? true : false;
             }
             this.broadcastPlayerList();
+            // FIX-008: 通关分支完整清态 + 回 waiting（修 A-20，同双赢入口）
+            this.gameState.roundWinner = null;
+            this.gameState.levelUp = 0;
+            this.gameState.previousLevel = null;
+            this.gameState.previousLevelTeam = null;
+            this.gameState.lastSettle = null;
+            this.setPhase('waiting');
             return;
         }
 
@@ -2379,6 +3057,9 @@ class GameRoom {
         // 获取排序后的玩家ID列表
         const playerIds = this.getSortedPlayerIds();
 
+        // FIX-008: 进入「新一局发牌」状态（该阶段不得被 AI 接管；发牌 → tribute → playing）
+        this.setPhase('newRound');
+
         // 先关闭结算界面
         this.broadcast({ type: 'closeRoundEndModal' });
 
@@ -2406,9 +3087,11 @@ class GameRoom {
         this.spectators.forEach((s, sid) => {
             if (s.ws.readyState === WebSocket.OPEN) {
                 if (msg.type === 'gameStart' || msg.type === 'gameState' || msg.type === 'newRound' || msg.type === 'showGameArea') {
-                    // 默认查看当前出牌玩家
+                    // 默认查看当前出牌玩家（FIX-007a: 只认本房玩家 id，越界一律回落默认视角）
                     const playerIds = this.getSortedPlayerIds();
-                    const viewPid = s.viewPlayerId || playerIds[this.gameState.currentPlayer];
+                    const viewPid = (s.viewPlayerId && playerIds.includes(s.viewPlayerId))
+                        ? s.viewPlayerId
+                        : (playerIds[this.gameState.currentPlayer] || playerIds[0]);
                     s.ws.send(JSON.stringify({ ...msg, gameState: this.getSpectatorGameState(viewPid) }));
                 } else {
                     s.ws.send(data);
@@ -2418,11 +3101,16 @@ class GameRoom {
     }
 
     // 设置观战者查看的玩家
+    // FIX-007a: 范围校验 —— 只能看本房玩家的手牌；越界/伪造 id 返回 false 且**不改**状态。
     setSpectatorViewPlayer(spectatorId, viewPlayerId) {
         const spectator = this.spectators.get(spectatorId);
-        if (spectator) {
-            spectator.viewPlayerId = viewPlayerId;
+        if (!spectator) return false;
+        if (!this.players.has(viewPlayerId)) {
+            console.log(`⚠️ 观战者 ${spectatorId} 请求越界视角被拒: viewPlayerId=${viewPlayerId}`);
+            return false;
         }
+        spectator.viewPlayerId = viewPlayerId;
+        return true;
     }
 
     broadcastGameState() {
@@ -2451,11 +3139,19 @@ class GameRoom {
     }
 
     broadcastPlayerList() {
+        // FIX-005: 统一按座位序（getSortedPlayerIds）下发 —— 消除「有的接口插入序、有的座位序」的口径差异。
+        // 客户端按 playerNum 定位座位，本改动对显示无影响，仅保证协议层顺序唯一（修 A-18）。
+        const ids = this.getSortedPlayerIds();
         this.broadcast({
             type: 'playerList',
-            players: Array.from(this.players.values()).map(p => ({
-                id: p.id, name: p.name, playerNum: p.playerNum, team: p.team, ready: p.ready, isAI: p.isAI
-            }))
+            // B6-1（收尾小修）: 下发「当前有效房主座位 id」——客户端据此把「添加AI / 测试模式 / 新局」
+            // 三个管理入口对非房主置灰（FIX-007b 的服务端鉴权本体一字未改，这里只是让客户端提前知道谁是房主）。
+            // 取 getEffectiveHostId（与 isRoomHost 同源）而非裸 room.hostId，避免房主断线顺位期间客户端与服务端结论不一致。
+            hostId: getEffectiveHostId(this),
+            players: ids.map(id => {
+                const p = this.players.get(id);
+                return { id: p.id, name: p.name, playerNum: p.playerNum, team: p.team, ready: p.ready, isAI: p.isAI };
+            })
         });
     }
 }
@@ -2464,9 +3160,99 @@ function generateRoomId() {
     return Math.random().toString(36).substring(2, 8).toUpperCase();
 }
 
+// ==================== FIX-002: 每连接消息频率限制（轻量令牌桶） ====================
+// 平均速率按 MSG_RATE_PER_MINUTE（OWASP 起点 100 条/分钟）放行，MSG_RATE_BURST 允许短时连发。
+// 超频时回**可见错误**（code=RATE_LIMITED）而不是静默丢包；告警最多 1 次/秒，避免错误本身放大流量。
+function consumeMessageToken(ws) {
+    const now = Date.now();
+    let b = ws.__msgBucket;
+    if (!b) {
+        b = { tokens: MSG_RATE_BURST, last: now, warnedAt: 0 };
+        ws.__msgBucket = b;
+    }
+    b.tokens = Math.min(MSG_RATE_BURST, b.tokens + (now - b.last) / 1000 * MSG_RATE_REFILL_PER_SEC);
+    b.last = now;
+    if (b.tokens < 1) {
+        if (now - b.warnedAt > 1000) {
+            b.warnedAt = now;
+            ws.send(JSON.stringify({
+                type: 'error',
+                code: 'RATE_LIMITED',
+                message: `消息发送过于频繁（上限 ${MSG_RATE_PER_MINUTE} 条/分钟），请稍后再试`
+            }));
+        }
+        return false;
+    }
+    b.tokens -= 1;
+    return true;
+}
+
+// ==================== FIX-004: 心跳（ws 官方 FAQ 写法） ====================
+// 每 30 秒一轮：上一轮未收到 pong（isAlive === false）→ 判为半开连接，用
+// terminate()（不是 close()）硬回收；terminate 会触发 close 事件，从而走全量清理链。
+// 否则置 isAlive = false 后 ping。顺带每轮做一次僵尸房扫描（主动回收，替代原「撞号
+// 才被动触发」的回收方式）。
+// FIX-012b: 心跳挂载抽成 armHeartbeat() —— 原地重启换上新 wss 后必须重新挂表
+// （旧 wss 的 'close' 会把上一张表清掉，见 createWebSocketServer）。
+let heartbeatTimer = null;
+
+function armHeartbeat() {
+    if (heartbeatTimer) { clearInterval(heartbeatTimer); heartbeatTimer = null; }
+    heartbeatTimer = setInterval(() => {
+        wss.clients.forEach((client) => {
+            if (client.isAlive === false) {
+                console.log('💀 心跳超时（30s 无 pong），回收半开连接');
+                return client.terminate();
+            }
+            client.isAlive = false;
+            try { client.ping(); } catch (e) { /* 连接已损坏，下一轮 terminate */ }
+        });
+        for (const [rid] of Array.from(rooms.entries())) {
+            maybeDestroyRoom(rid, '心跳扫描：无人在线');
+        }
+    }, HEARTBEAT_INTERVAL_MS);
+    return heartbeatTimer;
+}
+
+armHeartbeat();
+
 // WebSocket处理
-wss.on('connection', (ws) => {
+// FIX-012b: 连接处理器改为具名函数（原来是 wss.on 的匿名箭头）—— createWebSocketServer
+// 里挂载它，原地重启后新 wss 复用同一份实现，不会复制第二份逻辑。
+function onWsConnection(ws) {
     console.log('新客户端连接');
+
+    // FIX-004: 心跳标记（配合上方 30s 心跳定时器）
+    ws.isAlive = true;
+    ws.on('pong', () => { ws.isAlive = true; });
+
+    // FIX-006: 若握手阶段已验出身份（令牌登记有效）且座位仍在 → 连接入口即完成 ws↔身份 预绑定。
+    // 后续 reconnect / 动作消息仍各做一次令牌一致性校验（这里是「连接即绑定」的前半段）。
+    const gateInfo = ws.__upgradeAuth;
+    if (gateInfo && gateInfo.ident) {
+        const gateRoom = rooms.get(gateInfo.ident.roomId);
+        const gateSeat = gateRoom && (gateRoom.players.get(gateInfo.ident.id) || gateRoom.spectators.get(gateInfo.ident.id));
+        if (gateSeat) {
+            bindWsIdentity(ws, gateInfo.ident.type, gateInfo.ident.id, gateInfo.ident.roomId, gateInfo.token);
+            console.log(`🔗 握手阶段完成 ws↔身份绑定: ${gateInfo.ident.type} ${gateInfo.ident.id} @ ${gateInfo.ident.roomId}`);
+        } else {
+            console.log(`⚠️ 握手令牌有效但座位已不存在(${gateInfo.ident.id} @ ${gateInfo.ident.roomId})，不做预绑定`);
+        }
+    }
+
+    // FIX-002: 连接数硬上限（wss.clients 此刻已把本连接算进去，故用 > 判断）
+    if (wss.clients.size > MAX_CONNECTIONS) {
+        console.log(`⚠️ 连接被拒：在线连接数 ${wss.clients.size} 已超过上限 ${MAX_CONNECTIONS}`);
+        try {
+            ws.send(JSON.stringify({
+                type: 'error',
+                code: 'TOO_MANY_CONNECTIONS',
+                message: `服务器连接数已达上限（${MAX_CONNECTIONS}），请稍后重试`
+            }));
+        } catch (e) { /* 连接可能已关闭，忽略 */ }
+        ws.close(1013, '服务器连接数已达上限');
+        return;
+    }
 
     // 发送当前房间列表
     ws.send(JSON.stringify({
@@ -2475,21 +3261,59 @@ wss.on('connection', (ws) => {
     }));
 
     ws.on('message', (msg) => {
+        // FIX-002: 频率限制放在 JSON.parse 之前（超频连接不该再消耗解析开销）
+        if (!consumeMessageToken(ws)) {
+            return;
+        }
         try {
             const data = JSON.parse(msg);
             // 记录所有收到的消息类型
             console.log(`收到消息: type=${data.type}`);
             switch(data.type) {
                 case 'createRoom': {
+                    // FIX-002: 房间数硬上限
+                    if (rooms.size >= MAX_ROOMS) {
+                        console.log(`⚠️ 开房被拒：房间数 ${rooms.size} 已达上限 ${MAX_ROOMS}`);
+                        ws.send(JSON.stringify({
+                            type: 'error',
+                            code: 'TOO_MANY_ROOMS',
+                            message: `服务器房间数已达上限（${MAX_ROOMS}），请稍后再试`
+                        }));
+                        return;
+                    }
+
+                    // FIX-004: 单身份约束 —— 先解绑该连接此前挂载的身份（防一个 ws 挂多个房）
+                    for (const staleRid of detachWsIdentity(ws)) {
+                        maybeDestroyRoom(staleRid, '开房前解绑旧身份');
+                    }
+
                     // 检查是否指定了包间号，且是否重复
                     const parsedTableNumber = data.tableNumber ? parseInt(data.tableNumber) : null;
                     const customTableNumber = (parsedTableNumber && !isNaN(parsedTableNumber)) ? parsedTableNumber : null;
 
                     if (customTableNumber) {
                         // 检查包间号是否已存在
-                        for (let [, room] of rooms) {
-                            if (room.tableNumber === customTableNumber) {
-                                ws.send(JSON.stringify({ type: 'error', message: `包间${customTableNumber}已存在，请更换号码` }));
+                        let occupiedRoomId = null;
+                        for (const [existingRoomId, room] of rooms) {
+                            if (room.tableNumber === customTableNumber) { occupiedRoomId = existingRoomId; break; }
+                        }
+                        if (occupiedRoomId) {
+                            const room = rooms.get(occupiedRoomId);
+                            // ① FIX-004(c): 统一判据 —— 无在线真人 ∧ 无在线观战者 → 僵尸房，回收包间号
+                            if (isRoomDisposable(room)) {
+                                console.log(`♻️ 包间${customTableNumber} 原房间(${occupiedRoomId})无在线真人/观战者，回收包间号`);
+                                destroyRoom(occupiedRoomId, '撞号回收僵尸房');
+                            } else {
+                                // ② 真的有人在玩（或有在线观战者）→ 拒绝，日志留痕 + 告诉用户被谁占着
+                                const who = Array.from(room.players.values())
+                                    .filter(p => !p.isAI && p.ws && p.ws.readyState === WebSocket.OPEN)
+                                    .map(p => p.name).join('、');
+                                const state = room.gameState.started ? '对局中' : '在房间里';
+                                console.log(`⚠️ 开房被拒：包间${customTableNumber} 已存在（房间${occupiedRoomId}，在线真人：${who || '无'}，${state}）`);
+                                ws.send(JSON.stringify({
+                                    type: 'error',
+                                    message: `包间${customTableNumber}已存在（${who ? who + ' ' + state : state}），请更换号码；或让对方离开/关掉页面，30秒后自动释放`
+                                }));
                                 return;
                             }
                         }
@@ -2499,13 +3323,22 @@ wss.on('connection', (ws) => {
                     const playerId = 'P_' + Math.random().toString(36).substring(2, 10);
                     const mode = data.mode || 'normal'; // 默认正常模式
                     const allowSpectator = data.allowSpectator !== false; // 默认允许观战
-                    const tableNumber = customTableNumber || (++roomCounter); // 使用自定义包间号或自动递增
+                    // FIX-004(3): 唯一号池入口 —— 自定义号与自增号共用，自动号跳过所有已占号
+                    const tableNumber = allocTableNumber(customTableNumber);
                     const room = new GameRoom(roomId, mode, allowSpectator, tableNumber);
-                    room.addPlayer(ws, playerId, data.playerName);
+                    // FIX-009: 昵称入口清洗（限长 16 + 去控制字符），后续所有广播都用清洗后的名字
+                    room.addPlayer(ws, playerId, sanitizeText(data.playerName));
+                    // FIX-007b: 记录房主 —— 管理类消息（addAI/testWin/newRound）的判据来源
+                    room.hostId = playerId;
                     rooms.set(roomId, room);
                     playerToRoom.set(playerId, roomId);
+                    // FIX-006: 建立 ws↔身份 绑定，并下发座位级 session token
+                    const sessionToken = issueSessionToken('player', playerId, roomId);
+                    bindWsIdentity(ws, 'player', playerId, roomId, sessionToken);
                     ws.send(JSON.stringify({
-                        type: 'roomCreated', roomId, playerId, mode, allowSpectator, tableNumber,
+                        // B6-1: 建房者即房主，显式下发 hostId（客户端管理按钮门禁的唯一来源之一）
+                        type: 'roomCreated', roomId, playerId, token: sessionToken, mode, allowSpectator, tableNumber,
+                        hostId: getEffectiveHostId(room),
                         players: Array.from(room.players.values()).map(p => ({
                             id: p.id, name: p.name, playerNum: p.playerNum, team: p.team, ready: p.ready
                         }))
@@ -2515,20 +3348,30 @@ wss.on('connection', (ws) => {
                     break;
                 }
                 case 'joinRoom': {
+                    // FIX-004: 单身份约束 —— 先解绑该连接此前挂载的身份
+                    for (const staleRid of detachWsIdentity(ws)) {
+                        maybeDestroyRoom(staleRid, '进房前解绑旧身份');
+                    }
                     const room = rooms.get(data.roomId);
                     if (!room) { ws.send(JSON.stringify({ type: 'error', message: '房间不存在' })); return; }
                     if (room.players.size >= 4) { ws.send(JSON.stringify({ type: 'error', message: '房间已满' })); return; }
                     const playerId = 'P_' + Math.random().toString(36).substring(2, 10);
                     // 支持指定座位号加入
                     const seatNum = data.seatNum || null;
-                    if (!room.addPlayer(ws, playerId, data.playerName, seatNum)) {
+                    // FIX-009: 昵称入口清洗（同上）
+                    if (!room.addPlayer(ws, playerId, sanitizeText(data.playerName), seatNum)) {
                         ws.send(JSON.stringify({ type: 'error', message: '该座位已被占用' }));
                         return;
                     }
                     playerToRoom.set(playerId, data.roomId);
+                    // FIX-006: 建立 ws↔身份 绑定，并下发座位级 session token
+                    const sessionToken = issueSessionToken('player', playerId, data.roomId);
+                    bindWsIdentity(ws, 'player', playerId, data.roomId, sessionToken);
                     ws.send(JSON.stringify({
-                        type: 'roomJoined', roomId: data.roomId, playerId,
+                        type: 'roomJoined', roomId: data.roomId, playerId, token: sessionToken,
                         tableNumber: room.tableNumber, // 添加桌号
+                        // B6-1: 入房即告知「谁是房主」（管理按钮门禁用；非房主入房立刻就知道自己不能加 AI/测试/新局）
+                        hostId: getEffectiveHostId(room),
                         players: Array.from(room.players.values()).map(p => ({
                             id: p.id, name: p.name, playerNum: p.playerNum, team: p.team, ready: p.ready
                         }))
@@ -2543,17 +3386,40 @@ wss.on('connection', (ws) => {
                     const room = rooms.get(data.roomId);
                     if (!room) { ws.send(JSON.stringify({ type: 'error', message: '房间不存在' })); return; }
 
-                    // 根据玩家名称查找断开的玩家
-                    let foundPlayer = null;
-                    let foundPid = null;
-                    for (const [pid, p] of room.players.entries()) {
-                        if (p.name === data.playerName || p.name === '🤖 ' + data.playerName) {
-                            if (p.disconnected || p.ws === null) {
-                                foundPlayer = p;
-                                foundPid = pid;
-                                break;
-                            }
-                        }
+                    // ===== FIX-006: 重连必须凭【已登记的会话令牌】 =====
+                    // 过渡窗口只对「首次 createRoom/joinRoom」开放；reconnect 一律拒绝无 token / 错 token，
+                    // 且拒绝时**不下发任何手牌**（修 P0「用他人名字顶座看牌」）。
+                    const tokenEnt = (typeof data.token === 'string' && data.token) ? sessionTokens.get(data.token) : null;
+                    if (!tokenEnt || tokenEnt.roomId !== data.roomId) {
+                        console.log(`⛔ 重连被拒(令牌缺失/无效/不属于该房): roomId=${data.roomId} name=${data.playerName} hasToken=${!!data.token}`);
+                        ws.send(JSON.stringify({
+                            type: 'error',
+                            code: 'AUTH_FAILED',
+                            message: '重连凭证无效或已过期：请按 F5 刷新页面后重新加入房间'
+                        }));
+                        return;
+                    }
+
+                    // FIX-004: 单身份约束 —— 重连前解绑该连接此前的其它身份
+                    //（此处**不**回收变空的房间，避免把正在等待重连的房间销毁掉）
+                    detachWsIdentity(ws);
+
+                    // FIX-005: 座位查找统一走 findReconnectSeat（只认「真断线等人回」或「原真人座位被AI接管后认领」），
+                    // 不再用旧的 p.ws === null 松口径（真 AI 座位 ws 也是 null，会被张冠李戴）。
+                    // FIX-006: 令牌是每座位唯一的 —— 名字命中的座位必须与令牌登记的身份同一个人，否则拒绝。
+                    // FIX-009: 重连找人用同一套清洗口径（否则带特殊字符的昵称会与已存名字对不上）
+                    const hit = findReconnectSeat(room, sanitizeText(data.playerName));
+                    const foundPlayer = hit ? hit.player : null;
+                    const foundPid = hit ? hit.pid : null;
+
+                    if (!foundPlayer || foundPid !== tokenEnt.id) {
+                        console.log(`⛔ 重连被拒(令牌身份与座位不符): 令牌身份=${tokenEnt.id} 名字命中=${foundPid || '无'}`);
+                        ws.send(JSON.stringify({
+                            type: 'error',
+                            code: 'AUTH_FAILED',
+                            message: '重连失败：会话令牌与目标座位不匹配（座位可能已释放或被他人占用）'
+                        }));
+                        return;
                     }
 
                     if (foundPlayer) {
@@ -2565,14 +3431,21 @@ wss.on('connection', (ws) => {
                             foundPlayer.isAI = false;
                             foundPlayer.name = foundPlayer.name.replace('🤖 ', '');
                         }
+                        // FIX-005: 本人已回连 → 必须取消待接管定时器（杜绝「人回来了又被 AI 接管」）
+                        cancelTakeoverTimer(room, foundPid);
 
                         playerToRoom.set(foundPid, data.roomId);
+                        // FIX-006: 重新完成 ws↔身份 绑定，并把同一令牌回传给客户端继续持有
+                        bindWsIdentity(ws, 'player', foundPid, data.roomId, data.token);
 
                         // 发送重连成功消息和游戏状态
                         ws.send(JSON.stringify({
                             type: 'reconnected',
                             roomId: data.roomId,
                             playerId: foundPid,
+                            token: data.token,
+                            // B6-1: 刷新页面重连后同样下发房主标识，否则回连后管理按钮门禁会丢失依据
+                            hostId: getEffectiveHostId(room),
                             ...room.getPlayerGameState(foundPid),
                             players: Array.from(room.players.values()).map(p => ({
                                 id: p.id, name: p.name, playerNum: p.playerNum, team: p.team, ready: p.ready
@@ -2594,19 +3467,30 @@ wss.on('connection', (ws) => {
                     break;
                 }
                 case 'spectateRoom': {
+                    // FIX-004: 单身份约束 —— 先解绑该连接此前挂载的身份
+                    for (const staleRid of detachWsIdentity(ws)) {
+                        maybeDestroyRoom(staleRid, '观战前解绑旧身份');
+                    }
                     // 观战者加入
                     const room = rooms.get(data.roomId);
                     if (!room) { ws.send(JSON.stringify({ type: 'error', message: '房间不存在' })); return; }
                     if (!room.allowSpectator) { ws.send(JSON.stringify({ type: 'error', message: '该房间不允许观战' })); return; }
                     const spectatorId = 'S_' + Math.random().toString(36).substring(2, 10);
-                    room.addSpectator(ws, spectatorId, data.playerName);
+                    // FIX-007a: 初始视角也做范围校验（非本房玩家 id 一律不写入 → 回落默认视角）
+                    // FIX-009: 观战者昵称同样入口清洗
+                    room.addSpectator(ws, spectatorId, sanitizeText(data.playerName), data.viewPlayerId);
                     playerToRoom.set(spectatorId, data.roomId);
+                    // FIX-006: 观战身份同样做 ws↔身份 绑定并下发令牌。
+                    // FIX-007a: 观战身份纳入同一套权威绑定；视角切换改用绑定身份 + viewPlayerId 范围校验。
+                    const spectatorToken = issueSessionToken('spectator', spectatorId, data.roomId);
+                    bindWsIdentity(ws, 'spectator', spectatorId, data.roomId, spectatorToken);
 
                     // 发送观战者状态
                     ws.send(JSON.stringify({
                         type: 'spectatorJoined',
                         roomId: data.roomId,
                         spectatorId: spectatorId,
+                        token: spectatorToken,
                         gameState: room.getSpectatorGameState(data.viewPlayerId),
                         players: Array.from(room.players.values()).map(p => ({
                             id: p.id, name: p.name, playerNum: p.playerNum, team: p.team, ready: p.ready
@@ -2624,27 +3508,62 @@ wss.on('connection', (ws) => {
                 }
                 case 'spectatorViewPlayer': {
                     // 观战者切换查看的玩家
-                    const rid = playerToRoom.get(data.spectatorId);
-                    const room = rooms.get(rid);
-                    if (room && room.spectators.has(data.spectatorId)) {
-                        room.setSpectatorViewPlayer(data.spectatorId, data.viewPlayerId);
-                        const spectator = room.spectators.get(data.spectatorId);
-                        spectator.ws.send(JSON.stringify({
-                            type: 'spectatorViewState',
-                            gameState: room.getSpectatorGameState(data.viewPlayerId)
-                        }));
+                    // FIX-007a: 观战身份一律取【连接绑定身份】（FIX-006 权威映射），不再信任自报的
+                    // data.spectatorId。原实现 `playerToRoom.get(data.spectatorId)` + `spectators.has(...)`
+                    // 让任意连接只要报出一个存在的 sid，就能替该观战者改视角 / 拉该房手牌（越权）。
+                    const auth = authorizeAction(ws, data);
+                    if (!auth.ok) { sendAuthError(ws, auth); break; }
+                    const ident = auth.ident;
+                    if (ident.type !== 'spectator') {
+                        sendAuthError(ws, { code: 'NOT_SPECTATOR', message: '当前连接不是观战身份，无法切换观战视角' });
+                        break;
                     }
+                    // 客户端自带 spectatorId 时必须与绑定身份一致（旧客户端曾把「被观看玩家 id」塞进该字段）
+                    if (data.spectatorId && data.spectatorId !== ident.id) {
+                        sendAuthError(ws, { code: 'IDENTITY_MISMATCH', message: '观战身份校验失败：spectatorId 与当前连接身份不一致' });
+                        break;
+                    }
+                    const room = rooms.get(ident.roomId);
+                    if (!room || !room.spectators.has(ident.id)) {
+                        sendAuthError(ws, { code: 'ROOM_MISMATCH', message: '观战校验失败：观看的房间或观战身份已失效' });
+                        break;
+                    }
+                    // 范围校验：只能看本房玩家的手牌
+                    if (!room.setSpectatorViewPlayer(ident.id, data.viewPlayerId)) {
+                        sendAuthError(ws, { code: 'VIEW_OUT_OF_RANGE', message: '观战视角越界：只能查看本房间内玩家的手牌' });
+                        break;
+                    }
+                    const spectator = room.spectators.get(ident.id);
+                    spectator.ws.send(JSON.stringify({
+                        type: 'spectatorViewState',
+                        gameState: room.getSpectatorGameState(data.viewPlayerId)
+                    }));
                     break;
                 }
                 case 'ready': {
-                    const rid = playerToRoom.get(data.playerId);
-                    if (rid) rooms.get(rid)?.setPlayerReady(data.playerId, data.ready);
+                    // FIX-006: 动作消息一律按【连接身份】鉴权，不再信任 data.playerId
+                    const auth = authorizeAction(ws, data);
+                    if (!auth.ok) { sendAuthError(ws, auth); break; }
+                    const room = rooms.get(auth.ident.roomId);
+                    if (room) room.setPlayerReady(auth.ident.id, data.ready);
                     break;
                 }
                 case 'addAI': {
-                    // 添加AI玩家
-                    const room = rooms.get(data.roomId);
+                    // FIX-006: 按连接身份鉴权；房间取自【绑定身份】而非自报的 data.roomId
+                    // FIX-007b: 已加房主门禁 + 阶段门禁（非房主 / 对局中一律拒绝）
+                    const auth = authorizeAction(ws, data);
+                    if (!auth.ok) { sendAuthError(ws, auth); break; }
+                    const room = rooms.get(auth.ident.roomId);
                     if (!room) { ws.send(JSON.stringify({ type: 'error', message: '房间不存在' })); return; }
+                    // FIX-007b: 管理类消息门禁 —— 只有房主能加 AI，且只允许在非对局期（waiting/settling）
+                    if (!isRoomHost(room, auth.ident)) {
+                        sendAuthError(ws, { code: 'NOT_HOST', message: '只有房主可以添加AI' });
+                        break;
+                    }
+                    if (room.phase !== 'waiting' && room.phase !== 'settling') {
+                        sendAuthError(ws, { code: 'BAD_PHASE', message: `当前局面（${room.phase}）不允许添加AI，请等本局结束` });
+                        break;
+                    }
                     if (room.players.size >= 4) { ws.send(JSON.stringify({ type: 'error', message: '房间已满' })); return; }
 
                     const aiId = 'AI_' + Math.random().toString(36).substring(2, 10);
@@ -2652,56 +3571,88 @@ wss.on('connection', (ws) => {
                     const aiName = aiNames[room.players.size] || `🤖 AI${room.players.size + 1}`;
 
                     if (room.addAIPlayer(aiId, aiName, data.seatNum)) {
-                        playerToRoom.set(aiId, data.roomId);
+                        playerToRoom.set(aiId, room.id);
                         broadcastRoomList();
                         room.broadcastPlayerList();
                         room.checkStartGame();
-                        console.log(`AI玩家加入: ${data.roomId} - ${aiName}`);
+                        console.log(`AI玩家加入: ${room.id} - ${aiName}`);
                     } else {
                         ws.send(JSON.stringify({ type: 'error', message: '添加AI失败' }));
                     }
                     break;
                 }
                 case 'play': {
-                    const rid = playerToRoom.get(data.playerId);
-                    const res = rooms.get(rid)?.playCards(data.playerId, data.cards);
+                    const auth = authorizeAction(ws, data);
+                    if (!auth.ok) { sendAuthError(ws, auth); break; }
+                    const room = rooms.get(auth.ident.roomId);
+                    const res = room && room.playCards(auth.ident.id, data.cards);
                     if (res && !res.success) ws.send(JSON.stringify({ type: 'playError', message: res.message }));
                     break;
                 }
                 case 'pass': {
-                    const rid = playerToRoom.get(data.playerId);
-                    const res = rooms.get(rid)?.pass(data.playerId);
+                    const auth = authorizeAction(ws, data);
+                    if (!auth.ok) { sendAuthError(ws, auth); break; }
+                    const room = rooms.get(auth.ident.roomId);
+                    const res = room && room.pass(auth.ident.id);
                     if (res && !res.success) ws.send(JSON.stringify({ type: 'playError', message: res.message }));
                     break;
                 }
                 case 'setAutoPlay': {
                     // 设置托管状态
-                    const rid = playerToRoom.get(data.playerId);
-                    const room = rooms.get(rid);
+                    const auth = authorizeAction(ws, data);
+                    if (!auth.ok) { sendAuthError(ws, auth); break; }
+                    const room = rooms.get(auth.ident.roomId);
                     if (room) {
-                        room.setAutoPlay(data.playerId, data.autoPlay);
+                        room.setAutoPlay(auth.ident.id, data.autoPlay);
                     }
                     break;
                 }
                 case 'newRound': {
-                    const rid = playerToRoom.get(data.playerId);
-                    rooms.get(rid)?.startNewRound();
+                    const auth = authorizeAction(ws, data);
+                    if (!auth.ok) { sendAuthError(ws, auth); break; }
+                    const room = rooms.get(auth.ident.roomId);
+                    if (!room) break;
+                    // FIX-008/FIX-007b: 新局门禁 —— 只有房主、且房间必须处于「结算期」。
+                    // 原实现无任何校验：任何人点「新局」都能在别人对局中途重发牌打断对局，
+                    // 也能在 waiting 期把房间直接推进发牌流程（修 A-8 / A-9）。
+                    if (!isRoomHost(room, auth.ident)) {
+                        sendAuthError(ws, { code: 'NOT_HOST', message: '只有房主可以开始新一局' });
+                        break;
+                    }
+                    if (room.phase !== 'settling') {
+                        sendAuthError(ws, { code: 'BAD_PHASE', message: `当前局面（${room.phase}）不是结算期，无法开始新一局` });
+                        break;
+                    }
+                    room.startNewRound();
                     break;
                 }
                 case 'testWin': {
                     // 测试模式：模拟不同胜利情况
-                    const room = rooms.get(data.roomId);
-                    console.log(`testWin 收到: roomId=${data.roomId}, winType=${data.winType}, room存在=${!!room}`);
-                    if (room) {
-                        room.testWinScenario(data.winType);
+                    // FIX-006: 按连接身份鉴权；房间取自【绑定身份】而非自报的 data.roomId
+                    const auth = authorizeAction(ws, data);
+                    if (!auth.ok) { sendAuthError(ws, auth); break; }
+                    const room = rooms.get(auth.ident.roomId);
+                    console.log(`testWin 收到: roomId=${auth.ident.roomId}, winType=${data.winType}, room存在=${!!room}`);
+                    if (!room) break;
+                    // FIX-007b: 管理类消息门禁 —— 只有房主能强制结束对局，且房间必须正处于对局中
+                    //（原实现：房内任意真人点测试按钮即可打断别人正在打的一局）。
+                    if (!isRoomHost(room, auth.ident)) {
+                        sendAuthError(ws, { code: 'NOT_HOST', message: '只有房主可以使用测试胜利功能' });
+                        break;
                     }
+                    if (!isRoomInPlay(room)) {
+                        sendAuthError(ws, { code: 'BAD_PHASE', message: `当前局面（${room.phase}）不是对局中，无法模拟胜利` });
+                        break;
+                    }
+                    room.testWinScenario(data.winType);
                     break;
                 }
                 case 'returnTribute': {
-                    const rid = playerToRoom.get(data.playerId);
-                    const room = rooms.get(rid);
+                    const auth = authorizeAction(ws, data);
+                    if (!auth.ok) { sendAuthError(ws, auth); break; }
+                    const room = rooms.get(auth.ident.roomId);
                     if (room) {
-                        const result = room.handleReturnTribute(data.playerId, data.cardIndex);
+                        const result = room.handleReturnTribute(auth.ident.id, data.cardIndex);
                         if (!result.success) {
                             ws.send(JSON.stringify({ type: 'playError', message: result.message }));
                         }
@@ -2709,17 +3660,23 @@ wss.on('connection', (ws) => {
                     break;
                 }
                 case 'chat': {
-                    const rid = playerToRoom.get(data.playerId);
-                    const room = rooms.get(rid);
+                    // FIX-006: 按【绑定身份】判定发言人（不再按自报的 data.playerId）
+                    const auth = authorizeAction(ws, data);
+                    if (!auth.ok) { sendAuthError(ws, auth); break; }
+                    const ident = auth.ident;
+                    const room = rooms.get(ident.roomId);
                     // 先检查是否是普通玩家
-                    const p = room?.players.get(data.playerId);
+                    const p = room ? room.players.get(ident.id) : null;
                     if (p) {
-                        room.broadcast({ type: 'chat', playerId: data.playerId, playerName: p.name, message: data.message, isSpectator: false });
+                        // FIX-009: 聊天文本服务端转义（限长 200 + 去控制字符 + HTML 实体化）。
+                        // 原实现把 data.message 原样广播 → 客户端 innerHTML 直插 = 全房 XSS。
+                        room.broadcast({ type: 'chat', playerId: ident.id, playerName: p.name, message: escapeHtml(sanitizeText(data.message, MAX_CHAT_LEN)), isSpectator: false });
                     } else {
                         // 检查是否是观战者
-                        const s = room?.spectators.get(data.playerId);
+                        const s = room ? room.spectators.get(ident.id) : null;
                         if (s) {
-                            room.broadcast({ type: 'chat', playerId: data.playerId, playerName: s.name, message: data.message, isSpectator: true });
+                            // FIX-009: 观战者聊天同样转义（同上）
+                            room.broadcast({ type: 'chat', playerId: ident.id, playerName: s.name, message: escapeHtml(sanitizeText(data.message, MAX_CHAT_LEN)), isSpectator: true });
                         }
                     }
                     break;
@@ -2729,11 +3686,16 @@ wss.on('connection', (ws) => {
     });
 
     ws.on('close', () => {
-        for (let [pid, rid] of playerToRoom.entries()) {
+        // FIX-004: 遍历清理**全部**匹配项 —— 原实现首个匹配即 break，导致一个连接挂在
+        // 多个房间时，其余房间的 players/playerToRoom 永久残留（内存泄漏）。
+        const roomsToDestroy = new Set();
+        for (const [pid, rid] of Array.from(playerToRoom.entries())) {
             const room = rooms.get(rid);
-            // 先检查是否是玩家
-            const p = room?.players.get(pid);
-            if (p?.ws === ws) {
+            if (!room) { playerToRoom.delete(pid); continue; }
+
+            // ① 玩家断线
+            const p = room.players.get(pid);
+            if (p && p.ws === ws) {
                 console.log(`玩家断开: ${p.name}`);
 
                 // 如果游戏正在进行中，标记为断开但保留玩家信息（允许重连）
@@ -2752,98 +3714,73 @@ wss.on('connection', (ws) => {
                     });
                     room.broadcastPlayerList();
 
-                    // 30秒后如果还没重连，则替换为AI
-                    setTimeout(() => {
-                        const player = room.players.get(pid);
-                        if (player && player.disconnected && player.ws === null) {
-                            console.log(`${p.name} 超时未重连，由AI接管`);
-                            player.isAI = true;
-                            player.disconnected = false;
-                            player.name = '🤖 ' + player.name.replace('🤖 ', '');
-                            player.ready = true;
-
-                            room.broadcast({
-                                type: 'playerReplacedByAI',
-                                playerId: pid,
-                                playerName: player.name,
-                                message: `${player.name.replace('🤖 ', '')} 超时未重连，由AI接管`
-                            });
-                            room.broadcastPlayerList();
-
-                            // 检查是否所有玩家都是AI
-                            if (room.allPlayersAreAI()) {
-                                console.log(`房间 ${rid} 所有玩家都已离线，自动解散`);
-                                if (room.turnTimer) {
-                                    clearTimeout(room.turnTimer);
-                                    room.turnTimer = null;
-                                }
-                                for (const [playerId, roomId] of playerToRoom.entries()) {
-                                    if (roomId === rid) {
-                                        playerToRoom.delete(playerId);
-                                    }
-                                }
-                                rooms.delete(rid);
-                                broadcastRoomList();
-                            } else if (playerIds && playerIds[room.gameState.currentPlayer] === pid) {
-                                setTimeout(() => room.aiPlayCards(pid), room.getAIRandomDelay());
-                            }
-                        }
-                    }, 30000);
-
-                    // 如果当前轮到该玩家，暂时让AI接管
-                    const playerIds = Array.from(room.players.keys());
+                    // 如果当前轮到该玩家，先让AI顶一手（句柄登记到房间，房间销毁即取消）
+                    const playerIds = room.getSortedPlayerIds();
                     if (playerIds[room.gameState.currentPlayer] === pid) {
-                        setTimeout(() => {
-                            if (p.disconnected && p.ws === null) {
+                        registerTimer(room, 'deal', () => {
+                            if (p.disconnected && p.ws === null && rooms.get(rid) === room) {
                                 room.aiPlayCards(pid);
                             }
                         }, room.getAIRandomDelay());
                     }
-                    break;
+
+                    // FIX-005: 30 秒接管统一走 armTakeoverTimer（内含二次复查，句柄可按座位取消）。
+                    // 结算/新局期回调会自行放弃接管，不再把真人永久改 AI（修 A-17）。
+                    armTakeoverTimer(room, pid, 30000);
+
+                    // FIX-005: 对局中断线【保留】playerToRoom 映射 —— 座位仍留在 room.players，映射与座位保持一致；
+                    // 重连（reconnect）会幂等重建，AI 接管后映射仍在，房间销毁时由 destroyRoom 统一清扫。
+                    // （FIX-004 曾在此删除映射，造成「座位在、映射无」的两表不对称，本批修正。修 A-17 关联项。）
+                    continue;
+                }
+
+                // FIX-006: 未开局离场 → 座位连同它的会话令牌一起吊销（重连凭证不再有效）
+                revokeSessionToken(pid, rid);
+
+                // 游戏未开始，正常移除玩家
+                if (room.removePlayer(pid)) {
+                    // 房间已空 → 交给统一销毁函数（含定时器清理与广播）
+                    roomsToDestroy.add(rid);
                 } else {
-                    // 游戏未开始，正常移除玩家
-                    if (room.removePlayer(pid)) {
-                        rooms.delete(rid);
-                        console.log(`房间删除: ${rid}`);
-                    } else {
-                        // 广播玩家离开通知
-                        room.broadcast({ type: 'playerLeft', playerId: pid, playerName: p.name });
-                        // 更新房间内玩家列表
-                        room.broadcastPlayerList();
-                        // 检查是否只剩下AI玩家，如果是则解散房间
-                        if (room.allPlayersAreAI()) {
-                            console.log(`房间 ${rid} 只剩AI玩家，自动解散`);
-                            // 删除所有该房间玩家的映射
-                            for (const [playerId, roomId] of playerToRoom.entries()) {
-                                if (roomId === rid) {
-                                    playerToRoom.delete(playerId);
-                                }
-                            }
-                            rooms.delete(rid);
-                            broadcastRoomList();
-                            break;
-                        }
-                    }
+                    // 广播玩家离开通知
+                    room.broadcast({ type: 'playerLeft', playerId: pid, playerName: p.name });
+                    // 更新房间内玩家列表
+                    room.broadcastPlayerList();
+                    // 是否只剩AI玩家 → 交给统一判据决定（有在线观战者时不得解散）
+                    roomsToDestroy.add(rid);
                 }
                 playerToRoom.delete(pid);
-                broadcastRoomList();
-                break;
+                continue;
             }
-            // 检查是否是观战者
-            const s = room?.spectators.get(pid);
-            if (s?.ws === ws) {
+
+            // ② 观战者断线
+            const s = room.spectators.get(pid);
+            if (s && s.ws === ws) {
                 console.log(`观战者断开: ${s.name}`);
                 room.removeSpectator(pid);
                 playerToRoom.delete(pid);
+                // FIX-006: 观战者离场 → 吊销其会话令牌
+                revokeSessionToken(pid, rid);
                 // 通知房间内玩家
                 room.broadcast({ type: 'spectatorLeft', spectatorName: s.name });
-                break;
+                continue;
+            }
+
+            // ③ 两表漂移（映射指向的座位已不存在）→ 清理脏映射
+            if (!p && !s) {
+                playerToRoom.delete(pid);
             }
         }
+
+        // FIX-004: 对因此变空的房间统一走唯一销毁函数（清定时器 + 清全部映射 + 广播）
+        for (const rid of roomsToDestroy) {
+            maybeDestroyRoom(rid, '断线后无人在线');
+        }
+        broadcastRoomList();
     });
 
     ws.on('error', (e) => console.error('WS错误:', e));
-});
+}
 
 // 获取房间列表
 function getRoomList() {
@@ -2859,6 +3796,8 @@ function getRoomList() {
             maxPlayers: room.maxPlayers,
             spectatorCount: room.spectators.size, // 观战者数量
             started: room.gameState.started,
+            phase: room.phase, // FIX-008: 显式局面状态（新增字段，旧客户端忽略；供排障/验收观察）
+            hostId: room.hostId, // FIX-007b: 房主座位 id（新增字段）
             players: Array.from(room.players.values()).map(p => ({
                 name: p.name,
                 playerNum: p.playerNum,
@@ -2899,51 +3838,132 @@ server.listen(PORT, '0.0.0.0', () => {
 // 监视服务器代码文件，检测到变化时自动重启
 const watchFiles = ['guandan-server.js', 'guandan-lan.html'];
 let isRestarting = false;
+let fileWatchers = [];
 
-watchFiles.forEach(file => {
-    const filePath = path.join(__dirname, file);
-    if (fs.existsSync(filePath)) {
-        fs.watch(filePath, (eventType) => {
+// ⚠️ 用 npm run dev / dev:verbose 等（nodemon）启动时，nodemon 已经在管重启；内置监听若同时重启
+// 会与 nodemon 抢 8081 端口（EADDRINUSE），可能留下坏进程 → 检测到外部监视器就让位。
+// FIX-012: 让位判据从「环境变量值」(`npm_lifecycle_event === 'dev'`) 改为**显式开关**。
+//   原因：`npm run dev:verbose` 下 npm_lifecycle_event 的值是 'dev:verbose'，旧判据失效 → 双重重启抢 8081。
+//   package.json 的 nodemonConfig.env 里统一注入 GD_NO_SELF_RESTART=1，覆盖 dev / dev:verbose 等所有 nodemon 脚本。
+const underExternalWatcher = process.env.GD_NO_SELF_RESTART === '1';
+
+// ==================== FIX-012b: 内置自重启 = 同进程原地重启 ====================
+// 改前：内置分支 process.exit(0) 交外部拉起 —— 普通模式(node guandan-server.js)下没有人拉起，
+//       保存文件后服务器直接消失（而文档写着「会自动重启」）。
+// 改后：关 wss + 关 http server + 清房间/会话状态 + 重新 listen + 重挂 fs.watch，
+//       全程**不退出进程**（PID 不变，房间会清空、客户端会被 1001 关闭并自动重连）。
+//       只有原地重启失败（超时 / re-listen 出错）才 process.exit(1)，把控制权交回外部启动器。
+
+// 清态：房间级定时器→房间号→令牌→三张 Map（此处**不**广播 roomList：客户端正在被关，广播无意义）
+function clearRoomStateForRestart() {
+    const roomCount = rooms.size;
+    for (const [rid, room] of Array.from(rooms.entries())) {
+        try { clearRoomTimers(room); } catch (e) { /* 单个房间清理异常不影响整体 */ }
+        try { releaseTableNumber(room.tableNumber); } catch (e) { /* 号池下面统一清 */ }
+        try { revokeRoomTokens(rid); } catch (e) { /* 令牌下面统一清 */ }
+        rooms.delete(rid);
+    }
+    playerToRoom.clear();
+    sessionTokens.clear();
+    usedTableNumbers.clear();
+    roomCounter = 0;
+    console.log(`♻️ 原地重启清理：销毁房间 ${roomCount} 个，playerToRoom / sessionTokens / usedTableNumbers 已清空`);
+    return roomCount;
+}
+
+// 重挂文件监听（先关旧句柄再重挂，避免原地重启后叠加出多份 watcher）
+function rearmFileWatchers() {
+    fileWatchers.forEach(w => { try { w.close(); } catch (e) { /* 句柄已失效 */ } });
+    fileWatchers = [];
+    watchFiles.forEach(file => {
+        const filePath = path.join(__dirname, file);
+        if (!fs.existsSync(filePath)) return;
+        fileWatchers.push(fs.watch(filePath, (eventType) => {
             if (eventType === 'change' && !isRestarting) {
-                isRestarting = true;
-                console.log(``);
+                console.log('');
                 console.log(`🔄 检测到 ${file} 变化，正在重启服务器...`);
-                console.log(``);
+                console.log('');
+                restartInPlace(file);
+            }
+        }));
+    });
+    console.log(`👀 已挂载文件监听：${watchFiles.join(', ')}`);
+}
 
-                // 关闭所有WebSocket连接
-                wss.clients.forEach(client => {
-                    if (client.readyState === WebSocket.OPEN) {
-                        client.close(1001, '服务器重启');
-                    }
-                });
+// 原地重启主流程（顺序固定：关连接 → 清状态 → 关 http server → 换新 wss → re-listen → 重挂 watcher/心跳）
+function restartInPlace(trigger) {
+    if (isRestarting) return;
+    isRestarting = true;
+    console.log(`♻️ 内置自重启（同进程原地重启，PID ${process.pid} 不变）：${trigger} 变化`);
+    const state = { finished: false };
+    const failSafe = setTimeout(() => {
+        if (state.finished) return;
+        console.error('❌ 原地重启失败（5 秒内未完成）→ 退出本进程，交由外部启动器拉起');
+        process.exit(1);
+    }, 5000);
 
-                // 关闭服务器
-                server.close(() => {
-                    // 延迟重启，避免频繁重启
-                    setTimeout(() => {
-                        // 使用 spawn 启动新进程
-                        const { spawn } = require('child_process');
-                        const child = spawn(process.argv[0], process.argv.slice(1), {
-                            detached: true,
-                            stdio: 'inherit',
-                            shell: true
-                        });
-                        child.unref();
+    const finish = () => {
+        if (state.finished) return;
+        state.finished = true;
+        try {
+            // ③ 关掉旧 wss（它绑在旧 http server 的 upgrade 上，必须换一个新实例）
+            try { wss.close(); } catch (e) { /* 已经关过了 */ }
+            wss = createWebSocketServer();
+            // ④ 重新监听端口（顺带一次性挂上 re-listen 的错误兜底）
+            const onListenError = (err) => {
+                console.error(`❌ 原地重启失败（重新监听 ${PORT} 出错）：`, err && err.message);
+                clearTimeout(failSafe);
+                process.exit(1);
+            };
+            server.once('error', onListenError);
+            server.listen(PORT, '0.0.0.0', () => {
+                server.removeListener('error', onListenError);
+                // ⑤ 重挂心跳与文件监听，恢复可服务状态
+                armHeartbeat();
+                rearmFileWatchers();
+                isRestarting = false;
+                clearTimeout(failSafe);
+                console.log(`✅ 原地重启完成：PID ${process.pid} 不变，端口 ${PORT} 已重新监听，房间已清空`);
+                console.log(`🚀 掼蛋局域网服务器已启动！ 游戏地址: http://localhost:${PORT}`);
+                console.log('');
+            });
+        } catch (e) {
+            console.error('❌ 原地重启失败（re-listen 抛错）：', e && e.message);
+            clearTimeout(failSafe);
+            process.exit(1);
+        }
+    };
 
-                        // 退出当前进程
-                        process.exit(0);
-                    }, 500);
-                });
-
-                // 强制退出超时
-                setTimeout(() => {
-                    console.log('⏱️ 强制重启...');
-                    process.exit(0);
-                }, 3000);
+    try {
+        // ① 先关所有 WebSocket 连接（close 事件仍走既有的全量清理链）
+        wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.close(1001, '服务器重启');
             }
         });
+        // ② 清房间 / 会话 / 绑定 / 房间级定时器
+        clearRoomStateForRestart();
+        // ③ 关 http server → 回调里 re-listen；顺带强制回收 keep-alive 连接，
+        //    并留 1.5 秒兜底（有连接不回 close 回调时也能推进，finish 幂等）
+        server.close(() => finish());
+        if (typeof server.closeAllConnections === 'function') {
+            try { server.closeAllConnections(); } catch (e) { /* 旧 Node 无此 API */ }
+        }
+        setTimeout(finish, 1500);
+    } catch (e) {
+        console.error('❌ 原地重启失败（关服务抛错）：', e && e.message);
+        clearTimeout(failSafe);
+        process.exit(1);
     }
-});
+}
 
-console.log('🔧 自动重启功能已启用 (监视文件变化)');
+if (underExternalWatcher) {
+    console.log('🔧 当前模式：外部监视重启（GD_NO_SELF_RESTART=1，nodemon / npm run dev*）');
+    console.log('🔧 内置自动重启让位，由外部监视器负责重启');
+} else {
+    console.log('🔧 当前模式：内置自重启（未设置 GD_NO_SELF_RESTART，无外部监视器）—— 同进程原地重启，PID 不变');
+    console.log('🔧 自动重启功能已启用 (监视文件变化)');
+    console.log('🔧 提示：用 nodemon 启动时 package.json 的 nodemonConfig.env 会自动注入 GD_NO_SELF_RESTART=1');
+    rearmFileWatchers();
+}
 

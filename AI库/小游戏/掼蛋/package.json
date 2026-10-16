@@ -1,6 +1,6 @@
 {
   "name": "guandan-lan",
-  "version": "1.5.0",
+  "version": "2.1.3",
   "description": "掼蛋 - 安庆热门扑克游戏局域网版",
   "main": "guandan-server.js",
   "scripts": {
@@ -12,6 +12,9 @@
     "test:coverage": "jest --coverage --colors"
   },
   "nodemonConfig": {
+    "env": {
+      "GD_NO_SELF_RESTART": "1"
+    },
     "watch": [
       "guandan-server.js",
       "guandan-lan.html"

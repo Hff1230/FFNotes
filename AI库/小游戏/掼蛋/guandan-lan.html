@@ -2361,8 +2361,22 @@
     // ==================== 游戏状态 ====================
     let ws = null;
     let playerId = null;
+    // FIX-006: 座位级会话令牌 —— 服务端用它校验「连接身份 ↔ 令牌」一致；重连必须凭它。
+    let sessionToken = localStorage.getItem('guandan_token') || null;
     let roomId = null;
     let playerName = '';
+    let reconnectTimer = null;      // 自动重连定时器
+    let reconnectDelay = 1000;      // 自动重连间隔（指数退避，上限 10 秒）
+    let fatalBannerShown = false;   // file:// 红条只显示一次
+
+    // FIX-009: 发送队列 —— 未连接时不再静默丢包（入队 + 可见提示，连接就绪后自动补发）
+    let pendingSendQueue = [];
+    const MAX_PENDING_SENDS = 20;
+    // FIX-B8-1(F2): 会话级失效标记 —— 服务端已判定本连接不能再用（NOT_BOUND / 令牌失效）。
+    // 置位后：① 新动作不再入队（送进去必被服务端拒绝）② 清空队列里剩下的动作
+    // ③ 给用户可读提示（不再让用户以为「已在后台补发成功，只是没生效」）。
+    let sessionInvalid = false;
+    let lastFlushSentCount = 0;   // 最近一次补发实际发出的条数（会话失效时用于如实回调）
     let isReady = false;
     let gameState = null;
     let selectedCards = [];
@@ -2461,7 +2475,17 @@
     // ==================== WebSocket连接 ====================
     function connect(serverAddress) {
         return new Promise((resolve, reject) => {
-            ws = new WebSocket(`ws://${serverAddress}`);
+            // FIX-006: 令牌只能走握手 URL 的查询串（浏览器 WebSocket 构造函数不能自定义请求头）。
+            // 服务端在 server.on('upgrade') 里据此做校验与预绑定；没有令牌时保持原样（首次建房/进房）。
+            const savedTokenForUrl = localStorage.getItem('guandan_token');
+            const savedRoomIdForUrl = localStorage.getItem('guandan_roomId');
+            let wsUrl = `ws://${serverAddress}`;
+            if (savedTokenForUrl) {
+                wsUrl += `/?token=${encodeURIComponent(savedTokenForUrl)}` +
+                         (savedRoomIdForUrl ? `&roomId=${encodeURIComponent(savedRoomIdForUrl)}` : '');
+            }
+            const sock = new WebSocket(wsUrl);
+            ws = sock;
 
             ws.onopen = () => {
                 updateConnectionStatus(true);
@@ -2473,16 +2497,36 @@
                     // 重连请求已发送，等待服务器响应
                     resolve();
                 }
+                // FIX-009: 把断线期间排队未发的消息补发出去（顺序：先 reconnect，再队列）
+                flushSendQueue();
             };
 
             ws.onmessage = (event) => {
-                const data = JSON.parse(event.data);
-                handleMessage(data);
+                // FIX-009: 坏帧 / 非 JSON 帧不再抛未捕获异常（原来是裸 JSON.parse，一帧脏数据就炸掉 onmessage）
+                let data = null;
+                try {
+                    data = JSON.parse(event.data);
+                } catch (e) {
+                    console.warn('[协议] 收到无法解析的消息帧，已忽略：', e && e.message);
+                    return;
+                }
+                if (!data || typeof data.type !== 'string') {
+                    console.warn('[协议] 收到没有 type 字段的消息，已忽略：', data);
+                    return;
+                }
+                try {
+                    handleMessage(data);
+                } catch (e) {
+                    console.error('[协议] 处理消息 ' + data.type + ' 时出错：', e);
+                }
             };
 
-            ws.onclose = () => {
+            ws.onclose = (event) => {
                 updateConnectionStatus(false);
-                showNotification('与服务器断开连接');
+                if (ws !== sock) return;                  // 已被更新的连接取代 → 忽略
+                if (event && event.code === 1000) return;  // 主动正常关闭 → 不重连
+                showNotification('与服务器断开连接，正在自动重连…');
+                scheduleReconnect();
             };
 
             ws.onerror = (error) => {
@@ -2495,6 +2539,7 @@
 
     function updateConnectionStatus(connected) {
         const status = document.getElementById('connectionStatus');
+        if (!status) return;
         if (connected) {
             status.textContent = '已连接';
             status.className = 'connected';
@@ -2502,6 +2547,54 @@
             status.textContent = '未连接';
             status.className = 'disconnected';
         }
+    }
+
+    // 自动重连：断线（含服务器重启）后按 1→2→4→8→10 秒退避重连，成功后自动恢复原房间
+    function scheduleReconnect() {
+        if (location.protocol === 'file:') return;          // file:// 打不开的页面不重连
+        if (reconnectTimer) return;
+        if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) return;
+        // FIX-009: 退避加随机抖动（多客户端同刻断线时避免齐刷刷同时重连打服务器）
+        const jitteredDelay = Math.round(reconnectDelay * (0.5 + Math.random() * 0.5));
+        reconnectTimer = setTimeout(() => {
+            reconnectTimer = null;
+            connect(window.location.host).then(() => {
+                reconnectDelay = 1000;
+                console.log('自动重连成功');
+            }).catch(() => {
+                reconnectDelay = Math.min(reconnectDelay * 2, 10000);
+                console.log('自动重连失败，' + (reconnectDelay / 1000) + ' 秒后重试');
+                scheduleReconnect();
+            });
+        }, jitteredDelay);
+    }
+
+    // FIX-009: 网络恢复 / 页面重新可见 → 立即重试（不必等退避到点）
+    function retryConnectionNow(reason) {
+        if (location.protocol === 'file:') return;
+        if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) return;
+        if (reconnectTimer) { clearTimeout(reconnectTimer); reconnectTimer = null; }
+        reconnectDelay = 1000;
+        console.log('[网络] ' + reason + ' → 立即重连');
+        scheduleReconnect();
+    }
+    window.addEventListener('online', () => retryConnectionNow('网络已恢复'));
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) retryConnectionNow('页面重新可见');
+    });
+
+    // 致命提示条：显示在页面顶部、不会自动消失（用于 file:// 这类说不清才会踩的坑）
+    function showFatalBanner(message) {
+        if (fatalBannerShown) return;
+        fatalBannerShown = true;
+        const bar = document.createElement('div');
+        bar.id = 'fatalBanner';
+        bar.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#c0392b;color:#fff;' +
+            'padding:10px 14px;font:14px/1.5 system-ui,"Microsoft YaHei",sans-serif;text-align:center;' +
+            'box-shadow:0 2px 8px rgba(0,0,0,.4)';
+        bar.textContent = message;
+        document.body.appendChild(bar);
+        console.log('[致命提示] ' + message);
     }
 
     // ==================== 消息处理 ====================
@@ -2520,6 +2613,9 @@
                 handleReconnected(data);
                 break;
             case 'playerList':
+                // B6-1: hostId 随玩家列表一起下发（服务端 broadcastPlayerList 新增字段）——
+                // 房主断线顺位 / 回连时这里都会把「当前有效房主」刷新到最新
+                if (data.hostId) setRoomHost(data.hostId);
                 updatePlayerList(data.players);
                 break;
             case 'playerJoined':
@@ -2636,12 +2732,51 @@
             case 'autoPlayChanged':
                 handleAutoPlayChanged(data);
                 break;
-            case 'error':
+            case 'error': {
                 showNotification(data.message);
+                // FIX-006: 令牌类鉴权失败（服务器重启让旧令牌作废 / 旧页面本来就没有令牌）→
+                // 清掉本地会话并给出「请刷新页面」的持久红条，免得用户卡在「一直重连但永远连不上」里。
+                const authFatal = ['AUTH_FAILED', 'TOKEN_MISMATCH', 'TOKEN_REQUIRED'].indexOf(data.code) >= 0;
+                if (authFatal) {
+                    clearPlayerInfo();
+                    sessionToken = null;
+                    showFatalBanner('⚠️ 会话令牌已失效：请按 F5 刷新页面后重新加入房间（服务器重启会让旧令牌作废）。');
+                }
+                // FIX-B8-1(F2): 会话级失效 —— 座位已被解绑/令牌已吊销，服务端对本连接的任何动作
+                // 都回 NOT_BOUND（大厅未开局掉线就是这条路）。原实现仍把队列动作一条条发出去并打印
+                // 「已补发排队消息 N 条」，用户看到的实际结果却是全被拒 —— 提示与结果矛盾。
+                // 现在：清空队列 + 可读提示 + 如实回调（不再宣称补发成功）。
+                const sessionDead = ['NOT_BOUND', 'AUTH_FAILED', 'TOKEN_MISMATCH', 'TOKEN_REQUIRED'].indexOf(data.code) >= 0;
+                if (sessionDead) {
+                    markSessionInvalid(data.code === 'NOT_BOUND'
+                        ? '⚠️ 会话已失效（座位已释放）：刚才的操作没有执行，请重新加入房间'
+                        : '⚠️ 会话已失效（令牌作废）：刚才的操作没有执行，请按 F5 刷新页面后重新加入房间');
+                }
                 // 如果是重连失败的错误，清除保存的信息
-                if (data.message.includes('未找到可重连') || data.message.includes('房间不存在')) {
+                if (typeof data.message === 'string' &&
+                    (data.message.indexOf('未找到可重连') >= 0 || data.message.indexOf('房间不存在') >= 0)) {
                     clearPlayerInfo();
                 }
+                break;
+            }
+            case 'playerDisconnected':
+                // FIX-009: 原来缺这个 case → 有人掉线（等待重连）时全房毫无提示，消息被静默丢弃
+                showNotification(`⚠️ ${data.playerName || '有玩家'} 已断开连接，等待重连…`);
+                break;
+            case 'playerReplacedByAI':
+                // FIX-009: 原来缺这个 case → 「超时未重连被 AI 接管」全房无任何提示
+                showNotification(`🤖 ${data.playerName || '有玩家'} 超时未重连，已由 AI 接管`);
+                break;
+            case 'playerReconnected':
+                // B6-1（收尾小修）: 服务端在某位玩家重连成功后会广播 playerReconnected
+                // （guandan-server.js `case 'reconnect'`: room.broadcast({type:'playerReconnected', ...})），
+                // 但本 switch 一直没有这一支 → 有人回连成功时全房静默（消息被 default 丢到 console）。
+                // 补一条可见提示，口径与上面 playerDisconnected / playerReplacedByAI 一致。
+                showNotification(`✅ ${data.playerName || '有玩家'} 已重连成功，已恢复原座位`);
+                break;
+            default:
+                // FIX-009: 未知消息类型不再静默（只在控制台留痕，不弹提示以免噪声）
+                console.warn('[协议] 未处理的消息类型：', data.type);
                 break;
         }
     }
@@ -2796,14 +2931,8 @@
             </div>
         `;
 
-        // 添加模式按钮点击事件委托
-        grid.querySelectorAll('.mode-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const mode = this.getAttribute('data-mode');
-                createRoom(mode);
-            });
-        });
+        // 添加模式按钮点击事件委托（与静态卡片共用同一套绑定）
+        bindCreateCardButtons(grid);
 
         // 添加现有房间
         rooms.forEach((room, index) => {
@@ -2830,8 +2959,9 @@
                 const occupiedClass = occupied ? 'occupied' : '';
                 // 点击空位时传递座位号
                 const clickHandler = (!occupied && !isPlaying) ? `onclick="event.stopPropagation(); joinRoomById('${room.roomId}', ${seatNum})"` : '';
-                const title = occupied && player ? player.name : (isPlaying ? '' : '点击加入');
-                const displayChar = occupied ? (player ? player.name.charAt(0) : '?') : '+';
+                // FIX-009: 这里在 innerHTML 模板里插昵称（title 属性 + 头像首字）→ 先转义再插值
+                const title = occupied && player ? escapeHtmlText(player.name) : (isPlaying ? '' : '点击加入');
+                const displayChar = occupied ? (player ? escapeHtmlText(player.name.charAt(0)) : '?') : '+';
 
                 seatsHtml += `
                     <div class="mini-seat mini-seat-${seatNum}">
@@ -2882,6 +3012,11 @@
     }
 
     function joinRoomById(roomId, seatNum = null) {
+        if (location.protocol === 'file:') {
+            showNotification('连不上服务器：请用 http://localhost:8081 打开本页（不要双击 HTML 文件）');
+            showFatalBanner('⚠️ 当前是「本地文件(file://)」打开，连不上服务器 —— 请在地址栏输入 http://localhost:8081');
+            return;
+        }
         playerName = document.getElementById('playerName').value.trim();
 
         if (!playerName) {
@@ -2954,6 +3089,8 @@
             localStorage.setItem('guandan_playerId', playerId);
             localStorage.setItem('guandan_roomId', roomId);
             localStorage.setItem('guandan_playerName', playerName);
+            // FIX-006: 会话令牌与身份一起持久化（刷新页面后重连必须凭它）
+            if (sessionToken) localStorage.setItem('guandan_token', sessionToken);
         }
     }
 
@@ -2962,19 +3099,31 @@
         localStorage.removeItem('guandan_playerId');
         localStorage.removeItem('guandan_roomId');
         localStorage.removeItem('guandan_playerName');
+        localStorage.removeItem('guandan_token');
     }
 
     // 尝试重连
     function tryReconnect() {
         const savedRoomId = localStorage.getItem('guandan_roomId');
         const savedPlayerName = localStorage.getItem('guandan_playerName');
+        const savedToken = localStorage.getItem('guandan_token');
 
-        if (savedRoomId && savedPlayerName && ws && ws.readyState === WebSocket.OPEN) {
+        // FIX-006: 旧页面（改动前保存的会话信息里没有令牌）已经无法重连 —— 给出可读提示并要求刷新。
+        if (savedRoomId && savedPlayerName && !savedToken) {
+            console.warn('本地保存的是改动前的旧会话（无令牌），无法重连');
+            showNotification('检测到旧版会话信息（缺少令牌），请按 F5 刷新页面后重新加入房间');
+            clearPlayerInfo();
+            return false;
+        }
+
+        if (savedRoomId && savedPlayerName && savedToken && ws && ws.readyState === WebSocket.OPEN) {
             console.log('尝试重连...', savedPlayerName, savedRoomId);
+            sessionToken = savedToken;
             ws.send(JSON.stringify({
                 type: 'reconnect',
                 roomId: savedRoomId,
-                playerName: savedPlayerName
+                playerName: savedPlayerName,
+                token: savedToken            // FIX-006: 重连必须凭令牌
             }));
             return true;
         }
@@ -2984,7 +3133,11 @@
     function handleRoomCreated(data) {
         playerId = data.playerId;
         roomId = data.roomId;
+        sessionInvalid = false;   // FIX-B8-1(F2): 重新拿到有效会话（建房成功）→ 复位失效标记
+        if (data.token) sessionToken = data.token; // FIX-006: 保存服务端下发的会话令牌
         currentTableNumber = data.tableNumber; // 保存桌号
+        // B6-1: 建房者就是房主（服务端 roomCreated 已显式下发 hostId，缺省按自己算）
+        setRoomHost(data.hostId || data.playerId);
         updatePlayerList(data.players);
         showWaitingRoom();
         savePlayerInfo();
@@ -2993,7 +3146,11 @@
     function handleRoomJoined(data) {
         playerId = data.playerId;
         roomId = data.roomId;
+        sessionInvalid = false;   // FIX-B8-1(F2): 重新拿到有效会话（入房成功）→ 复位失效标记
+        if (data.token) sessionToken = data.token; // FIX-006: 保存服务端下发的会话令牌
         currentTableNumber = data.tableNumber || data.tableNumber; // 保存桌号（兼容不同命名）
+        // B6-1: 入房即拿到房主标识（非房主入房当场就能看到管理按钮已被置灰）
+        setRoomHost(data.hostId);
         updatePlayerList(data.players);
         showWaitingRoom();
         savePlayerInfo();
@@ -3002,7 +3159,11 @@
     function handleReconnected(data) {
         playerId = data.playerId;
         roomId = data.roomId;
+        sessionInvalid = false;   // FIX-B8-1(F2): 重连成功（会话仍有效）→ 复位失效标记
+        if (data.token) sessionToken = data.token; // FIX-006: 重连回传同一令牌
         myInfo = data.myInfo;
+        // B6-1: 刷新页面重连后同样恢复房主标识（否则回连后管理按钮门禁会丢失依据）
+        setRoomHost(data.hostId);
 
         // 重建 gameState（服务器返回的是展开的字段）
         gameState = {
@@ -3040,6 +3201,7 @@
     function handleSpectatorJoined(data) {
         playerId = data.spectatorId;
         roomId = data.roomId;
+        if (data.token) sessionToken = data.token; // FIX-006: 观战同样有会话令牌
         isSpectator = true;
         gameState = data.gameState;
         myInfo = { id: playerId, name: playerName };
@@ -3060,6 +3222,64 @@
         document.getElementById('waitingRoom').style.display = 'flex';
         // 显示包间号
         document.getElementById('displayRoomId').textContent = currentTableNumber || roomId;
+    }
+
+    // ==================== B6-1（收尾小修）：管理类按钮的「房主身份」UX 门禁 ====================
+    // 背景：服务端 FIX-007b 已给 addAI / testWin / newRound 加房主门禁（非房主收到 NOT_HOST），
+    // 但客户端按钮照旧显示，非房主点了才看到报错。这里按服务端下发的 hostId 在 UI 层「置灰 + tooltip 说明」，
+    // 让非房主一眼看出这些入口不归自己管。**服务端鉴权仍是唯一权威**，本层只是体验优化（不替代鉴权）。
+    // hostId 来源：服务端四条下行消息 —— roomCreated / roomJoined / reconnected / playerList（均含 hostId 字段）。
+    let roomHostId = null;          // 服务端下发的「当前有效房主座位 id」
+    let hostIdKnown = false;        // 是否真的拿到过 hostId（旧服务端没有该字段时保持 false → 不拦，行为与改动前一致）
+    let nextRoundBtnIsMgmt = true;  // 结算弹窗按钮「下一局」是管理动作；通关后它变「返回大厅」，那时就不是了
+
+    const MGMT_TIP = '只有房主可以操作（你当前不是房主）';
+
+    function isRoomHostClient() {
+        if (!hostIdKnown) return true; // 兼容：拿不到 hostId（旧服务端 / 未入房）就不拦
+        return !!playerId && roomHostId === playerId;
+    }
+
+    function setRoomHost(hostId) {
+        if (typeof hostId === 'string' && hostId) {
+            roomHostId = hostId;
+            hostIdKnown = true;
+        }
+        applyManagementGate();
+    }
+
+    // 统一的「置灰 + tooltip」实现（置灰时记下原 title，恢复时还原，避免覆盖掉别人的提示）
+    function setMgmtDisabled(el, disabled) {
+        if (!el) return;
+        el.disabled = !!disabled;
+        el.style.opacity = disabled ? '0.45' : '';
+        el.style.cursor = disabled ? 'not-allowed' : '';
+        if (disabled) {
+            if (el.dataset.hostTip === undefined) el.dataset.hostTip = el.getAttribute('title') || '';
+            el.setAttribute('title', MGMT_TIP);
+        } else if (el.dataset.hostTip !== undefined) {
+            if (el.dataset.hostTip) el.setAttribute('title', el.dataset.hostTip);
+            else el.removeAttribute('title');
+            delete el.dataset.hostTip;
+        }
+    }
+
+    // 按房主身份刷新管理入口：添加AI / AI自动测试（同一 addAI 门禁）/ 测试模式（含测试面板）/ 新局
+    function applyManagementGate() {
+        const block = !isRoomHostClient();
+        setMgmtDisabled(document.getElementById('addAIBtn'), block);
+        setMgmtDisabled(document.getElementById('autoTestBtn'), block);
+        setMgmtDisabled(document.getElementById('testModeCheckbox'), block);
+        document.querySelectorAll('#testModePanel button').forEach(b => setMgmtDisabled(b, block));
+        if (block) {
+            // 非房主不允许停在「测试模式已开」：复位开关并收起测试面板（不弹提示，避免刷屏）
+            const cb = document.getElementById('testModeCheckbox');
+            if (cb && cb.checked) cb.checked = false;
+            const panel = document.getElementById('testModePanel');
+            if (panel && panel.style.display !== 'none') panel.style.display = 'none';
+        }
+        const nextRoundBtn = document.getElementById('nextRoundBtn');
+        if (nextRoundBtn && nextRoundBtnIsMgmt) setMgmtDisabled(nextRoundBtn, block);
     }
 
     function updatePlayerList(players) {
@@ -3094,6 +3314,8 @@
         if (addAIBtn) {
             addAIBtn.style.display = players.length >= 4 ? 'none' : 'inline-block';
         }
+        // B6-1: 列表刷新后重新按房主身份刷一遍管理入口（上面刚把 addAIBtn 的 display 改回 inline-block）
+        applyManagementGate();
     }
 
     // ==================== 出牌飞行动画 ====================
@@ -3503,13 +3725,23 @@
             if (isCurrentPlayer) {
                 btn.classList.add('current-turn');
             }
-            btn.innerHTML = `${player.name} <span style="opacity:0.7">(${gameState.hands[player.playerId]?.count || 0}张)</span>`;
+            // FIX-009: 昵称一律 textContent 插入（原来 btn.innerHTML 拼昵称 → 全房 XSS）
+            const btnName = document.createElement('span');
+            btnName.textContent = player.name;
+            const btnCount = document.createElement('span');
+            btnCount.style.opacity = '0.7';
+            btnCount.textContent = ` (${gameState.hands[player.playerId]?.count || 0}张)`;
+            btn.appendChild(btnName);
+            btn.appendChild(btnCount);
             if (isCurrentPlayer) {
-                btn.innerHTML += ' ▼';
+                btn.appendChild(document.createTextNode(' ▼'));
                 // 添加倒计时
                 const timeLeft = currentTurnTimeLeft || gameState.turnTimeLeft || 0;
                 if (timeLeft > 0) {
-                    btn.innerHTML += ` <span class="name-timer ${timeLeft <= 5 ? 'warning' : ''}">${timeLeft}s</span>`;
+                    const timerEl = document.createElement('span');
+                    timerEl.className = `name-timer ${timeLeft <= 5 ? 'warning' : ''}`;
+                    timerEl.textContent = ` ${timeLeft}s`;
+                    btn.appendChild(timerEl);
                 }
             }
             btn.onclick = () => switchViewPlayer(player.playerId);
@@ -3534,7 +3766,11 @@
                 const label = document.createElement('div');
                 label.className = 'spectator-hand-label';
                 label.style.color = teamColor;
-                label.innerHTML = `<strong>${viewedPlayer.name}</strong> 的手牌 (${cards.length}张)`;
+                // FIX-009: 昵称走 textContent（原来 label.innerHTML 拼昵称 → 全房 XSS）
+                const viewedNameEl = document.createElement('strong');
+                viewedNameEl.textContent = viewedPlayer.name;
+                label.appendChild(viewedNameEl);
+                label.appendChild(document.createTextNode(` 的手牌 (${cards.length}张)`));
                 handArea.appendChild(label);
 
                 const cardsDiv = document.createElement('div');
@@ -3573,13 +3809,20 @@
             if (isCurrentPlayer) {
                 label.classList.add('current-turn');
             }
-            label.innerHTML = `<strong>${player.name}</strong> (${count}张)`;
+            // FIX-009: 昵称 textContent 插入（原来 label.innerHTML 拼昵称）
+            const nameStrong = document.createElement('strong');
+            nameStrong.textContent = player.name;
+            label.appendChild(nameStrong);
+            label.appendChild(document.createTextNode(` (${count}张)`));
             if (isCurrentPlayer) {
-                label.innerHTML += ' ▼';
+                label.appendChild(document.createTextNode(' ▼'));
                 // 添加倒计时
                 const timeLeft = currentTurnTimeLeft || gameState.turnTimeLeft || 0;
                 if (timeLeft > 0) {
-                    label.innerHTML += ` <span class="name-timer ${timeLeft <= 5 ? 'warning' : ''}">${timeLeft}s</span>`;
+                    const timerEl = document.createElement('span');
+                    timerEl.className = `name-timer ${timeLeft <= 5 ? 'warning' : ''}`;
+                    timerEl.textContent = ` ${timeLeft}s`;
+                    label.appendChild(timerEl);
                 }
             }
             playerBox.appendChild(label);
@@ -3613,12 +3856,15 @@
     }
 
     // 切换查看的玩家
-    function switchViewPlayer(playerId) {
+    function switchViewPlayer(viewPid) {
         if (!isSpectator) return;
+        // FIX-007a: spectatorId 必须发【自己的】观战 sid —— 服务端以其权威绑定身份为准做校验。
+        // 原实现形参名 playerId 遮蔽了全局 playerId，于是把「被观看玩家的 id」塞进了 spectatorId 字段；
+        // 服务端旧判据 room.spectators.has(该玩家id) 恒为 false → 切换视角一直是静默失败（点了没反应）。
         send({
             type: 'spectatorViewPlayer',
             spectatorId: playerId,
-            viewPlayerId: playerId
+            viewPlayerId: viewPid
         });
     }
 
@@ -3950,12 +4196,16 @@
                 }
 
                 // 更新名字和队伍颜色，如果已出完显示名次
+                // FIX-009: 昵称走 textContent（原来 nameEl.innerHTML 拼昵称 → 全房 XSS）；名次徽章单独建节点
                 const nameEl = document.getElementById(`op${pos}Name`);
-                let nameHtml = targetPlayer.name;
+                nameEl.textContent = targetPlayer.name;
                 if (finished && rank > 0) {
-                    nameHtml += ` <span class="rank-badge">第${rank}名</span>`;
+                    const rankBadge = document.createElement('span');
+                    rankBadge.className = 'rank-badge';
+                    rankBadge.textContent = `第${rank}名`;
+                    nameEl.appendChild(document.createTextNode(' '));
+                    nameEl.appendChild(rankBadge);
                 }
-                nameEl.innerHTML = nameHtml;
                 nameEl.className = `opponent-name ${targetPlayer.team === 1 ? 'team1' : 'team2'}`;
 
                 // 更新高亮效果
@@ -4868,7 +5118,7 @@
             .sort((a, b) => a.rank - b.rank)
             .map(r => `
                 <div class="rank-item">
-                    <span class="name">${r.name} (${r.team === 1 ? '红队' : '蓝队'})</span>
+                    <span class="name">${escapeHtmlText(r.name)} (${r.team === 1 ? '红队' : '蓝队'})</span>
                     <span class="rank">第${r.rank}名</span>
                 </div>
             `).join('');
@@ -4884,6 +5134,8 @@
         } else {
             levelInfo.textContent = `${winnerTeam} 获胜！级别不变: ${nextLevelDisplay}`;
         }
+        // B6-1: 结算弹窗里的「下一局」也是管理动作 → 弹出时按房主身份盖一次（非房主置灰）
+        applyManagementGate();
     }
 
     // 处理发牌动画
@@ -5034,6 +5286,9 @@
         const nextRoundBtn = document.getElementById('nextRoundBtn');
         nextRoundBtn.textContent = '返回大厅';
         nextRoundBtn.onclick = backToLobbyAfterGameOver;
+        // B6-1: 通关后这个按钮是「返回大厅」（普通动作，不写房间状态）→ 解除房主门禁，谁都能点
+        nextRoundBtnIsMgmt = false;
+        setMgmtDisabled(nextRoundBtn, false);
     }
 
     // 通关后返回大厅
@@ -5045,6 +5300,9 @@
         const nextRoundBtn = document.getElementById('nextRoundBtn');
         nextRoundBtn.textContent = '下一局';
         nextRoundBtn.onclick = startNewRound;
+        // B6-1: 回到「下一局」= 管理动作 → 重新纳入房主门禁
+        nextRoundBtnIsMgmt = true;
+        applyManagementGate();
 
         // 隐藏游戏区域，显示等待房间
         document.getElementById('gameArea').style.display = 'none';
@@ -5188,11 +5446,11 @@
 
             return `
                 <div class="tribute-record">
-                    <span class="player-name" title="${record.fromName}">${record.fromName}</span>
+                    <span class="player-name" title="${escapeHtmlText(record.fromName)}">${escapeHtmlText(record.fromName)}</span>
                     <span class="arrow">→</span>
                     ${tributeCardHtml}
                     <span class="arrow">→</span>
-                    <span class="player-name" title="${record.toName}">${record.toName}</span>
+                    <span class="player-name" title="${escapeHtmlText(record.toName)}">${escapeHtmlText(record.toName)}</span>
                     ${returnCardHtml ? `<span class="return-arrow">↩</span>${returnCardHtml}` : ''}
                     ${index < tributeRecords.length - 1 ? '<span class="tribute-separator">|</span>' : ''}
                 </div>
@@ -5214,8 +5472,19 @@
         container.style.display = 'flex';
         container.classList.add('resist-mode');
 
-        const resistHtml = `<div class="tribute-record resist"><span class="resist-icon">🛡️</span><span class="resist-text">${playerName} 抗贡</span></div>`;
-        content.innerHTML = resistHtml;
+        // FIX-009: 昵称不再拼进 innerHTML → 建节点 + textContent
+        content.innerHTML = '';
+        const resistDiv = document.createElement('div');
+        resistDiv.className = 'tribute-record resist';
+        const resistIcon = document.createElement('span');
+        resistIcon.className = 'resist-icon';
+        resistIcon.textContent = '🛡️';
+        const resistText = document.createElement('span');
+        resistText.className = 'resist-text';
+        resistText.textContent = `${playerName} 抗贡`;
+        resistDiv.appendChild(resistIcon);
+        resistDiv.appendChild(resistText);
+        content.appendChild(resistDiv);
     }
 
     // 创建迷你牌面HTML
@@ -5251,7 +5520,7 @@
         display.style.display = 'block';
         cardsDisplay.innerHTML = `
             <div class="tribute-item">
-                <div class="tribute-label">🎁 ${fromName} ${action}给 ${toName}</div>
+                <div class="tribute-label">🎁 ${escapeHtmlText(fromName)} ${escapeHtmlText(action)}给 ${escapeHtmlText(toName)}</div>
                 <div class="tribute-card">${createCardHTML(card)}</div>
             </div>
             <div class="tribute-arrow">⏳</div>
@@ -5269,12 +5538,12 @@
         display.style.display = 'block';
         cardsDisplay.innerHTML = `
             <div class="tribute-item">
-                <div class="tribute-label">🎁 ${currentTributeFrom} 进贡给 ${currentTributeTo}</div>
+                <div class="tribute-label">🎁 ${escapeHtmlText(currentTributeFrom)} 进贡给 ${escapeHtmlText(currentTributeTo)}</div>
                 <div class="tribute-card">${createCardHTML(currentTributeCard)}</div>
             </div>
             <div class="tribute-arrow">🔄</div>
             <div class="tribute-item">
-                <div class="tribute-label">${fromName} 还贡给 ${currentTributeFrom}</div>
+                <div class="tribute-label">${escapeHtmlText(fromName)} 还贡给 ${escapeHtmlText(currentTributeFrom)}</div>
                 <div class="tribute-card">${createCardHTML(card)}</div>
             </div>
         `;
@@ -5400,20 +5669,71 @@
         document.getElementById('tributeModal').style.display = 'none';
     }
 
+    // FIX-009: 服务端已对聊天正文做 escapeHtml（线路上 HTML 失活）→ 这里先还原实体，
+    // 再用 textContent 插入 DOM（**绝不拼 innerHTML**）。两层防护，XSS 无法落地。
+    function decodeEscapedText(text) {
+        const s = (text === null || text === undefined) ? '' : String(text);
+        return s
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'")
+            .replace(/&amp;/g, '&');
+    }
+
+    // FIX-009: 少数必须用 innerHTML 拼标记的地方（大厅座位 title/首字、结算名次、进贡记录、
+    // 桌面进贡/还贡标签）—— 昵称先转义再插值，文字内容仍由浏览器按文本渲染。
+    function escapeHtmlText(text) {
+        const s = (text === null || text === undefined) ? '' : String(text);
+        return s
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
     function handleChat(data) {
         const messages = document.getElementById('chatMessages');
+        if (!messages) return;
+        const who = (data.playerName === null || data.playerName === undefined) ? '玩家' : String(data.playerName);
         const msgDiv = document.createElement('div');
         msgDiv.className = 'chat-message';
-        const displayName = data.isSpectator ? `${data.playerName} 👁️` : data.playerName;
-        const senderClass = data.isSpectator ? 'sender spectator' : 'sender';
-        msgDiv.innerHTML = `<span class="${senderClass}">${displayName}:</span> <span class="text">${data.message}</span>`;
+        const sender = document.createElement('span');
+        sender.className = data.isSpectator ? 'sender spectator' : 'sender';
+        sender.textContent = (data.isSpectator ? `${who} 👁️` : who) + ':';
+        const body = document.createElement('span');
+        body.className = 'text';
+        body.textContent = decodeEscapedText(data.message);
+        msgDiv.appendChild(sender);
+        msgDiv.appendChild(document.createTextNode(' '));
+        msgDiv.appendChild(body);
         messages.appendChild(msgDiv);
         messages.scrollTop = messages.scrollHeight;
     }
 
     // ==================== 游戏操作 ====================
+    // 绑定「开房」卡片里的模式按钮。静态卡片（HTML 里那张）也要绑：
+    // 它原来只在收到 roomList（=连上服务器）后才由 renderTableList 绑事件，
+    // 一旦连不上服务器（服务器没起 / 用 file:// 打开），这张卡就是块死图，点了完全没反应。
+    function bindCreateCardButtons(root) {
+        (root || document).querySelectorAll('.mode-btn[data-mode]').forEach(btn => {
+            if (btn.dataset.bound === '1') return;
+            btn.dataset.bound = '1';
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                createRoom(this.getAttribute('data-mode'));
+            });
+        });
+    }
+
     async function createRoom(mode = 'normal') {
         console.log('createRoom called, mode:', mode);
+        if (location.protocol === 'file:') {
+            showNotification('连不上服务器：请用 http://localhost:8081 打开本页（不要双击 HTML 文件）');
+            showFatalBanner('⚠️ 当前是「本地文件(file://)」打开，连不上服务器 —— 请在地址栏输入 http://localhost:8081');
+            return;
+        }
         playerName = document.getElementById('playerName').value.trim();
         console.log('playerName:', playerName);
 
@@ -5484,6 +5804,8 @@
     }
 
     function addAIPlayer() {
+        // B6-1: 非房主直接给可读提示（服务端 FIX-007b 仍会回 NOT_HOST；这里只是不让"点了才知道"）
+        if (!isRoomHostClient()) { showNotification('⚠️ ' + MGMT_TIP); return; }
         send({
             type: 'addAI',
             roomId: roomId
@@ -5498,6 +5820,8 @@
             showNotification('请先创建或加入房间');
             return;
         }
+        // B6-1: AI自动测试本质是连发 3 个 addAI → 与服务端同一道房主门禁
+        if (!isRoomHostClient()) { showNotification('⚠️ ' + MGMT_TIP); return; }
 
         // 连续添加3个AI玩家
         let aiCount = 0;
@@ -5524,6 +5848,15 @@
     // 测试模式开关
     let testModeEnabled = false;
     function toggleTestMode() {
+        // B6-1: 只有房主能开测试模式（服务端对 testWin 有 NOT_HOST 门禁）
+        if (!isRoomHostClient()) {
+            const cb0 = document.getElementById('testModeCheckbox');
+            if (cb0) cb0.checked = false;
+            const panel0 = document.getElementById('testModePanel');
+            if (panel0) panel0.style.display = 'none';
+            showNotification('⚠️ ' + MGMT_TIP);
+            return;
+        }
         testModeEnabled = document.getElementById('testModeCheckbox').checked;
         const panel = document.getElementById('testModePanel');
         if (panel) {
@@ -5578,8 +5911,11 @@
         // 只有轮到自己时才自动出牌
         if (currentPid !== playerId) return;
 
-        const myHand = gameState.hands[playerId];
-        if (!myHand || myHand.length === 0) return;
+        // FIX-009（既有 bug 修正）：自己的手牌在 gameState.myHand，而 gameState.hands[playerId]
+        // 是**公共视图** {count}（没有 cards 数组）→ 原实现 myHand 恒为空，永远走不到 send，
+        // 「🎮 AI自动测试」的自动出牌一路空转。这里改读 myHand（取不到时回退公共视图的 cards）。
+        const myHand = gameState.myHand || (gameState.hands[playerId] && gameState.hands[playerId].cards);
+        if (!Array.isArray(myHand) || myHand.length === 0) return;
 
         // 延迟1秒后自动出牌
         setTimeout(() => {
@@ -6532,6 +6868,8 @@
     }
 
     function startNewRound() {
+        // B6-1: 非房主不能开新局（服务端 FIX-007b 会回 NOT_HOST；先给提示，别静默把结算界面关掉）
+        if (!isRoomHostClient()) { showNotification('⚠️ ' + MGMT_TIP); return; }
         // 立即关闭结算界面
         document.getElementById('roundEndModal').style.display = 'none';
 
@@ -6558,9 +6896,76 @@
 
     // ==================== 工具函数 ====================
     function send(data) {
+        // FIX-B8-1(F2): 会话已失效 → 任何动作都不再发出/入队（送进去必被服务端 NOT_BOUND 拒），
+        // 只给可读提示。守卫必须放在最前面：放在「未连接」分支里的话，连接恢复后
+        // （ws.readyState = OPEN）动作仍会被直接发出去（实测 send() 返回 true）。
+        if (sessionInvalid) {
+            showNotification('⚠️ 会话已失效，该操作没有执行：请重新加入房间（按 F5 刷新页面）');
+            return false;
+        }
+        // FIX-006: 所有消息统一自动带上会话令牌（原先 7 处 playerId: 发送点因此全部覆盖）。
+        // 首次 createRoom/joinRoom/spectateRoom 时还没有令牌，服务端按「过渡窗口」放行并下发令牌。
+        if (data && typeof data === 'object' && data.token === undefined && sessionToken) {
+            data.token = sessionToken;
+        }
         if (ws && ws.readyState === WebSocket.OPEN) {
             ws.send(JSON.stringify(data));
+            return true;
         }
+        // FIX-009: 未连接时不再**静默丢包** —— 入队 + 可见提示，连上后由 flushSendQueue() 自动补发
+        if (pendingSendQueue.length >= MAX_PENDING_SENDS) {
+            pendingSendQueue.shift();
+            console.warn('[发送] 队列已满（上限 ' + MAX_PENDING_SENDS + ' 条），丢弃最旧的一条待发消息');
+        }
+        pendingSendQueue.push(data);
+        showNotification('⚠️ 尚未连接到服务器：该操作已排队，连接成功后自动发送');
+        return false;
+    }
+
+    // FIX-009: 连接就绪后按原顺序补发排队消息（返回实际发出的条数）
+    function flushSendQueue() {
+        if (!ws || ws.readyState !== WebSocket.OPEN || pendingSendQueue.length === 0) return 0;
+        const queued = pendingSendQueue;
+        pendingSendQueue = [];
+        let sent = 0;
+        queued.forEach(item => {
+            try {
+                ws.send(JSON.stringify(item));
+                sent++;
+            } catch (e) {
+                console.warn('[发送] 补发失败，丢弃一条排队消息：', e && e.message);
+            }
+        });
+        lastFlushSentCount = sent;
+        // FIX-B8-1(F2): 措辞收紧 —— 「已发出，等待服务端回执」，不再把它当作「补发成功」；
+        // 若服务端回 NOT_BOUND 一类，markSessionInvalid() 会清空队列并打印如实回调。
+        if (sent > 0) console.log('[发送] 已补发排队消息 ' + sent + ' 条（已发出，等待服务端回执）');
+        return sent;
+    }
+
+    // FIX-B8-1(F2): 清空发送队列（会话失效时调用）。返回清掉的条数。
+    // 与 flushSendQueue 相对：这里明确「这些动作没有被服务端接受」，绝不宣称补发成功。
+    function clearPendingSendQueue(reason) {
+        const n = pendingSendQueue.length;
+        pendingSendQueue = [];
+        if (n > 0) console.warn('[发送] 已丢弃 ' + n + ' 条未被服务端接受的动作（' + reason + '）');
+        return n;
+    }
+
+    // FIX-B8-1(F2): 会话级失效 —— 清队列 + 可读提示 + 如实回调（替代「静默发出去 + 宣称已补发」）。
+    function markSessionInvalid(message) {
+        sessionInvalid = true;
+        const flushed = lastFlushSentCount;
+        const dropped = clearPendingSendQueue('会话已失效');
+        lastFlushSentCount = 0;
+        if (flushed > 0) {
+            console.warn('[发送] ⚠️ 会话已失效：刚才发出的 ' + flushed + ' 条排队动作未被服务端接受（NOT_BOUND 一类鉴权拒绝），已作废'
+                + (dropped > 0 ? '；另清空 ' + dropped + ' 条' : ''));
+        }
+        const bar = document.getElementById('fatalBanner');
+        if (bar) bar.textContent = message;   // 已有持久红条 → 更新成更具体的原因
+        else showFatalBanner(message);
+        showNotification(message);
     }
 
     function showNotification(message) {
@@ -6581,9 +6986,20 @@
             document.getElementById('playerName').value = savedName;
         }
 
+        // 静态「开房」卡片立即绑定（不等 roomList，否则连不上时点击无反应）
+        bindCreateCardButtons(document);
+
+        // ① 直接双击 HTML（file://）→ 这种打开方式连不上 WebSocket，必须在页面上说清楚
+        if (location.protocol === 'file:') {
+            showFatalBanner('⚠️ 当前是「本地文件(file://)」打开，连不上服务器 —— 请在地址栏输入 http://localhost:8081（或先双击「启动服务器-自动重启.bat」，用它的提示地址）');
+            updateConnectionStatus(false);
+        }
+
         // 页面加载时连接服务器，以便接收房间列表
         connect(window.location.host).catch(e => {
             console.log('初始连接失败，将在创建/加入房间时重试');
+            showNotification('连不上服务器，正在自动重试…（一直失败请确认服务器已启动）');
+            scheduleReconnect();
         });
 
         document.getElementById('messageInput').addEventListener('keydown', (e) => {

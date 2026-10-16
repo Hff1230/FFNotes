@@ -15,6 +15,7 @@ class AIPlayer {
         this.seatNum = seatNum;
         this.ws = null;
         this.playerId = null;
+        this.token = null;   // FIX-006: 座位级会话令牌（服务端在 roomCreated/roomJoined 下发）
         this.roomId = null;
         this.myHand = [];
         this.myInfo = null;
@@ -62,13 +63,15 @@ class AIPlayer {
             case 'roomCreated':
                 this.playerId = msg.playerId;
                 this.roomId = msg.roomId;
-                this.log(`创建房间成功: ${this.roomId}`);
+                if (msg.token) this.token = msg.token;   // FIX-006
+                this.log(`创建房间成功: ${this.roomId}（令牌已下发: ${this.token ? 'YES' : 'NO'}）`);
                 break;
 
             case 'roomJoined':
                 this.playerId = msg.playerId;
                 this.roomId = msg.roomId;
-                this.log(`加入房间成功: ${this.roomId}`);
+                if (msg.token) this.token = msg.token;   // FIX-006
+                this.log(`加入房间成功: ${this.roomId}（令牌已下发: ${this.token ? 'YES' : 'NO'}）`);
                 break;
 
             case 'playerList':
@@ -126,6 +129,11 @@ class AIPlayer {
 
     send(msg) {
         if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+            // FIX-006: 身份绑定后所有动作消息（play/pass/ready/newRound）都必须携带会话令牌，
+            // 否则服务端按 TOKEN_REQUIRED 拒绝。首次 createRoom/joinRoom 时尚无令牌，服务端放行并下发。
+            if (msg && typeof msg === 'object' && msg.token === undefined && this.token) {
+                msg.token = this.token;
+            }
             this.ws.send(JSON.stringify(msg));
         }
     }
