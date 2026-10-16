@@ -85,14 +85,22 @@ PC 端 adb 驱动手游日常与挂机：拟人输入、横屏坐标、防检测
 4. **过登录/公告/选服选角**：逐张截图判读；涉及密码/验证码 → 停手叫用户。
 5. **主循环 = 截图 → 判读 → 一个拟人动作 → 再截图核对**。一步只做一个动作，动作后必须截图确认界面确实变了；没变就换坐标/换策略，**不要连点**。
 6. **长挂机/自动战斗**：优先用游戏内置的自动寻路/自动战斗，脚本只负责点「自动/继续/确定」并定期确认没被弹窗卡住。巡检间隔 30~60s，别高频截图（占带宽、也像机器）。
-7. **收尾**：关自动战斗、恢复改过的设置（`svc power stayon false`、超时、免打扰），汇报「完成了哪些、哪些没做、为什么」。
+7. **收尾**：关自动战斗、恢复改过的设置（`stay_awake.py off` 还原屏幕超时/常亮、免打扰），汇报「完成了哪些、哪些没做、为什么」。
 
 **■ Pitfalls**
 
 1. **坐标空间 = 当前旋转，不是 Physical**。华为/多数机 `wm size` 输出 `Physical size: 1080x2400` + `Override size: 720x1600`；游戏横屏后 `dumpsys window displays` 是 `cur=1600x720`，`screencap` 出的 PNG 也是 1600x720（IHDR 实测），uiautomator dump 的 `root rotation=1`。三者同一空间 → **截图像素直接当点击坐标**；按 Physical 缩放会整体偏移。判断旋转：`adb shell dumpsys input | grep SurfaceOrientation`（1/3=横屏，0/2=竖屏）。注意刘海侧 app bounds 可能从 x=90 起，但游戏常整屏绘制 —— 以截图像素为准。
 2. **首启是「两段下载」，且登录框会先弹出来**。倩女幽魂实测：先客户端更新（约 1.5GB）→ 完成后进登录界面，同时底部继续「正在下载重要资源…(x MB / 1388.3MB) 4.9M/s」。别把「一直没进游戏」当卡死：读进度条数字、算 ETA、报给用户；下载与点击互不干扰，可以先登录再等下载。
 3. **uiautomator 对 Unity/Cocos 游戏几乎无节点**。实测某游戏 dump 只有 6 个 node、`text` 全空 → 定位只能靠**截图 + 视觉判读**，别指望 `dump`/`find --text`。
-4. **息屏即采集失败**。息屏时 screencap/uiautomator 报 `ERROR: null root node returned by UiTestAutomationBridge`。长跑前：`input keyevent KEYCODE_WAKEUP` + `svc power stayon true`（= `stay_on_while_plugged_in 7`，插线常亮）+ `settings put system screen_off_timeout 1800000`。
+4. ❗**息屏即采集失败 —— 远程调试期间必须「永不锁屏」（用户硬规则 2026-10-13：「远程调试时不要让手机锁屏了」）**。息屏时 screencap/uiautomator 报 `ERROR: null root node returned by UiTestAutomationBridge`。
+   - 旧写法（`screen_off_timeout 1800000` = 30 分钟）**不够**：远程调试时人不在手机旁边、没人碰屏幕，30 分钟必然锁屏，流程断在半路。
+   - 一律用现成脚本（原值自动存盘、收尾精确还原、adb 调用带 `CREATE_NO_WINDOW` 不弹黑框）：
+     ```bash
+     python C:\Users\Administrator\AppData\Local\hermes\skills\tools\adb-device-control\scripts\stay_awake.py on
+     python ...\stay_awake.py status      # 回读验证真的生效
+     python ...\stay_awake.py off         # 收尾必须还原（屏幕整夜亮着费电、伤屏）
+     ```
+   - `on` = `screen_off_timeout 2147483647`（永不）+ `stay_on_while_plugged_in 7`（插线常亮）+ `KEYCODE_WAKEUP` + `wm dismiss-keyguard`。
 5. **别在用户自己上手时操作**。他试玩/按 Play 期间的 tap 会与他抢屏、互相打断；要操作前先确认他没在用手机。
 6. **来电/通知会打断长流程**。建议用户临时开免打扰 —— 先问再开。
 7. **拟人节奏不是可选项**。固定 1.0s 间隔 + 同像素重复点击最像脚本；用对数正态间隔（中位 ~0.5s，偶发 1.2~3.5s 走神停顿）+ ±5~12px 坐标抖动 + 滑动拆 4 段带弧变速，见附录 A。
