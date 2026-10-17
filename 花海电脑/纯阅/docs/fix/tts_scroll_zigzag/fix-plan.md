@@ -155,6 +155,47 @@
 - 包：`release/_wip/entry-default-signed-zigzag-release.hap`，md5 `aa6681484abeea6114ad7196bcacf2d9`，1,372,286 B（已装平板模拟器 5557 验收）。
 - 门禁：`reader_center` 57/57、`reader_pos` 150/150、`diag_log` UT-313~321 GREEN；反向对照 RED（撤掉单源闸后 `idx` 复现）。
 
+### 1.8 第二轮：手机复现 + 真正根因（2026-10-17 21:30–22:20，包 `16d4dc13…`）
+
+**可复现条件（手机 1256×2760，连跑两遍数字一致）**：滚动模式 + 字号 **36**（内容超一屏）+ **停止朗读后 ≤1s 再开**。
+
+| 现场 | 日志 | 目视 |
+|---|---|---|
+| 复播首拍回拉 400px | `center curY=1218 dev=-400 want=818 real=-39` → `scrollcmd src=tick from=1218 to=818 exec=1` | 第 4/4 页 → 重启后第 2/4 页 |
+| 换章后二次回顶 | `curY=917 dev=-1172 want=0 real=-811 clamped=1` → `to=0` | 先停在中部再跳回章首 |
+
+**同时暴露一个量具错误（必须先修量具）**：`logScrollCmd` 把 `to` 恒记成 `Math.round(want)`，于是 `why=src-hold|blocked|frozen`（代码已 `return`、根本没下发）的行也带着目标值 ⇒ 旧日志里 113 次「`seg 113→51`」全是假回退（`curY` 序列零下降）。修法：未执行行 `to=-1` + `exec=0`，`zigzag` 阈值 0.343→`0.08×band` 且日志直接打印 `thr=`。
+
+**新增根因**
+- **R8**：开听书 `toggleSpeech()` 无条件 `followFloor=-1`（「首次定位完全自由」）⇒ 首拍可往回拉一屏，地板来不及拦。
+- **R9**：`realC` 落在屏幕外（`-39`/`-811`）时未判无效，仍按 `dev=realC−band/2` 算目标 ⇒ 大幅上移。
+
+**FIX-ZZ-007**：地板改为 `y0 − 一行`；`src=start` 首拍最多回退一行（`start-clamp`）；`realC` 越出 `[-band/2, 1.5band]` 判无效（`real-invalid`）；换章窗口内最多回退一屏（`chapter-hold`）。
+**复验**：手机非换章回退 5→2（均换章合法）、目视 3/4→3/4；平板字号 36 停 0.5s 复播两轮 **真回退 0 / zigzag 0 / inScreen 93.8%~97.6%**。
+
+### 1.9 第三轮：换章漂移与最终收口（2026-10-17 22:20–22:55，包 `eacecb66…`）
+
+**最后一个真凶**：换章 `scrollTo(0)` 后 `LazyForEach` 换数据源会让 **List 自己漂移**（手机 489~551px、平板 427~1131px，无人下令）；而 `settleChapterScroll` 被 FIX-ZZ-002 **整条闸掉**，合法补正一起被关 ⇒ 1.8s 后才由跟读按真实坐标拉回章首（目视「新章内容顶屏、标题滚出、无高亮 → 再跳回」）。
+
+**FIX-ZZ-008**：换章/改字号/可视高变化时 `resetScrollTrail` 清采样（消假 zigzag）；换章 3s 内 `shouldFreeze` 不触发（防误冻）；换章 3s 内 `realC` 无效不退估算（`chapter-nowait`，防「先滚过去再拉回」）。
+**FIX-ZZ-009**：`settleChapterScroll` 闸改为**换章 3s 内放行**；`gotoChapter` 排 150/600ms 两次 `chapter-pin` 钉位；假 `zigzag` 判据加「真实位移 ≥2px」门槛。
+
+| 指标 | 第二轮 | 最终 |
+|---|---|---|
+| 非换章回退（手机章末） | 2（551→0、489→0） | **0** |
+| `zigzag`（手机） | 8 | **0** |
+| 假 `zigzag`（平板） | 3 | **0** |
+| `zigzag-guard` / `frozen` | 偶发误冻 | **0 / 0** |
+| `chapter-pin` | — | 每换章 2 条，`t=600 got=0` 全钉住 |
+| 换章漂移寿命 | 1.8s（可见） | **≈120ms**（150ms 钉位顶回；1010 帧连拍抓不到） |
+
+**交付物**：commit 链 `dfdfb68 → 11919cc → fdd842f → a87d890 → 144ac0f → cababdd → ec4a670 → d442e32 → d81ec2e`（9 个，逐条可单独回退）；包 `release/_wip/entry-default-signed-zigzag-final-release.hap`，md5 `eacecb667c71c30081bedec7fd9de42d`，1,376,729 B；门禁 `reader_center` 57/57、`reader_pos` 150/150、`diag_log` UT-313~325 GREEN 且反向对照 RED。
+
+**未覆盖 / 新增观察项**
+- 未覆盖：**书源抓取书**；**听书中改字号**（`Reader.ets:5222 ttsBlocked`，模拟器无法在听书态打开设置）；真机（本轮全部在手机/平板模拟器）。
+- 观察项 A（非本单）：章末 `maxScroll` 偏小使跟读 `to` 超界被 List 夹住、高亮短暂出屏（平板 R1 换章前 ~28s 内 11 条 `inScreen=0`）。
+- 观察项 B（非本单）：停止朗读后点击间隔 0.3s，但 `phase=start` 记在 +2.17s，复播会从本章开头重读（未定性）。
+
 ---
 
 ## 二、修复方案
