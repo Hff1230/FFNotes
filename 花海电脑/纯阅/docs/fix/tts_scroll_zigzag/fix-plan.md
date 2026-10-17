@@ -196,6 +196,45 @@
 - 观察项 A（非本单）：章末 `maxScroll` 偏小使跟读 `to` 超界被 List 夹住、高亮短暂出屏（平板 R1 换章前 ~28s 内 11 条 `inScreen=0`）。
 - 观察项 B（非本单）：停止朗读后点击间隔 0.3s，但 `phase=start` 记在 +2.17s，复播会从本章开头重读（未定性）。
 
+### 1.10 第四轮：判据换成日志序列 + 禁用 idx 硬跳（2026-10-18 00:12–02:00，包 `a8b01bc2…`）
+
+> 用户口径：**「查问题用日志打点比看图更有效，又不是界面布局问题」**。本轮起滚动类判据一律用位移序列，截图只用于静态形态。
+
+**量具（FIX-ZZ-010，`f6340d2`，零行为）**
+- `pos|t=|y=|max=|band=|tts=|mode=|phase=`：`onScroll` 里 y 变且距上次 ≥30ms 写一行；`pos-stop` 每次停稳必写；
+- `seg|i=|…|curY=|max=|floor=|phase=`：**每读一句一行**；
+- `zigzag` 采样 250ms → 50ms；
+- `tools/scroll_trace_analyze.py`：输出 `TRACE: back=N mono=OK|BAD maxBack=Xpx` 与 `SEGTRACE: n=N back=N mono=…`，每个反向事件自动挂最近的 `scrollcmd` 归因。
+- 量具自身的两个坑：① `to` 只在 `exec=1` 时可信（`exec=0` 恒 `-1`）；② 换章时旧章末 `curY` + 新章 `max` 会假报回退 ⇒ 判定须排除 `a.ch!=b.ch` 或任一侧 `phase=chapter`（已修脚本）。
+
+**真凶（FIX-ZZ-011，`4a32406`）**：字号 36 章中，`realC` 连续测不到（`real=-9999`）达 4 拍后放行 `scrollToIndex(CENTER)`：
+```
+605864 scrollcmd|src=idx|want=10496|from=10217|to=10496|exec=1
+605876 pos|y=14922                              ← +12ms 超射 4426px
+605909~606757 pos: 13707→11503→…→4611          ← 881ms 连续回落
+606757 pos-stop|y=4611                          ← 比起始往回 5606px（≈4 屏）
+```
+`scrollToIndex` 的目标是「目标块滚到屏幕中央」而非像素目标，落点不可预测。修法：`idxAllowed` 首位加 `!ttsScrollSole()`（听书滚动彻底禁 idx），只记 `idx-blocked(tts) miss=… estDev=… y=…`。
+
+**最终验收（全部日志判据，11 场平板 + 3 场手机）**
+
+| 场 | 字号 | `src=idx` | `idx-blocked(tts)` | `TRACE` | `SEGTRACE` |
+|---|---|---|---|---|---|
+| 平板 V1-a/b/c 章中 | 36 | **0/0/0** | 4 / 0 / 0 | back=0 mono=OK ×3 | back=0 ×3 |
+| 平板 V2 章中 | 19 | **0** | 98 | back=0 mono=OK | back=0 |
+| 平板 V3 停→19→22→继续 | 22 | **0** | 1 | back=0 mono=OK | back=0 |
+| 手机 P1/P2/P3 | 36/36/19 | **0/0/0** | 1/0/0 | back=1(换章†)/0/0 | back=0 ×3 |
+
+跟随速率 13.7~35.4 px/s、最大单步 34~117px（band 1373）、`pos` 最大的间隔 4.3~16.6s（无 >20s 卡死）；`zigzag`/`zigzag-guard`/`frozen` 全 0。
+
+**取舍（接受）**：`realC` 长期断供时听书只剩「估算 + 单调地板 + 换章 3s 等待」，会更慢、可能落后几拍，但只会「落后」不会「回滚」——正是本轮要的方向。
+
+**新增观察项（非回退）**
+- `idx-blocked` 走 `BookSpeaker.dlog` ⇒ 落在 `tts_diag.txt`，不在 `tts_b.txt`（验收脚本的 grep 目标要注意）；
+- 短章（`max≈1.7k px`）压不出 `realC` 连断，`idx-blocked=0` 属正常，且可能 `TRACE: no-pos`（未发生位移，不能读成 OK）；
+- 换章前跟读会连续下发 `to` 而 List 稳定不动（`exec=1` 零位移），属「目标超界被夹」，不是回退。
+
+
 ---
 
 ## 二、修复方案
