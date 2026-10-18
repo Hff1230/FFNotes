@@ -5,7 +5,7 @@ title: 听书丢字顿挫审查优化
 关联: docs/fix/tts_mid_sentence_stutter/（顿挫主战场，M-001 实测继承）、docs/fix/tts_highlight_drift/（丢尾推断出处）、04 承诺表 #3/#6/#8
 所有者: 桌面会话
 更新: 2026-10-18
-状态: 待开工（取证任务 FIX-001 未跑；「丢字」语义未与用户确认）
+状态: 取证首轮完成（2026-10-18 M-001：FIX-002 作废、FIX-003 无效；真机制=段界断档；待用户拍板段界预写 spike）
 ---
 
 # 修复方案：听书丢字顿挫审查优化
@@ -40,7 +40,8 @@ title: 听书丢字顿挫审查优化
 
 既有用户口径（04:258）：「现在的版本后台能正常了，只是有句中吭哧的问题和噪点」；
 （tts_mid_sentence_stutter fix-plan §1.2）：「听书时一句话中间偶尔有顿挫感」。
-⇒「顿挫」= 已立案的 04 #3；「丢字」= 本轮新增，**未复现、未定义**，按未复现线处理。
+**2026-10-18 用户补口径（定案依据，详见 M-000）**：所有书都存在；《剑来》实测；形态=「一句话中间顿挫一下就丢字，后面字又正常」；**频率高**。
+⇒ 语义A（声音缺字）成立；形态指向「段内欠载（F2）×墙钟推进×清尾（H-A）」三联机理，主判定线为三数联查（欠载 ∧ drop>0 ∧ 同段共现）。
 
 ### 1.3 根因分析（全部标证据等级，未实测的一律是假设）
 
@@ -58,7 +59,9 @@ title: 听书丢字顿挫审查优化
 
 | # | 假设 | 机理 | 现状 | 取证方法 |
 |---|------|------|------|----------|
-| H-A | **段末推进吃掉上一段未播 PCM**（语义A 首要候选） | `onTick` 判据 `played+120 >= segDurMs`（BookSpeaker.ets:1013，tick 200ms）到点即 `speakCurrent()`，而 `speakCurrent()` 起新段前 `pcmPending.length=0`（:725）——上一段还没写进渲染器的 PCM 被直接丢弃。代码自认这是异常：`dropBytes` 有记账、`:1034` 把 `dropNow>0` 列为 odd 判据、日志 `drop tail bytes=`（:723） | tts_highlight_drift §2.1 曾推断，模拟器 drop=0、真机未量 | 拉真机 `tts_diag.txt` 的 `drop tail bytes=` 行 + `selfplay seg done` 的 `drop=` 字段，统计 dropBytes>0 的比例与字节量（换算 ms） |
+| H-A | ~~段末推进吃掉上一段未播 PCM~~ **已被真机 250 段实测否定** | 原推断：清尾路径吃 PCM | 实测 `dropBytes=660B≈21ms`（250 段，占比 1%→0%）——量级可忽略，不是丢字来源 | 已结案 |
+| H-A2 | **段尾断粮 + 到点推进** | 首轮 6 条疑此 | **第二轮 250 段修正**：欠载时刻 p50=1146ms、段首仅 12/29 ⇒ 不是「段尾到点」为主，见 H-A3 | 被 H-A3 取代 |
+| H-A3 | **消费侧脱钩（现行首要）**：渲染器段中断粮 ⇒ 音频落后墙钟；推进按墙钟到点切段 ⇒ 切段瞬间渲染器仍在播上一段尾巴（不清缓冲），旧尾混进新段开头、高亮已跳走 ⇒ 听感「顿挫一下+丢几个字+后面正常」 | 250 段：uf>0 29/39 odd 段、stockMin p50=−134ms（断粮实锤）；`played−dur` p50=+35ms（计时模型本身不漂）；drop≈0（内容没被清，是**错位**不是**删除**）；ufAt 段中为主（300ms 段首闸救不了） | 机理与用户形态逐点对上；「切段时渲染器仍有残余」待真机日志补一个 `tailMs`（切段时刻 − 渲染器已播时刻）钉死 | 修法=FIX-002 消费侧推进判据（见 §2.3） |
 | H-B | **声道标定偏小 ⇒ segDurMs 系统性偏短 ⇒ 每段提前截断**（语义A 次要，若成立则必现且逐段） | `calibrateSeg` 进程内一次、按「字/秒落在 2~9 最接近 4.5」反推 calibCh（:806-828）；`bytesToMs` 固定 16000Hz（:778-781）；引擎上报采样率/声道不可信（:790-791 注释）。代码注释自认「取大⇒句子被拦腰截断」（:804） | 无实测 | 取证包里对同一本书打 `calib ch=` + 每段 `cps` 分布；若 cps 分布贴 2 或 9 边界即标定可疑 |
 | H-C | **哑巴段整段静默跳过**（语义B 首要候选） | `onComplete type=0` 且 `segBytes===0` 且非末段 ⇒ `cur++` 直接跳，**不上报 onSeg**（:325-330）——有文字、引擎念不出、整段无声跳过。F4 证明量级不小 | 已实测存在（F4），但「用户是否感知为丢字」未确认 | 取证包统计每场会话跳段次数与段文本样本；问用户丢字是否集中在破折号/省略号/符号处 |
 | H-D | **高亮双时钟错位**（第三种语义：显示层） | `onSeg` 在 `eng.speak` **之前**上报（:701）⇒ 高亮领先声音一个合成延迟；`measureRate` 耗时含合成等待（segAt :700 打点、段末 :1042 结算）⇒ rateCps 偏低；Reader 600ms tick 线性插值 `round(p*tickChars)`（Reader.ets:1138-1139）⇒ 高亮按估算跳、声音按 PCM 播 | 代码可证「机制存在」，用户感知未确认 | 真机对拍：录屏（声音+画面同帧）抽 3 个点量高亮位置 vs 声音位置 |
@@ -81,7 +84,8 @@ title: 听书丢字顿挫审查优化
 - 现行诊断行（只读、已在码）：`selfplay seg done played/dur/req/chunks/pcmSpan/written/stockMin/uf/skew/drop`（:1021-1024）、`drop tail bytes=`（:723）、落盘 odd 判据（:1034-1039：dropNow 增量>0 ∥ uf>0 ∥ stockMin<40ms ∥ |played−dur|>200ms）+ 每 50 句心跳。
 - 日志文件：`filesDir/tts_diag.txt`（dlog 落盘）。❗每次「开始朗读」TRUNC 重写（`diagBReset`）⇒ 分段 recv。
 - 原始日志留档：scratch `tts_stutter\hilog.log`（M-001）。
-- 手机上现留 **诊断包**（md5=33c312a8…），日常版 fix004b（md5=903e3932…）未装回；`power-shell timeout` 覆盖未复位——开工前先收这个尾。
+- 手机上现留 **诊断包**（md5=**0603f250**…，1,382,271 B，构建 10:50:24 / 装机 10:51:02，含 FIX-001 四计数，见 M-001 §一），日常版 fix004b（md5=903e3932…）未装回；`power-shell timeout` 覆盖未复位——开工前先收这个尾。
+  （原写「md5=33c312a8…」有误：那是 10-16 的旧诊断包 `entry-default-signed-ttsdiag-release.hap`，不含四计数。）
 
 ---
 
@@ -105,16 +109,23 @@ title: 听书丢字顿挫审查优化
 - 段内欠载复现（uf>0/stockMin<0）且丢字与它无关 ⇒ 落 **FIX-003 = 300ms 段内闸**（原单 FIX-002B 收编，单独出包）；
 - H-B 若成立（cps 贴边界）⇒ 单独开声道标定专项，**不在本单修**。
 
+**2026-10-18 用户补口径后的次序预判**（待 FIX-001 数字确认，不预先执行）：形态=「句中顿挫→丢字→后面正常、高频」指向欠载与丢字**同源**（断粮→墙钟照走→清尾丢字）。若三数联查证实共现，则执行次序改为 **FIX-003（300ms 闸，治断粮=同时消掉顿挫与大部分 drop）先行**，FIX-002 尾字节保护作为兜底第二包；两包仍禁止同包、各自真机验。
+
+> ❗**2026-10-18 首轮取证已否决上述分叉（见 `M-001-取证.md`）**：drop 仅 660 B/章（20.6 ms）、`dropSegPct`=0% ⇒ **FIX-002 不触发，作废**；欠载确实存在（uf>0 10.1%、stockMin 中位 −117 ms），但 `ufAt` **100% 落在段末**（最小 769 ms，28/28 ≥ dur）⇒ **FIX-003 的段首 300 ms 闸救不了**。真机制=**段界供给断档**（每段空档 ≈43.4 ms，skew 每段 +43.4 ms）。能治它的只剩段前预写/预灌一类，正是 §2.4 红线①②封掉的方向 ⇒ **需用户拍板**是否开一次最小 spike。
+
 ### 2.3 技术实现（各候选的最小形态）
 
-**FIX-002 尾字节保护**（若 dropBytes 实测显著才做）：
-`speakCurrent()` 起新段时**不清 `pcmPending`**，改为把上一段残余 PCM 留在队头继续写（连续接队），`segFirstWriteMs` 仍由 pump 首写打点不变——只动「清不清」，不动计时公式（红线③边界：这是删补偿不是加补偿）。回退方式：恢复 `pcmPending.length = 0` 一行。
-❗同时评估 `nextSeg/prevSeg/jumpTo`（:646-676）路径：用户主动跳段**必须**清（那是意图改变），只有自动推进路径不清。
+**FIX-002 消费侧推进判据**（2026-10-18 定稿，SDK 核实后取代原「尾字节保护」——drop≈0 证明清尾无罪，真凶是 H-A3 消费侧脱钩）：
+段首 pump 首写时（:929 打点处）同步取 `f0 = getAudioTimestampInfoSync().framePos` 作基准（try/catch，失败记 −1；本代码跨段不 flush ⇒ framePos 跨段单调，差分有效）；`onTick` 推进判据（:1042）改为：
+`pcmPending 空 ∧ segWrittenBytes ≥ segBytes ∧ (f0≥0 ? (framePos−f0)×1000/32 ≥ segDurMs−80 : played+120 ≥ segDurMs)`
+——f0 不可得自动退回现墙钟判据（降级=现状，无害）。回退方式：判据恢复一行。
+❗死路已核实（勿再试）：`getLatency` 测路由延迟不含缓冲（SDK NOTE 亲口）；`on('writeData')` 回调模型与现有 push 循环互斥（回调内禁调 renderer API）；`getAudioRendererState/getPlayedFrames` 不存在；本 SDK 无 Creator 设 buffer。
+> 📚 **技术来源**：本地 SDK `@ohos.multimedia.audio.d.ts` :6170/:6190（getAudioTimestampInfo/Sync，@since 19，AudioTimestampInfo :5865）、:6898-6905（getLatency NOTE：不含实时缓冲、推荐改用 TimestampInfo）、:6103（write @deprecated since 11 → writeData 事件）。
 
 **FIX-003 段内 300ms 闸**（原单 FIX-002B 原文照搬）：起段后 PCM 先攒 `START_BUFFER_MS=300ms` 再开写；短段在 type=0 时强制开闸；只决定「第一块 PCM 何时写」，不碰 `played/segDurMs/提前量`。回退方式：常量置 0。
 
-**FIX-001 取证包**（零行为）：在现有诊断行上补三个只读计数，全部落 `tts_diag.txt`：
-`dropsum|segs=N dropBytes=B dropSegPct=P%`（每 50 句）、`skipseg|idx=N text=<前12字>`（哑巴段跳过的文本样本）、`align|odd=N`（write 前 `byteLength % (calibCh*2) != 0` 累计）。
+**FIX-001 取证包**（零行为）：在现有诊断行上补四个只读计数，全部落 `tts_diag.txt`：
+`dropsum|segs=N dropBytes=B dropSegPct=P%`（每 50 句）、`skipseg|idx=N text=<前12字>`（哑巴段跳过的文本样本）、`align|odd=N`（write 前 `byteLength % (calibCh*2) != 0` 累计）、`ufAt=<ms>`（段内 uf 首次>0 相对起播的偏移，无=-1，分「段首/段中欠载」——2026-10-18 用户补口径后追加，见 M-000）。
 每加一类日志补一条门禁（`tools/diag_log_reset_selftest.py` 的 UT 套路）。
 
 > 📚 **技术来源**（沿用原单已核实项，未新增外部调研）：
