@@ -220,3 +220,18 @@ STOP 分支：同 PAUSE 暂停，但记 `afoc|stop-norm`，**不自动恢复**�
 ### 实测修正（原地改，不留矛盾）
 - §2.2 官方语义「RESUME 一定是 SHARE（BEGIN）」**被真机推翻**：本机 RESUME 发在 **END 事件**（`evt=2|force=1|hint=1`）。首包按文档只认 BEGIN → 恢复被闸掉 → 永久无声假播（用户报「听完语音听书没回来」）；r1 改为 END+RESUME 也走 `resumeFromFocus`。
 - 闹铃实测走 DUCK/UNDUCK（`hint=4/5`）而非 PAUSE：默认策略下闹铃与听书混播，代码只记日志不动作，符合预期（用户验收 OK）。
+
+## FIX-AF-006（2026-10-19）：短视频暂停/停止后自动续读 —— 静音试探
+
+用户口径：「抖音播放视频后必须要回纯阅界面才继续，改成只要抖音等视频软件暂停或停止播放就恢复读书」。
+
+- **无障碍事实核查**：没有公开 API 可查「别的 App 是否正在播」——
+  `AudioManager.getAudioSceneSync()` 返回的 `AudioScene` 只有 DEFAULT/RINGING/PHONE_CALL/VOICE_CHAT（通信场景，非媒体）；
+  `AVSession.getAllSessionDescriptors()` 需 `ohos.permission.MANAGE_MEDIA_RESOURCES`（系统级，本 App 零权限红线不可用）；
+  而短视频 App 暂停时**不释放焦点**，系统不会给我们发 RESUME（FIX-AF-005 已实测）。
+- **方案**：焦点暂停期间做**静音试探**（`BookSpeaker.probeOnce()`）：
+  `setVolume(0)` → `start()` → 400ms 存活判定 → 被占则退避重试（1.5s×1.6 至 6s，上限 80 次），
+  没人抢则 `resumeFromFocus()` 续读。红线：**试探必须静音**（对端若是混播/DUCK 策略也听不到我们）。
+- 日志：`afoc|probe-start|why=…|first=…`、`afoc|probe-blocked|n=…|next=…|started=`、`afoc|probe-hit|n=…|started=`、`afoc|probe-giveup|n=`。
+- 回退：`FOCUS_PROBE = false`；门禁 UT-339（含顺序断言）。
+- 真机验收判据：抖音抢焦点 → `afoc|paused` + `afoc|probe-start`；抖音**暂停或划走** → 出现 `afoc|probe-hit` 并接着出声（**无需回到纯阅界面**）。
